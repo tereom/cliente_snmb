@@ -2,7 +2,7 @@
 {{=congform.custom.begin}}
 <fieldset>
     <legend>
-        Datos del conglomerado:
+        Datos del conglomerado
     </legend>
     <table>
         <tr>
@@ -103,6 +103,67 @@
                 {{=congform.custom.widget.comment_}}
             </div>
         </td>
-{{=congform.custom.submit}}
+</fieldset> 
 {{=congform.custom.end}}
+
+{{=site1form.custom.begin}}
+<fieldset>
+    <legend>
+        Datos del centro del conglomerado (sitio 1)
+    </legend>
+    <table>
+        <tr>
+            <th>
+            </th>
+            <th colspan="3">
+                Latitud
+            </th>
+            <th colspan="3">
+                Longitud
+            </th>
+            <th rowspan="2">
+                {{=site1form.custom.label.datum}}
+            </th>
+            <th rowspan="2">
+                 {{=site1form.custom.label.altitude}}
+            </th>
+            <th rowspan="2">
+                 {{=site1form.custom.label.gps_error}}
+            </th>
+        </tr>
+            <th>
+                
+            </th>
+        <tr>
+            <th>
+                Elemento
+            </th>
+            <th>
+                {{=site1form.custom.label.lat_deg}}
+            </th>
+            <th>
+                {{=site1form.custom.label.lat_min}}
+            </th>
+            <th>
+                {{=site1form.custom.label.lat_sec}}
+            </th>
+            <th>
+                {{=site1form.custom.label.lon_deg}}
+            </th>
+            <th>
+                {{=site1form.custom.label.lon_min}}
+            </th>
+            <th>
+                {{=site1form.custom.label.lon_sec}}
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+        </tr>
+    </table>
 </fieldset>
+{{=site1form.custom.end}}
+<button onclick="document.getElementById('forma_conglomerado').submit();">Enviar formulario</button>
