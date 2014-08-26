@@ -9,6 +9,7 @@ sessions
 *.py[co]
 *.png
 *.bak
+*.log
 
 # Packages
 *.egg
