@@ -108,6 +108,7 @@
 'DB': 'BDD',
 'db': 'bdd',
 'DB Model': 'Modelo BDD',
+'Debe elegir un tipo de vegetación predominante': 'Debe elegir un tipo de vegetación predominante',
 'defines tables': 'define tablas',
 'Delete': 'Eliminar',
 'delete': 'eliminar',
