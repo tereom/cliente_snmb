@@ -3,15 +3,15 @@
 ## En esta sección se definen las tablas correspondientes a la pestaña de Conglomerado, es decir: Conglomerate_sample, Site_sample y Reference_image_site:
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
 
-db.define_table('Conglomerate_sample',
-                Field('name','integer', required='TRUE'),
-                Field('visit_date', 'date', required='TRUE'),
-                Field('municipio', 'integer', required='TRUE'),
-                Field('predio', 'text', required='TRUE'),
-                Field('property_', 'text', required='TRUE'),
-                Field('soil_use_type', 'text', required='TRUE'),
-                Field('vegetation_type', 'text', required='TRUE'),
-                Field('is_perturbed', 'boolean'),
+db.define_table('Conglomerate_sample',\
+                Field('name','integer', required='TRUE'),\
+                Field('visit_date', 'date', required='TRUE'),\
+                Field('municipio', 'integer', required='TRUE'),\
+                Field('predio', 'text', required='TRUE'),\
+                Field('property_', 'text', required='TRUE'),\
+                Field('soil_use_type', 'text', required='TRUE'),\
+                Field('vegetation_type', 'text', required='TRUE'),\
+                Field('is_perturbed', 'boolean'),\
                 Field('comment_', 'text'))
 
                 #Field('type_', 'reference Conglomerate_type_option', required='TRUE'),\
