@@ -1,7 +1,5 @@
 # coding: utf8
 
-db = DAL('sqlite://storage.sqlite',pool_size=1,check_reserved=['all'])
-
 ## En esta sección se definen las tablas correspondientes a la pestaña de Conglomerado, es decir: Conglomerate_sample, Site_sample y Reference_image_site:
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
 
