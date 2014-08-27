@@ -5,7 +5,8 @@
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
 
 db.define_table('Camera',
-                Field('name','string',label=T("Código cámara"),required='TRUE'), 
+                Field('name','reference Camera_name_option',\
+                	label=T("Código cámara")), 
                 Field('start_date', 'date',label=T("Fecha de colocación"),\
                         required='TRUE'),
                 Field('stop_date', 'date',label=T("Fecha de levantamiento"),\
@@ -27,8 +28,10 @@ db.define_table('Camera',
                 Field('site_sample_id','reference Site_sample'),         
                 Field('distance','double',label=T("Distancia al centro del sitio (m)"),required='TRUE'),
                 Field('it_rained', 'boolean',label=T("Llovió durante el muestreo")),
-                Field('resolution','string',label=T("Resolución"),required='TRUE'),
-                Field('sensitivity','string',label=T("Sensibilidad"),required='TRUE'),
+                Field('resolution','reference Camera_resolution_option',\
+                		label=T("Resolución")),
+                Field('sensitivity','reference Camera_sensitivity_option',\
+                		label=T("Sensibilidad")),
                 Field('comment_', 'text',label=T("Observaciones"))
                 )
 

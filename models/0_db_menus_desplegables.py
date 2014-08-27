@@ -95,9 +95,10 @@ if db(db.Conglomerate_soil_option.id>0).count() == 0:
 ## Conglomerate_vegetation_option
 db.define_table('Conglomerate_vegetation_option',
                 Field('num_vegetation','integer', required='TRUE'),
-                Field('name_vegetation', 'text', required='TRUE'))
+                Field('name_vegetation', 'text'),  required='TRUE')
 
 if db(db.Conglomerate_vegetation_option.id>0).count() == 0:
+    db.Conglomerate_vegetation_option.insert(num_vegetation='0', name_vegetation='')
     db.Conglomerate_vegetation_option.insert(num_vegetation='1', name_vegetation='Bosque de coníferas')
     db.Conglomerate_vegetation_option.insert(num_vegetation='2', name_vegetation='Bosque templado de latifoliadas')
     db.Conglomerate_vegetation_option.insert(num_vegetation='3', name_vegetation='Bosque mesófilo de montaña')
@@ -132,4 +133,51 @@ db.define_table('Site_ellipsoid_option',
 if db(db.Site_ellipsoid_option.id>0).count() == 0:
     db.Site_ellipsoid_option.insert(num_ellipsoid='1', name_ellipsoid='Elipsoide 1')
     db.Site_ellipsoid_option.insert(num_ellipsoid='2', name_ellipsoid='Elipsoide 2')
+
+
+##########################################################################
+## Tab Camera
+########################################################################
+## 
+db.define_table('Camera_name_option',
+                Field('num_name','integer', required='TRUE'),
+                Field('name_name', 'text', required='TRUE'))
+
+if db(db.Camera_name_option.id>0).count() == 0:
+    db.Camera_name_option.insert(num_name='1', name_name='Cámara 1')
+    db.Camera_name_option.insert(num_name='2', name_name='Cámara 2')
+
+#########################################################################
+## 
+db.define_table('Camera_resolution_option',
+                Field('num_resolution','integer', required='TRUE'),
+                Field('name_resolution', 'text', required='TRUE'))
+
+if db(db.Camera_resolution_option.id>0).count() == 0:
+    db.Camera_resolution_option.insert(num_resolution='1', name_resolution='Resolución 1')
+    db.Camera_resolution_option.insert(num_resolution='2', name_resolution='Resolución 2')
+
+#########################################################################
+## 
+db.define_table('Camera_sensitivity_option',
+                Field('num_sensitivity','integer', required='TRUE'),
+                Field('name_sensitivity', 'text', required='TRUE'))
+
+if db(db.Camera_sensitivity_option.id>0).count() == 0:
+    db.Camera_sensitivity_option.insert(num_sensitivity='1', name_sensitivity='Sensibilidad 1')
+    db.Camera_sensitivity_option.insert(num_sensitivity='2', name_sensitivity='Sensibilidad 2')
+
+
+##########################################################################
+## Tab Recorder
+########################################################################
+## 
+db.define_table('Recorder_name_option',
+                Field('num_name','integer', required='TRUE'),
+                Field('name_name', 'text', required='TRUE'))
+
+if db(db.Recorder_name_option.id>0).count() == 0:
+    db.Recorder_name_option.insert(num_name='1', name_name='Grabadora 1')
+    db.Recorder_name_option.insert(num_name='2', name_name='Grabadora 2')
+
 
