@@ -1,11 +1,67 @@
 {{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .cong_table .integer, .cong_table .date, .cong_table .string, .cong_table .double
+    {
+        margin-right: 2cm;
+        width: 4cm;
+    }
+
+    .cong_table #Conglomerate_sample_type_, .cong_table #Conglomerate_sample_soil_use_type,
+    .cong_table #Conglomerate_sample_state_, .cong_table #Conglomerate_sample_vegetation_type
+    {
+        margin-right: 2cm;
+        width: 4.5cm;
+    }
+
+    .site_table, .cong_table
+    {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .site_table .integer, .site_table .date, .site_table .string, .site_table .double
+    {
+        width: 2cm;
+    }
+
+    #Site_sample_ellipsoid
+    {
+        width: 2.5cm;
+    }
+    
+    .centrar
+    {
+        text-align: center;
+    }
+<!--
+    SQLFORM.widgets.string.widget
+    SQLFORM.widgets.text.widget
+    SQLFORM.widgets.password.widget
+    SQLFORM.widgets.integer.widget
+    SQLFORM.widgets.double.widget
+    SQLFORM.widgets.time.widget
+    SQLFORM.widgets.date.widget
+    SQLFORM.widgets.datetime.widget
+    SQLFORM.widgets.upload.widget
+    SQLFORM.widgets.boolean.widget
+    SQLFORM.widgets.options.widget
+    SQLFORM.widgets.multiple.widget
+    SQLFORM.widgets.radio.widget
+    SQLFORM.widgets.checkboxes.widget
+    SQLFORM.widgets.autocomplete
+-->
+
+</style>
+{{end}}
 <fieldset>
     <legend>
         Datos del conglomerado
     </legend>
 
     {{=congform.custom.begin}}
-    <table>
+    <table class='cong_table'>
         <tr>
             <td>
                 <div>
@@ -112,27 +168,27 @@
         Datos de los sitios y punto de control
     </legend>
     {{=controlform.custom.begin}}
-    <table>
+    <table class="site_table">
         <tr>
-            <th rowspan="2">
+            <th>
                 Elemento
             </th>
-            <th colspan="3">
+            <th colspan="3", class="centrar">
                 Latitud
             </th>
-            <th colspan="3">
+            <th colspan="3", class="centrar">
                 Longitud
             </th>
-            <th rowspan="2">
-                {{=controlform.custom.label.datum}}
+            <th>
+                {{=controlform.custom.label.ellipsoid}}
             </th>
-            <th rowspan="2">
+            <th>
                  {{=controlform.custom.label.altitude}}
             </th>
-            <th rowspan="2">
+            <th>
                  {{=controlform.custom.label.gps_error}}
             </th>
-            <th rowspan="2">
+            <th>
                  {{=controlform.custom.label.is_evidence}}
             </th>
         </tr>
@@ -189,7 +245,7 @@
                 {{=controlform.custom.widget.lon_sec}}
             </td>
             <td>
-                {{=controlform.custom.widget.datum}}
+                {{=controlform.custom.widget.ellipsoid}}
             </td>
             <td>
                 {{=controlform.custom.widget.altitude}}
@@ -205,7 +261,7 @@
     {{=controlform.custom.end}}
 
     {{=site1form.custom.begin}}
-    <table>
+    <table class="site_table">
         <tr>
             <td>
                 Sitio 1
@@ -229,7 +285,7 @@
                 {{=site1form.custom.widget.lon_sec}}
             </td>
             <td>
-                {{=site1form.custom.widget.datum}}
+                {{=site1form.custom.widget.ellipsoid}}
             </td>
             <td>
                 {{=site1form.custom.widget.altitude}}
@@ -243,9 +299,9 @@
         </tr>
     </table>
     {{=site1form.custom.end}}
-    
+
     {{=site2form.custom.begin}}
-    <table>
+    <table class="site_table">
         <tr>
             <td>
                 Sitio 2
@@ -269,7 +325,7 @@
                 {{=site2form.custom.widget.lon_sec}}
             </td>
             <td>
-                {{=site2form.custom.widget.datum}}
+                {{=site2form.custom.widget.ellipsoid}}
             </td>
             <td>
                 {{=site2form.custom.widget.altitude}}
@@ -283,9 +339,9 @@
         </tr>
     </table>
     {{=site2form.custom.end}}
-    
+
     {{=site3form.custom.begin}}
-    <table>
+    <table class="site_table">
         <tr>
             <td>
                 Sitio 3
@@ -309,7 +365,7 @@
                 {{=site3form.custom.widget.lon_sec}}
             </td>
             <td>
-                {{=site3form.custom.widget.datum}}
+                {{=site3form.custom.widget.ellipsoid}}
             </td>
             <td>
                 {{=site3form.custom.widget.altitude}}
@@ -323,6 +379,46 @@
         </tr>
     </table>
     {{=site3form.custom.end}}
+
+    {{=site4form.custom.begin}}
+    <table class="site_table">
+        <tr>
+            <td>
+                Sitio 4
+            </td>
+            <td>
+                {{=site4form.custom.widget.lat_deg}}
+            </td>
+            <td>
+                {{=site4form.custom.widget.lat_min}}
+            </td>
+            <td>
+                {{=site4form.custom.widget.lat_sec}}
+            </td>
+            <td>
+                {{=site4form.custom.widget.lon_deg}}
+            </td>
+            <td>
+                {{=site4form.custom.widget.lon_min}}
+            </td>
+            <td>
+                {{=site4form.custom.widget.lon_sec}}
+            </td>
+            <td>
+                {{=site4form.custom.widget.ellipsoid}}
+            </td>
+            <td>
+                {{=site4form.custom.widget.altitude}}
+            </td>
+            <td>
+                {{=site4form.custom.widget.gps_error}}
+            </td>
+            <td>
+                {{=site4form.custom.widget.is_evidence}}
+            </td>
+        </tr>
+    </table>
+    {{=site4form.custom.end}}
 </fieldset>
 <button onclick="document.getElementById('forma_conglomerado').submit();
                  document.getElementById('forma_sitio1').submit();
