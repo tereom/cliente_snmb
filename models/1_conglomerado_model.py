@@ -6,6 +6,8 @@
 db.define_table('Conglomerate_sample',\
                 Field('name','integer', required='TRUE'),\
                 Field('visit_date', 'date', required='TRUE'),\
+                Field('type_', 'integer', required='TRUE'),\
+                Field('state_', 'integer', required='TRUE'),\
                 Field('municipio', 'integer', required='TRUE'),\
                 Field('predio', 'text', required='TRUE'),\
                 Field('property_', 'text', required='TRUE'),\
