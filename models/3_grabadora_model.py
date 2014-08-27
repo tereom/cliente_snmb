@@ -7,8 +7,8 @@
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
 
 db.define_table('Recorder',
-                Field('name','string',label=T("Código grabadora"),\
-                		required='TRUE'), 
+                Field('name','reference Recorder_name_option',\
+                	label=T("Código grabadora")),  
                 Field('start_date', 'date',label=T("Fecha de colocación"),\
                         required='TRUE'),
                 Field('stop_date', 'date',label=T("Fecha de levantamiento"),\
@@ -24,7 +24,7 @@ db.define_table('Recorder',
                 Field('loc_recorder_lon_min','integer',label=T("minuto"),required='TRUE'),
                 Field('loc_recorder_lon_sec','double',label=T("segundo"),required='TRUE'),
                 Field('loc_recorder_altitude','double',label=T("Altitud(m)"),required='TRUE'),                
-                Field('loc_recorder_gps_error','double',label=T("Error(m)"),required='TRUE')
+                Field('loc_recorder_gps_error','double',label=T("Error(m)"),required='TRUE'),
                 Field('loc_recorder_ellipsoid', 'reference Site_ellipsoid_option',\
                         label=T("Datum"),required='TRUE'), 
                 Field('site_sample_id','reference Site_sample'),         
@@ -35,21 +35,19 @@ db.define_table('Recorder',
                 Field('comment_', 'text',label=T("Observaciones"))
                 )
 
-db.Camera.name.requires=IS_IN_DB(db,db.Camera_name_option.num_name,'%(name_name)s')
-db.Camera.start_date.requires=IS_NOT_EMPTY()
-db.Camera.stop_date.requires=IS_NOT_EMPTY()
-db.Camera.start_time.requires=IS_NOT_EMPTY()
-db.Camera.stop_time.requires=IS_NOT_EMPTY()
-db.Camera.loc_camera_lat_deg.requires=IS_NOT_EMPTY()
-db.Camera.loc_camera_lat_min.requires=IS_NOT_EMPTY()
-db.Camera.loc_camera_lat_sec.requires=IS_NOT_EMPTY()
-db.Camera.loc_camera_lon_deg.requires=IS_NOT_EMPTY()
-db.Camera.loc_camera_lon_min.requires=IS_NOT_EMPTY()
-db.Camera.loc_camera_lon_sec.requires=IS_NOT_EMPTY()
-db.Camera.loc_camera_altitude.requires=IS_NOT_EMPTY()
-db.Camera.loc_camera_gps_error.requires=IS_NOT_EMPTY()
-db.Camera.loc_camera_ellipsoid.requires=IS_NOT_EMPTY()
-db.Camera.distance.requires=IS_NOT_EMPTY()
-db.Camera.resolution.requires=IS_NOT_EMPTY()
-db.Camera.sensitivity.requires=IS_NOT_EMPTY()
+db.Recorder.name.requires=IS_IN_DB(db,db.Recorder_name_option.num_name,'%(name_name)s')
+db.Recorder.start_date.requires=IS_NOT_EMPTY()
+db.Recorder.stop_date.requires=IS_NOT_EMPTY()
+db.Recorder.start_time.requires=IS_NOT_EMPTY()
+db.Recorder.stop_time.requires=IS_NOT_EMPTY()
+db.Recorder.loc_recorder_lat_deg.requires=IS_NOT_EMPTY()
+db.Recorder.loc_recorder_lat_min.requires=IS_NOT_EMPTY()
+db.Recorder.loc_recorder_lat_sec.requires=IS_NOT_EMPTY()
+db.Recorder.loc_recorder_lon_deg.requires=IS_NOT_EMPTY()
+db.Recorder.loc_recorder_lon_min.requires=IS_NOT_EMPTY()
+db.Recorder.loc_recorder_lon_sec.requires=IS_NOT_EMPTY()
+db.Recorder.loc_recorder_altitude.requires=IS_NOT_EMPTY()
+db.Recorder.loc_recorder_gps_error.requires=IS_NOT_EMPTY()
+db.Recorder.loc_recorder_ellipsoid.requires=IS_NOT_EMPTY()
+db.Recorder.distance.requires=IS_NOT_EMPTY()
 
