@@ -108,3 +108,28 @@ if db(db.Conglomerate_vegetation_option.id>0).count() == 0:
     db.Conglomerate_vegetation_option.insert(num_vegetation='8', name_vegetation='Matorral desértico')
     db.Conglomerate_vegetation_option.insert(num_vegetation='9', name_vegetation='Humedal arbóreo')
     db.Conglomerate_vegetation_option.insert(num_vegetation='10', name_vegetation='Humedal herbáceo')
+
+
+#########################################################################
+## Site_number_option
+db.define_table('Site_number_option',
+                Field('num_number','integer', required='TRUE'),
+                Field('name_number', 'text', required='TRUE'))
+
+if db(db.Site_number_option.id>0).count() == 0:
+    db.Site_number_option.insert(num_number='1', name_number='Punto de control')
+    db.Site_number_option.insert(num_number='1', name_number='Centro')
+    db.Site_number_option.insert(num_number='2', name_number='Sitio 2')
+    db.Site_number_option.insert(num_number='3', name_number='Sitio 3')
+    db.Site_number_option.insert(num_number='4', name_number='Sitio 4')
+
+#########################################################################
+## 
+db.define_table('Site_ellipsoid_option',
+                Field('num_ellipsoid','integer', required='TRUE'),
+                Field('name_ellipsoid', 'text', required='TRUE'))
+
+if db(db.Site_ellipsoid_option.id>0).count() == 0:
+    db.Site_ellipsoid_option.insert(num_ellipsoid='1', name_ellipsoid='Elipsoide 1')
+    db.Site_ellipsoid_option.insert(num_ellipsoid='2', name_ellipsoid='Elipsoide 2')
+
