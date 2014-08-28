@@ -11,18 +11,18 @@ def additionalValidations(congform):
 
 def controladorConglomerado():
     congform = SQLFORM(db.Conglomerate_sample,  _id='forma_conglomerado')
-    site1form = SQLFORM(db.Site_sample, _id='forma_sitio1')
-    site2form = SQLFORM(db.Site_sample, _id='forma_sitio2')
-    site3form = SQLFORM(db.Site_sample, _id='forma_sitio3')
-    site4form = SQLFORM(db.Site_sample, _id='forma_sitio4')
-    controlform = SQLFORM(db.Site_sample, _id='forma_control')
-    if congform.process(onvalidation=additionalValidations).accepted\
-    and site1form.process().accepted and site2form.process().accepted\
-    and site3form.process().accepted and site4form.process().accepted\
-    and controlform.process().accepted:
+    #site1form = SQLFORM(db.Site_sample, _id='forma_sitio1')
+    #site2form = SQLFORM(db.Site_sample, _id='forma_sitio2')
+    #site3form = SQLFORM(db.Site_sample, _id='forma_sitio3')
+    #site4form = SQLFORM(db.Site_sample, _id='forma_sitio4')
+    #controlform = SQLFORM(db.Site_sample, _id='forma_control')
+    if congform.process(onvalidation=additionalValidations).accepted:
+    #and site1form.process().accepted and site2form.process().accepted\
+    #and site3form.process().accepted and site4form.process().accepted\
+    #and controlform.process().accepted:
         response.flash = "Registro ingresado exitosamente"
-    return dict(congform=congform, site1form=site1form, site2form=site2form, site3form=site3form,\
-                site4form=site4form, controlform=controlform)
+    return dict(congform=congform)#, site1form=site1form, site2form=site2form, site3form=site3form,\
+                #site4form=site4form, controlform=controlform)
 
 #def check(form):
 #    if form.vars.b and not form.vars.c:
