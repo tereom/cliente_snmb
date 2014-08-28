@@ -3,11 +3,17 @@ cache
 databases
 errors
 sessions
+languages
+private
+sessions
+
+LICENSE
  
 # inherit https://github.com/github/gitignore/blob/master/Python.gitignore
  
 *.py[co]
 *.png
+*.py.bak
 *.bak
 *.log
 
