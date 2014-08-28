@@ -8,9 +8,9 @@
         width: 4cm;
     }
 
-    .cong_table #Conglomerate_sample_type_, .cong_table #Conglomerate_sample_soil_use_type,
-    .cong_table #Conglomerate_sample_state_, .cong_table #Conglomerate_sample_vegetation_type
-    .cong_table #Conglomerate_sample_property_
+    .cong_table #Conglomerado_muestra_tipo, .cong_table #Conglomerado_muestra_tipo_uso_suelo,
+    .cong_table #Conglomerado_muestra_estado, .cong_table #Conglomerado_muestra_vegetacion_tipo
+    .cong_table #Conglomerado_muestra_tenencia
     {
         margin-right: 2cm;
         width: 4.5cm;
@@ -66,26 +66,26 @@
         <tr>
             <td>
                 <div>
-                    {{=congform.custom.label.name}}
+                    {{=congform.custom.label.nombre}}
                 </div>
                 <div>
-                    {{=congform.custom.widget.name}}
-                </div>
-            </td>
-            <td>
-                <div>
-                    {{=congform.custom.label.visit_date}}
-                </div>
-                <div>
-                    {{=congform.custom.widget.visit_date}}
+                    {{=congform.custom.widget.nombre}}
                 </div>
             </td>
             <td>
                 <div>
-                    {{=congform.custom.label.type_}}
+                    {{=congform.custom.label.fecha_visita}}
                 </div>
                 <div>
-                    {{=congform.custom.widget.type_}}
+                    {{=congform.custom.widget.fecha_visita}}
+                </div>
+            </td>
+            <td>
+                <div>
+                    {{=congform.custom.label.tipo}}
+                </div>
+                <div>
+                    {{=congform.custom.widget.tipo}}
                 </div>
             </td>
             <td></td>
@@ -93,10 +93,10 @@
         <tr>
             <td>
                 <div>
-                    {{=congform.custom.label.state_}}
+                    {{=congform.custom.label.estado}}
                 </div>
                 <div>
-                    {{=congform.custom.widget.state_}}
+                    {{=congform.custom.widget.estado}}
                 </div>
             </td>
             <td>
@@ -117,36 +117,36 @@
             </td>
             <td>
                 <div>
-                    {{=congform.custom.label.property_}}
+                    {{=congform.custom.label.tenencia}}
                 </div>
                 <div>
-                    {{=congform.custom.widget.property_}}
+                    {{=congform.custom.widget.tenencia}}
                 </div>
             </td>
         </tr>
         <tr>
             <td>
                 <div>
-                    {{=congform.custom.label.soil_use_type}}
+                    {{=congform.custom.label.tipo_uso_suelo}}
                 </div>
                 <div>
-                    {{=congform.custom.widget.soil_use_type}}
-                </div>
-            </td>
-            <td>
-                <div>
-                    {{=congform.custom.label.vegetation_type}}
-                </div>
-                <div>
-                    {{=congform.custom.widget.vegetation_type}}
+                    {{=congform.custom.widget.tipo_uso_suelo}}
                 </div>
             </td>
             <td>
                 <div>
-                    {{=congform.custom.label.is_perturbed}}
+                    {{=congform.custom.label.vegetacion_tipo}}
                 </div>
                 <div>
-                    {{=congform.custom.widget.is_perturbed}}
+                    {{=congform.custom.widget.vegetacion_tipo}}
+                </div>
+            </td>
+            <td>
+                <div>
+                    {{=congform.custom.label.perturbado}}
+                </div>
+                <div>
+                    {{=congform.custom.widget.perturbado}}
                 </div>
             </td>
             <td></td>
@@ -155,10 +155,10 @@
     <div>
         <td>
             <div>
-                {{=congform.custom.label.comment_}}
+                {{=congform.custom.label.comentario}}
             </div>
             <div>
-                {{=congform.custom.widget.comment_}}
+                {{=congform.custom.widget.comentario}}
             </div>
         </td>
 {{=congform.custom.end}}
