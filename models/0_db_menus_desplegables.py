@@ -72,8 +72,8 @@ if db(db.Conglomerate_property_option.id>0).count() == 0:
 
 ######################################################################### Conglomerate_soil_option
 db.define_table('Conglomerate_soil_option',
-                Field('num_soil','integer', required='TRUE'),
-                Field('name_soil', 'text', required='TRUE'))
+                Field('num_soil','integer'),
+                Field('name_soil', 'text'))
 
 if db(db.Conglomerate_soil_option.id>0).count() == 0:
     db.Conglomerate_soil_option.insert(num_soil='1', name_soil='Agricultura de riego')

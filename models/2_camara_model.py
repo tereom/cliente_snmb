@@ -6,7 +6,7 @@
 
 db.define_table('Camera',
                 Field('name','reference Camera_name_option',\
-                	label=T("Código cámara")), 
+                		label=T("Código cámara")), 
                 Field('start_date', 'date',label=T("Fecha de colocación"),\
                         required='TRUE'),
                 Field('stop_date', 'date',label=T("Fecha de levantamiento"),\
