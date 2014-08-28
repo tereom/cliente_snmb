@@ -30,10 +30,9 @@ db.Conglomerate_sample.type_.requires=IS_IN_DB(db,db.Conglomerate_type_option.nu
 db.Conglomerate_sample.state_.requires=IS_IN_DB(db,db.Conglomerate_state_option.num_state,'%(name_state)s')
 db.Conglomerate_sample.municipio.requires=IS_NOT_EMPTY()
 db.Conglomerate_sample.predio.requires=IS_NOT_EMPTY()
-db.Conglomerate_sample.property_.requires==IS_IN_DB(db,db.Conglomerate_property_option.num_property,'%(name_property)s')
+db.Conglomerate_sample.property_.requires=IS_IN_DB(db,db.Conglomerate_property_option.num_property,'%(name_property)s')
 db.Conglomerate_sample.soil_use_type.requires=IS_IN_DB(db,db.Conglomerate_soil_option.num_soil,'%(name_soil)s')
 db.Conglomerate_sample.vegetation_type.requires=IS_IN_DB(db,db.Conglomerate_vegetation_option.num_vegetation,'%(name_vegetation)s')
-
 
 db.define_table('Site_sample',
                 Field('conglomerate_sample_id','reference Conglomerate_sample'),
