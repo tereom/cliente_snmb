@@ -87,7 +87,7 @@ if db(db.Conglomerate_soil_option.id>0).count() == 0:
     db.Conglomerate_soil_option.insert(num_soil='9', name_soil='Minería a cielo abierto')
     db.Conglomerate_soil_option.insert(num_soil='10', name_soil='Jales mineros')
     db.Conglomerate_soil_option.insert(num_soil='11', name_soil='Incendios')
-    db.Conglomerate_soil_option.insert(num_soil='12', name_soil='Tipo de vegetación')
+    db.Conglomerate_soil_option.insert(num_soil='12', name_soil='Vegetación')
     db.Conglomerate_soil_option.insert(num_soil='13', name_soil='Otros')
 
 
@@ -98,7 +98,7 @@ db.define_table('Conglomerate_vegetation_option',
                 Field('name_vegetation', 'text'),  required='TRUE')
 
 if db(db.Conglomerate_vegetation_option.id>0).count() == 0:
-    db.Conglomerate_vegetation_option.insert(num_vegetation='0', name_vegetation='')
+    #db.Conglomerate_vegetation_option.insert(num_vegetation='0', name_vegetation=None)
     db.Conglomerate_vegetation_option.insert(num_vegetation='1', name_vegetation='Bosque de coníferas')
     db.Conglomerate_vegetation_option.insert(num_vegetation='2', name_vegetation='Bosque templado de latifoliadas')
     db.Conglomerate_vegetation_option.insert(num_vegetation='3', name_vegetation='Bosque mesófilo de montaña')
@@ -179,5 +179,3 @@ db.define_table('Recorder_name_option',
 if db(db.Recorder_name_option.id>0).count() == 0:
     db.Recorder_name_option.insert(num_name='1', name_name='Grabadora 1')
     db.Recorder_name_option.insert(num_name='2', name_name='Grabadora 2')
-
-
