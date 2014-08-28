@@ -6,7 +6,7 @@ def additionalValidations(congform):
         congform.vars.vegetation_type=None
         congform.vars.is_perturbed=None
     #Checking if the vegetation_type control is filled when soil_use_type='Vegetación'
-    elif not congform.vars.vegetation_type:
+    elif congform.vars.vegetation_type==None:
         congform.errors.vegetation_type=T("Debe elegir un tipo de vegetación predominante")
 
 def controladorConglomerado():
