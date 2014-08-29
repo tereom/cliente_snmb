@@ -19,6 +19,7 @@
     .sitio_tabla, .cong_tabla
     {
         table-layout: fixed;
+        width: 120%;
     }
 
     .sitio_tabla .integer, .sitio_tabla .date, .sitio_tabla .string, .sitio_tabla .double
@@ -26,7 +27,7 @@
         width: 1.5cm;
     }
 
-    .sitio_tabla #Sitio_muestra_elipsoide
+    .sitio_tabla #conjunta_sitio_imagen_elipsoide
     {
         width: 2cm;
     }
@@ -199,9 +200,9 @@
             <th>
                  {{=controlform.custom.label.evidencia}}
             </th>
-          <!--  <th>
+            <th>
                 {{=controlform.custom.label.imagen}}
-            </th> -->
+            </th>
         </tr>
         <tr>
             <th>
@@ -273,9 +274,9 @@
             <td>
                 {{=controlform.custom.widget.evidencia}}
             </td>
-         <!--   <td>
+            <td>
                 {{=controlform.custom.widget.imagen}}
-            </td> -->
+            </td>
         </tr>
     </table>
     {{=controlform.custom.end}}
@@ -319,9 +320,9 @@
             <td>
                 {{=sitio1form.custom.widget.evidencia}}
             </td>
-   <!--         <td>
+            <td>
                 {{=sitio1form.custom.widget.imagen}}
-            </td> -->
+            </td>
         </tr>
     </table>
     {{=sitio1form.custom.end}}
@@ -364,6 +365,9 @@
             </td>
             <td>
                 {{=sitio2form.custom.widget.evidencia}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.imagen}}
             </td>
         </tr>
     </table>
@@ -408,6 +412,9 @@
             <td>
                 {{=sitio3form.custom.widget.evidencia}}
             </td>
+            <td>
+                {{=sitio3form.custom.widget.imagen}}
+            </td>
         </tr>
     </table>
     {{=sitio3form.custom.end}}
@@ -450,6 +457,9 @@
             </td>
             <td>
                 {{=sitio4form.custom.widget.evidencia}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.imagen}}
             </td>
         </tr>
     </table>

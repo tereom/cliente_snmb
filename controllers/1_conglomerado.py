@@ -27,11 +27,16 @@ def additionalValidations(congform):
 
 def controladorConglomerado():
     congform = SQLFORM(db.Conglomerado_muestra, _id='forma_conglomerado')
-    sitio1form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, _id='forma_sitio1')
-    sitio2form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, _id='forma_sitio2')
-    sitio3form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, _id='forma_sitio3')
-    sitio4form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, _id='forma_sitio4')
-    controlform = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, _id='forma_control')
+    sitio1form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, \
+        _id='forma_sitio1', table_name='conjunta_sitio_imagen')
+    sitio2form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, \
+        _id='forma_sitio2', table_name='conjunta_sitio_imagen')
+    sitio3form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, \
+        _id='forma_sitio3', table_name='conjunta_sitio_imagen')
+    sitio4form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, \
+        _id='forma_sitio4', table_name='conjunta_sitio_imagen')
+    controlform = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio,\
+     _id='forma_control', table_name='conjunta_sitio_imagen')
     if congform.process(onvalidation=additionalValidations).accepted\
     and sitio1form.process().accepted and sitio2form.process().accepted\
     and sitio3form.process().accepted and sitio4form.process().accepted\
