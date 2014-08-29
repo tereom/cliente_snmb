@@ -16,7 +16,7 @@ db.define_table('Conglomerado_muestra',
                 Field('predio','string',label=T("Predio"),required='TRUE'),
                 Field('tenencia', 'reference Conglomerado_tenencia_opcion',\
                         label=T("Tenencia"), required='TRUE'),
-                Field('tipo_uso_suelo', 'reference Conglomerado_suelo_opcion',
+                Field('uso_suelo_tipo', 'reference Conglomerado_suelo_opcion',
                         label=T("Tipo de uso de suelo"),required='TRUE'),
                 Field('vegetacion_tipo',\
                         'reference Conglomerado_vegetacion_opcion',\
@@ -31,7 +31,7 @@ db.Conglomerado_muestra.estado.requires=IS_IN_DB(db,db.Conglomerado_estado_opcio
 db.Conglomerado_muestra.municipio.requires=IS_NOT_EMPTY()
 db.Conglomerado_muestra.predio.requires=IS_NOT_EMPTY()
 db.Conglomerado_muestra.tenencia.requires=IS_IN_DB(db,db.Conglomerado_tenencia_opcion.num_tenencia,'%(nombre_tenencia)s')
-db.Conglomerado_muestra.tipo_uso_suelo.requires=IS_IN_DB(db,db.Conglomerado_suelo_opcion.num_suelo,'%(nombre_suelo)s')
+db.Conglomerado_muestra.uso_suelo_tipo.requires=IS_IN_DB(db,db.Conglomerado_suelo_opcion.num_suelo,'%(nombre_suelo)s')
 db.Conglomerado_muestra.vegetacion_tipo.requires=(IS_IN_DB(db,db.Conglomerado_vegetacion_opcion.num_vegetacion,'%(nombre_vegetacion)s') or None)
 
 db.define_table('Sitio_muestra',
@@ -65,11 +65,11 @@ db.Sitio_muestra.elipsoide.requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_el
 
 
 
-# db.define_table('Reference_image_site',
-#                 Field('site_muestra_id','reference Sitio_muestra'),
-#                 Field('filenombre','text',label=T("Archivo")),
-#                 Field('oldfilenombre','text',label=T("Archivo")),
-#                 )
+db.define_table('Imagen_referencia_sitio',
+                Field('sitio_muestra_id','reference Sitio_muestra'),
+                #Field('archivo_nombre_original'),
+                Field('imagen', 'upload', label=T("Imagen"))
+                )
 
 
 

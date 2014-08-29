@@ -2,39 +2,43 @@
 {{block head}}
 <style type="text/css">
 
-    .cong_table .integer, .cong_table .date, .cong_table .string, .cong_table .double
+    .cong_tabla .integer, .cong_tabla .date, .cong_tabla .string, .cong_tabla .double
     {
         margin-right: 2cm;
         width: 4cm;
     }
 
-    .cong_table #Conglomerado_muestra_tipo, .cong_table #Conglomerado_muestra_tipo_uso_suelo,
-    .cong_table #Conglomerado_muestra_estado, .cong_table #Conglomerado_muestra_vegetacion_tipo
-    .cong_table #Conglomerado_muestra_tenencia
+    .cong_tabla #Conglomerado_muestra_tipo, .cong_tabla #Conglomerado_muestra_uso_suelo_tipo,
+    .cong_tabla #Conglomerado_muestra_estado, .cong_tabla #Conglomerado_muestra_vegetacion_tipo,
+    .cong_tabla #Conglomerado_muestra_tenencia
     {
         margin-right: 2cm;
         width: 4.5cm;
     }
 
-    .site_table, .cong_table
+    .sitio_tabla, .cong_tabla
     {
         table-layout: fixed;
-        width: 100%;
     }
 
-    .site_table .integer, .site_table .date, .site_table .string, .site_table .double
+    .sitio_tabla .integer, .sitio_tabla .date, .sitio_tabla .string, .sitio_tabla .double
+    {
+        width: 1.5cm;
+    }
+
+    .sitio_tabla #Sitio_muestra_elipsoide
     {
         width: 2cm;
-    }
-
-    #Site_sample_ellipsoid
-    {
-        width: 2.5cm;
     }
     
     .centrar
     {
         text-align: center;
+    }
+
+    .derecha
+    {
+        text-align: right;
     }
 <!--
     SQLFORM.widgets.string.widget
@@ -62,7 +66,7 @@
     </legend>
 
     {{=congform.custom.begin}}
-    <table class='cong_table'>
+    <table class='cong_tabla'>
         <tr>
             <td>
                 <div>
@@ -127,10 +131,10 @@
         <tr>
             <td>
                 <div>
-                    {{=congform.custom.label.tipo_uso_suelo}}
+                    {{=congform.custom.label.uso_suelo_tipo}}
                 </div>
                 <div>
-                    {{=congform.custom.widget.tipo_uso_suelo}}
+                    {{=congform.custom.widget.uso_suelo_tipo}}
                 </div>
             </td>
             <td>
@@ -163,6 +167,299 @@
         </td>
 {{=congform.custom.end}}
 </fieldset>
-<button onclick="document.getElementById('forma_conglomerado').submit();">
+
+<fieldset>
+    <legend>
+        Datos de los sitios y punto de control
+    </legend>
+    {{=controlform.custom.begin}}
+    <table class="sitio_tabla">
+        <tr>
+            <th class="centrar">        
+                {{=controlform.custom.label.existe}}
+            </th>
+            <th>
+                Elemento
+            </th>
+            <th colspan="3", class="centrar">
+                Latitud
+            </th>
+            <th colspan="3", class="centrar">
+                Longitud
+            </th>
+            <th>
+                {{=controlform.custom.label.elipsoide}}
+            </th>
+            <th>
+                 {{=controlform.custom.label.altitud}}
+            </th>
+            <th>
+                 {{=controlform.custom.label.gps_error}}
+            </th>
+            <th>
+                 {{=controlform.custom.label.evidencia}}
+            </th>
+          <!--  <th>
+                {{=controlform.custom.label.imagen}}
+            </th> -->
+        </tr>
+        <tr>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+                {{=controlform.custom.label.lat_grado}}
+            </th>
+            <th>
+                {{=controlform.custom.label.lat_min}}
+            </th>
+            <th>
+                {{=controlform.custom.label.lat_seg}}
+            </th>
+            <th>
+                {{=controlform.custom.label.lon_grado}}
+            </th>
+            <th>
+                {{=controlform.custom.label.lon_min}}
+            </th>
+            <th>
+                {{=controlform.custom.label.lon_seg}}
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>                
+            </th>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                Punto de control
+            </td>                
+            <td>
+                {{=controlform.custom.widget.lat_grado}}
+            </td>
+            <td>
+                {{=controlform.custom.widget.lat_min}}
+            </td>
+            <td>
+                {{=controlform.custom.widget.lat_seg}}
+            </td>
+            <td>
+                {{=controlform.custom.widget.lon_grado}}
+            </td>
+            <td>
+                {{=controlform.custom.widget.lon_min}}
+            </td>
+            <td>
+                {{=controlform.custom.widget.lon_seg}}
+            </td>
+            <td>
+                {{=controlform.custom.widget.elipsoide}}
+            </td>
+            <td>
+                {{=controlform.custom.widget.altitud}}
+            </td>
+            <td>
+                {{=controlform.custom.widget.gps_error}}
+            </td>
+            <td>
+                {{=controlform.custom.widget.evidencia}}
+            </td>
+         <!--   <td>
+                {{=controlform.custom.widget.imagen}}
+            </td> -->
+        </tr>
+    </table>
+    {{=controlform.custom.end}}
+
+    {{=sitio1form.custom.begin}}
+    <table class="sitio_tabla">
+        <tr>
+            <td class="centrar">
+                {{=sitio1form.custom.widget.existe}}
+            </td>
+            <td>
+                Sitio 1
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.lat_grado}}
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.lat_min}}
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.lat_seg}}
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.lon_grado}}
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.lon_min}}
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.lon_seg}}
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.elipsoide}}
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.altitud}}
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.gps_error}}
+            </td>
+            <td>
+                {{=sitio1form.custom.widget.evidencia}}
+            </td>
+   <!--         <td>
+                {{=sitio1form.custom.widget.imagen}}
+            </td> -->
+        </tr>
+    </table>
+    {{=sitio1form.custom.end}}
+
+    {{=sitio2form.custom.begin}}
+    <table class="sitio_tabla">
+        <tr>
+            <td class="centrar">
+                {{=sitio2form.custom.widget.existe}}
+            </td>
+            <td>
+                Sitio 2
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.lat_grado}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.lat_min}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.lat_seg}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.lon_grado}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.lon_min}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.lon_seg}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.elipsoide}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.altitud}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.gps_error}}
+            </td>
+            <td>
+                {{=sitio2form.custom.widget.evidencia}}
+            </td>
+        </tr>
+    </table>
+    {{=sitio2form.custom.end}}
+
+    {{=sitio3form.custom.begin}}
+    <table class="sitio_tabla">
+        <tr>
+            <td class="centrar">
+                {{=sitio3form.custom.widget.existe}}
+            </td>
+            <td>
+                Sitio 3
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.lat_grado}}
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.lat_min}}
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.lat_seg}}
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.lon_grado}}
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.lon_min}}
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.lon_seg}}
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.elipsoide}}
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.altitud}}
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.gps_error}}
+            </td>
+            <td>
+                {{=sitio3form.custom.widget.evidencia}}
+            </td>
+        </tr>
+    </table>
+    {{=sitio3form.custom.end}}
+
+    {{=sitio4form.custom.begin}}
+    <table class="sitio_tabla">
+        <tr>
+            <td class="centrar">
+                {{=sitio4form.custom.widget.existe}}
+            </td>
+            <td>
+                Sitio 4
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.lat_grado}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.lat_min}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.lat_seg}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.lon_grado}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.lon_min}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.lon_seg}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.elipsoide}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.altitud}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.gps_error}}
+            </td>
+            <td>
+                {{=sitio4form.custom.widget.evidencia}}
+            </td>
+        </tr>
+    </table>
+    {{=sitio4form.custom.end}}
+</fieldset>
+<button onclick="document.getElementById('forma_conglomerado').submit();
+                 document.getElementById('forma_sitio1').submit();
+                 document.getElementById('forma_sitio2').submit();
+                 document.getElementById('forma_sitio3').submit();
+                 document.getElementById('forma_sitio4').submit();
+                 document.getElementById('forma_control').submit()">
     Enviar formulario
 </button>
