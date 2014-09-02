@@ -98,7 +98,7 @@ db.define_table('Conglomerado_vegetacion_opcion',
                 Field('nombre_vegetacion', 'text'),  required='TRUE')
 
 if db(db.Conglomerado_vegetacion_opcion.id>0).count() == 0:
-    #db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='0', nombre_vegetacion=None)
+    db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='0', nombre_vegetacion='No aplica')
     db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='1', nombre_vegetacion='Bosque de coníferas')
     db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='2', nombre_vegetacion='Bosque templado de latifoliadas')
     db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='3', nombre_vegetacion='Bosque mesófilo de montaña')
@@ -118,7 +118,7 @@ db.define_table('Sitio_numero_opcion',
                 Field('nombre_numero', 'text', required='TRUE'))
 
 if db(db.Sitio_numero_opcion.id>0).count() == 0:
-    db.Sitio_numero_opcion.insert(num_numero='1', nombre_numero='Punto de control')
+    db.Sitio_numero_opcion.insert(num_numero='0', nombre_numero='Punto de control')
     db.Sitio_numero_opcion.insert(num_numero='1', nombre_numero='Centro')
     db.Sitio_numero_opcion.insert(num_numero='2', nombre_numero='Sitio 2')
     db.Sitio_numero_opcion.insert(num_numero='3', nombre_numero='Sitio 3')
