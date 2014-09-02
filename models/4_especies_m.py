@@ -1,53 +1,46 @@
-# # coding: utf8
+# coding: utf8
 
-# ## En esta sección se definen las tablas correspondientes a la pestaña de 
-# ## Especies Invasoras, es decir: Transect_sample_invaders, Invader, File_invader
+## En esta segción se definen las tablas correspondientes a la pestaña de 
+## Especies Invasoras, es decir: Transecto_especies_invasoras_muestra, 
+## Especie_Invasora, Archivo_especie_invasora 
 
-# db.define_table('Camera',
-#                 Field('name','reference Camera_name_option',\
-#                 	label=T("Código cámara")), 
-#                 Field('start_date', 'date',label=T("Fecha de colocación"),\
-#                         required='TRUE'),
-#                 Field('stop_date', 'date',label=T("Fecha de levantamiento"),\
-#                         required='TRUE'),
-#                 Field('start_time', 'time',label=T("Hora inicio"),\
-#                         required='TRUE'),
-#                 Field('stop_time', 'date',label=T("Hora término"),\
-#                         required='TRUE'),
-#                 Field('loc_camera_lat_deg','integer',label=T("grado"),required='TRUE'),
-#                 Field('loc_camera_lat_min','integer',label=T("minuto"),required='TRUE'),
-#                 Field('loc_camera_lat_sec','double',label=T("segundo"),required='TRUE'),
-#                 Field('loc_camera_lon_deg','integer',label=T("grado"),required='TRUE'),
-#                 Field('loc_camera_lon_min','integer',label=T("minuto"),required='TRUE'),
-#                 Field('loc_camera_lon_sec','double',label=T("segundo"),required='TRUE'),
-#                 Field('loc_camera_altitude','double',label=T("Altitud(m)"),required='TRUE'),
-#                 Field('loc_camera_gps_error','double',label=T("Error(m)"),required='TRUE'),
-#                 Field('loc_camera_ellipsoid', 'reference Site_ellipsoid_option',\
-#                         label=T("Datum"),required='TRUE'), 
-#                 Field('site_sample_id','reference Site_sample'),         
-#                 Field('distance','double',label=T("Distancia al centro del sitio (m)"),required='TRUE'),
-#                 Field('it_rained', 'boolean',label=T("Llovió durante el muestreo")),
-#                 Field('resolution','reference Camera_resolution_option',\
-#                 		label=T("Resolución")),
-#                 Field('sensitivity','reference Camera_sensitivity_option',\
-#                 		label=T("Sensibilidad")),
-#                 Field('comment_', 'text',label=T("Observaciones"))
-#                 )
+db.define_table('Transecto_especies_invasoras_muestra',
+                Field('conglomerado_muestra_id','reference Conglomerado_muestra'),
+                Field('transecto_numero',\
+                        'reference Transecto_numero_opcion',\
+                	label=T("Transecto")),  
+                Field('fecha', 'date',label=T("Fecha"),\
+                        required='TRUE'),
+                Field('hora_inicio', 'time',label=T("Hora inicio"),\
+                        required='TRUE'),
+                Field('hora_termino', 'date',label=T("Hora término"),\
+                        required='TRUE'),
+                Field('tecnico','string',label=T("Técnico")),
+                Field('comment_','text',label=T("Observaciones"))
+                )
 
-# db.Camera.name.requires=IS_IN_DB(db,db.Camera_name_option.num_name,'%(name_name)s')
-# db.Camera.start_date.requires=IS_NOT_EMPTY()
-# db.Camera.stop_date.requires=IS_NOT_EMPTY()
-# db.Camera.start_time.requires=IS_NOT_EMPTY()
-# db.Camera.stop_time.requires=IS_NOT_EMPTY()
-# db.Camera.loc_camera_lat_deg.requires=IS_NOT_EMPTY()
-# db.Camera.loc_camera_lat_min.requires=IS_NOT_EMPTY()
-# db.Camera.loc_camera_lat_sec.requires=IS_NOT_EMPTY()
-# db.Camera.loc_camera_lon_deg.requires=IS_NOT_EMPTY()
-# db.Camera.loc_camera_lon_min.requires=IS_NOT_EMPTY()
-# db.Camera.loc_camera_lon_sec.requires=IS_NOT_EMPTY()
-# db.Camera.loc_camera_altitude.requires=IS_NOT_EMPTY()
-# db.Camera.loc_camera_gps_error.requires=IS_NOT_EMPTY()
-# db.Camera.loc_camera_ellipsoid.requires=IS_NOT_EMPTY()
-# db.Camera.distance.requires=IS_NOT_EMPTY()
-# db.Camera.resolution.requires=IS_NOT_EMPTY()
-# db.Camera.sensitivity.requires=IS_NOT_EMPTY()
+db.Transecto_especies_invasoras_muestra.transecto_numero.requires=\
+        IS_IN_DB(db,db.Transecto_numero_opcion.num_transecto,'%(nombre_transecto)s')
+db.Transecto_especies_invasoras_muestra.fecha.requires=IS_NOT_EMPTY()
+db.Transecto_especies_invasoras_muestra.hora_inicio.requires=IS_NOT_EMPTY()
+db.Transecto_especies_invasoras_muestra.hora_termino.requires=IS_NOT_EMPTY()
+db.Transecto_especies_invasoras_muestra.tecnico.requires=IS_NOT_EMPTY()
+
+db.define_table('Especie_invasora',
+                Field('transecto_especies_invasoras_id',\
+                        'reference Transecto_especies_invasoras_muestra'),
+                Field('nombre_en_lista','boolean',\
+                        label="Lista CONABIO de especies invasoras"),
+                Field('hay_nombre_comun', 'boolean', label="Nombre común"),
+                Field('nombre_comun','string'),
+                Field('hay_nombre_cientifico', 'boolean', label="Nombre científico"),
+                Field('nombre_cientifico','string'),
+                Field('numero_individuos', \
+                        'reference Especie_individuos_opcion',\
+                         label = "Número de individuos")
+)
+
+db.Especie_invasora.numero_individuos.requires=\
+        IS_IN_DB(db,db.Especie_individuos_opcion.num_individuos,'%(nombre_individuos)s')
+
+        
