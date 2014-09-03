@@ -3,7 +3,7 @@
 ## En esta segción se definen las tablas correspondientes a la pestaña de 
 ## Huellas y Excretas, es decir: Transecto_huellas_excretas_muestra, 
 ## Huella_excreta, Archivo_huella_excreta
-
+'''
 db.define_table('Transecto_huellas_excretas_muestra',
                 Field('conglomerado_muestra_id','reference Conglomerado_muestra'),
                 Field('transecto_numero',\
@@ -37,3 +37,4 @@ db.define_table('Huella_excreta',
                 Field('largo','double',label="Largo"),
                 Field('ancho','double',label="Ancho")
 )
+'''
