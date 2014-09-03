@@ -48,7 +48,7 @@ db.define_table('Sitio_muestra',
                 Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
                 Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
                         label=T("Datum"),required='TRUE'), 
-                Field('evidencia', 'boolean',label=T("Evidencias")), 
+                Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")), 
                 Field('existe', 'boolean',label=T("Existe")))
 
 #db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,'%(nombre_numero)s')
@@ -65,7 +65,7 @@ db.define_table('Sitio_muestra',
 db.define_table('Imagen_referencia_sitio',
                 Field('sitio_muestra_id','reference Sitio_muestra'),
                 #Field('archivo_nombre_original'),
-                Field('imagen', 'upload', label=T("Imagen"))
+                Field('archivo_nombre', 'upload', label=T("Imagen"))
                 )
 ########################################################################
 ## Fields can be 'string','text','password','integer','double','boolean'

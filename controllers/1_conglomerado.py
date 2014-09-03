@@ -79,6 +79,9 @@ def controladorConglomerado():
     return dict(congForm=congForm, sitio1Form=sitio1Form, sitio2Form=sitio2Form, sitio3Form=sitio3Form,\
                 sitio4Form=sitio4Form, controlForm=controlForm)#, vegOpcionesNombre=vegOpcionesNombre, vegOpcionesNumero=vegOpcionesNumero)
 
+
+
+
 #def check(form):
 #    if form.vars.b and not form.vars.c:
 #        form.errors.c = "If the b is checked, c must be filled"
