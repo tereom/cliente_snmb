@@ -1,6 +1,5 @@
 # coding: utf8
 
-from customvalidators import IS_NOT_EMPTY_IF_OTHER_TRUE
 
 ## En esta sección se definen las tablas correspondientes a la pestaña de Conglomerado, es decir: Conglomerado_muestra, Sitio_muestra y Reference_image_site:
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
@@ -54,31 +53,22 @@ db.define_table('Sitio_muestra',
                 Field('existe', 'boolean',label=T("Existe")))
 
 
-#db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,'%(nombre_numero)s')
-#db.Sitio_muestra.lat_grado.requires=IS_NOT_EMPTY()
-#db.Sitio_muestra.lat_min.requires=IS_NOT_EMPTY()
-#db.Sitio_muestra.lat_seg.requires=IS_NOT_EMPTY()
-#db.Sitio_muestra.lon_grado.requires=IS_NOT_EMPTY()
-#db.Sitio_muestra.lon_min.requires=IS_NOT_EMPTY()
-#db.Sitio_muestra.lon_seg.requires=IS_NOT_EMPTY()
-#db.Sitio_muestra.altitud.requires=IS_NOT_EMPTY()
-#db.Sitio_muestra.gps_error.requires=IS_NOT_EMPTY()
+db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,'%(nombre_numero)s')
+db.Sitio_muestra.lat_grado.requires=IS_NOT_EMPTY()
+db.Sitio_muestra.lat_min.requires=IS_NOT_EMPTY()
+db.Sitio_muestra.lat_seg.requires=IS_NOT_EMPTY()
+db.Sitio_muestra.lon_grado.requires=IS_NOT_EMPTY()
+db.Sitio_muestra.lon_min.requires=IS_NOT_EMPTY()
+db.Sitio_muestra.lon_seg.requires=IS_NOT_EMPTY()
+db.Sitio_muestra.altitud.requires=IS_NOT_EMPTY()
+db.Sitio_muestra.gps_error.requires=IS_NOT_EMPTY()
 db.Sitio_muestra.elipsoide.requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,'%(nombre_elipsoide)s')
 
-db.Sitio_muestra.lat_grado.requires = IS_NOT_EMPTY_IF_OTHER_TRUE(db.Sitio_muestra.existe)
-db.Sitio_muestra.lat_min.requires = IS_NOT_EMPTY_IF_OTHER_TRUE(db.Sitio_muestra.existe)
-db.Sitio_muestra.lat_seg.requires = IS_NOT_EMPTY_IF_OTHER_TRUE(db.Sitio_muestra.existe)
-db.Sitio_muestra.lon_grado.requires = IS_NOT_EMPTY_IF_OTHER_TRUE(db.Sitio_muestra.existe)
-db.Sitio_muestra.lon_min.requires = IS_NOT_EMPTY_IF_OTHER_TRUE(db.Sitio_muestra.existe)
-db.Sitio_muestra.lon_seg.requires = IS_NOT_EMPTY_IF_OTHER_TRUE(db.Sitio_muestra.existe)
-db.Sitio_muestra.altitud.requires = IS_NOT_EMPTY_IF_OTHER_TRUE(db.Sitio_muestra.existe)
-db.Sitio_muestra.gps_error.requires = IS_NOT_EMPTY_IF_OTHER_TRUE(db.Sitio_muestra.existe)
-#db.Sitio_muestra.elipsoide.requires=[IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,'%(nombre_elipsoide)s'), #IS_NOT_EMPTY_IF_OTHER_TRUE(db.Sitio_muestra.existe)]
 
 db.define_table('Imagen_referencia_sitio',
                 Field('sitio_muestra_id','reference Sitio_muestra'),
-                #Field('archivo_nombre_original'),
-                Field('archivo_nombre', 'upload', label=T("Imagen"))
+                Field('archivo_nombre'),
+                Field('archivo_nombre_original', 'upload', label=T("Imagen"))
                 )
 
 

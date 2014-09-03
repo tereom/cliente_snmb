@@ -1,5 +1,10 @@
 # coding: utf8
 
+## Las siguientes dos funciones son para descargar las imágenes
+def descargar(): return response.download(request,db)
+def link(): return response.download(request,db,attachment=False)
+
+
 def validacionesConglomerado(congForm):
     #Si uso_suelo_tipo no es 'Vegetación', entonces perturbado=None y vegetacion_tipo=No aplica
     if not congForm.vars.uso_suelo_tipo==T('Vegetación'):
@@ -27,6 +32,22 @@ def controladorConglomerado():
     #db.Conglomerado_muestra.vegetacion_tipo.requires=IS_IN_DB(db(query), '%(nombre_vegetacion)s' )
     db.Conglomerado_muestra.vegetacion_tipo.default=(db.Conglomerado_vegetacion_opcion.num_vegetacion==1)
     congForm = SQLFORM(db.Conglomerado_muestra, _id='forma_conglomerado')
+
+    ### Cargar imágenes
+    imagenForm = FORM(
+        INPUT(_name='imagen_nombre',_type='text'),
+        INPUT(_name='imagen_archivo',_type='file')
+    )
+
+    if imagenForm.accepts(request.vars,formname='imagenForm'):
+        imagen = db.Imagen_referencia_sitio.archivo_nombre_original.store(\
+            imagenForm.vars.imagen_archivo.file,\
+            imagenForm.vars.imagen_archivo.filename)
+        id = db.Imagen_referencia_sitio.insert(\
+            archivo_nombre_original=imagen,\
+            archivo_nombre=imagenForm.vars.imagen_nombre)
+    
+    imagenes = db().select(db.Imagen_referencia_sitio.ALL)
 
     #seleccion = 'comboVeg = SELECT('
     #for row in db(db.Conglomerado_vegetacion_opcion.num_vegetacion>0).select():
@@ -57,8 +78,9 @@ def controladorConglomerado():
     and sitio3Form.process().accepted and sitio4Form.process().accepted\
     and controlForm.process().accepted:
         response.flash = "Registro ingresado exitosamente"
-    return dict(congForm=congForm, sitio1Form=sitio1Form, sitio2Form=sitio2Form, sitio3Form=sitio3Form,\
-                sitio4Form=sitio4Form, controlForm=controlForm)#, comboVeg=comboVeg)
+    return dict(congForm=congForm, sitio1Form=sitio1Form, sitio2Form=sitio2Form,\
+        sitio3Form=sitio3Form, sitio4Form=sitio4Form, controlForm=controlForm,\
+        imagenes=imagenes)#, comboVeg=comboVeg)
 
 
 
