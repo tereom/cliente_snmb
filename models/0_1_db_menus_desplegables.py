@@ -171,7 +171,7 @@ if db(db.Camara_sensibilidad_opcion.id>0).count() == 0:
 ##########################################################################
 ## Tab Grabadora
 ########################################################################
-## 
+
 db.define_table('Grabadora_nombre_opcion',
                 Field('num_nombre','integer', required='TRUE'),
                 Field('nombre_nombre', 'text', required='TRUE'))
@@ -179,3 +179,40 @@ db.define_table('Grabadora_nombre_opcion',
 if db(db.Grabadora_nombre_opcion.id>0).count() == 0:
     db.Grabadora_nombre_opcion.insert(num_nombre='1', nombre_nombre='Grabadora 1')
     db.Grabadora_nombre_opcion.insert(num_nombre='2', nombre_nombre='Grabadora 2')
+
+
+##########################################################################
+## Tab Especies Invasoras / Tab Huellas Excretas
+######################################################################## 
+
+db.define_table('Transecto_numero_opcion',
+                Field('num_transecto','integer', required='TRUE'),
+                Field('nombre_transecto', 'text', required='TRUE'))
+
+if db(db.Transecto_numero_opcion.id>0).count() == 0:
+    db.Transecto_numero_opcion.insert(num_transecto='1', \
+        nombre_transecto='T1')
+    db.Transecto_numero_opcion.insert(num_transecto='2', \
+        nombre_transecto='T2')
+    db.Transecto_numero_opcion.insert(num_transecto='3', \
+        nombre_transecto='T3')
+
+
+##########################################################################
+## Tab Especies Invasoras
+######################################################################## 
+
+db.define_table('Especie_individuos_opcion',
+                Field('num_individuos','integer', required='TRUE'),
+                Field('nombre_individuos', 'text', required='TRUE'))
+
+if db(db.Especie_individuos_opcion.id>0).count() == 0:
+    db.Especie_individuos_opcion.insert(num_individuos='1', \
+        nombre_individuos='No aplica')
+    db.Especie_individuos_opcion.insert(num_individuos='2', \
+        nombre_individuos='1 a 5')
+    db.Especie_individuos_opcion.insert(num_individuos='3', \
+        nombre_individuos='6 a 10')
+    db.Especie_individuos_opcion.insert(num_individuos='4', \
+        nombre_individuos='más de 10')
+
