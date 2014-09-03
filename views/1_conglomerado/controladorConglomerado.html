@@ -27,9 +27,13 @@
         width: 1.2cm;
     }
 
-    .sitio_tabla #conjunta_sitio_imagen_elipsoide
+    .sitio_tabla #Conjunta_sitio_imagen_control_elipsoide,
+    .sitio_tabla #Conjunta_sitio_imagen_1_elipsoide,
+    .sitio_tabla #Conjunta_sitio_imagen_2_elipsoide,
+    .sitio_tabla #Conjunta_sitio_imagen_3_elipsoide,
+    .sitio_tabla #Conjunta_sitio_imagen_4_elipsoide 
     {
-        width: 2cm;
+        width: 1.8cm;
     }
     
     .centrar
@@ -230,7 +234,7 @@
                  {{=controlForm.custom.label.evidencia}}
             </th>
             <th>
-                {{=controlForm.custom.label.imagen}}
+                {{=controlForm.custom.label.archivo_nombre_original}}
             </th>
         </tr>
         <tr>
@@ -304,8 +308,9 @@
                 {{=controlForm.custom.widget.evidencia}}
             </td>
             <td>
-                {{=controlForm.custom.widget.imagen}}
+                {{=controlForm.custom.widget.archivo_nombre_original}}
             </td>
+
         </tr>
     </table>
     {{=controlForm.custom.end}}
@@ -320,38 +325,61 @@
                 Sitio 1
             </td>
             <td>
-                {{=sitio1Form.custom.widget.lat_grado}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.lat_grado}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.lat_min}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.lat_min}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.lat_seg}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.lat_seg}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.lon_grado}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.lon_grado}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.lon_min}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.lon_min}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.lon_seg}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.lon_seg}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.elipsoide}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.elipsoide}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.altitud}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.altitud}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.gps_error}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.gps_error}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.evidencia}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.evidencia}}
+                </div>
             </td>
             <td>
-                {{=sitio1Form.custom.widget.imagen}}
+                <div class="Sitio_info_1">
+                    {{=sitio1Form.custom.widget.archivo_nombre_original}}
+                </div>
             </td>
+
         </tr>
     </table>
     {{=sitio1Form.custom.end}}
@@ -366,38 +394,61 @@
                 Sitio 2
             </td>
             <td>
-                {{=sitio2Form.custom.widget.lat_grado}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.lat_grado}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.lat_min}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.lat_min}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.lat_seg}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.lat_seg}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.lon_grado}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.lon_grado}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.lon_min}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.lon_min}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.lon_seg}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.lon_seg}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.elipsoide}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.elipsoide}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.altitud}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.altitud}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.gps_error}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.gps_error}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.evidencia}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.evidencia}}
+                </div>
             </td>
             <td>
-                {{=sitio2Form.custom.widget.imagen}}
+                <div class="Sitio_info_2">
+                    {{=sitio2Form.custom.widget.archivo_nombre_original}}
+                </div>
             </td>
+
         </tr>
     </table>
     {{=sitio2Form.custom.end}}
@@ -412,37 +463,59 @@
                 Sitio 3
             </td>
             <td>
-                {{=sitio3Form.custom.widget.lat_grado}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.lat_grado}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.lat_min}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.lat_min}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.lat_seg}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.lat_seg}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.lon_grado}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.lon_grado}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.lon_min}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.lon_min}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.lon_seg}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.lon_seg}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.elipsoide}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.elipsoide}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.altitud}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.altitud}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.gps_error}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.gps_error}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.evidencia}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.evidencia}}
+                </div>
             </td>
             <td>
-                {{=sitio3Form.custom.widget.imagen}}
+                <div class="Sitio_info_3">
+                    {{=sitio3Form.custom.widget.archivo_nombre_original}}
+                </div>
             </td>
         </tr>
     </table>
@@ -450,7 +523,7 @@
 
     {{=sitio4Form.custom.begin}}
     <table class="sitio_tabla">
-        <tr>
+         <tr>
             <td class="centrar">
                 {{=sitio4Form.custom.widget.existe}}
             </td>
@@ -458,37 +531,59 @@
                 Sitio 4
             </td>
             <td>
-                {{=sitio4Form.custom.widget.lat_grado}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.lat_grado}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.lat_min}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.lat_min}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.lat_seg}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.lat_seg}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.lon_grado}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.lon_grado}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.lon_min}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.lon_min}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.lon_seg}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.lon_seg}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.elipsoide}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.elipsoide}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.altitud}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.altitud}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.gps_error}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.gps_error}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.evidencia}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.evidencia}}
+                </div>
             </td>
             <td>
-                {{=sitio4Form.custom.widget.archivo_nombre}}
+                <div class="Sitio_info_4">
+                    {{=sitio4Form.custom.widget.archivo_nombre_original}}
+                </div>
             </td>
         </tr>
     </table>
@@ -502,3 +597,72 @@
                  document.getElementById('forma_control').submit()">
     Enviar formulario
 </button>
+
+<script>
+    $(document).ready
+    (
+        function()
+        {
+           $('.Sitio_info_1').hide();
+           $('.Sitio_info_2').hide();
+           $('.Sitio_info_3').hide();
+           $('.Sitio_info_4').hide();
+        }
+    )
+    $('#Conjunta_sitio_imagen_1_existe').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+            {
+                $('.Sitio_info_1').fadeIn();
+             }
+            else
+            {
+                $('.Sitio_info_1').fadeOut();
+            }
+        }
+    )
+    $('#Conjunta_sitio_imagen_2_existe').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+            {
+                $('.Sitio_info_2').fadeIn();
+             }
+            else
+            {
+                $('.Sitio_info_2').fadeOut();
+            }
+        }
+    )
+    $('#Conjunta_sitio_imagen_3_existe').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+            {
+                $('.Sitio_info_3').fadeIn();
+             }
+            else
+            {
+                $('.Sitio_info_3').fadeOut();
+            }
+        }
+    )
+    $('#Conjunta_sitio_imagen_4_existe').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+            {
+                $('.Sitio_info_4').fadeIn();
+             }
+            else
+            {
+                $('.Sitio_info_4').fadeOut();
+            }
+        }
+    )
+</script>
