@@ -26,7 +26,6 @@
     {
         width: 1.2cm;
     }
-
     .sitio_tabla #Conjunta_sitio_imagen_control_elipsoide,
     .sitio_tabla #Conjunta_sitio_imagen_1_elipsoide,
     .sitio_tabla #Conjunta_sitio_imagen_2_elipsoide,
@@ -66,6 +65,8 @@
 </style>
 {{end}}
 
+
+
 <form action="" enctype="multipart/form-data" method="post">
     <input name="_formname" type="hidden" value="imagenForm">
     <input class="string" name="imagen_nombre" type="text" value="">
@@ -86,12 +87,12 @@
     </li>
 {{pass}}
 </ul>
+
+{{=congForm.custom.begin}}
 <fieldset>
     <legend>
         Datos del conglomerado
     </legend>
-
-    {{=congForm.custom.begin}}
     <table class='cong_tabla'>
         <tr>
             <td>
@@ -165,25 +166,19 @@
                 </div>
             </td>
             <td>
-                <div>
+                <!--La clase Vegetación sirve para el JQuery que desvanece/reaparece el campo-->
+                <div class="vegetacion">
                     {{=congForm.custom.label.vegetacion_tipo}}
                 </div>
-                <div>
+                <div class="vegetacion">
                     {{=congForm.custom.widget.vegetacion_tipo}}
-                    <!--
-                    <select name="gato">
-                        {{#for i in range(len(vegOpcionesNombre)):}}
-                            <option value="{{#=vegOpcionesNumero[i]}}">{{#=vegOpcionesNombre[i]}}</option>
-                        {{#pass}}
-                    </select>
-                    -->
                 </div>
             </td>
             <td>
-                <div>
+                <div class="vegetacion">
                     {{=congForm.custom.label.perturbado}}
                 </div>
-                <div>
+                <div class="vegetacion">
                     {{=congForm.custom.widget.perturbado}}
                 </div>
             </td>
@@ -191,16 +186,16 @@
         </tr>
     </table>
     <div>
-        <td>
-            <div>
-                {{=congForm.custom.label.comentario}}
-            </div>
-            <div>
-                {{=congForm.custom.widget.comentario}}
-            </div>
-        </td>
-{{=congForm.custom.end}}
+        <div>
+            {{=congForm.custom.label.comentario}}
+        </div>
+        <div>
+            {{=congForm.custom.widget.comentario}}
+        </div>
+    </div>
 </fieldset>
+{{=congForm.custom.end}}
+
 
 <fieldset>
     <legend>
@@ -603,12 +598,17 @@
     (
         function()
         {
+           $('.vegetacion').hide();
+           $('#Conglomerado_muestra_vegetacion_tipo').val("1");
+           $('#Conglomerado_muestra_uso_suelo_tipo').val("");
+
            $('.Sitio_info_1').hide();
            $('.Sitio_info_2').hide();
            $('.Sitio_info_3').hide();
            $('.Sitio_info_4').hide();
         }
     )
+
     $('#Conjunta_sitio_imagen_1_existe').change
     (
         function()
@@ -623,6 +623,7 @@
             }
         }
     )
+
     $('#Conjunta_sitio_imagen_2_existe').change
     (
         function()
@@ -637,6 +638,7 @@
             }
         }
     )
+
     $('#Conjunta_sitio_imagen_3_existe').change
     (
         function()
@@ -651,6 +653,7 @@
             }
         }
     )
+
     $('#Conjunta_sitio_imagen_4_existe').change
     (
         function()
@@ -662,6 +665,23 @@
             else
             {
                 $('.Sitio_info_4').fadeOut();
+            }
+        }
+    )
+
+    $('#Conglomerado_muestra_uso_suelo_tipo').change
+    (
+        function()
+        {
+            if($(this).val()=="12")
+            {
+                $('.vegetacion').fadeIn();
+                $('#Conglomerado_muestra_vegetacion_tipo').val("");
+            }
+            else
+            {
+                $('.vegetacion').fadeOut();
+                $('#Conglomerado_muestra_vegetacion_tipo').val("1");
             }
         }
     )
