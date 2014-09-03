@@ -10,28 +10,64 @@ def validacionesConglomerado(congForm):
     if not congForm.vars.uso_suelo_tipo==T('Vegetación'):
         congForm.vars.vegetacion_tipo=0
         congForm.vars.perturbado=None
-    #Si uso_suelo_tipo es 'Vegetación', entonces la validación se realiza automáticamente por el .requires (más abajo).
+    #response.flash = sitio1Form.vars.existe
+
+    #Si uso_suelo_tipo es 'Vegetación', entonces la validación se realiza automáticamente porque en el campo vegetacion_tipo sólo se pueden incluir
+    #tipos que están en el catálogo correspondiente. Además, la combobox siempre debe tener una opción seleccionada.
 
 #def validacionesSitio(sitioForm):
-    #Si el atributo existe=True, entonces todos los campos deben ser validados.
-    #if not sitioForm.var.lat_grado
+    #Si el sitio existe, entonces todos los campos deben ser validados.
+
+    
+#def vegetacionCombobox(field, name):
+    #seleccion = 'comboVeg = SELECT('
+    #for row in db(db.Conglomerado_vegetacion_opcion.num_vegetacion>0).select():
+        #seleccion += 'OPTION(\''+row.nombre_vegetacion+'\', _value=\'%d\'), ' % (row.num_vegetacion,)
+    #seleccion = seleccion+'value=\'1\')'
+
+    #congForm.element(_name='vegetacion_tipo') = seleccion
 
 def controladorConglomerado():
 
-# Definimos los formularios correspondientes a cada una de las tablas, el atributo id se utiliza principalmente para el envío del formularios,
-# Se combinan Sitio_muestra e Imagen_referencia_sitio en un solo formulario porque campos correspondientes a ambas tablas se encuentran en la misma
-# tabla de HTML.
-# El nombre de la tabla "virtual" de la cuál se derivan los formularios conjuntos se utiliza para CSS.
+    # Definimos los formularios correspondientes a cada una de las tablas, el atributo id se utiliza principalmente para el envío del formularios,
+    #congForm = SQLFORM(db.Conglomerado_muestra, _id='forma_conglomerado')
+    congForm = SQLFORM.factory(Field('nombre','integer',label=T("Num. conglomerado"),required='TRUE'),
+                               Field('fecha_visita', 'date',label=T("Fecha de visita"),required='TRUE'),
+                               Field('tipo', 'reference Conglomerado_tipo_opcion',label=T("Tipo de conglomerado"),required='TRUE',\
+                                   requires=IS_IN_DB(db,db.Conglomerado_tipo_opcion.num_tipo,'%(nombre_tipo)s')),
+                               Field('estado', 'reference Conglomerado_estado_opcion',label=T("Estado"),required='TRUE',\
+                                   requires=IS_IN_DB(db,db.Conglomerado_estado_opcion.num_estado,'%(nombre_estado)s')),
+                               Field('municipio', 'integer',label=T("Municipio"),required='TRUE'),
+                               Field('predio','string',label=T("Predio"),required='TRUE'),
+                               Field('tenencia', 'reference Conglomerado_tenencia_opcion',label=T("Tenencia"), required='TRUE',\
+                                   requires=IS_IN_DB(db,db.Conglomerado_tenencia_opcion.num_tenencia,'%(nombre_tenencia)s')),
+                               Field('uso_suelo_tipo', 'reference Conglomerado_suelo_opcion',label=T("Tipo de uso de suelo"),required='TRUE',\
+                                     requires=IS_IN_DB(db,db.Conglomerado_suelo_opcion.num_suelo,'%(nombre_suelo)s')),
+                               Field('vegetacion_tipo','reference Conglomerado_vegetacion_opcion',label=T("Tipo de vegetación"),\
+                                   requires=IS_IN_DB(db(db.Conglomerado_vegetacion_opcion.num_vegetacion>0),\
+                                   db.Conglomerado_vegetacion_opcion.num_vegetacion,'%(nombre_vegetacion)s')),
+                               Field('perturbado', 'boolean',label=T("Perturbado")),
+                               Field('comentario', 'text',label=T("Observaciones")))
 
-# De acuerdo con el documento que explica el comportamiento del controlador,
-# se definirá la combobox para vegetacion_tipo (conglomerado) aquí.
 
-# Haciendo un query a la tabla Conglomerado_vegetacion_opcion para llenar la combobox:
+    # Se combinan Sitio_muestra e Imagen_referencia_sitio en un solo formulario porque campos correspondientes a ambas tablas se encuentran en la misma
+    # tabla de HTML.
+    # El nombre de la tabla "virtual" de la cuál se derivan los formularios conjuntos se utiliza para CSS.
+    sitio1Form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, _id='forma_sitio1', table_name='conjunta_sitio_imagen')
+    sitio2Form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, _id='forma_sitio2', table_name='conjunta_sitio_imagen')
+    sitio3Form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, _id='forma_sitio3', table_name='conjunta_sitio_imagen')
+    sitio4Form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, _id='forma_sitio4', table_name='conjunta_sitio_imagen')
+    controlForm = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio,_id='forma_control', table_name='conjunta_sitio_imagen')
 
-    query = (db.Conglomerado_vegetacion_opcion.num_vegetacion>0)
-    #db.Conglomerado_muestra.vegetacion_tipo.requires=IS_IN_DB(db(query), '%(nombre_vegetacion)s' )
-    db.Conglomerado_muestra.vegetacion_tipo.default=(db.Conglomerado_vegetacion_opcion.num_vegetacion==1)
-    congForm = SQLFORM(db.Conglomerado_muestra, _id='forma_conglomerado')
+    # De acuerdo con el documento que explica el comportamiento del controlador,
+    # se definirá la combobox para vegetacion_tipo (conglomerado) aquí y en la vista.
+    
+    # Haciendo un query a la tabla Conglomerado_vegetacion_opcion para llenar la combobox:
+    #vegOpcionesNombre=[]
+    #vegOpcionesNumero=[]
+    #for row in db(db.Conglomerado_vegetacion_opcion.num_vegetacion>0).select():
+        #vegOpcionesNombre.append(row.nombre_vegetacion)
+        #vegOpcionesNumero.append(row.num_vegetacion)
 
     ### Cargar imágenes
     imagenForm = FORM(
@@ -51,33 +87,17 @@ def controladorConglomerado():
 
     #seleccion = 'comboVeg = SELECT('
     #for row in db(db.Conglomerado_vegetacion_opcion.num_vegetacion>0).select():
-    #    seleccion += 'OPTION(\''+row.nombre_vegetacion+'\', _value=\'%d\'), ' % (row.num_vegetacion,)
-    #selection += 'value=\'1\')'
+        #seleccion += 'OPTION(\''+row.nombre_vegetacion+'\', _value=\'%d\'), ' % (row.num_vegetacion,)
+    #seleccion = seleccion+'value=\'1\')'
     #exec(seleccion)
 
-    sitio1Form = SQLFORM(db.Sitio_muestra, _id='forma_sitio1')
-    sitio2Form = SQLFORM(db.Sitio_muestra, _id='forma_sitio2')
-    sitio3Form = SQLFORM(db.Sitio_muestra, _id='forma_sitio3')
-    sitio4Form = SQLFORM(db.Sitio_muestra, _id='forma_sitio4')
-    controlForm = SQLFORM(db.Sitio_muestra, _id='forma_control')
-
-
-    #sitio1Form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, \
-    #    _id='forma_sitio1', table_name='conjunta_sitio_imagen')
-    #sitio2Form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, \
-    #    _id='forma_sitio2', table_name='conjunta_sitio_imagen')
-    #sitio3Form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, \
-    #    _id='forma_sitio3', table_name='conjunta_sitio_imagen')
-    #sitio4Form = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio, \
-    #    _id='forma_sitio4', table_name='conjunta_sitio_imagen')
-    #controlForm = SQLFORM.factory(db.Sitio_muestra, db.Imagen_referencia_sitio,\
-    # _id='forma_control', table_name='conjunta_sitio_imagen')
-
-    if congForm.process(onvalidation=validacionesConglomerado).accepted\
-    and sitio1Form.process().accepted and sitio2Form.process().accepted\
-    and sitio3Form.process().accepted and sitio4Form.process().accepted\
-    and controlForm.process().accepted:
+    #onvalidation=validacionesSitio
+    if congForm.process(onvalidation=validacionesConglomerado).accepted:
+    #and sitio1Form.process().accepted and sitio2Form.process().accepted\
+    #and sitio3Form.process().accepted and sitio4Form.process().accepted\
+    #and controlForm.process().accepted:
         response.flash = "Registro ingresado exitosamente"
+        
     return dict(congForm=congForm, sitio1Form=sitio1Form, sitio2Form=sitio2Form,\
         sitio3Form=sitio3Form, sitio4Form=sitio4Form, controlForm=controlForm,\
         imagenes=imagenes)#, comboVeg=comboVeg)

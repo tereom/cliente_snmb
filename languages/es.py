@@ -196,6 +196,7 @@
 'Home': 'Inicio',
 'How did you get here?': '¿Cómo llegaste aquí?',
 'htmledit': 'htmledit',
+'Imagen': 'Imagen',
 'Impersonate': 'Suplantar',
 'import': 'importar',
 'Import/Export': 'Importar/Exportar',
