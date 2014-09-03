@@ -93,7 +93,8 @@
                     {{=congForm.custom.widget.tipo}}
                 </div>
             </td>
-            <td></td>
+            <td>
+            </td>
         </tr>
         <tr>
             <td>
@@ -144,6 +145,13 @@
                 </div>
                 <div>
                     {{=congForm.custom.widget.vegetacion_tipo}}
+                    <!--
+                    <select name="gato">
+                        {{#for i in range(len(vegOpcionesNombre)):}}
+                            <option value="{{#=vegOpcionesNumero[i]}}">{{#=vegOpcionesNombre[i]}}</option>
+                        {{#pass}}
+                    </select>
+                    -->
                 </div>
             </td>
             <td>
@@ -201,7 +209,7 @@
                  {{=controlForm.custom.label.evidencia}}
             </th>
             <th>
-                <!--{{=controlForm.custom.label.imagen}}-->
+                {{=controlForm.custom.label.imagen}}
             </th>
         </tr>
         <tr>
@@ -275,7 +283,7 @@
                 {{=controlForm.custom.widget.evidencia}}
             </td>
             <td>
-                <!--{{=controlForm.custom.widget.imagen}}-->
+                {{=controlForm.custom.widget.imagen}}
             </td>
         </tr>
     </table>
@@ -321,7 +329,7 @@
                 {{=sitio1Form.custom.widget.evidencia}}
             </td>
             <td>
-                <!--{{=sitio1Form.custom.widget.imagen}}-->
+                {{=sitio1Form.custom.widget.imagen}}
             </td>
         </tr>
     </table>
@@ -367,7 +375,7 @@
                 {{=sitio2Form.custom.widget.evidencia}}
             </td>
             <td>
-                <!--{{=sitio2Form.custom.widget.imagen}}-->
+                {{=sitio2Form.custom.widget.imagen}}
             </td>
         </tr>
     </table>
@@ -413,7 +421,7 @@
                 {{=sitio3Form.custom.widget.evidencia}}
             </td>
             <td>
-                <!--{{=sitio3Form.custom.widget.imagen}}-->
+                {{=sitio3Form.custom.widget.imagen}}
             </td>
         </tr>
     </table>
