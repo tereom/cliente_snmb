@@ -62,7 +62,30 @@
 </style>
 {{end}}
 
+<<<<<<< HEAD
 {{=congForm.custom.begin}}
+=======
+<form action="" enctype="multipart/form-data" method="post">
+    <input name="_formname" type="hidden" value="imagenForm">
+    <input class="string" name="imagen_nombre" type="text" value="">
+    <input class="upload" name="imagen_archivo" type="file">
+    <input type="submit" value="Submit">
+</form>
+ 
+<ul>
+{{for imagen in imagenes:}}
+    <li>
+        <a href="{{=URL(f='link', args=imagen.archivo_nombre_original)}}">
+            <img src="{{=URL(f='link', args=imagen.archivo_nombre_original)}}"/>
+            {{=imagen.archivo_nombre}}
+        </a>
+        <a href="{{=URL(f='descargar', args=imagen.archivo_nombre_original)}}">
+            [Descargar]
+        </a>
+    </li>
+{{pass}}
+</ul>
+>>>>>>> 2df75dbdf32b23399e34b0521556eb244a3a94ef
 <fieldset>
     <legend>
         Datos del conglomerado
