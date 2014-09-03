@@ -5,22 +5,22 @@
 
 db.define_table('Conglomerado_muestra',
                 Field('nombre','integer',label=T("Num. conglomerado"),\
-                        required='TRUE'),
+                      required='TRUE'),
                 Field('fecha_visita', 'date',label=T("Fecha de visita"),\
-                        required='TRUE'),
+                      required='TRUE'),
                 Field('tipo', 'reference Conglomerado_tipo_opcion',\
-                        label=T("Tipo de conglomerado"),required='TRUE'),
+                      label=T("Tipo de conglomerado"),required='TRUE'),
                 Field('estado', 'reference Conglomerado_estado_opcion',\
-                        label=T("Estado"),required='TRUE'),
+                      label=T("Estado"),required='TRUE'),
                 Field('municipio', 'integer',label=T("Municipio"),required='TRUE'),
                 Field('predio','string',label=T("Predio"),required='TRUE'),
                 Field('tenencia', 'reference Conglomerado_tenencia_opcion',\
-                        label=T("Tenencia"), required='TRUE'),
+                      label=T("Tenencia"), required='TRUE'),
                 Field('uso_suelo_tipo', 'reference Conglomerado_suelo_opcion',
-                        label=T("Tipo de uso de suelo"),required='TRUE'),
+                      label=T("Tipo de uso de suelo"),required='TRUE'),
                 Field('vegetacion_tipo',\
-                        'reference Conglomerado_vegetacion_opcion',\
-                        label=T("Tipo de vegetación")),
+                      'reference Conglomerado_vegetacion_opcion',\
+                      label=T("Tipo de vegetación")),
                 Field('perturbado', 'boolean',label=T("Perturbado")),
                 Field('comentario', 'text',label=T("Observaciones")))
 
@@ -37,7 +37,7 @@ db.Conglomerado_muestra.vegetacion_tipo.requires=IS_IN_DB(db,db.Conglomerado_veg
 db.define_table('Sitio_muestra',
                 Field('conglomerado_muestra_id','reference Conglomerado_muestra'),
                 Field('sitio_numero', 'reference Sitio_numero_opcion',\
-                        label=T("Número de sitio")),
+                      label=T("Número de sitio")),
                 Field('lat_grado','integer',label=T("grado"),required='TRUE'),
                 Field('lat_min','integer',label=T("minuto"),required='TRUE'),
                 Field('lat_seg','double',label=T("segundo"),required='TRUE'),
@@ -47,10 +47,9 @@ db.define_table('Sitio_muestra',
                 Field('altitud','double',label=T("Altitud(m)"),required='TRUE'),
                 Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
                 Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
-                        label=T("Datum"),required='TRUE'), 
+                      label=T("Datum"),required='TRUE'), 
                 Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")), 
                 Field('existe', 'boolean',label=T("Existe")))
-
 
 
 #db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,'%(nombre_numero)s')
@@ -67,8 +66,9 @@ db.define_table('Sitio_muestra',
 
 db.define_table('Imagen_referencia_sitio',
                 Field('sitio_muestra_id','reference Sitio_muestra'),
-                Field('archivo_nombre'),
-                Field('archivo_nombre_original', 'upload', label=T("Imagen"))
+                Field('archivo_nombre',required=True),
+                Field('archivo_nombre_original', 'upload', 
+                       autodelete=True,label=T("Fotografía"))
                 )
 ########################################################################
 ## Fields can be 'string','text','password','integer','double','boolean'
