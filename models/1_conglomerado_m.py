@@ -24,15 +24,15 @@ db.define_table('Conglomerado_muestra',
                 Field('perturbado', 'boolean',label=T("Perturbado")),
                 Field('comentario', 'text',label=T("Observaciones")))
 
-db.Conglomerado_muestra.nombre.requires=IS_NOT_EMPTY()
-db.Conglomerado_muestra.fecha_visita.requires=IS_NOT_EMPTY()
-db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,db.Conglomerado_tipo_opcion.num_tipo,'%(nombre_tipo)s')
-db.Conglomerado_muestra.estado.requires=IS_IN_DB(db,db.Conglomerado_estado_opcion.num_estado,'%(nombre_estado)s')
-db.Conglomerado_muestra.municipio.requires=IS_NOT_EMPTY()
-db.Conglomerado_muestra.predio.requires=IS_NOT_EMPTY()
-db.Conglomerado_muestra.tenencia.requires=IS_IN_DB(db,db.Conglomerado_tenencia_opcion.num_tenencia,'%(nombre_tenencia)s')
-db.Conglomerado_muestra.uso_suelo_tipo.requires=IS_IN_DB(db,db.Conglomerado_suelo_opcion.num_suelo,'%(nombre_suelo)s')
-db.Conglomerado_muestra.vegetacion_tipo.requires=IS_IN_DB(db,db.Conglomerado_vegetacion_opcion.num_vegetacion,'%(nombre_vegetacion)s')
+#db.Conglomerado_muestra.nombre.requires=IS_NOT_EMPTY()
+#db.Conglomerado_muestra.fecha_visita.requires=IS_NOT_EMPTY()
+#db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,db.Conglomerado_tipo_opcion.num_tipo,'%(nombre_tipo)s')
+#db.Conglomerado_muestra.estado.requires=IS_IN_DB(db,db.Conglomerado_estado_opcion.num_estado,'%(nombre_estado)s')
+#db.Conglomerado_muestra.municipio.requires=IS_NOT_EMPTY()
+#db.Conglomerado_muestra.predio.requires=IS_NOT_EMPTY()
+#db.Conglomerado_muestra.tenencia.requires=IS_IN_DB(db,db.Conglomerado_tenencia_opcion.num_tenencia,'%(nombre_tenencia)s')
+#db.Conglomerado_muestra.uso_suelo_tipo.requires=IS_IN_DB(db,db.Conglomerado_suelo_opcion.num_suelo,'%(nombre_suelo)s')
+#db.Conglomerado_muestra.vegetacion_tipo.requires=IS_IN_DB(db,db.Conglomerado_vegetacion_opcion.num_vegetacion,'%(nombre_vegetacion)s')
 
 db.define_table('Sitio_muestra',
                 Field('conglomerado_muestra_id','reference Conglomerado_muestra'),
