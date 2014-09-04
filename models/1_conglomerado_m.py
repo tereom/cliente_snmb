@@ -8,21 +8,21 @@ db.define_table('Conglomerado_muestra',
                       required='TRUE'),
                 Field('fecha_visita', 'date',label=T("Fecha de visita"),\
                       required='TRUE'),
-                Field('tipo', 'reference Conglomerado_tipo_opcion',\
+                Field('tipo','reference Conglomerado_tipo_opcion',\
                       label=T("Tipo de conglomerado"),required='TRUE'),
-                Field('estado', 'reference Conglomerado_estado_opcion',\
+                Field('estado','reference Conglomerado_estado_opcion',\
                       label=T("Estado"),required='TRUE'),
-                Field('municipio', 'integer',label=T("Municipio"),required='TRUE'),
+                Field('municipio','integer',label=T("Municipio"),required='TRUE'),
                 Field('predio','string',label=T("Predio"),required='TRUE'),
-                Field('tenencia', 'reference Conglomerado_tenencia_opcion',\
+                Field('tenencia','reference Conglomerado_tenencia_opcion',\
                       label=T("Tenencia"), required='TRUE'),
                 Field('uso_suelo_tipo', 'reference Conglomerado_suelo_opcion',
                       label=T("Tipo de uso de suelo"),required='TRUE'),
                 Field('vegetacion_tipo',\
                       'reference Conglomerado_vegetacion_opcion',\
                       label=T("Tipo de vegetación")),
-                Field('perturbado', 'boolean',label=T("Perturbado")),
-                Field('comentario', 'text',label=T("Observaciones")))
+                Field('perturbado','boolean',label=T("Perturbado")),
+                Field('comentario','text',label=T("Observaciones")))
 
 #db.Conglomerado_muestra.nombre.requires=IS_NOT_EMPTY()
 #db.Conglomerado_muestra.fecha_visita.requires=IS_NOT_EMPTY()
