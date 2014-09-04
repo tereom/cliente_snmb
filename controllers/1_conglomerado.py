@@ -45,27 +45,27 @@ def controladorConglomerado():
             requires=IS_NOT_EMPTY()),
         Field('tipo','reference Conglomerado_tipo_opcion',
             label=T("Tipo de conglomerado"),\
-            requires=IS_IN_DB(db,db.Conglomerado_tipo_opcion.num_tipo,
+            requires=IS_IN_DB(db,db.Conglomerado_tipo_opcion.id,
                 '%(nombre_tipo)s')),
         Field('estado', 'reference Conglomerado_estado_opcion',
             label=T("Estado"),\
-            requires=IS_IN_DB(db,db.Conglomerado_estado_opcion.num_estado,
+            requires=IS_IN_DB(db,db.Conglomerado_estado_opcion.id,
                 '%(nombre_estado)s')),
         Field('municipio', 'integer',label=T("Municipio"),
             requires=IS_NOT_EMPTY()),
         Field('predio','string',label=T("Predio"),requires=IS_NOT_EMPTY()),
         Field('tenencia', 'reference Conglomerado_tenencia_opcion',
             label=T("Tenencia"),\
-            requires=IS_IN_DB(db,db.Conglomerado_tenencia_opcion.num_tenencia,
+            requires=IS_IN_DB(db,db.Conglomerado_tenencia_opcion.id,
                 '%(nombre_tenencia)s')),
         Field('uso_suelo_tipo', 'reference Conglomerado_suelo_opcion',
             label=T("Tipo de uso de suelo"),\
-            requires=IS_IN_DB(db,db.Conglomerado_suelo_opcion.num_suelo,
+            requires=IS_IN_DB(db,db.Conglomerado_suelo_opcion.id,
                 '%(nombre_suelo)s')),
         Field('vegetacion_tipo_aux','reference Conglomerado_vegetacion_opcion',
             label=T("Tipo de vegetación"),\
-            requires=IS_IN_DB(db(db.Conglomerado_vegetacion_opcion.num_vegetacion<11),\
-            db.Conglomerado_vegetacion_opcion.num_vegetacion,
+            requires=IS_IN_DB(db(db.Conglomerado_vegetacion_opcion.nombre_vegetacion!='No aplica'),\
+            db.Conglomerado_vegetacion_opcion.id,
             '%(nombre_vegetacion)s')),
             #),
         Field('perturbado', 'boolean',label=T("Perturbado")),
@@ -79,10 +79,10 @@ def controladorConglomerado():
     sitio1Form = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
               label=T("Número de sitio"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
+              requires=IS_IN_DB(db,db.Sitio_numero_opcion.id,
                                 '%(nombre_numero)s')),
         Field('lat_grado','integer',label=T("grado"),required='TRUE',
-            requires=IS_NOT_EMPTY()),
+            requires=IS_NOT_EMPTY(),),
         Field('lat_min','integer',label=T("minuto"),required='TRUE',
             requires=IS_NOT_EMPTY()),
         Field('lat_seg','double',label=T("segundo"),required='TRUE'),
@@ -91,10 +91,10 @@ def controladorConglomerado():
         Field('lon_seg','double',label=T("segundo"),required='TRUE'),
         Field('altitud','double',label=T("Altitud(m)"),required='TRUE'),
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
-        Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
+        Field('elipsoide','reference Sitio_elipsoide_opcion',\
               label=T("Datum"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
-                                '%(nombre_elipsoide)s')),
+              requires=IS_IN_DB(db(db.Sitio_elipsoide_opcion.nombre_elipsoide=='Elipsoide 1'),
+                db.Sitio_elipsoide_opcion.id,'%(nombre_elipsoide)s')),
         Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
         Field('archivo_nombre',required=True),
@@ -105,7 +105,7 @@ def controladorConglomerado():
     sitio2Form = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
               label=T("Número de sitio"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
+              requires=IS_IN_DB(db,db.Sitio_numero_opcion.id,
                                 '%(nombre_numero)s')),
         Field('lat_grado','integer',label=T("grado"),required='TRUE'),
         Field('lat_min','integer',label=T("minuto"),required='TRUE'),
@@ -117,7 +117,7 @@ def controladorConglomerado():
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
         Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
               label=T("Datum"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
+              requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.id,
                                 '%(nombre_elipsoide)s')),
         Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
@@ -129,7 +129,7 @@ def controladorConglomerado():
     sitio3Form = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
               label=T("Número de sitio"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
+              requires=IS_IN_DB(db,db.Sitio_numero_opcion.id,
                                 '%(nombre_numero)s')),
         Field('lat_grado','integer',label=T("grado"),required='TRUE'),
         Field('lat_min','integer',label=T("minuto"),required='TRUE'),
@@ -141,7 +141,7 @@ def controladorConglomerado():
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
         Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
               label=T("Datum"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
+              requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.id,
                                 '%(nombre_elipsoide)s')),
         Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
@@ -153,7 +153,7 @@ def controladorConglomerado():
     sitio4Form = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
               label=T("Número de sitio"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
+              requires=IS_IN_DB(db,db.Sitio_numero_opcion.id,
                                 '%(nombre_numero)s')),
         Field('lat_grado','integer',label=T("grado"),required='TRUE'),
         Field('lat_min','integer',label=T("minuto"),required='TRUE'),
@@ -165,7 +165,7 @@ def controladorConglomerado():
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
         Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
               label=T("Datum"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
+              requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.id,
                                 '%(nombre_elipsoide)s')),
         Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
@@ -177,7 +177,7 @@ def controladorConglomerado():
     controlForm = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
               label=T("Número de sitio"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
+              requires=IS_IN_DB(db,db.Sitio_numero_opcion.id,
                                 '%(nombre_numero)s')),
         Field('lat_grado','integer',label=T("grado"),required='TRUE'),
         Field('lat_min','integer',label=T("minuto"),required='TRUE'),
@@ -189,7 +189,7 @@ def controladorConglomerado():
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
         Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
               label=T("Datum"),required='TRUE',
-              requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
+              requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.id,
                                 '%(nombre_elipsoide)s')),
         Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
@@ -229,7 +229,7 @@ def controladorConglomerado():
 
     #seleccion = 'comboVeg = SELECT('
     #for row in db(db.Conglomerado_vegetacion_opcion.num_vegetacion>0).select():
-        #seleccion += 'OPTION(\''+row.nombre_vegetacion+'\', _value=\'%d\'), ' % (row.num_vegetacion,)
+        #seleccion += 'OPTION(\''+row.nombre_vegetacion+'\', _value=\'%d\'), ' % (row.id,)
     #seleccion = seleccion+'value=\'1\')'
     #exec(seleccion)
     #onvalidation=validacionesConglomerado
@@ -238,11 +238,15 @@ def controladorConglomerado():
         #variables = dict(congForm.vars)
         #if not variables['uso_suelo_tipo']=='12':
         variables=db.Conglomerado_muestra._filter_fields(congForm.vars)
-        if not congForm.vars.uso_suelo_tipo=='12':
+
+        opcion_suelo = db(db.Conglomerado_suelo_opcion.nombre_suelo=='Vegetación').select().first()
+        opcion_vegetacion = db(db.Conglomerado_vegetacion_opcion.nombre_vegetacion=='No aplica').select().first()
+
+        if congForm.vars.uso_suelo_tipo!=opcion_suelo.id:
             #perturbado=None
             #vegetacion_tipo='0'
             variables['perturbado']=None
-            variables['vegetacion_tipo']='11'
+            variables['vegetacion_tipo']=opcion_vegetacion.id
         else:
             variables['vegetacion_tipo']=congForm.vars.vegetacion_tipo_aux
         db.Conglomerado_muestra.insert(**variables)

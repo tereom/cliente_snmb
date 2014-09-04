@@ -687,7 +687,7 @@
     (
         function()
         {
-            if($(this).val()=="12")
+            if($(this).find(":selected").text()=="Vegetación")
             {
                 $('.vegetacion').fadeIn();
                 $('#Conglomerado_muestra_vegetacion_tipo_aux').val("");
