@@ -98,7 +98,6 @@ db.define_table('Conglomerado_vegetacion_opcion',
                 Field('nombre_vegetacion', 'text'),  required='TRUE')
 
 if db(db.Conglomerado_vegetacion_opcion.id>0).count() == 0:
-    db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='0', nombre_vegetacion='No aplica')
     db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='1', nombre_vegetacion='Bosque de coníferas')
     db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='2', nombre_vegetacion='Bosque templado de latifoliadas')
     db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='3', nombre_vegetacion='Bosque mesófilo de montaña')
@@ -109,7 +108,7 @@ if db(db.Conglomerado_vegetacion_opcion.id>0).count() == 0:
     db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='8', nombre_vegetacion='Matorral desértico')
     db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='9', nombre_vegetacion='Humedal arbóreo')
     db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='10', nombre_vegetacion='Humedal herbáceo')
-
+    db.Conglomerado_vegetacion_opcion.insert(num_vegetacion='11', nombre_vegetacion='No aplica')
 
 #########################################################################
 ## Sitio_numero_opcion
@@ -215,4 +214,3 @@ if db(db.Especie_individuos_opcion.id>0).count() == 0:
         nombre_individuos='6 a 10')
     db.Especie_individuos_opcion.insert(num_individuos='4', \
         nombre_individuos='más de 10')
-

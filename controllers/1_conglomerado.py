@@ -4,11 +4,24 @@ import os
 controllers_dir = os.path.dirname(os.path.dirname(__file__))
 path = os.path.join(controllers_dir, 'imagenes')
 
-
-
 ## Las siguientes dos funciones son para descargar las imágenes
 def descargar(): return response.download(request,db)
 def link(): return response.download(request,db,attachment=False)
+
+#def procesamientoConglomerado(congForm):
+    #if not congForm.vars.uso_suelo_tipo=='12':
+        #congForm.vars.vegetacion_tipo = "0"
+
+#def check(form):
+#    if form.vars.b and not form.vars.c:
+#        form.errors.c = "If the b is checked, c must be filled"
+
+#def action():
+#    form = SQLFORM(db.foo)
+#    if form.process(onvalidation=check).accepted:
+#        response.flash = "success"
+#    return dict(form=form)
+
 
 #def validacionesSitio(sitioForm):
     #Si el sitio existe, entonces todos los campos deben ser validados.
@@ -49,11 +62,12 @@ def controladorConglomerado():
             label=T("Tipo de uso de suelo"),\
             requires=IS_IN_DB(db,db.Conglomerado_suelo_opcion.num_suelo,
                 '%(nombre_suelo)s')),
-        Field('vegetacion_tipo','reference Conglomerado_vegetacion_opcion',
+        Field('vegetacion_tipo_aux','reference Conglomerado_vegetacion_opcion',
             label=T("Tipo de vegetación"),\
-            requires=IS_IN_DB(db(db.Conglomerado_vegetacion_opcion.num_vegetacion>0),\
+            requires=IS_IN_DB(db(db.Conglomerado_vegetacion_opcion.num_vegetacion<11),\
             db.Conglomerado_vegetacion_opcion.num_vegetacion,
             '%(nombre_vegetacion)s')),
+            #),
         Field('perturbado', 'boolean',label=T("Perturbado")),
         Field('comentario', 'text',label=T("Observaciones")),
         table_name ='Conglomerado_muestra', _id='forma_conglomerado')
@@ -64,12 +78,12 @@ def controladorConglomerado():
 
     sitio1Form = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
-              label=T("Número de sitio"),required='TRUE', 
+              label=T("Número de sitio"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
                                 '%(nombre_numero)s')),
-        Field('lat_grado','integer',label=T("grado"),required='TRUE', 
+        Field('lat_grado','integer',label=T("grado"),required='TRUE',
             requires=IS_NOT_EMPTY()),
-        Field('lat_min','integer',label=T("minuto"),required='TRUE', 
+        Field('lat_min','integer',label=T("minuto"),required='TRUE',
             requires=IS_NOT_EMPTY()),
         Field('lat_seg','double',label=T("segundo"),required='TRUE'),
         Field('lon_grado','integer',label=T("grado"),required='TRUE'),
@@ -78,19 +92,19 @@ def controladorConglomerado():
         Field('altitud','double',label=T("Altitud(m)"),required='TRUE'),
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
         Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
-              label=T("Datum"),required='TRUE', 
+              label=T("Datum"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
-                                '%(nombre_elipsoide)s')), 
-        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")), 
+                                '%(nombre_elipsoide)s')),
+        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
         Field('archivo_nombre',required=True),
-        Field('archivo_nombre_original', 'upload', 
+        Field('archivo_nombre_original', 'upload',
               autodelete=True,label=T("Fotografía")),
         _id='forma_sitio1',table_name='Conjunta_sitio_imagen_1')
 
     sitio2Form = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
-              label=T("Número de sitio"),required='TRUE', 
+              label=T("Número de sitio"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
                                 '%(nombre_numero)s')),
         Field('lat_grado','integer',label=T("grado"),required='TRUE'),
@@ -102,19 +116,19 @@ def controladorConglomerado():
         Field('altitud','double',label=T("Altitud(m)"),required='TRUE'),
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
         Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
-              label=T("Datum"),required='TRUE', 
+              label=T("Datum"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
-                                '%(nombre_elipsoide)s')), 
-        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")), 
+                                '%(nombre_elipsoide)s')),
+        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
         Field('archivo_nombre',required=True),
-        Field('archivo_nombre_original', 'upload', 
+        Field('archivo_nombre_original', 'upload',
               autodelete=True,label=T("Fotografía")),
         _id='forma_sitio1',table_name='Conjunta_sitio_imagen_2')
 
     sitio3Form = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
-              label=T("Número de sitio"),required='TRUE', 
+              label=T("Número de sitio"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
                                 '%(nombre_numero)s')),
         Field('lat_grado','integer',label=T("grado"),required='TRUE'),
@@ -126,19 +140,19 @@ def controladorConglomerado():
         Field('altitud','double',label=T("Altitud(m)"),required='TRUE'),
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
         Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
-              label=T("Datum"),required='TRUE', 
+              label=T("Datum"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
-                                '%(nombre_elipsoide)s')), 
-        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")), 
+                                '%(nombre_elipsoide)s')),
+        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
         Field('archivo_nombre',required=True),
-        Field('archivo_nombre_original', 'upload', 
+        Field('archivo_nombre_original', 'upload',
               autodelete=True,label=T("Fotografía")),
         _id='forma_sitio1',table_name='Conjunta_sitio_imagen_3')
 
     sitio4Form = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
-              label=T("Número de sitio"),required='TRUE', 
+              label=T("Número de sitio"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
                                 '%(nombre_numero)s')),
         Field('lat_grado','integer',label=T("grado"),required='TRUE'),
@@ -150,19 +164,19 @@ def controladorConglomerado():
         Field('altitud','double',label=T("Altitud(m)"),required='TRUE'),
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
         Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
-              label=T("Datum"),required='TRUE', 
+              label=T("Datum"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
-                                '%(nombre_elipsoide)s')), 
-        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")), 
+                                '%(nombre_elipsoide)s')),
+        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
         Field('archivo_nombre',required=True),
-        Field('archivo_nombre_original', 'upload', 
+        Field('archivo_nombre_original', 'upload',
               autodelete=True,label=T("Fotografía")),
         _id='forma_sitio1',table_name='Conjunta_sitio_imagen_4')
 
     controlForm = SQLFORM.factory(
         Field('sitio_muestra_id','reference Sitio_numero_opcion',
-              label=T("Número de sitio"),required='TRUE', 
+              label=T("Número de sitio"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_numero_opcion.num_numero,
                                 '%(nombre_numero)s')),
         Field('lat_grado','integer',label=T("grado"),required='TRUE'),
@@ -174,20 +188,20 @@ def controladorConglomerado():
         Field('altitud','double',label=T("Altitud(m)"),required='TRUE'),
         Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
         Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
-              label=T("Datum"),required='TRUE', 
+              label=T("Datum"),required='TRUE',
               requires=IS_IN_DB(db,db.Sitio_elipsoide_opcion.num_elipsoide,
-                                '%(nombre_elipsoide)s')), 
-        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")), 
+                                '%(nombre_elipsoide)s')),
+        Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior")),
         Field('existe', 'boolean',label=T("Existe"),default=True),
         Field('archivo_nombre',required=True),
-        Field('archivo_nombre_original', 'upload', 
+        Field('archivo_nombre_original', 'upload',
               autodelete=True,label=T("Fotografía")),
         _id='forma_sitio1',table_name='Conjunta_sitio_imagen_control')
-    
+
 
     # De acuerdo con el documento que explica el comportamiento del controlador,
     # se definirá la combobox para vegetacion_tipo (conglomerado) aquí y en la vista.
-    
+
     # Haciendo un query a la tabla Conglomerado_vegetacion_opcion para llenar la combobox:
     #vegOpcionesNombre=[]
     #vegOpcionesNumero=[]
@@ -208,7 +222,7 @@ def controladorConglomerado():
         id = db.Imagen_referencia_sitio.insert(\
             archivo_nombre_original=imagen,\
             archivo_nombre=imagenForm.vars.imagen_nombre)
-    
+
     imagenes = db().select(db.Imagen_referencia_sitio.ALL)
 
     ### Acaba imagen
@@ -218,27 +232,28 @@ def controladorConglomerado():
         #seleccion += 'OPTION(\''+row.nombre_vegetacion+'\', _value=\'%d\'), ' % (row.num_vegetacion,)
     #seleccion = seleccion+'value=\'1\')'
     #exec(seleccion)
-
     #onvalidation=validacionesConglomerado
     #onvalidation=validacionesSitio
     if congForm.validate():
-        
+        #variables = dict(congForm.vars)
+        #if not variables['uso_suelo_tipo']=='12':
+        variables=db.Conglomerado_muestra._filter_fields(congForm.vars)
+        if not congForm.vars.uso_suelo_tipo=='12':
+            #perturbado=None
+            #vegetacion_tipo='0'
+            variables['perturbado']=None
+            variables['vegetacion_tipo']='11'
+        else:
+            variables['vegetacion_tipo']=congForm.vars.vegetacion_tipo_aux
+        db.Conglomerado_muestra.insert(**variables)
+        response.flash = "Registro ingresado exitosamente"
+                                       
+
     #and sitio1Form.process().accepted and sitio2Form.process().accepted\
     #and sitio3Form.process().accepted and sitio4Form.process().accepted\
     #and controlForm.process().accepted:
-        response.flash = "Registro ingresado exitosamente"
+        #response.flash = "Registro ingresado exitosamente"
 
     return dict(congForm=congForm, sitio1Form=sitio1Form, sitio2Form=sitio2Form,\
         sitio3Form=sitio3Form, sitio4Form=sitio4Form, controlForm=controlForm,\
         imagenes=imagenes)#, comboVeg=comboVeg)
-
-
-#def check(form):
-#    if form.vars.b and not form.vars.c:
-#        form.errors.c = "If the b is checked, c must be filled"
-
-#def action():
-#    form = SQLFORM(db.foo)
-#    if form.process(onvalidation=check).accepted:
-#        response.flash = "success"
-#    return dict(form=form)
