@@ -44,6 +44,10 @@
     {
         text-align: right;
     }
+    #enviar
+    {
+        float: left;
+    }
 <!--
     SQLFORM.widgets.string.widget
     SQLFORM.widgets.text.widget
@@ -589,7 +593,7 @@
                  document.getElementById('forma_sitio2').submit();
                  document.getElementById('forma_sitio3').submit();
                  document.getElementById('forma_sitio4').submit();
-                 document.getElementById('forma_control').submit()">
+                 document.getElementById('forma_control').submit()" id=enviar>
     Enviar formulario
 </button>
 
@@ -602,10 +606,10 @@
            $('#Conglomerado_muestra_vegetacion_tipo').val("1");
            $('#Conglomerado_muestra_uso_suelo_tipo').val("");
 
-           $('.Sitio_info_1').hide();
-           $('.Sitio_info_2').hide();
-           $('.Sitio_info_3').hide();
-           $('.Sitio_info_4').hide();
+           $('.Sitio_info_1').show();
+           $('.Sitio_info_2').show();
+           $('.Sitio_info_3').show();
+           $('.Sitio_info_4').show();
         }
     )
 
