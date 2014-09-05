@@ -1,6 +1,5 @@
 # coding: utf8
 
-
 ########################################
 # import os
 # controllers_dir = os.path.dirname(os.path.dirname(__file__))
@@ -234,15 +233,16 @@ def index():
 			response.flash = "El uso de suelo no es vegetación"
 		else:
 			response.flash = "Hay plantas"
+			
+		#if variables['uso_suelo_tipo']<opcion_suelo.id:
+        #    variables['perturbado']=None
+        #    variables['vegetacion_tipo']=opcion_vegetacion.id
+        # elif opcion_suelo.id<variables['uso_suelo_tipo']:
+        #     variables['perturbado']=None
+        #     variables['vegetacion_tipo']=opcion_vegetacion.id
+        #else:
+        #    variables['vegetacion_tipo']=congForm.vars.vegetacion_tipo_aux
+        #db.Conglomerado_muestra.insert(**variables)
+        #response.flash = "Registro ingresado exitosamente"
 
-
-#             #perturbado=None
-#             #vegetacion_tipo='0'
-#             variables['perturbado']=None
-#             variables['vegetacion_tipo']=opcion_vegetacion.id
-#         else:
-#             variables['vegetacion_tipo']=congForm.vars.vegetacion_tipo_aux
-#         db.Conglomerado_muestra.insert(**variables)
-#         response.flash = "Registro ingresado exitosamente"
-#                                       
-	return dict(forma=forma)
+	return dict(forma=forma)                                       
