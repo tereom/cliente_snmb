@@ -227,9 +227,7 @@ def index():
 		ID_suelo_vegetacion = db(db.Cat_suelo_conglomerado.nombre=='Vegetación').select().first().id
 		ID_vegetacion_no_aplica = db(db.Cat_vegetacion_conglomerado.nombre=='No aplica').select().first().id
   		
- 		HTTP(400, 'my message', test=ID_suelo_vegetacion)
-
-		if forma.vars['uso_suelo_tipo']!=ID_suelo_vegetacion:
+		if int(forma.vars['uso_suelo_tipo'])!=int(ID_suelo_vegetacion):
 			response.flash = "El uso de suelo no es vegetación"
 		else:
 			response.flash = "Hay plantas"
