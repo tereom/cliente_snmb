@@ -102,7 +102,6 @@ def index():
 #     	
 #     	###########Imagen############
 # 		Field('archivo_nombre_original_1', 'upload', label=T("Fotografía")),
-# 
 # 	
 # 		##La validación de la imagen obligatoria se realizará directo en la vista, debido a 
 # 		##que no es muy cómodo incluir una imagen default si el sitio no existe, y luego borrarla
@@ -129,7 +128,6 @@ def index():
 #     	###########Imagen############
 # 		Field('archivo_nombre_original_2', 'upload', label=T("Fotografía")),
 # 
-# 
 # 		###############################
 # 		#Campos del sitio 3
 # 		###############################
@@ -150,7 +148,6 @@ def index():
 #     	
 #     	###########Imagen############
 # 		Field('archivo_nombre_original_3', 'upload', label=T("Fotografía")),
-# 
 # 
 # 		###############################
 # 		#Campos del sitio 4
@@ -227,12 +224,11 @@ def index():
 		ID_suelo_vegetacion = db(db.Cat_suelo_conglomerado.nombre=='Vegetación').select().first().id
 		ID_vegetacion_no_aplica = db(db.Cat_vegetacion_conglomerado.nombre=='No aplica').select().first().id
   		
-		if int(forma.vars['uso_suelo_tipo'])!=int(ID_suelo_vegetacion):
-			response.flash = "El uso de suelo no es vegetación"
-		else:
+        #Casteando para asegurarnos que la comparación sea entre enteros.
+		if int(variablesConglomerado['uso_suelo_tipo'])!=int(ID_suelo_vegetacion):
+        else:
 			response.flash = "Hay plantas"
 			
-		#if variables['uso_suelo_tipo']<opcion_suelo.id:
         #    variables['perturbado']=None
         #    variables['vegetacion_tipo']=opcion_vegetacion.id
         # elif opcion_suelo.id<variables['uso_suelo_tipo']:
@@ -243,4 +239,4 @@ def index():
         #db.Conglomerado_muestra.insert(**variables)
         #response.flash = "Registro ingresado exitosamente"
 
-	return dict(forma=forma)                                       
+	return dict(forma=forma)
