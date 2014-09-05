@@ -30,7 +30,7 @@ Campos_Sitio_muestra = [
 	Field('conglomerado_muestra_id','reference Conglomerado_muestra', required='TRUE'),
 	Field('sitio_numero', 'reference Cat_numero_sitio', label=T("Número de sitio"), required='TRUE'),
 	Field('existe', 'boolean',label=T("Existe"), required='TRUE'),
-    Field('lat_grado','integer',label=T("grado")),
+	Field('lat_grado','integer',label=T("grado")),
 	Field('lat_min','integer',label=T("minuto")),
 	Field('lat_seg','double',label=T("segundo")),
 	Field('lon_grado','integer',label=T("grado")),
