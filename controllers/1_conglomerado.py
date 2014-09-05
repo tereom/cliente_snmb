@@ -2,11 +2,6 @@
 
 import os
 controllers_dir = os.path.dirname(os.path.dirname(__file__))
-path = os.path.join(controllers_dir, 'imagenes')
-
-## Las siguientes dos funciones son para descargar las imágenes
-def descargar(): return response.download(request,db)
-def link(): return response.download(request,db,attachment=False)
 
 #def procesamientoConglomerado(congForm):
     #if not congForm.vars.uso_suelo_tipo=='12':
@@ -70,7 +65,7 @@ def controladorConglomerado():
             #),
         Field('perturbado', 'boolean',label=T("Perturbado")),
         Field('comentario', 'text',label=T("Observaciones")),
-        table_name ='Conglomerado_muestra', _id='forma_conglomerado')
+            table_name ='Conglomerado_muestra', _id='forma_conglomerado')
 
     # Se combinan Sitio_muestra e Imagen_referencia_sitio en un solo formulario porque campos correspondientes a ambas tablas se encuentran en la misma
     # tabla de HTML.
@@ -209,24 +204,6 @@ def controladorConglomerado():
         #vegOpcionesNombre.append(row.nombre_vegetacion)
         #vegOpcionesNumero.append(row.num_vegetacion)
 
-    ### Cargar imágenes
-    imagenForm = FORM(
-        INPUT(_name='imagen_nombre',_type='text',required=True),
-        INPUT(_name='imagen_archivo',_type='file')
-    )
-
-    if imagenForm.accepts(request.vars,formname='imagenForm'):
-        imagen = db.Imagen_referencia_sitio.archivo_nombre_original.store(\
-            imagenForm.vars.imagen_archivo.file,\
-            imagenForm.vars.imagen_archivo.filename)
-        id = db.Imagen_referencia_sitio.insert(\
-            archivo_nombre_original=imagen,\
-            archivo_nombre=imagenForm.vars.imagen_nombre)
-
-    imagenes = db().select(db.Imagen_referencia_sitio.ALL)
-
-    ### Acaba imagen
-
     #seleccion = 'comboVeg = SELECT('
     #for row in db(db.Conglomerado_vegetacion_opcion.num_vegetacion>0).select():
         #seleccion += 'OPTION(\''+row.nombre_vegetacion+'\', _value=\'%d\'), ' % (row.id,)
@@ -242,11 +219,12 @@ def controladorConglomerado():
         opcion_suelo = db(db.Conglomerado_suelo_opcion.nombre_suelo=='Vegetación').select().first()
         opcion_vegetacion = db(db.Conglomerado_vegetacion_opcion.nombre_vegetacion=='No aplica').select().first()
 
-        if congForm.vars.uso_suelo_tipo!=opcion_suelo.id:
-            #perturbado=None
-            #vegetacion_tipo='0'
+        if variables['uso_suelo_tipo']<opcion_suelo.id:
             variables['perturbado']=None
             variables['vegetacion_tipo']=opcion_vegetacion.id
+        # elif opcion_suelo.id<variables['uso_suelo_tipo']:
+        #     variables['perturbado']=None
+        #     variables['vegetacion_tipo']=opcion_vegetacion.id
         else:
             variables['vegetacion_tipo']=congForm.vars.vegetacion_tipo_aux
         db.Conglomerado_muestra.insert(**variables)
@@ -259,5 +237,4 @@ def controladorConglomerado():
         #response.flash = "Registro ingresado exitosamente"
 
     return dict(congForm=congForm, sitio1Form=sitio1Form, sitio2Form=sitio2Form,\
-        sitio3Form=sitio3Form, sitio4Form=sitio4Form, controlForm=controlForm,\
-        imagenes=imagenes)#, comboVeg=comboVeg)
+        sitio3Form=sitio3Form, sitio4Form=sitio4Form, controlForm=controlForm)#, comboVeg=comboVeg)
