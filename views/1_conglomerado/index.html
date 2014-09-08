@@ -539,6 +539,8 @@
         </tr>
     </table>
 </fieldset>
+{{=forma.custom.submit}}
+{{=forma.custom.end}}
 
 <br/>
 <div>
@@ -565,18 +567,28 @@
            
            /*Cuando el documento se carga, se muestran los sitios como si existieran*/
            $('#tabla_existe_2').prop('checked', true);
+           $('.Sitio_info_2 input').not('#tabla_evidencia_2').val("");
+           $('.Sitio_info_2 select').val("");
            $('.Sitio_info_2').show();
+
            
            $('#tabla_existe_3').prop('checked', true);
+           $('.Sitio_info_3 input').not('#tabla_evidencia_3').val("");
+           $('.Sitio_info_3 select').val("");
            $('.Sitio_info_3').show();
            
            $('#tabla_existe_4').prop('checked', true);
+           $('.Sitio_info_4 input').not('#tabla_evidencia_4').val("");
+           $('.Sitio_info_4 select').val("");
            $('.Sitio_info_4').show();
         }
     )
 
 	/*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, se sombrean
-	o reaparecen los campos correspondientes, dependiendo si el sitio existe o no.*/
+	o reaparecen los campos correspondientes, dependiendo si el sitio existe o no. Además,
+	si la casilla existe no es seleccionada, se asignan valores por default a los campos
+	correspondientes a dicho sitio para que pasen la validación de la forma (estos valores
+	serán modificados en el controlador, antes de guardarlos en la base de datos*/
     
     $('#tabla_existe_2').change
     (
@@ -585,10 +597,17 @@
             if($(this).prop('checked'))
             {
                 $('.Sitio_info_2').fadeIn();
+                
+            	$('.Sitio_info_2 input').not('#tabla_evidencia_2').val("");
+            	$('.Sitio_info_2 select').val("");
              }
             else
             {
                 $('.Sitio_info_2').fadeOut();
+                
+                $('.Sitio_info_2 input').not('#tabla_evidencia_2').val("0");
+            	$('.Sitio_info_2 select').val("1");
+                /*$('#tabla_evidencia_2').prop('checked', false);*/
             }
         }
     )
@@ -600,10 +619,16 @@
             if($(this).prop('checked'))
             {
                 $('.Sitio_info_3').fadeIn();
+                
+                $('.Sitio_info_3 input').not('#tabla_evidencia_3').val("");
+            	$('.Sitio_info_3 select').val("");
              }
             else
             {
                 $('.Sitio_info_3').fadeOut();
+                
+                $('.Sitio_info_3 input').not('#tabla_evidencia_3').val("0");
+            	$('.Sitio_info_3 select').val("1");
             }
         }
     )
@@ -615,10 +640,16 @@
             if($(this).prop('checked'))
             {
                 $('.Sitio_info_4').fadeIn();
+                
+                $('.Sitio_info_4 input').not('#tabla_evidencia_4').val("");
+            	$('.Sitio_info_4 select').val("");
              }
             else
             {
                 $('.Sitio_info_4').fadeOut();
+                
+                $('.Sitio_info_4 input').not('#tabla_evidencia_4').val("0");
+            	$('.Sitio_info_4 select').val("1");
             }
         }
     )
