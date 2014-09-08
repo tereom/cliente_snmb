@@ -71,19 +71,19 @@ if db(db.Cat_tenencia_conglomerado.id>0).count() == 0:
 db.define_table('Cat_suelo_conglomerado', Field('nombre', 'text'), required='TRUE')
 
 if db(db.Cat_suelo_conglomerado.id>0).count() == 0:
-    db.Cat_suelo_conglomerado.insert( nombre='Agricultura de riego')
-    db.Cat_suelo_conglomerado.insert( nombre='Agricultura de temporal')
-    db.Cat_suelo_conglomerado.insert( nombre='Pastizal inducido')
-    db.Cat_suelo_conglomerado.insert( nombre='Pastizal cultivado')
-    db.Cat_suelo_conglomerado.insert( nombre='Asentamiento humano')
-    db.Cat_suelo_conglomerado.insert( nombre='Cuerpo de agua')
-    db.Cat_suelo_conglomerado.insert( nombre='Acuacultura')
-    db.Cat_suelo_conglomerado.insert( nombre='Área recién desmontada')
-    db.Cat_suelo_conglomerado.insert( nombre='Minería a cielo abierto')
-    db.Cat_suelo_conglomerado.insert( nombre='Jales mineros')
-    db.Cat_suelo_conglomerado.insert( nombre='Incendios')
-    db.Cat_suelo_conglomerado.insert( nombre='Vegetación')
-    db.Cat_suelo_conglomerado.insert( nombre='Otros')
+    db.Cat_suelo_conglomerado.insert(nombre='Agricultura de riego')
+    db.Cat_suelo_conglomerado.insert(nombre='Agricultura de temporal')
+    db.Cat_suelo_conglomerado.insert(nombre='Pastizal inducido')
+    db.Cat_suelo_conglomerado.insert(nombre='Pastizal cultivado')
+    db.Cat_suelo_conglomerado.insert(nombre='Asentamiento humano')
+    db.Cat_suelo_conglomerado.insert(nombre='Cuerpo de agua')
+    db.Cat_suelo_conglomerado.insert(nombre='Acuacultura')
+    db.Cat_suelo_conglomerado.insert(nombre='Área recién desmontada')
+    db.Cat_suelo_conglomerado.insert(nombre='Minería a cielo abierto')
+    db.Cat_suelo_conglomerado.insert(nombre='Jales mineros')
+    db.Cat_suelo_conglomerado.insert(nombre='Incendios')
+    db.Cat_suelo_conglomerado.insert(nombre='Vegetación')
+    db.Cat_suelo_conglomerado.insert(nombre='Otros')
 
 
 #########################################################################
@@ -91,37 +91,37 @@ if db(db.Cat_suelo_conglomerado.id>0).count() == 0:
 db.define_table('Cat_vegetacion_conglomerado', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_vegetacion_conglomerado.id>0).count() == 0:
-    db.Cat_vegetacion_conglomerado.insert( nombre='Bosque de coníferas')
-    db.Cat_vegetacion_conglomerado.insert( nombre='Bosque templado de latifoliadas')
-    db.Cat_vegetacion_conglomerado.insert( nombre='Bosque mesófilo de montaña')
-    db.Cat_vegetacion_conglomerado.insert( nombre='Selva caducifolia o subcaducifolia')
-    db.Cat_vegetacion_conglomerado.insert( nombre='Selva perennifolia  o subperennifolia')
-    db.Cat_vegetacion_conglomerado.insert( nombre='Bosque o matorral espinoso')
-    db.Cat_vegetacion_conglomerado.insert( nombre='Matorral sarcocaule o crasicaule o ambos')
-    db.Cat_vegetacion_conglomerado.insert( nombre='Matorral desértico')
-    db.Cat_vegetacion_conglomerado.insert( nombre='Humedal arbóreo')
-    db.Cat_vegetacion_conglomerado.insert( nombre='Humedal herbáceo')
-    db.Cat_vegetacion_conglomerado.insert( nombre='No aplica')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Bosque de coníferas')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Bosque templado de latifoliadas')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Bosque mesófilo de montaña')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Selva caducifolia o subcaducifolia')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Selva perennifolia  o subperennifolia')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Bosque o matorral espinoso')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Matorral sarcocaule o crasicaule o ambos')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Matorral desértico')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Humedal arbóreo')
+    db.Cat_vegetacion_conglomerado.insert(nombre='Humedal herbáceo')
+    db.Cat_vegetacion_conglomerado.insert(nombre='No aplica')
 
 #########################################################################
 
 db.define_table('Cat_numero_sitio', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_numero_sitio.id>0).count() == 0:
-    db.Cat_numero_sitio.insert( nombre='Centro')
-    db.Cat_numero_sitio.insert( nombre='Sitio 2')
-    db.Cat_numero_sitio.insert( nombre='Sitio 3')
-    db.Cat_numero_sitio.insert( nombre='Sitio 4')
-    db.Cat_numero_sitio.insert( nombre='Punto de control')
+    db.Cat_numero_sitio.insert(nombre='Centro')
+    db.Cat_numero_sitio.insert(nombre='Sitio 2')
+    db.Cat_numero_sitio.insert(nombre='Sitio 3')
+    db.Cat_numero_sitio.insert(nombre='Sitio 4')
+    db.Cat_numero_sitio.insert(nombre='Punto de control')
 
 #########################################################################
 
 db.define_table('Cat_elipsoide_sitio', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_elipsoide_sitio.id>0).count() == 0:
-    db.Cat_elipsoide_sitio.insert( nombre='Elipsoide 1')
-    db.Cat_elipsoide_sitio.insert( nombre='Elipsoide 2')
-    db.Cat_elipsoide_sitio.insert( nombre='No aplica')
+    db.Cat_elipsoide_sitio.insert(nombre='Elipsoide 1')
+    db.Cat_elipsoide_sitio.insert(nombre='Elipsoide 2')
+    db.Cat_elipsoide_sitio.insert(nombre='No aplica')
 
 ##########################################################################
 ## Pestaña Camara
@@ -130,24 +130,24 @@ if db(db.Cat_elipsoide_sitio.id>0).count() == 0:
 db.define_table('Cat_nombre_camara', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_nombre_camara.id>0).count() == 0:
-    db.Cat_nombre_camara.insert( nombre='Cámara 1')
-    db.Cat_nombre_camara.insert( nombre='Cámara 2')
+    db.Cat_nombre_camara.insert(nombre='Cámara 1')
+    db.Cat_nombre_camara.insert(nombre='Cámara 2')
 
 #########################################################################
 
-db.define_table('Cat_resolucion_camara', Field('resolucion', 'text', required='TRUE'))
+db.define_table('Cat_resolucion_camara', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_resolucion_camara.id>0).count() == 0:
-    db.Cat_resolucion_camara.insert( resolucion='Resolución 1')
-    db.Cat_resolucion_camara.insert( resolucion='Resolución 2')
+    db.Cat_resolucion_camara.insert(nombre='Resolución 1')
+    db.Cat_resolucion_camara.insert(nombre='Resolución 2')
 
 #########################################################################
 
-db.define_table('Cat_sensibilidad_camara', Field('sensibilidad', 'text', required='TRUE'))
+db.define_table('Cat_sensibilidad_camara', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_sensibilidad_camara.id>0).count() == 0:
-    db.Cat_sensibilidad_camara.insert( sensibilidad='Sensibilidad 1')
-    db.Cat_sensibilidad_camara.insert( sensibilidad='Sensibilidad 2')
+    db.Cat_sensibilidad_camara.insert(nombre='Sensibilidad 1')
+    db.Cat_sensibilidad_camara.insert(nombre='Sensibilidad 2')
 
 
 ##########################################################################
@@ -157,8 +157,8 @@ if db(db.Cat_sensibilidad_camara.id>0).count() == 0:
 db.define_table('Cat_nombre_grabadora', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_nombre_grabadora.id>0).count() == 0:
-    db.Cat_nombre_grabadora.insert( nombre='Grabadora 1')
-    db.Cat_nombre_grabadora.insert( nombre='Grabadora 2')
+    db.Cat_nombre_grabadora.insert(nombre='Grabadora 1')
+    db.Cat_nombre_grabadora.insert(nombre='Grabadora 2')
 
 
 ##########################################################################
@@ -168,19 +168,19 @@ if db(db.Cat_nombre_grabadora.id>0).count() == 0:
 db.define_table('Cat_numero_transecto', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_numero_transecto.id>0).count() == 0:
-    db.Cat_numero_transecto.insert( nombre='Transecto 1')
-    db.Cat_numero_transecto.insert( nombre='Transecto 2')
-    db.Cat_numero_transecto.insert( nombre='Transecto 3')
+    db.Cat_numero_transecto.insert(nombre='Transecto 1')
+    db.Cat_numero_transecto.insert(nombre='Transecto 2')
+    db.Cat_numero_transecto.insert(nombre='Transecto 3')
 
 
 ##########################################################################
 ## Pestaña Especies Invasoras
 ######################################################################## 
 
-db.define_table('Cat_numero_individuos', Field('categoria', 'text', required='TRUE'))
+db.define_table('Cat_numero_individuos', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_numero_individuos.id>0).count() == 0:
-    db.Cat_numero_individuos.insert( categoria='No aplica')
-    db.Cat_numero_individuos.insert( categoria='1 a 5')
-    db.Cat_numero_individuos.insert( categoria='6 a 10')
-    db.Cat_numero_individuos.insert( categoria='más de 10')
+    db.Cat_numero_individuos.insert(nombre='No aplica')
+    db.Cat_numero_individuos.insert(nombre='1 a 5')
+    db.Cat_numero_individuos.insert(nombre='6 a 10')
+    db.Cat_numero_individuos.insert(nombre='más de 10')
