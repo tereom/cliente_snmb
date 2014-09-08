@@ -101,7 +101,6 @@ if db(db.Cat_vegetacion_conglomerado.id>0).count() == 0:
     db.Cat_vegetacion_conglomerado.insert( nombre='Matorral desértico')
     db.Cat_vegetacion_conglomerado.insert( nombre='Humedal arbóreo')
     db.Cat_vegetacion_conglomerado.insert( nombre='Humedal herbáceo')
-    db.Cat_vegetacion_conglomerado.insert( nombre='No aplica')
 
 #########################################################################
 
@@ -121,7 +120,6 @@ db.define_table('Cat_elipsoide_sitio', Field('nombre', 'text', required='TRUE'))
 if db(db.Cat_elipsoide_sitio.id>0).count() == 0:
     db.Cat_elipsoide_sitio.insert( nombre='Elipsoide 1')
     db.Cat_elipsoide_sitio.insert( nombre='Elipsoide 2')
-    db.Cat_elipsoide_sitio.insert( nombre='No aplica')
 
 ##########################################################################
 ## Pestaña Camara

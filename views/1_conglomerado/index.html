@@ -1,115 +1,89 @@
 {{extend 'layout.html'}}
 {{block head}}
-{{=response.toolbar()}}
 <style type="text/css">
 
-    .cong_tabla .integer, .cong_tabla .date, .cong_tabla .string, .cong_tabla .double
-    {
-        margin-right: 2cm;
-        width: 4cm;
-    }
-
-    .cong_tabla #Conglomerado_muestra_tipo, .cong_tabla #Conglomerado_muestra_uso_suelo_tipo,
-    .cong_tabla #Conglomerado_muestra_estado, .cong_tabla #Conglomerado_muestra_vegetacion_tipo_aux,
-    .cong_tabla #Conglomerado_muestra_tenencia
-    {
-        margin-right: 2cm;
-        width: 4.5cm;
-    }
-
-    .sitio_tabla, .cong_tabla
+	.Campos_sitio, .Campos_conglomerado
     {
         table-layout: fixed;
         width: 120%;
     }
 
-    .sitio_tabla .integer, .sitio_tabla .date, .sitio_tabla .string, .sitio_tabla .double
+    .Campos_conglomerado .integer, .Campos_conglomerado .date, .Campos_conglomerado .string,
+    .Campos_conglomerado .double
     {
-        width: 1.2cm;
-    }
-    .sitio_tabla #Conjunta_sitio_imagen_control_elipsoide,
-    .sitio_tabla #Conjunta_sitio_imagen_1_elipsoide,
-    .sitio_tabla #Conjunta_sitio_imagen_2_elipsoide,
-    .sitio_tabla #Conjunta_sitio_imagen_3_elipsoide,
-    .sitio_tabla #Conjunta_sitio_imagen_4_elipsoide 
-    {
-        width: 1.8cm;
+        margin-right: 2cm;
+        width: 4cm;
     }
     
-    .centrar
+    .Campos_conglomerado .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4.4cm;
+    }
+
+    .Campos_sitio .integer, .Campos_sitio .date, .Campos_sitio .string, .Campos_sitio .double
+    {
+        width: 2cm;
+    }
+    
+    .Campos_sitio .generic-widget
+    {
+        width: 2.5cm;
+    }
+    
+    .Centrar
     {
         text-align: center;
     }
-
-    .derecha
-    {
-        text-align: right;
-    }
+    
     #enviar
     {
         float: left;
     }
-<!--
-    SQLFORM.widgets.string.widget
-    SQLFORM.widgets.text.widget
-    SQLFORM.widgets.password.widget
-    SQLFORM.widgets.integer.widget
-    SQLFORM.widgets.double.widget
-    SQLFORM.widgets.time.widget
-    SQLFORM.widgets.date.widget
-    SQLFORM.widgets.datetime.widget
-    SQLFORM.widgets.upload.widget
-    SQLFORM.widgets.boolean.widget
-    SQLFORM.widgets.options.widget
-    SQLFORM.widgets.multiple.widget
-    SQLFORM.widgets.radio.widget
-    SQLFORM.widgets.checkboxes.widget
-    SQLFORM.widgets.autocomplete
--->
-
 </style>
 {{end}}
 
+{{=response.toolbar()}}
 
-
+<!--
 <form action="" enctype="multipart/form-data" method="post">
     <input name="_formname" type="hidden" value="imagenForm">
     <input class="string" name="imagen_nombre" type="text" value="">
     <input class="upload" name="imagen_archivo" type="file">
     <input type="submit" value="Submit">
 </form>
- 
+ -->
 
 
-{{=congForm.custom.begin}}
-<fieldset>
+{{=forma.custom.begin}}
+<fieldset class='Campos_conglomerado'>
     <legend>
         Datos del conglomerado
     </legend>
-    <table class='cong_tabla'>
+    <table>
         <tr>
             <td>
                 <div>
-                    {{=congForm.custom.label.nombre}}
+                    {{=forma.custom.label.nombre}}
                 </div>
                 <div>
-                    {{=congForm.custom.widget.nombre}}
-                </div>
-            </td>
-            <td>
-                <div>
-                    {{=congForm.custom.label.fecha_visita}}
-                </div>
-                <div>
-                    {{=congForm.custom.widget.fecha_visita}}
+                    {{=forma.custom.widget.nombre}}
                 </div>
             </td>
             <td>
                 <div>
-                    {{=congForm.custom.label.tipo}}
+                    {{=forma.custom.label.fecha_visita}}
                 </div>
                 <div>
-                    {{=congForm.custom.widget.tipo}}
+                    {{=forma.custom.widget.fecha_visita}}
+                </div>
+            </td>
+            <td>
+                <div>
+                    {{=forma.custom.label.tipo}}
+                </div>
+                <div>
+                    {{=forma.custom.widget.tipo}}
                 </div>
             </td>
             <td>
@@ -118,113 +92,112 @@
         <tr>
             <td>
                 <div>
-                    {{=congForm.custom.label.estado}}
+                    {{=forma.custom.label.estado}}
                 </div>
                 <div>
-                    {{=congForm.custom.widget.estado}}
-                </div>
-            </td>
-            <td>
-                <div>
-                    {{=congForm.custom.label.municipio}}
-                </div>
-                <div>
-                    {{=congForm.custom.widget.municipio}}
+                    {{=forma.custom.widget.estado}}
                 </div>
             </td>
             <td>
                 <div>
-                    {{=congForm.custom.label.predio}}
+                    {{=forma.custom.label.municipio}}
                 </div>
                 <div>
-                    {{=congForm.custom.widget.predio}}
+                    {{=forma.custom.widget.municipio}}
                 </div>
             </td>
             <td>
                 <div>
-                    {{=congForm.custom.label.tenencia}}
+                    {{=forma.custom.label.predio}}
                 </div>
                 <div>
-                    {{=congForm.custom.widget.tenencia}}
+                    {{=forma.custom.widget.predio}}
+                </div>
+            </td>
+            <td>
+                <div>
+                    {{=forma.custom.label.tenencia}}
+                </div>
+                <div>
+                    {{=forma.custom.widget.tenencia}}
                 </div>
             </td>
         </tr>
         <tr>
             <td>
                 <div>
-                    {{=congForm.custom.label.uso_suelo_tipo}}
+                    {{=forma.custom.label.uso_suelo_tipo}}
                 </div>
                 <div>
-                    {{=congForm.custom.widget.uso_suelo_tipo}}
+                    {{=forma.custom.widget.uso_suelo_tipo}}
                 </div>
             </td>
             <td>
-                <!--La clase Vegetación sirve para el JQuery que desvanece/reaparece el campo-->
-                <div class="vegetacion">
-                     {{=congForm.custom.label.vegetacion_tipo_aux}}
+                <!--La clase vegetación sirve para el JQuery que desvanece/reaparece el campo-->
+                <div class="Vegetacion">
+                     {{=forma.custom.label.vegetacion_tipo}}
                 </div>
-                <div class="vegetacion">
-                    {{=congForm.custom.widget.vegetacion_tipo_aux}}
+                <div class="Vegetacion">
+                    {{=forma.custom.widget.vegetacion_tipo}}
                 </div>
             </td>
             <td>
-                <div class="vegetacion">
-                    {{=congForm.custom.label.perturbado}}
+                <div class="Vegetacion">
+                    {{=forma.custom.label.perturbado}}
                 </div>
-                <div class="vegetacion">
-                    {{=congForm.custom.widget.perturbado}}
+                <div class="Vegetacion">
+                    {{=forma.custom.widget.perturbado}}
                 </div>
             </td>
-            <td></td>
+            <td>
+            </td>
         </tr>
     </table>
     <div>
         <div>
-            {{=congForm.custom.label.comentario}}
+            {{=forma.custom.label.comentario}}
         </div>
         <div>
-            {{=congForm.custom.widget.comentario}}
+            {{=forma.custom.widget.comentario}}
         </div>
     </div>
 </fieldset>
-<input type="submit" value="Submit">
-{{=congForm.custom.end}}
 
-
-<fieldset>
+<fieldset class="Campos_sitio">
     <legend>
         Datos de los sitios y punto de control
     </legend>
-    {{=controlForm.custom.begin}}
-    <table class="sitio_tabla">
+    <table>
         <tr>
-            <th class="centrar">        
-                {{=controlForm.custom.label.existe}}
+            <th class="Centrar">        
+                {{=forma.custom.label.existe_2}}
             </th>
             <th>
                 Elemento
             </th>
-            <th colspan="3", class="centrar">
+            <th colspan="3", class="Centrar">
                 Latitud
             </th>
-            <th colspan="3", class="centrar">
+            <th colspan="3", class="Centrar">
                 Longitud
             </th>
             <th>
-                {{=controlForm.custom.label.elipsoide}}
+                {{=forma.custom.label.elipsoide_c}}
             </th>
             <th>
-                 {{=controlForm.custom.label.altitud}}
+                 {{=forma.custom.label.altitud_c}}
             </th>
             <th>
-                 {{=controlForm.custom.label.gps_error}}
+                 {{=forma.custom.label.gps_error_c}}
             </th>
             <th>
-                 {{=controlForm.custom.label.evidencia}}
+                 {{=forma.custom.label.evidencia_c}}
             </th>
+        <!--
             <th>
-                {{=controlForm.custom.label.archivo_nombre_original}}
+                {{=forma.custom.label.archivo_nombre_original}}
             </th>
+        -->
         </tr>
         <tr>
             <th>
@@ -232,24 +205,22 @@
             <th>
             </th>
             <th>
-                {{=controlForm.custom.label.lat_grado}}
+                {{=forma.custom.label.lat_grado_c}}
             </th>
             <th>
-                {{=controlForm.custom.label.lat_min}}
+                {{=forma.custom.label.lat_min_c}}
             </th>
             <th>
-                {{=controlForm.custom.label.lat_seg}}
+                {{=forma.custom.label.lat_seg_c}}
             </th>
             <th>
-                {{=controlForm.custom.label.lon_grado}}
+                {{=forma.custom.label.lon_grado_c}}
             </th>
             <th>
-                {{=controlForm.custom.label.lon_min}}
+                {{=forma.custom.label.lon_min_c}}
             </th>
             <th>
-                {{=controlForm.custom.label.lon_seg}}
-            </th>
-            <th>
+                {{=forma.custom.label.lon_seg_c}}
             </th>
             <th>
             </th>
@@ -257,8 +228,12 @@
             </th>
             <th>
             </th>
+            <th>
+            </th>
+        <!--
             <th>                
             </th>
+        -->
         </tr>
         <tr>
             <td>
@@ -267,333 +242,312 @@
                 Punto de control
             </td>                
             <td>
-                {{=controlForm.custom.widget.lat_grado}}
+                {{=forma.custom.widget.lat_grado_c}}
             </td>
             <td>
-                {{=controlForm.custom.widget.lat_min}}
+                {{=forma.custom.widget.lat_min_c}}
             </td>
             <td>
-                {{=controlForm.custom.widget.lat_seg}}
+                {{=forma.custom.widget.lat_seg_c}}
             </td>
             <td>
-                {{=controlForm.custom.widget.lon_grado}}
+                {{=forma.custom.widget.lon_grado_c}}
             </td>
             <td>
-                {{=controlForm.custom.widget.lon_min}}
+                {{=forma.custom.widget.lon_min_c}}
             </td>
             <td>
-                {{=controlForm.custom.widget.lon_seg}}
+                {{=forma.custom.widget.lon_seg_c}}
             </td>
             <td>
-                {{=controlForm.custom.widget.elipsoide}}
+                {{=forma.custom.widget.elipsoide_c}}
             </td>
             <td>
-                {{=controlForm.custom.widget.altitud}}
+                {{=forma.custom.widget.altitud_c}}
             </td>
             <td>
-                {{=controlForm.custom.widget.gps_error}}
+                {{=forma.custom.widget.gps_error_c}}
             </td>
             <td>
-                {{=controlForm.custom.widget.evidencia}}
+                {{=forma.custom.widget.evidencia_c}}
             </td>
+        <!--
             <td>
-                {{=controlForm.custom.widget.archivo_nombre_original}}
+                {{=forma.custom.widget.archivo_nombre_original}}
             </td>
+        -->
 
         </tr>
-    </table>
-    {{=controlForm.custom.end}}
-
-    {{=sitio1Form.custom.begin}}
-    <table class="sitio_tabla">
         <tr>
-            <td class="centrar">
-                {{=sitio1Form.custom.widget.existe}}
+            <td
             </td>
             <td>
                 Sitio 1
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.lat_grado}}
+                    {{=forma.custom.widget.lat_grado_1}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.lat_min}}
+                    {{=forma.custom.widget.lat_min_1}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.lat_seg}}
+                    {{=forma.custom.widget.lat_seg_1}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.lon_grado}}
+                    {{=forma.custom.widget.lon_grado_1}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.lon_min}}
+                    {{=forma.custom.widget.lon_min_1}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.lon_seg}}
+                    {{=forma.custom.widget.lon_seg_1}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.elipsoide}}
+                    {{=forma.custom.widget.elipsoide_1}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.altitud}}
+                    {{=forma.custom.widget.altitud_1}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.gps_error}}
+                    {{=forma.custom.widget.gps_error_1}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.evidencia}}
+                    {{=forma.custom.widget.evidencia_1}}
                 </div>
             </td>
+        <!--
             <td>
                 <div class="Sitio_info_1">
-                    {{=sitio1Form.custom.widget.archivo_nombre_original}}
+                    {{=forma.custom.widget.archivo_nombre_original}}
                 </div>
             </td>
-
+        -->
         </tr>
-    </table>
-    {{=sitio1Form.custom.end}}
-
-    {{=sitio2Form.custom.begin}}
-    <table class="sitio_tabla">
         <tr>
-            <td class="centrar">
-                {{=sitio2Form.custom.widget.existe}}
+            <td class="Centrar">
+                {{=forma.custom.widget.existe_2}}
             </td>
             <td>
                 Sitio 2
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.lat_grado}}
+                    {{=forma.custom.widget.lat_grado_2}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.lat_min}}
+                    {{=forma.custom.widget.lat_min_2}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.lat_seg}}
+                    {{=forma.custom.widget.lat_seg_2}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.lon_grado}}
+                    {{=forma.custom.widget.lon_grado_2}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.lon_min}}
+                    {{=forma.custom.widget.lon_min_2}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.lon_seg}}
+                    {{=forma.custom.widget.lon_seg_2}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.elipsoide}}
+                    {{=forma.custom.widget.elipsoide_2}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.altitud}}
+                    {{=forma.custom.widget.altitud_2}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.gps_error}}
+                    {{=forma.custom.widget.gps_error_2}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.evidencia}}
+                    {{=forma.custom.widget.evidencia_2}}
                 </div>
             </td>
+        <!--
             <td>
                 <div class="Sitio_info_2">
-                    {{=sitio2Form.custom.widget.archivo_nombre_original}}
+                    {{=forma.custom.widget.archivo_nombre_original}}
                 </div>
             </td>
-
+        -->
         </tr>
-    </table>
-    {{=sitio2Form.custom.end}}
-
-    {{=sitio3Form.custom.begin}}
-    <table class="sitio_tabla">
         <tr>
-            <td class="centrar">
-                {{=sitio3Form.custom.widget.existe}}
+            <td class="Centrar">
+                {{=forma.custom.widget.existe_3}}
             </td>
             <td>
                 Sitio 3
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.lat_grado}}
+                    {{=forma.custom.widget.lat_grado_3}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.lat_min}}
+                    {{=forma.custom.widget.lat_min_3}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.lat_seg}}
+                    {{=forma.custom.widget.lat_seg_3}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.lon_grado}}
+                    {{=forma.custom.widget.lon_grado_3}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.lon_min}}
+                    {{=forma.custom.widget.lon_min_3}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.lon_seg}}
+                    {{=forma.custom.widget.lon_seg_3}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.elipsoide}}
+                    {{=forma.custom.widget.elipsoide_3}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.altitud}}
+                    {{=forma.custom.widget.altitud_3}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.gps_error}}
+                    {{=forma.custom.widget.gps_error_3}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.evidencia}}
+                    {{=forma.custom.widget.evidencia_3}}
                 </div>
             </td>
+        <!--
             <td>
                 <div class="Sitio_info_3">
-                    {{=sitio3Form.custom.widget.archivo_nombre_original}}
+                    {{=forma.custom.widget.archivo_nombre_original}}
                 </div>
             </td>
-        </tr>
-    </table>
-    {{=sitio3Form.custom.end}}
-
-    {{=sitio4Form.custom.begin}}
-    <table class="sitio_tabla">
+        -->
+         </tr>
          <tr>
-            <td class="centrar">
-                {{=sitio4Form.custom.widget.existe}}
+            <td class="Centrar">
+                {{=forma.custom.widget.existe_4}}
             </td>
             <td>
                 Sitio 4
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.lat_grado}}
+                    {{=forma.custom.widget.lat_grado_4}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.lat_min}}
+                    {{=forma.custom.widget.lat_min_4}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.lat_seg}}
+                    {{=forma.custom.widget.lat_seg_4}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.lon_grado}}
+                    {{=forma.custom.widget.lon_grado_4}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.lon_min}}
+                    {{=forma.custom.widget.lon_min_4}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.lon_seg}}
+                    {{=forma.custom.widget.lon_seg_4}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.elipsoide}}
+                    {{=forma.custom.widget.elipsoide_4}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.altitud}}
+                    {{=forma.custom.widget.altitud_4}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.gps_error}}
+                    {{=forma.custom.widget.gps_error_4}}
                 </div>
             </td>
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.evidencia}}
+                    {{=forma.custom.widget.evidencia_4}}
                 </div>
             </td>
+        <!--
             <td>
                 <div class="Sitio_info_4">
-                    {{=sitio4Form.custom.widget.archivo_nombre_original}}
+                    {{=forma.custom.widget.archivo_nombre_original}}
                 </div>
             </td>
+        -->
         </tr>
     </table>
-    {{=sitio4Form.custom.end}}
 </fieldset>
-<!--<button onclick="document.getElementById('forma_conglomerado').submit();
-                 document.getElementById('forma_sitio1').submit();
-                 document.getElementById('forma_sitio2').submit();
-                 document.getElementById('forma_sitio3').submit();
-                 document.getElementById('forma_sitio4').submit();
-                 document.getElementById('forma_control').submit()" id=enviar>
-    Enviar formulario
-</button>-->
+
 <br/>
 <div>
 <h2>Submitted variables</h2>
 {{=BEAUTIFY(request.vars)}}
 <h2>Accepted variables</h2>
-{{=BEAUTIFY(congForm.vars)}}
+{{=BEAUTIFY(forma.vars)}}
 <h2>Errors in form</h2>
-{{=BEAUTIFY(congForm.errors)}}
+{{=BEAUTIFY(forma.errors)}}
 </div>
 
 <script>
@@ -601,34 +555,30 @@
     (
         function()
         {
+        	/*Cuando el documento se carga, los campos de vegetación están escondidos,
+        	en particular, el campo de vegetacion_tipo tiene un valor default cuando se esconde,
+        	para pasar la validación de la forma, como se explica en el controlador*/
+           $('.Vegetacion').hide();
+           $('#tabla_vegetacion_tipo').val("1");
+           $('#tabla_uso_suelo_tipo').val("");
            
-           $('.vegetacion').hide();
-           $('#Conglomerado_muestra_vegetacion_tipo_aux').val("1");
-           $('#Conglomerado_muestra_uso_suelo_tipo_aux').val("");
            
-           $('.Sitio_info_1').show();
+           /*Cuando el documento se carga, se muestran los sitios como si existieran*/
+           $('#tabla_existe_2').prop('checked', true);
            $('.Sitio_info_2').show();
+           
+           $('#tabla_existe_3').prop('checked', true);
            $('.Sitio_info_3').show();
+           
+           $('#tabla_existe_4').prop('checked', true);
            $('.Sitio_info_4').show();
         }
     )
 
-    $('#Conjunta_sitio_imagen_1_existe').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-            {
-                $('.Sitio_info_1').fadeIn();
-             }
-            else
-            {
-                $('.Sitio_info_1').fadeOut();
-            }
-        }
-    )
-
-    $('#Conjunta_sitio_imagen_2_existe').change
+	/*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, se sombrean
+	o reaparecen los campos correspondientes, dependiendo si el sitio existe o no.*/
+    
+    $('#tabla_existe_2').change
     (
         function()
         {
@@ -643,7 +593,7 @@
         }
     )
 
-    $('#Conjunta_sitio_imagen_3_existe').change
+    $('#tabla_existe_3').change
     (
         function()
         {
@@ -658,7 +608,7 @@
         }
     )
 
-    $('#Conjunta_sitio_imagen_4_existe').change
+    $('#tabla_existe_4').change
     (
         function()
         {
@@ -673,19 +623,24 @@
         }
     )
 
-    $('#Conglomerado_muestra_uso_suelo_tipo').change
+	/* Cuando cambia el tipo de uso de suelo seleccionado, si el uso de suelo principal es
+	'Vegetación', entonces aparecen los campos correspondientes, y se resetea el campo
+	'vegetacion_tipo', en caso contrario, se sombrean dichos campos y se le asigna un valor
+	por default a 'vegetacion_tipo'*/
+	
+    $('#tabla_uso_suelo_tipo').change
     (
         function()
         {
             if($(this).find(":selected").text()=="Vegetación")
             {
-                $('.vegetacion').fadeIn();
-                $('#Conglomerado_muestra_vegetacion_tipo_aux').val("");
+                $('.Vegetacion').fadeIn();
+                $('#tabla_vegetacion_tipo').val("");
             }
             else
             {
-                $('.vegetacion').fadeOut();
-                $('#Conglomerado_muestra_vegetacion_tipo_aux').val("1");
+                $('.Vegetacion').fadeOut();
+                $('#tabla_vegetacion_tipo').val("1");
             }
         }
     )

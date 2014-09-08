@@ -10,10 +10,6 @@
 # def link(): return response.download(request,db,attachment=False)
 ########################################
 
-#def procesamientoConglomerado(congForm):
-    #if not congForm.vars.uso_suelo_tipo=='12':
-        #congForm.vars.vegetacion_tipo = "0"
-
 #def check(form):
 #    if form.vars.b and not form.vars.c:
 #        form.errors.c = "If the b is checked, c must be filled"
@@ -23,21 +19,6 @@
 #    if form.process(onvalidation=check).accepted:
 #        response.flash = "success"
 #    return dict(form=form)
-
-
-#def validacionesSitio(sitioForm):
-    #Si el sitio existe, entonces todos los campos deben ser validados.
-    
-    #Si uso_suelo_tipo no es 'Vegetación', entonces perturbado=None y vegetacion_tipo=No aplica
-    #if not congForm.vars.uso_suelo_tipo==T('Vegetación'):
-        #congForm.vars.vegetacion_tipo=0
-        #congForm.vars.perturbado=None
-    #response.flash = sitio1Form.vars.existe
-
-    #Si uso_suelo_tipo es 'Vegetación', entonces la validación se realiza automáticamente 
-    #porque en el campo vegetacion_tipo sólo se pueden incluir
-    #tipos que están en el catálogo correspondiente. 
-    #Además, la combobox siempre debe tener una opción seleccionada.
 
 def index():
 
@@ -70,8 +51,7 @@ def index():
     	Field('uso_suelo_tipo',label=T("Tipo de uso de suelo"),
     		requires=IS_IN_DB(db,db.Cat_suelo_conglomerado.id,'%(nombre)s')),
 		Field('vegetacion_tipo', label=T("Tipo de vegetación"),
-			requires=IS_IN_DB(db(db.Cat_vegetacion_conglomerado.nombre!='No aplica'),
-			db.Cat_vegetacion_conglomerado.id,'%(nombre)s')),
+			requires=IS_IN_DB(db,db.Cat_vegetacion_conglomerado.id,'%(nombre)s')),
     	Field('perturbado','boolean',label=T("Perturbado")),
 		Field('comentario','text',label=T("Observaciones")),
 
@@ -86,17 +66,15 @@ def index():
 		#Field('existe', 'boolean', label=T("existe)", required='TRUE'),
 		# El centro del conglomerado y el punto de control siempre existen.
 		
-    	Field('lat_grado_1','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_1','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_1','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_1','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_1','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_1','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
+    	Field('lat_grado_1','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lat_min_1','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lat_seg_1','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
+		Field('lon_grado_1','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lon_min_1','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lon_seg_1','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_1','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_1','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_1',label=T("Datum"),
-			requires=IS_IN_DB(db(db.Cat_elipsoide_sitio.nombre!='No aplica'),
-        	db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+		Field('elipsoide_1',label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_1', 'boolean',label=XML("Evidencia <br/> anterior")),
     	
 #     	###########Imagen############
@@ -117,17 +95,15 @@ def index():
 		##	"si este campo está marcado, entonces este otro es obligatorio, si no, ni aparece".
 	
 		Field('existe_2', 'boolean',label=T("Existe")),
-		Field('lat_grado_2','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_2','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_2','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_2','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_2','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_2','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
+		Field('lat_grado_2','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lat_min_2','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lat_seg_2','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
+		Field('lon_grado_2','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lon_min_2','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lon_seg_2','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_2','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_2','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_2', label=T("Datum"),
-			requires=IS_IN_DB(db(db.Cat_elipsoide_sitio.nombre!='No aplica'),
-        	db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+		Field('elipsoide_2', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_2', 'boolean',label=XML("Evidencia <br/> anterior")),
     	
 #     	###########Imagen############
@@ -138,17 +114,15 @@ def index():
 		###############################
 	
 		Field('existe_3', 'boolean',label=T("Existe")),
-		Field('lat_grado_3','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_3','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_3','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_3','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_3','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_3','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
+		Field('lat_grado_3','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lat_min_3','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lat_seg_3','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
+		Field('lon_grado_3','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lon_min_3','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lon_seg_3','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_3','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_3','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_3', label=T("Datum"),
-			requires=IS_IN_DB(db(db.Cat_elipsoide_sitio.nombre!='No aplica'),
-        	db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+		Field('elipsoide_3', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_3', 'boolean',label=XML("Evidencia <br/> anterior")),
 #     	
 #     	###########Imagen############
@@ -159,17 +133,15 @@ def index():
 		###############################
 	
 		Field('existe_4', 'boolean',label=T("Existe")),
-		Field('lat_grado_4','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_4','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_4','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_4','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_4','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_4','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
+		Field('lat_grado_4','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lat_min_4','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lat_seg_4','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
+		Field('lon_grado_4','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lon_min_4','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lon_seg_4','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_4','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_4','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_4', label=T("Datum"),
-			requires=IS_IN_DB(db(db.Cat_elipsoide_sitio.nombre!='No aplica'),
-        	db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+    	Field('elipsoide_4', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_4', 'boolean',label=XML("Evidencia <br/> anterior")),
 #     	
 #     	###########Imagen############
@@ -179,17 +151,15 @@ def index():
 		#Campos del punto de control
 		###############################
 
-		Field('lat_grado_c','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_c','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_c','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_c','integer',label=T("grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_c','integer',label=T("minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_c','double',label=T("segundo"), requires=IS_NOT_EMPTY()),
+		Field('lat_grado_c','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lat_min_c','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lat_seg_c','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
+		Field('lon_grado_c','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
+		Field('lon_min_c','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
+		Field('lon_seg_c','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_c','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_c','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_c', label=T("Datum"),
-			requires=IS_IN_DB(db(db.Cat_elipsoide_sitio.nombre!='No aplica'),
-        	db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+		Field('elipsoide_c', label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_c', 'boolean',label=XML("Evidencia <br/> anterior")),
 #     	
 #     	###########Imagen############
@@ -199,13 +169,9 @@ def index():
 	##Cerrando la lista de campos para el formulario
 	]
 
-	forma=SQLFORM.factory(*Campos_pestana_1)
-
-###############################+
-	#CSS
-        #table_name ='Conglomerado_muestra', _id='forma_conglomerado')
-        #_id='forma_sitio1',table_name='Conjunta_sitio_imagen_4'
-###############################
+	forma=SQLFORM.factory(*Campos_pestana_1, table_name='tabla')
+	# El nombre de la tabla: table_name se utiliza únicamente para los estilos, ya que 
+	# determina los ID's de los campos en el formulario
 
 #########IMAGENES################# 
 #     ### Cargar imágenes
@@ -232,13 +198,11 @@ def index():
   		
         #Casteando para asegurarnos que la comparación sea entre enteros.
 		if int(formaConglomerado['uso_suelo_tipo'])!=int(ID_suelo_vegetacion):
+		#Si el uso de suelo no es vegetación, tanto el campo de 'perturbado' como el campo
+		#de 'vegetacion_tipo' se anulan.
 		
-		#Si el uso de suelo no es vegetación, el campo de 'perturbado' se anula y el campo de
-		#'vegetacion_tipo' toma el ID de "no aplica".
 			formaConglomerado['perturbado']=None
-			
-			ID_vegetacion_no_aplica = db(db.Cat_vegetacion_conglomerado.nombre=='No aplica').select().first().id
-			formaConglomerado['vegetacion_tipo']=ID_vegetacion_no_aplica
+			formaConglomerado['vegetacion_tipo']=None
 			
 		#Insertando en la base de datos:
 		conglomeradoInsertado = db.Conglomerado_muestra.insert(**formaConglomerado)
