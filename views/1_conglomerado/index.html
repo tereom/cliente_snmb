@@ -557,58 +557,49 @@
     (
         function()
         {
-        	/*Cuando el documento se carga, los campos de vegetación están escondidos,
-        	en particular, el campo de vegetacion_tipo tiene un valor default cuando se esconde,
-        	para pasar la validación de la forma, como se explica en el controlador*/
-           $('.Vegetacion').hide();
-           $('#tabla_vegetacion_tipo').val("1");
+           /*Cuando el documento se carga, el campo de vegetación está escondido*/
            $('#tabla_uso_suelo_tipo').val("");
-           
+           $('.Vegetacion').hide();
            
            /*Cuando el documento se carga, se muestran los sitios como si existieran*/
            $('#tabla_existe_2').prop('checked', true);
-           $('.Sitio_info_2 input').not('#tabla_evidencia_2').val("");
-           $('.Sitio_info_2 select').val("");
            $('.Sitio_info_2').show();
-
            
            $('#tabla_existe_3').prop('checked', true);
-           $('.Sitio_info_3 input').not('#tabla_evidencia_3').val("");
-           $('.Sitio_info_3 select').val("");
            $('.Sitio_info_3').show();
            
            $('#tabla_existe_4').prop('checked', true);
-           $('.Sitio_info_4 input').not('#tabla_evidencia_4').val("");
-           $('.Sitio_info_4 select').val("");
            $('.Sitio_info_4').show();
         }
     )
-
-	/*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, se sombrean
-	o reaparecen los campos correspondientes, dependiendo si el sitio existe o no. Además,
-	si la casilla existe no es seleccionada, se asignan valores por default a los campos
-	correspondientes a dicho sitio para que pasen la validación de la forma (estos valores
-	serán modificados en el controlador, antes de guardarlos en la base de datos*/
     
+    /* Cuando cambia el tipo de uso de suelo seleccionado, si el uso de suelo principal es
+	'Vegetación', entonces aparecen los campos correspondientes, en caso contrario,
+	se sombrean dichos campos */
+	
+    $('#tabla_uso_suelo_tipo').change
+    (
+        function()
+        {
+            if($(this).find(":selected").text()=="Vegetación")
+                $('.Vegetacion').fadeIn();
+            else
+                $('.Vegetacion').fadeOut();
+        }
+    )
+
+    
+    /*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, se sombrean
+	o reaparecen los campos correspondientes, dependiendo si el sitio existe o no.*/
+	
     $('#tabla_existe_2').change
     (
         function()
         {
             if($(this).prop('checked'))
-            {
                 $('.Sitio_info_2').fadeIn();
-                
-            	$('.Sitio_info_2 input').not('#tabla_evidencia_2').val("");
-            	$('.Sitio_info_2 select').val("");
-             }
             else
-            {
                 $('.Sitio_info_2').fadeOut();
-                
-                $('.Sitio_info_2 input').not('#tabla_evidencia_2').val("0");
-            	$('.Sitio_info_2 select').val("1");
-                /*$('#tabla_evidencia_2').prop('checked', false);*/
-            }
         }
     )
 
@@ -617,19 +608,9 @@
         function()
         {
             if($(this).prop('checked'))
-            {
                 $('.Sitio_info_3').fadeIn();
-                
-                $('.Sitio_info_3 input').not('#tabla_evidencia_3').val("");
-            	$('.Sitio_info_3 select').val("");
-             }
             else
-            {
                 $('.Sitio_info_3').fadeOut();
-                
-                $('.Sitio_info_3 input').not('#tabla_evidencia_3').val("0");
-            	$('.Sitio_info_3 select').val("1");
-            }
         }
     )
 
@@ -638,41 +619,37 @@
         function()
         {
             if($(this).prop('checked'))
-            {
                 $('.Sitio_info_4').fadeIn();
-                
-                $('.Sitio_info_4 input').not('#tabla_evidencia_4').val("");
-            	$('.Sitio_info_4 select').val("");
-             }
             else
-            {
                 $('.Sitio_info_4').fadeOut();
-                
-                $('.Sitio_info_4 input').not('#tabla_evidencia_4').val("0");
-            	$('.Sitio_info_4 select').val("1");
-            }
         }
     )
-
-	/* Cuando cambia el tipo de uso de suelo seleccionado, si el uso de suelo principal es
-	'Vegetación', entonces aparecen los campos correspondientes, y se resetea el campo
-	'vegetacion_tipo', en caso contrario, se sombrean dichos campos y se le asigna un valor
-	por default a 'vegetacion_tipo'*/
-	
-    $('#tabla_uso_suelo_tipo').change
+    
+    /*Antes de enviar la forma, se escriben los valores, para que el formulario pase la
+    validación de Web2py. Posteriormente, en el controlador se administrarán los valores
+    que realmente se introducen en la base de datos*/
+    $('form').submit
     (
-        function()
-        {
-            if($(this).find(":selected").text()=="Vegetación")
-            {
-                $('.Vegetacion').fadeIn();
-                $('#tabla_vegetacion_tipo').val("");
+    	function()
+    	{
+    		if($('#tabla_uso_suelo_tipo').find(":selected").text()!="Vegetación")
+    			$('#tabla_vegetacion_tipo').val("1");
+    	
+    		if($('#tabla_existe_2').prop('checked') == false)
+    		{
+    			$('.Sitio_info_2 input').not('#tabla_evidencia_2').val("0");
+            	$('.Sitio_info_2 select').val("1");
             }
-            else
-            {
-                $('.Vegetacion').fadeOut();
-                $('#tabla_vegetacion_tipo').val("1");
+            if($('#tabla_existe_3').prop('checked') == false)
+    		{
+    			$('.Sitio_info_3 input').not('#tabla_evidencia_3').val("0");
+            	$('.Sitio_info_3 select').val("1");
             }
-        }
+            if($('#tabla_existe_4').prop('checked') == false)
+    		{
+    			$('.Sitio_info_4 input').not('#tabla_evidencia_3').val("0");
+            	$('.Sitio_info_4 select').val("1");
+            }
+    	}
     )
 </script>

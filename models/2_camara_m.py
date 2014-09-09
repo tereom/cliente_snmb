@@ -13,7 +13,7 @@
 #                         required='TRUE'),
 #                 Field('hora_inicio', 'time',label=T("Hora inicio"),\
 #                         required='TRUE'),
-#                 Field('hora_termino', 'date',label=T("Hora término"),\
+#                 Field('hora_termino', 'time',label=T("Hora término"),\
 #                         required='TRUE'),
 #                 Field('lat_grado','integer',label=T("grado"),required='TRUE'),
 #                 Field('lat_min','integer',label=T("minuto"),required='TRUE'),
