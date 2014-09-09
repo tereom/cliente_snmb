@@ -4,6 +4,7 @@
 ## Camara, es decir: Camara, File_camera, Reference_image_camera
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
 
+<<<<<<< HEAD
 Campos_Camara = [
     Field('nombre','reference Cat_nombre_camara',label=T("Código cámara")), 
     Field('fecha_inicio', 'date',label=T("Fecha de colocación"),required='TRUE'),
