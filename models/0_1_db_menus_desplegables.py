@@ -91,17 +91,16 @@ if db(db.Cat_suelo_conglomerado.id>0).count() == 0:
 db.define_table('Cat_vegetacion_conglomerado', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_vegetacion_conglomerado.id>0).count() == 0:
-    db.Cat_vegetacion_conglomerado.insert(nombre='Bosque de coníferas')
-    db.Cat_vegetacion_conglomerado.insert(nombre='Bosque templado de latifoliadas')
-    db.Cat_vegetacion_conglomerado.insert(nombre='Bosque mesófilo de montaña')
-    db.Cat_vegetacion_conglomerado.insert(nombre='Selva caducifolia o subcaducifolia')
-    db.Cat_vegetacion_conglomerado.insert(nombre='Selva perennifolia  o subperennifolia')
-    db.Cat_vegetacion_conglomerado.insert(nombre='Bosque o matorral espinoso')
-    db.Cat_vegetacion_conglomerado.insert(nombre='Matorral sarcocaule o crasicaule o ambos')
-    db.Cat_vegetacion_conglomerado.insert(nombre='Matorral desértico')
-    db.Cat_vegetacion_conglomerado.insert(nombre='Humedal arbóreo')
-    db.Cat_vegetacion_conglomerado.insert(nombre='Humedal herbáceo')
-    db.Cat_vegetacion_conglomerado.insert(nombre='No aplica')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Bosque de coníferas')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Bosque templado de latifoliadas')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Bosque mesófilo de montaña')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Selva caducifolia o subcaducifolia')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Selva perennifolia  o subperennifolia')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Bosque o matorral espinoso')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Matorral sarcocaule o crasicaule o ambos')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Matorral desértico')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Humedal arbóreo')
+    db.Cat_vegetacion_conglomerado.insert( nombre='Humedal herbáceo')
 
 #########################################################################
 
@@ -121,7 +120,6 @@ db.define_table('Cat_elipsoide_sitio', Field('nombre', 'text', required='TRUE'))
 if db(db.Cat_elipsoide_sitio.id>0).count() == 0:
     db.Cat_elipsoide_sitio.insert(nombre='Elipsoide 1')
     db.Cat_elipsoide_sitio.insert(nombre='Elipsoide 2')
-    db.Cat_elipsoide_sitio.insert(nombre='No aplica')
 
 ##########################################################################
 ## Pestaña Camara

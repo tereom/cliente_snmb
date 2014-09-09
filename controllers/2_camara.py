@@ -21,30 +21,39 @@ def index():
     	Field('lon_seg','double',label=T("segundo"),requires=IS_NOT_EMPTY()),
     	Field('altitud','double',label=T("Altitud(m)"),requires=IS_NOT_EMPTY()),
     	Field('gps_error','double',label=T("Error(m)"),requires=IS_NOT_EMPTY()),
-    	Field('elipsoide', 'reference Sitio_elipsoide_opcion',label=T("Datum"),
+    	Field('elipsoide',label=T("Datum"),
     		requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),    		
-    	Field('sitio_muestra_id','reference Sitio_muestra'),         
+    	Field('sitio_muestra_id',label=T("Sitio"),
+    		requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(sitio_numero)s')), 
     	Field('distancia_centro','double',
     		label=T("Distancia al centro del sitio (m)"),
     		requires=IS_NOT_EMPTY()),    		
     	Field('llovio', 'boolean',label=T("Llovió durante el muestreo")),
     	Field('resolucion','reference Camara_resolucion_opcion',
-    		label=T("Resolución"),requires=IS_NOT_EMPTY()),
+    		label=T("Resolución"),
+    		requires=IS_IN_DB(db,db.Cat_resolucion_camara.id,'%(nombre)s')),
     	Field('sensibilidad','reference Camara_sensibilidad_opcion',
-    		label=T("Sensibilidad"),requires=IS_NOT_EMPTY()),
+    		label=T("Sensibilidad"),
+    		requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.id,'%(nombre)s')),
     	Field('comentario', 'text',label=T("Observaciones")),
+	
 	# campos magen_referencia_camara	
-		Field('camara_id','reference Camara',requires=IS_NOT_EMPTY()),
     	Field('archivo_nombre',requires=IS_NOT_EMPTY()),
     	Field('archivo_nombre_original','upload',autodelete=True,
     		label=T("Fotografía"),requires=IS_NOT_EMPTY())
 	]
 
-	forma=SQLFORM.factory(*Campos_pestana_2)
+	forma=SQLFORM.factory(*Campos_pestana_2,table_name='tabla')
+
+	if forma.validate():
+		formaCamara=db.Camara._filter_fields(forma.vars)
+		camaraInsertado = db.Camara.insert(**formaCamara)
+		formaCamara['sitio_muestra_id']=camaraInsertado
+
+		formaImagen = {}
+		formaImage['camara_id']=camaraInsertado
 
 	return dict(forma=forma)
-
-
 
 # db.Camara.nombre.requires=IS_IN_DB(db,db.Camara_nombre_opcion.num_nombre,'%(nombre_nombre)s')
 # db.Camara.fecha_inicio.requires=IS_NOT_EMPTY()
