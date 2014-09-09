@@ -42,11 +42,10 @@
 </style>
 {{end}}
 
-
 <form action="#" enctype="multipart/form-data" method="post">
 	<fieldset>
 		<legend>
-		Datos de la cámara
+		Datos del micrófono
 		</legend>
 		<table class="No_GPS">
 			<tr>
@@ -124,6 +123,14 @@
 					</div>
 				</td>
 				<td>
+					<div>
+						<label for="tabla_mojaron">Se mojaron los micrófonos</label>
+					</div>
+					<div>
+						<input class="boolean" name="microfonons_mojados" id="tabla_mojaron" type="checkbox" value="on"/>
+					</div>
+				</td>
+				<td>
 				</td>
 			</tr>
     	</table>
@@ -180,7 +187,7 @@
     		<tr>
     			<td>
 					<div>
-						<label for="tabla_nombre">Código cámara</label>
+						<label for="tabla_nombre">Código grabadora</label>
 					</div>
 					<div>
 						<select class="generic-widget" name="nombre" id="tabla_nombre">
@@ -189,19 +196,10 @@
 				</td>
 				<td>
 					<div>
-						<label for="tabla_resolucion">Resolución</label>
+						<label for="tabla_metadatos">Archivo metadatos</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="resolucion" id="tabla_resolucion">
-						</select>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_sensibilidad">Sensibilidad</label>
-					</div>
-					<div>
-						<select class="generic-widget" name="sensibilidad" id="tabla_sensibilidad">
+						<select class="generic-widget" name="metadatos" id="tabla_metadatos">
 						</select>
 					</div>
 				</td>
