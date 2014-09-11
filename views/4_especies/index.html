@@ -1,0 +1,208 @@
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+	table
+    {
+        table-layout: fixed;
+        width: 120%;
+    }
+
+    .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
+    {
+        margin-right: 2cm;
+        width: 4cm;
+    }
+    
+    .No_GPS .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4.4cm;
+    }
+
+    .GPS .integer, .GPS .double
+    {
+        width: 2cm;
+    }
+    
+    .GPS .generic-widget
+    {
+        width: 2.5cm;
+    }
+    
+    .Centrar
+    {
+        text-align: center;
+    }
+    
+    #enviar
+    {
+        float: left;
+    }
+</style>
+{{end}}
+
+<form action="#" enctype="multipart/form-data" method="post">
+	<fieldset>
+		<legend>
+		Transecto especies invasoras
+		</legend>
+		<table class="No_GPS">
+			<tr>
+				<td>
+					<div>
+						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+					</div>
+					<div>
+						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+							<option value=""/>
+							<option value="1">Gato</option>
+						</select>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_sitio_numero">Sitio</label>
+					</div>
+					<div>
+						<select class="generic-widget" name="sitio_numero" id="tabla_sitio_numero">
+							<option value=""/>
+							<option value="1">Café</option>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_tecnico">Técnico</label>
+					</div>
+					<div>
+						<input class="string" name="tecnico" id="tabla_tecnico" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+		<tr>
+			<td>
+				<div>
+					<label for="tabla_fecha">Fecha</label>
+				</div>
+				<div>
+					<input class="date" name="fecha" id="tabla_fecha" type="text" value=""/>
+				</div>
+			</td>
+			<td>
+				<div>
+					<label for="tabla_hora_inicio">Hora inicio</label>
+				</div>
+				<div>
+					<input class="time" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
+				</div>
+			</td>
+			<td>
+				<div>
+					<label for="tabla_hora_termino">Hora término</label>
+				</div>
+				<div>
+					<input class="date" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
+				</div>
+			</td>
+		</tr>
+	</table>
+		<div>
+    		<label for="tabla_comentario">Observaciones</label>
+    	</div>
+    	<div>
+		    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10">
+			</textarea>
+    	</div>
+    </fieldset>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
+	<br>
+	</br>
+	<fieldset>
+		<legend>
+		Especies invasoras
+		</legend>
+		<table class="No_GPS">
+			<tr>
+				<td>
+					<div>
+						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+					</div>
+					<div>
+						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+							<option value=""/>
+							<option value="1">Gato</option>
+						</select>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_sitio_numero">Sitio</label>
+					</div>
+					<div>
+						<select class="generic-widget" name="sitio_numero" id="tabla_sitio_numero">
+							<option value=""/>
+							<option value="1">Café</option>
+					</div>
+				</td>
+			</tr>
+			<tr>
+			<td>
+				<div>
+					<label for="tabla_conabio_id">Lista CONABIO especies invasoras</label>
+				</div>
+				<div>
+					<select class="generic-widget" name="conabio_lista" id="tabla_conabio_lista">
+						<option value=""/>
+						<option value="1">Gato</option>
+					</select>
+				</div>
+				</td>
+				<div>
+		<!-- como se activa esta botón? -->
+				<label for="tabla_nombre_en_lista"> </label>
+				</div>
+				<div>
+					<input class="boolean" name="nombre_en_lista" id="tabla_nombre_en_lista" type="checkbox" value="on"/>
+				</div>
+				</td>				
+				<td>
+					<div>
+						<label for="tabla_hay_nombre_comun"></label>
+					</div>
+					<div>
+					<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_tecnico">Nombre común</label>
+					</div>
+					<div>
+						<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
+					</div>
+				</td>
+
+		<td>
+			<div>
+				<label for="tabla_hay_nombre_cientifico">Nombre científico</label>
+			</div>
+			<div>
+				<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
+			</div>
+		</td>
+
+		<td>
+			<div>
+				<label for="tabla_numero_individuos">Número de individuos</label>
+			</div>
+			<div>
+				<select class="generic-widget" name="numero_individuos" id="tabla_numero_individuos">
+				</select>
+			</div>
+		</td> 
+		</table>
+
+</form>
+<!-- {{=BEAUTIFY(response._vars)}} -->
+
+<!-- tengo problemas con lista conabio, no tengo etiqueta para el booleano -->
