@@ -41,6 +41,7 @@
         float: left;
     }
 </style>
+<link href="{{=URL('static', 'js/file-validator.js')}}" rel="stylesheet" type="text/css" />
 {{end}}
 
 
@@ -192,11 +193,9 @@
             <th>
                  {{=forma.custom.label.evidencia_c}}
             </th>
-        <!--
             <th>
-                {{=forma.custom.label.archivo_nombre_original}}
+                {{=forma.custom.label.archivo_c}}
             </th>
-        -->
         </tr>
         <tr>
             <th>
@@ -229,10 +228,8 @@
             </th>
             <th>
             </th>
-        <!--
             <th>                
             </th>
-        -->
         </tr>
         <tr>
             <td>
@@ -270,12 +267,9 @@
             <td>
                 {{=forma.custom.widget.evidencia_c}}
             </td>
-        <!--
             <td>
-                {{=forma.custom.widget.archivo_nombre_original}}
+                {{=forma.custom.widget.archivo_c}}
             </td>
-        -->
-
         </tr>
         <tr>
             <td
@@ -333,13 +327,11 @@
                     {{=forma.custom.widget.evidencia_1}}
                 </div>
             </td>
-        <!--
             <td>
                 <div class="Sitio_info_1">
-                    {{=forma.custom.widget.archivo_nombre_original}}
+                    {{=forma.custom.widget.archivo_1}}
                 </div>
             </td>
-        -->
         </tr>
         <tr>
             <td class="Centrar">
@@ -398,13 +390,11 @@
                     {{=forma.custom.widget.evidencia_2}}
                 </div>
             </td>
-        <!--
             <td>
                 <div class="Sitio_info_2">
-                    {{=forma.custom.widget.archivo_nombre_original}}
+                    {{=forma.custom.widget.archivo_2}}
                 </div>
             </td>
-        -->
         </tr>
         <tr>
             <td class="Centrar">
@@ -463,13 +453,11 @@
                     {{=forma.custom.widget.evidencia_3}}
                 </div>
             </td>
-        <!--
             <td>
                 <div class="Sitio_info_3">
-                    {{=forma.custom.widget.archivo_nombre_original}}
+                    {{=forma.custom.widget.archivo_3}}
                 </div>
             </td>
-        -->
          </tr>
          <tr>
             <td class="Centrar">
@@ -528,13 +516,11 @@
                     {{=forma.custom.widget.evidencia_4}}
                 </div>
             </td>
-        <!--
             <td>
                 <div class="Sitio_info_4">
-                    {{=forma.custom.widget.archivo_nombre_original}}
+                    {{=forma.custom.widget.archivo_4}}
                 </div>
             </td>
-        -->
         </tr>
     </table>
 </fieldset>
@@ -544,11 +530,11 @@
 <br/>
 <div>
 <h2>Submitted variables</h2>
-{{=BEAUTIFY(request.vars)}}
+    {{#=BEAUTIFY(request.vars)}}
 <h2>Accepted variables</h2>
-{{=BEAUTIFY(forma.vars)}}
+    {{#=BEAUTIFY(forma.vars)}}
 <h2>Errors in form</h2>
-{{=BEAUTIFY(forma.errors)}}
+    {{#=BEAUTIFY(forma.errors)}}
 </div>
 
 <script>
@@ -623,10 +609,14 @@
                 $('.Sitio_info_4').fadeOut();
         }
     )
-    
+
     /*Antes de enviar la forma, se escriben los valores, para que el formulario pase la
     validación de Web2py. Posteriormente, en el controlador se administrarán los valores
     que realmente se introducen en la base de datos*/
+    
+    /* si un sitio existe y no se subió ningún archivo, lanza un mensaje y no
+    deja que se envíe el formulario*/
+    
     $('form').submit
     (
     	function()
@@ -651,4 +641,71 @@
             }
     	}
     )
+
+    /*$('form').submit
+    (
+    	function()
+    	{
+    		//Si falta alguna imagen, var=false y no se envía el formulario.
+    		flag = true;
+    		
+    		if($('#tabla_uso_suelo_tipo').find(":selected").text()!="Vegetación")
+    		{
+    			$('#tabla_vegetacion_tipo').val("1");
+    		}
+
+    		if(!$('#tabla_archivo_1').val() || !$('#tabla_archivo_c').val())
+    		{
+    			flag = false;
+    		}
+    			                	            
+            if(!$('#tabla_existe_3').prop('checked'))
+    		{
+    		    $('.Sitio_info_3 select').val("1");
+    			$('.Sitio_info_3 input').not('#tabla_evidencia_3').val("0");
+            }
+            else if(!$('#tabla_archivo_3').val())
+            {
+            	flag = false;
+            }
+            else
+            {
+            }
+            
+            if(!$('#tabla_existe_2').prop('checked'))
+    		{
+    		    $('.Sitio_info_2 select').val("1");
+    			$('.Sitio_info_2 input').not('#tabla_evidencia_2').val("0");
+            }
+            
+            else if(!$('#tabla_archivo_2').val())
+            {
+            	flag = false;
+            }
+            else
+            {
+            }
+
+            if(!$('#tabla_existe_4').prop('checked'))
+    		{
+    		    $('.Sitio_info_4 select').val("1");
+    			$('.Sitio_info_4 input').not('#tabla_evidencia_3').val("0");
+            }
+            
+            else if(!$('#tabla_archivo_4').val())
+            {
+            	flag = false;
+            }
+            else
+            {
+            }
+            	
+            if(!flag)
+            {
+                alert('Faltó adjuntar una imagen a algún sitio existente');
+            	return false;
+			}
+    	}
+    )*/
+
 </script>
