@@ -1,15 +1,5 @@
 # coding: utf8
-
-########################################
-# import os
-# controllers_dir = os.path.dirname(os.path.dirname(__file__))
-# path = os.path.join(controllers_dir, 'imagenes')
-# 
-# ## Las siguientes dos funciones son para descargar las imágenes
-# def descargar(): return response.download(request,db)
-# def link(): return response.download(request,db,attachment=False)
-########################################
-
+import re
 #def check(form):
 #    if form.vars.b and not form.vars.c:
 #        form.errors.c = "If the b is checked, c must be filled"
@@ -22,7 +12,6 @@
 
 def index():
 
-    
 # Se define el formulario a partir de una única tabla virtual ya que necesitamos un único
 #botón submit para las formas.
 
@@ -31,8 +20,6 @@ def index():
 		###############################
 		#Campos del conglomerado
 		###############################
-
-#Hay que ver si es necesario el campo de reference
 
 		Field('nombre','integer',label=T("Número de conglomerado"),
 			requires=IS_NOT_EMPTY()),
@@ -77,13 +64,13 @@ def index():
 		Field('elipsoide_1',label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_1', 'boolean',label=XML("Evidencia <br/> anterior")),
     	
-#     	###########Imagen############
-# 		Field('archivo_nombre_original_1', 'upload', label=T("Fotografía")),
-# 	
-# 		##La validación de la imagen obligatoria se realizará directo en la vista, debido a 
-# 		##que no es muy cómodo incluir una imagen default si el sitio no existe, y luego borrarla
-# 		##en el controlador.
-# 	
+     	###########Imagen############
+		Field('archivo_1', 'upload', label=T("Fotografía")),
+		
+		#La validación de la imagen se realizará directo en la vista, puesto que resultaría
+		#muy impráctico poner una imagen default para que los sitios no existentes pasen
+		#la validación de la muestra.
+ 	
 		###############################
 		#Campos del sitio 2
 		###############################
@@ -106,9 +93,9 @@ def index():
 		Field('elipsoide_2', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_2', 'boolean',label=XML("Evidencia <br/> anterior")),
     	
-#     	###########Imagen############
-# 		Field('archivo_nombre_original_2', 'upload', label=T("Fotografía")),
-# 
+     	###########Imagen############
+ 		Field('archivo_2', 'upload', label=T("Fotografía")),
+ 
 		###############################
 		#Campos del sitio 3
 		###############################
@@ -124,10 +111,10 @@ def index():
     	Field('gps_error_3','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
 		Field('elipsoide_3', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_3', 'boolean',label=XML("Evidencia <br/> anterior")),
-#     	
-#     	###########Imagen############
-# 		Field('archivo_nombre_original_3', 'upload', label=T("Fotografía")),
-# 
+     	
+     	###########Imagen############
+ 		Field('archivo_3', 'upload', label=T("Fotografía")),
+ 
 		###############################
 		#Campos del sitio 4
 		###############################
@@ -143,10 +130,10 @@ def index():
     	Field('gps_error_4','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
     	Field('elipsoide_4', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_4', 'boolean',label=XML("Evidencia <br/> anterior")),
-#     	
-#     	###########Imagen############
-# 		Field('archivo_nombre_original_4', 'upload', label=T("Fotografía")),
-# 
+     	
+     	###########Imagen############
+ 		Field('archivo_4', 'upload', label=T("Fotografía")),
+ 
 		###############################
 		#Campos del punto de control
 		###############################
@@ -161,33 +148,16 @@ def index():
     	Field('gps_error_c','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
 		Field('elipsoide_c', label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
     	Field('evidencia_c', 'boolean',label=XML("Evidencia <br/> anterior")),
-#     	
-#     	###########Imagen############
-#     	Field('archivo_nombre_original_c', 'upload', label=T("Fotografía")),
-# 
-
+	
+     	###########Imagen############
+     	Field('archivo_c', 'upload', label=T("Fotografía"))
+ 
 	##Cerrando la lista de campos para el formulario
 	]
 
 	forma=SQLFORM.factory(*Campos_pestana_1, table_name='tabla')
 	# El nombre de la tabla: table_name se utiliza únicamente para los estilos, ya que 
 	# determina los ID's de los campos en el formulario
-
-#########IMAGENES################# 
-#     ### Cargar imágenes
-#     imagenForm = FORM(
-#         INPUT(_name='imagen_nombre',_type='text',required=True),
-#         INPUT(_name='imagen_archivo',_type='file')
-#     )
-# 
-#     if imagenForm.accepts(request.vars,formname='imagenForm'):
-#         imagen = db.Imagen_referencia_sitio.archivo_nombre_original.store(
-#             imagenForm.vars.imagen_archivo.file,imagenForm.vars.imagen_archivo.filename)
-#         id = db.Imagen_referencia_sitio.insert(
-#				archivo_nombre_original=imagen,archivo_nombre=imagenForm.vars.imagen_nombre)
-# 
-#     imagenes = db().select(db.Imagen_referencia_sitio.ALL)
-#################################
 
 	if forma.validate():
 	
@@ -212,6 +182,7 @@ def index():
 		#Agregando los datos que no se pidieron al usuario:
 		
 		formaSitio1 = {}
+		
 		formaSitio1['conglomerado_muestra_id']=conglomeradoInsertado
 		formaSitio1['sitio_numero']=1
 		formaSitio1['existe']=True
@@ -233,9 +204,27 @@ def index():
 			formaSitio1['evidencia']=forma.vars['evidencia_1']
 		else:
 			formaSitio1['evidencia']=False
+			
 		#Insertando en la base de datos:
-		db.Sitio_muestra.insert(**formaSitio1)
+		sitio1Insertado = db.Sitio_muestra.insert(**formaSitio1)
 
+		################Procesando la imagen 1##########################################
+		
+		try:
+		
+			formaImagen1 = {}
+			
+			formaImagen1['sitio_muestra_id']=sitio1Insertado
+			formaImagen1['archivo_nombre_original']=forma.vars['archivo_1'].filename
+			formaImagen1['archivo']=forma.vars['archivo_1']
+			
+			#formaImagen1['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
+
+			db.Imagen_referencia_sitio.insert(**formaImagen1)
+			
+		except:
+			pass
+			
 		################Procesando los datos del sitio 2##############################
 
 		#Agregando los datos que no se pidieron al usuario:
@@ -268,9 +257,26 @@ def index():
 			formaSitio2['existe']=False
 		
 		#Insertando en la base de datos:
-		db.Sitio_muestra.insert(**formaSitio2)
+		sitio2Insertado=db.Sitio_muestra.insert(**formaSitio2)		
+
+		################Procesando la imagen 2##########################################
 		
-		################Procesando los datos del sitio3##############################
+		if bool(forma.vars['existe_2']):
+			
+			try:
+
+				formaImagen2 = {}
+		
+				formaImagen2['sitio_muestra_id']=sitio2Insertado
+				formaImagen2['archivo_nombre_original']=forma.vars['archivo_2'].filename
+				formaImagen2['archivo']=forma.vars['archivo_2']
+		
+				db.Imagen_referencia_sitio.insert(**formaImagen2)
+				
+			except:
+				pass
+
+		################Procesando los datos del sitio 3##############################
 
 		#Agregando los datos que no se pidieron al usuario:
 		
@@ -302,9 +308,26 @@ def index():
 			formaSitio3['existe']=False
 		
 		#Insertando en la base de datos:
-		db.Sitio_muestra.insert(**formaSitio3)
+		sitio3Insertado=db.Sitio_muestra.insert(**formaSitio3)
+		
+		################Procesando la imagen 3##########################################
+		
+		if bool(forma.vars['existe_3']):
+			
+			try:
 
-		################Procesando los datos del sitio4##############################
+				formaImagen3 = {}
+		
+				formaImagen3['sitio_muestra_id']=sitio3Insertado
+				formaImagen3['archivo_nombre_original']=forma.vars['archivo_3'].filename
+				formaImagen3['archivo']=forma.vars['archivo_3']
+		
+				db.Imagen_referencia_sitio.insert(**formaImagen3)
+				
+			except:
+				pass
+
+		################Procesando los datos del sitio 4##############################
 
 		#Agregando los datos que no se pidieron al usuario:
 		
@@ -336,7 +359,24 @@ def index():
 			formaSitio4['existe']=False
 		
 		#Insertando en la base de datos:
-		db.Sitio_muestra.insert(**formaSitio4)
+		sitio4Insertado=db.Sitio_muestra.insert(**formaSitio4)
+		
+		################Procesando la imagen##########################################
+		
+		if bool(forma.vars['existe_4']):
+			
+			try:
+
+				formaImagen4 = {}
+		
+				formaImagen4['sitio_muestra_id']=sitio4Insertado
+				formaImagen4['archivo_nombre_original']=forma.vars['archivo_4'].filename
+				formaImagen4['archivo']=forma.vars['archivo_4']
+		
+				db.Imagen_referencia_sitio.insert(**formaImagen4)
+				
+			except:
+				pass
 
 		################Procesando los datos del punto de control#########################
 
@@ -362,7 +402,23 @@ def index():
 			formaSitioC['evidencia']=forma.vars['evidencia_c']
 		else:
 			formaSitioC['evidencia']=False
+			
 		#Insertando en la base de datos:
-		db.Sitio_muestra.insert(**formaSitioC)
+		sitioCInsertado=db.Sitio_muestra.insert(**formaSitioC)
+		
+		################Procesando la imagen del control##########################################
+		
+		try:
+		
+			formaImagenC = {}
+			
+			formaImagenC['sitio_muestra_id']=sitioCInsertado
+			formaImagenC['archivo_nombre_original']=forma.vars['archivo_c'].filename
+			formaImagenC['archivo']=forma.vars['archivo_c']
+			
+			db.Imagen_referencia_sitio.insert(**formaImagenC)
+			
+		except:
+			pass
 
 	return dict(forma=forma)
