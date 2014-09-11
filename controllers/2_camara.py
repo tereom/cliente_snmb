@@ -35,8 +35,7 @@ def index():
     	Field('sensibilidad','reference Camara_sensibilidad_opcion',
     		label=T("Sensibilidad"),
     		requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.id,'%(nombre)s')),
-    	Field('comentario', 'text',label=T("Observaciones")),
-	
+    	Field('comentario', 'text',label=T("Observaciones")),	
 	# campos imagen_referencia_camara	
     	Field('archivo_nombre',requires=IS_NOT_EMPTY()),
     	Field('archivo_nombre_original','upload',autodelete=True,

@@ -41,7 +41,6 @@
         float: left;
     }
 </style>
-<link href="{{=URL('static', 'js/file-validator.js')}}" rel="stylesheet" type="text/css" />
 {{end}}
 
 
@@ -622,8 +621,9 @@
     	function()
     	{
     		if($('#tabla_uso_suelo_tipo').find(":selected").text()!="Vegetación")
+            {
     			$('#tabla_vegetacion_tipo').val("1");
-    	
+    	    }
     		if($('#tabla_existe_2').prop('checked') == false)
     		{
     			$('.Sitio_info_2 input').not('#tabla_evidencia_2').val("0");

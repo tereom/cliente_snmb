@@ -37,10 +37,9 @@ db.define_table('Especie_invasora',
                 Field('nombre_cientifico','string'),
                 Field('numero_individuos', \
                         'reference Especie_individuos_opcion',\
-                         label = "Número de individuos")
+                         label=T("Número de individuos"))
 )
 
 db.Especie_invasora.numero_individuos.requires=\
         IS_IN_DB(db,db.Especie_individuos_opcion.num_individuos,'%(nombre_individuos)s')
-
-  '''      
+'''
