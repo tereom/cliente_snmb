@@ -37,7 +37,7 @@ def index():
     		requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.id,'%(nombre)s')),
     	Field('comentario', 'text',label=T("Observaciones")),
 	
-	# campos magen_referencia_camara	
+	# campos imagen_referencia_camara	
     	Field('archivo_nombre',requires=IS_NOT_EMPTY()),
     	Field('archivo_nombre_original','upload',autodelete=True,
     		label=T("Fotografía"),requires=IS_NOT_EMPTY())
@@ -54,7 +54,6 @@ def index():
 		formaImage['camara_id']=camaraInsertado
 
 	return dict(forma=forma)
-
 # db.Camara.nombre.requires=IS_IN_DB(db,db.Camara_nombre_opcion.num_nombre,'%(nombre_nombre)s')
 # db.Camara.fecha_inicio.requires=IS_NOT_EMPTY()
 # db.Camara.fecha_termino.requires=IS_NOT_EMPTY()
