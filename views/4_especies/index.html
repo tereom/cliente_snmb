@@ -147,12 +147,36 @@
 			<tr>
 				<td rowspan="2" class="CentrarV">
 					<div>
-						<label for="tabla_conabio_id">Lista CONABIO especies</label>
+						<label for="tabla_conabio_lista">Lista CONABIO especies</label>
 					</div>
 					<div>
 						<select class="generic-widget" name="conabio_lista" id="tabla_conabio_lista">
 							<option value=""/>
-							<option value="1">Gato</option>
+							<option value="1">Arundo donax<Carrizo gigante>
+							<option value="2">Axis axis<Venado axis>
+							<option value="3">Bassia scoparia<Rodadora>
+							<option value="4">Bromus madritensis">Bromo>
+							<option value="5">Cactoblastis cactorum<Palomilla de nopal>
+							<option value="6">Carpobrotus sp (C. edulis)<Higo marino>
+							<option value="7">Cyperus papyrus (ANP)<>
+							<option value="8">Eichhornia crassipes<Lirio acuático>
+							<option value="9">Hedera helix<Hiedra>
+							<option value="10">Lepidium draba /Cardaria draba<Flor bábol, capellanes>
+							<option value="11">Melinis minutiflora<Paja rosada, pasto morado, Zacate colorado>
+							<option value="12">Melinis repens<Paja rosada, pasto morado, Zacate colorado>
+							<option value="13">Mesembryanthemum crystallinum<Vidrillo>
+							<option value="14">Myiopsitta monachus<Perico monje>
+							<option value="15">Myocastor coypus<Coipu>
+							<option value="16">Oeceoclades maculata<Orquidea monje>
+							<option value="17">Pennisetum clandestinum<Kikuyo, Kuyuyú, tapete, colchoncillo>
+							<option value="18">Pueraria sp. (montana lobata o phaseoloides<Kudzu>
+							<option value="19">Rottboellia cochinchinensis<Caminadora>
+							<option value="20">Salsola sp. (vermiculata o tragus)<Rodadora>
+							<option value="21">Stizlobium prurienes<Picapica>
+							<option value="22">Sus scrofa<Cerdo europeo>
+							<option value="23">Tamarix sp.<Pino salado, cedro salado, tamarisco>
+
+							<option value="24">Otros</option>
 						</select>
 					</div>
 				</td>				
@@ -164,7 +188,7 @@
 						<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
 					</div>
 				</td>-->
-				<td>
+				<td class="Nombre">
 					<div>
 						<div style="float:left;padding-right:10px;">
 							<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
@@ -188,7 +212,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
+				<td class="Nombre">
 					<div>
 						<div style="float:left;padding-right:10px;">
 							<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
@@ -211,22 +235,28 @@
 				</textarea>
     		</div>
 	</fieldset>
-		<input type="submit" value="Enviar" class="btn" id="enviar"/>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
-<!-- {{=BEAUTIFY(response._vars)}} -->
 
-<!-- tengo problemas con lista conabio, no tengo etiqueta para el booleano -->
+<script>
+    $(document).ready
+    (
+        function()
+        {
+           /*Cuando el documento se carga, el campo de vegetación está escondido*/
+           $('#tabla_conabio_lista').val("");
+           $('.Nombre').hide();
+        }
+    )
 
-		<!-- como se activa esta botón? 
-			<tr>
-			<td>
-				<div>
-					<label for="tabla_nombre_en_lista">a</label>
-				</div>
-				<div>
-					<th class="Centrar">  
-						<input class="boolean" name="nombre_en_lista" id="tabla_nombre_en_lista" type="checkbox" value="on"/>
-					</th>
-				</div>
-			</td> 
-			</tr> -->
+    $('#tabla_conabio_lista').change
+    (
+        function()
+        {
+            if($(this).find(":selected").text()=="Otros")
+                $('.Nombre').fadeIn();
+            else
+                $('.Nombre').fadeOut();
+        }
+    )
+</script>
