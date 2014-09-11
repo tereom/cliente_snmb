@@ -51,11 +51,16 @@ db.define_table('Sitio_muestra', *Campos_Sitio_muestra)
 
 Campos_Imagen_referencia_sitio = [
 	Field('sitio_muestra_id','reference Sitio_muestra', required='TRUE'),
-    Field('archivo_nombre',required='TRUE'),
-    Field('archivo_nombre_original', 'upload', autodelete=True, label=T("Fotografía"), required='TRUE')]
+    Field('archivo_nombre_original',required='TRUE'),
+    Field('archivo', 'upload', autodelete=True, label=T("Fotografía"), required='TRUE')]
+    
+    # La inclusión del siguiente campo no es segura, ya que hay que ver su utilidad. Si se
+    #incluye, se necesitará un módulo que lea datos de la forma y los combine para formar
+    #el nombre_CONAFOR. También hay que ver si es necesario que los archivos se guarden en
+    #carpetas distintas, ya que todo se va a hacer de manera automatizada.
+    # Field('archivo_nombre_CONAFOR',required='TRUE'),
 
 db.define_table('Imagen_referencia_sitio', *Campos_Imagen_referencia_sitio)
-
 
 ########################################################################
 ## Fields can be 'string','text','password','integer','double','boolean'
