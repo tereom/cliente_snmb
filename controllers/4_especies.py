@@ -13,11 +13,11 @@ def index():
     # campos especie
     Field('nombre_en_lista','boolean',
         label=T("Lista CONABIO de especies invasoras")),
-    Field('hay_nombre_comun', 'boolean', label="Nombre común"),
-    Field('nombre_comun','string',requires=IS_NOT_EMPTY()),
-    Field('hay_nombre_cientifico', 'boolean', label="Nombre científico"),
+    Field('hay_nombre_comun','boolean',label="Nombre común"),
+    Field('nombre_comun','string'),
+    Field('hay_nombre_cientifico','boolean',label="Nombre científico"),
     Field('nombre_cientifico','string'),
-    Field('numero_individuos',label = "Número de individuos",
+    Field('numero_individuos',label="Número de individuos",
         requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')),
 	
     # campos imagen_referencia_grabadora	

@@ -20,7 +20,8 @@ Campos_Conglomerado_muestra = [
     Field('uso_suelo_tipo', 'reference Cat_suelo_conglomerado',label=T("Tipo de uso de suelo"),required='TRUE'),
 	Field('vegetacion_tipo','reference Cat_vegetacion_conglomerado',label=T("Tipo de vegetación")),
     Field('perturbado','boolean',label=T("Perturbado")),
-	Field('comentario','text',label=T("Observaciones"))]
+	Field('comentario','text',label=T("Observaciones"))
+	]
 
 db.define_table('Conglomerado_muestra', *Campos_Conglomerado_muestra)
 
@@ -29,9 +30,11 @@ db.define_table('Conglomerado_muestra', *Campos_Conglomerado_muestra)
 ########################
 
 Campos_Sitio_muestra = [
-	Field('conglomerado_muestra_id','reference Conglomerado_muestra',required='TRUE'),
-	Field('sitio_numero','reference Cat_numero_sitio',label=T("Número de sitio"), required='TRUE'),
-	Field('existe', 'boolean',label=T("Existe"), required='TRUE'),
+	Field('conglomerado_muestra_id','reference Conglomerado_muestra',
+		required='TRUE'),
+	Field('sitio_numero','reference Cat_numero_sitio',
+		label=T("Número de sitio"), required='TRUE'),
+	Field('existe', 'boolean',label=T("Existe"),required='TRUE'),
 	Field('lat_grado','integer',label=T("Grado")),
 	Field('lat_min','integer',label=T("Minuto")),
 	Field('lat_seg','double',label=T("Segundo")),
@@ -41,9 +44,10 @@ Campos_Sitio_muestra = [
     Field('altitud','double',label=T("Altitud(m)")),
     Field('gps_error','double',label=T("Error(m)")),
 	Field('elipsoide', 'reference Cat_elipsoide_sitio',label=T("Datum")), 
-    Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior"))] 
+    Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior"))
+    ] 
 
-db.define_table('Sitio_muestra', *Campos_Sitio_muestra)
+db.define_table('Sitio_muestra',*Campos_Sitio_muestra)
 
 ########################
 #Imagen_referencia_sitio
@@ -54,7 +58,7 @@ Campos_Imagen_referencia_sitio = [
     Field('archivo_nombre',required='TRUE'),
     Field('archivo_nombre_original', 'upload', autodelete=True, label=T("Fotografía"), required='TRUE')]
 
-db.define_table('Imagen_referencia_sitio', *Campos_Imagen_referencia_sitio)
+db.define_table('Imagen_referencia_sitio',*Campos_Imagen_referencia_sitio)
 
 
 ########################################################################
