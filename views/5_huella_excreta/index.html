@@ -42,7 +42,7 @@
 <form action="#" enctype="multipart/form-data" method="post">
 	<fieldset>
 		<legend>
-		Transecto especies invasoras
+		Transecto huellas y excretas
 		</legend>
 		<table class="Especies">
 			<tr>
@@ -116,9 +116,33 @@
 	</br>
 	<fieldset>
 		<legend>
-		Especies invasoras
-		</legend>
+			Huella/excreta
+		</legend><td>
 		<table class="Especies">
+			<tr>
+				<th>
+					<div style="float:left;padding-right:10px;">
+						<label for="tabla_es_huella">Huellas</label>
+					</div>
+					<div style="float:center;">
+						<input class="boolean" name="es_huella" id="tabla_es_huella" type="radio" value="on"/>
+					</div>
+				</th>
+				<th>
+				</th>
+			</tr>
+			<tr>
+				<th>
+					<div style="float:left;padding-right:10px;padding-bottom: 10px">
+						<label for="tabla_es_excreta">Excretas</label>
+					</div>
+					<div style="float:center;">
+						<input class="boolean" name="es_excreta" id="tabla_es_excreta" type="radio" value="off"/>
+					</div>
+				</th>
+				<th>
+				</th>
+			</tr>
 			<tr>
 				<td>
 					<div>
@@ -141,35 +165,14 @@
 							<option value="1">Café</option>
 					</div>
 				</td>
-				<td>
-				</td>
 			</tr>
 			<tr>
-				<td rowspan="2" class="CentrarV">
-					<div>
-						<label for="tabla_conabio_id">Lista CONABIO especies</label>
-					</div>
-					<div>
-						<select class="generic-widget" name="conabio_lista" id="tabla_conabio_lista">
-							<option value=""/>
-							<option value="1">Gato</option>
-						</select>
-					</div>
-				</td>				
-				<!--<td>
-					<div>
-						<label for="tabla_hay_nombre_comun"></label>
-					</div>
-					<div>
-						<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
-					</div>
-				</td>-->
 				<td>
 					<div>
 						<div style="float:left;padding-right:10px;">
 							<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
 						</div>
-						<div style="float:center;">
+						<div style="float:left;padding-right:22px;">
 							<label for="tabla_comun">Nombre común</label>
 						</div>
 						<div style="float:left;">
@@ -177,14 +180,7 @@
 						</div>
 					</div>
 				</td>
-				<td rowspan="2" class="CentrarV">
-					<div>
-						<label for="tabla_numero_individuos">Número de individuos</label>
-					</div>
-					<div>
-						<select class="generic-widget" name="numero_individuos" id="tabla_numero_individuos">
-						</select>
-					</div>
+				<td>
 				</td>
 			</tr>
 			<tr>
@@ -193,7 +189,7 @@
 						<div style="float:left;padding-right:10px;">
 							<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
 						</div>
-						<div div style="float:center;">
+						<div div style="float:left;padding-right:10px;">
 							<label for="tabla_cientifico">Nombre científico</label>
 						</div>
 						<div style="float:left;">
@@ -201,8 +197,28 @@
 						</div>
 					</div>
 				</td>
+				<td>
+				</td>
 			</tr>
-		</table>
+			<tr>
+				<td>
+					<div>
+						<label for="tabla_largo">Largo(cm)</label>
+					</div>
+					<div>
+						<input class="double" name="largo" id="tabla_largo" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_ancho">Ancho(cm)</label>
+					</div>
+					<div>
+						<input class="double" name="ancho" id="tabla_ancho" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+				</table>
 			<div>
     			<label for="tabla_archivos">Lista de archivos</label>
     		</div>
@@ -213,20 +229,4 @@
 	</fieldset>
 		<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
-<!-- {{=BEAUTIFY(response._vars)}} -->
 
-<!-- tengo problemas con lista conabio, no tengo etiqueta para el booleano -->
-
-		<!-- como se activa esta botón? 
-			<tr>
-			<td>
-				<div>
-					<label for="tabla_nombre_en_lista">a</label>
-				</div>
-				<div>
-					<th class="Centrar">  
-						<input class="boolean" name="nombre_en_lista" id="tabla_nombre_en_lista" type="checkbox" value="on"/>
-					</th>
-				</div>
-			</td> 
-			</tr> -->
