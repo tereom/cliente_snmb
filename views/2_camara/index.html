@@ -2,12 +2,6 @@
 {{block head}}
 <style type="text/css">
 
-	table
-    {
-        table-layout: fixed;
-        width: 120%;
-    }
-
     .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
     {
         margin-right: 2cm;
@@ -205,8 +199,24 @@
 						</select>
 					</div>
 				</td>
-    		</tr>
+				<td>
+					<div>
+						<label for="tabla_imagen_ref_archivo_nombre">Foto cámara y GPS
+						</label>
+					</div>
+					<div>
+						<input type="file" id="imagen_ref_archivo_nombre" name="tabla_imagen_ref_archivo_nombre"/>
+					</div>
+				</td>
+			</tr>
     	</table>
+    	<div>
+			<label for="tabla_archivo_nombre">Subir imágenes/videos
+			</label>
+		</div>
+		<div>
+			<input type="file" id="archivo_nombre" name="tabla_archivo_nombre" multiple/>
+		</div>
     	<div>
     		<label for="tabla_comentario">Observaciones</label>
     	</div>
