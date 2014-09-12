@@ -1,5 +1,4 @@
 # coding: utf8
-import re
 #def check(form):
 #    if form.vars.b and not form.vars.c:
 #        form.errors.c = "If the b is checked, c must be filled"
@@ -65,7 +64,7 @@ def index():
     	Field('evidencia_1', 'boolean',label=XML("Evidencia <br/> anterior")),
     	
      	###########Imagen############
-		Field('archivo_1', 'upload', label=T("Fotografía")),
+		Field('archivo_1', 'upload', label=T("Fotografía"), uploadfolder="naruto"),
 		
 		#La validación de la imagen se realizará directo en la vista, puesto que resultaría
 		#muy impráctico poner una imagen default para que los sitios no existentes pasen
@@ -94,7 +93,7 @@ def index():
     	Field('evidencia_2', 'boolean',label=XML("Evidencia <br/> anterior")),
     	
      	###########Imagen############
- 		Field('archivo_2', 'upload', label=T("Fotografía")),
+ 		Field('archivo_2', 'upload', label=T("Fotografía"), uploadfolder="naruto"),
  
 		###############################
 		#Campos del sitio 3
@@ -113,7 +112,7 @@ def index():
     	Field('evidencia_3', 'boolean',label=XML("Evidencia <br/> anterior")),
      	
      	###########Imagen############
- 		Field('archivo_3', 'upload', label=T("Fotografía")),
+ 		Field('archivo_3', 'upload', label=T("Fotografía"), uploadfolder="naruto"),
  
 		###############################
 		#Campos del sitio 4
@@ -132,7 +131,7 @@ def index():
     	Field('evidencia_4', 'boolean',label=XML("Evidencia <br/> anterior")),
      	
      	###########Imagen############
- 		Field('archivo_4', 'upload', label=T("Fotografía")),
+ 		Field('archivo_4', 'upload', label=T("Fotografía"), uploadfolder="naruto"),
  
 		###############################
 		#Campos del punto de control
@@ -150,7 +149,7 @@ def index():
     	Field('evidencia_c', 'boolean',label=XML("Evidencia <br/> anterior")),
 	
      	###########Imagen############
-     	Field('archivo_c', 'upload', label=T("Fotografía"))
+     	Field('archivo_c', 'upload', label=T("Fotografía"), uploadfolder="naruto")
  
 	##Cerrando la lista de campos para el formulario
 	]
@@ -159,6 +158,7 @@ def index():
 	# El nombre de la tabla: table_name se utiliza únicamente para los estilos, ya que 
 	# determina los ID's de los campos en el formulario
 
+	#if forma.accepts(request.vars):
 	if forma.validate():
 	
 		##################Procesando los datos del conglomerado######################
@@ -210,20 +210,24 @@ def index():
 
 		################Procesando la imagen 1##########################################
 		
-		try:
+		#try:
 		
-			formaImagen1 = {}
+		formaImagen1 = {}
 			
-			formaImagen1['sitio_muestra_id']=sitio1Insertado
-			formaImagen1['archivo_nombre_original']=forma.vars['archivo_1'].filename
-			formaImagen1['archivo']=forma.vars['archivo_1']
-			
-			#formaImagen1['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
+		formaImagen1['sitio_muestra_id']=sitio1Insertado
+		formaImagen1['archivo_nombre_original']=request.vars['archivo_1'].filename
+		#formaImagen1['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
 
-			db.Imagen_referencia_sitio.insert(**formaImagen1)
+		#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
+		#a la base de datos:
+
+		formaImagen1['archivo']=forma.vars['archivo_1']
+
+			#Insertando en la base de datos:
+		db.Imagen_referencia_sitio.insert(**formaImagen1)
 			
-		except:
-			pass
+		#except:
+			#pass
 			
 		################Procesando los datos del sitio 2##############################
 
@@ -264,16 +268,24 @@ def index():
 		if bool(forma.vars['existe_2']):
 			
 			try:
-
+			
 				formaImagen2 = {}
-		
+			
 				formaImagen2['sitio_muestra_id']=sitio2Insertado
-				formaImagen2['archivo_nombre_original']=forma.vars['archivo_2'].filename
+				formaImagen2['archivo_nombre_original']=request.vars['archivo_2'].filename
+				#formaImagen2['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
+
+				#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
+				#a la base de datos:
+
 				formaImagen2['archivo']=forma.vars['archivo_2']
-		
+
+				#Insertando en la base de datos:
 				db.Imagen_referencia_sitio.insert(**formaImagen2)
+
 				
 			except:
+			
 				pass
 
 		################Procesando los datos del sitio 3##############################
@@ -317,11 +329,17 @@ def index():
 			try:
 
 				formaImagen3 = {}
-		
+			
 				formaImagen3['sitio_muestra_id']=sitio3Insertado
-				formaImagen3['archivo_nombre_original']=forma.vars['archivo_3'].filename
+				formaImagen3['archivo_nombre_original']=request.vars['archivo_3'].filename
+				#formaImagen3['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
+
+				#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
+				#a la base de datos:
+
 				formaImagen3['archivo']=forma.vars['archivo_3']
-		
+
+				#Insertando en la base de datos:
 				db.Imagen_referencia_sitio.insert(**formaImagen3)
 				
 			except:
@@ -368,11 +386,17 @@ def index():
 			try:
 
 				formaImagen4 = {}
-		
+			
 				formaImagen4['sitio_muestra_id']=sitio4Insertado
-				formaImagen4['archivo_nombre_original']=forma.vars['archivo_4'].filename
+				formaImagen4['archivo_nombre_original']=request.vars['archivo_4'].filename
+				#formaImagen4['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
+
+				#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
+				#a la base de datos:
+
 				formaImagen4['archivo']=forma.vars['archivo_4']
-		
+
+				#Insertando en la base de datos:
 				db.Imagen_referencia_sitio.insert(**formaImagen4)
 				
 			except:
@@ -413,11 +437,17 @@ def index():
 			formaImagenC = {}
 			
 			formaImagenC['sitio_muestra_id']=sitioCInsertado
-			formaImagenC['archivo_nombre_original']=forma.vars['archivo_c'].filename
+			formaImagenC['archivo_nombre_original']=request.vars['archivo_c'].filename
+			#formaImagenC['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
+
+			#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
+			#a la base de datos:
+
 			formaImagenC['archivo']=forma.vars['archivo_c']
-			
+
+			#Insertando en la base de datos:
 			db.Imagen_referencia_sitio.insert(**formaImagenC)
-			
+		
 		except:
 			pass
 
