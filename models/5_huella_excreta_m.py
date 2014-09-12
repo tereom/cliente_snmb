@@ -1,6 +1,6 @@
 # coding: utf8
 
-## En esta segción se definen las tablas correspondientes a la pestaña de 
+## En esta sección se definen las tablas correspondientes a la pestaña de 
 ## Huellas y Excretas, es decir: Transecto_huellas_excretas_muestra, 
 ## Huella_excreta, Archivo_huella_excreta
 Campos_Transecto_Huellas_excretas = [
