@@ -1,9 +1,10 @@
 # coding: utf8
-# try something like
 def index(): 
+
 	Campos_pestana_2 = [
+	
 	# campos Camara
-	    Field('nombre','reference Cat_nombre_camara',label=T("Código cámara"),
+	    Field('nombre', label=T("Código cámara"),
 	    	requires=IS_IN_DB(db,db.Cat_nombre_camara.id,'%(nombre)s')), 
     	Field('fecha_inicio', 'date',label=T("Fecha de colocación"),
     		requires=IS_NOT_EMPTY()),
