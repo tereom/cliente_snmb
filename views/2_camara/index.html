@@ -2,12 +2,6 @@
 {{block head}}
 <style type="text/css">
 
-	table
-    {
-        table-layout: fixed;
-        width: 120%;
-    }
-
     .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
     {
         margin-right: 2cm;
@@ -43,15 +37,16 @@
 {{end}}
 
 
-<form action="#" enctype="multipart/form-data" method="post">
+<form action="" enctype="multipart/form-data" method="post">
+	<input type="hidden" name="_formname" value="prueba"/>
 	<fieldset>
-		<legend>
+	<legend>
 		Datos de la cámara
 		</legend>
 		<table class="No_GPS">
 			<tr>
 				<td>
-					<div>
+	<!--				<div>
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
@@ -60,7 +55,7 @@
 							<option value="1">Gato</option>
 						</select>
 					</div>
-				</td>
+				</td> -->
 				<td>
 					<div>
 						<label for="tabla_sitio_numero">Sitio</label>
@@ -71,7 +66,7 @@
 							<option value="1">Café</option>
 					</div>
 				</td>
-				<td>
+<!--				<td>
 					<div>
 						<label for="tabla_distancia_centro">Distancia al centro del sitio (m)</label>
 					</div>
@@ -166,6 +161,8 @@
             	</td>
             	<td>
         			<select class="generic-widget" name="elipsoide" id="tabla_elipsoide">
+        					<option value=""/>
+							<option value="1">Gato</option>
 					</select>
             	</td>
             	<td>
@@ -184,6 +181,8 @@
 					</div>
 					<div>
 						<select class="generic-widget" name="nombre" id="tabla_nombre">
+							<option value=""/>
+							<option value="1">Gato</option>			
 						</select>
 					</div>
 				</td>
@@ -193,6 +192,8 @@
 					</div>
 					<div>
 						<select class="generic-widget" name="resolucion" id="tabla_resolucion">
+							<option value=""/>
+							<option value="1">Gato</option>
 						</select>
 					</div>
 				</td>
@@ -202,11 +203,29 @@
 					</div>
 					<div>
 						<select class="generic-widget" name="sensibilidad" id="tabla_sensibilidad">
+							<option value=""/>
+							<option value="1">Gato</option>
 						</select>
 					</div>
 				</td>
-    		</tr>
+				<td>
+					<div>
+						<label for="tabla_imagen_ref_archivo_nombre">Foto cámara y GPS
+						</label>
+					</div>
+					<div>
+						<input type="file" id="imagen_ref_archivo_nombre" name="imagen_camara"/>
+					</div>
+				</td>
+			</tr>
     	</table>
+    	<div>
+			<label for="tabla_archivo_nombre">Subir imágenes/videos
+			</label>
+		</div>
+		<div>
+			<input type="file" id="archivo_nombre" name="tabla_archivo_nombre" multiple/>
+		</div> -->
     	<div>
     		<label for="tabla_comentario">Observaciones</label>
     	</div>
