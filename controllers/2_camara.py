@@ -53,13 +53,11 @@ def index():
 
     forma = FORM(*Campos_pestana_2)
 
-    #if forma.accepts(request.vars,formname='formaHTML'):
     if forma.accepts(request.vars,formname='formaHTML'):
-
     
     	################Procesando la cámara#################################
     
-    	#Filtrando los datos correspondientes a la base de datos de la cámara:
+    	#Filtrando los datos correspondientes a la tabla de la cámara:
         formaCamara = db.Camara._filter_fields(forma.vars)
         
         #Utilizando la llave del sitio para encontrarlo:
