@@ -58,5 +58,4 @@ def index():
 		formaImagen = {}
 		formaImage['camara_id']=camaraInsertado
 	'''
-
 	return dict()
