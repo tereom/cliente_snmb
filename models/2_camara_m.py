@@ -1,42 +1,65 @@
 #coding: utf8
 
-# En esta segción se definen las tablas correspondientes a la pestaña de 
+# En esta sección se definen las tablas correspondientes a la pestaña de 
 # Camara, es decir: Camara, File_camera, Reference_image_camera
 # El campo de ID es automático en Web2py, por lo que no se incluye:
 
+##########################################################################
+## Cámara
+########################################################################
+
+
 Campos_Camara = [
-    # Field('nombre','reference Cat_nombre_camara',label=T("Código cámara")), 
-    # Field('fecha_inicio','date',label=T("Fecha de colocación"),required='TRUE'),
-    # Field('fecha_termino','date',label=T("Fecha de levantamiento"),
-    # 	required='TRUE'),
-    # Field('hora_inicio','time',label=T("Hora inicio"),required='TRUE'),
-    # Field('hora_termino', 'date',label=T("Hora término"),required='TRUE'),
-    # Field('lat_grado','integer',label=T("grado"),required='TRUE'),
-    # Field('lat_min','integer',label=T("minuto"),required='TRUE'),
-    # Field('lat_seg','double',label=T("segundo"),required='TRUE'),
-    # Field('lon_grado','integer',label=T("grado"),required='TRUE'),
-    # Field('lon_min','integer',label=T("minuto"),required='TRUE'),
-    # Field('lon_seg','double',label=T("segundo"),required='TRUE'),
-    # Field('altitud','double',label=T("Altitud(m)"),required='TRUE'),
-    # Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
-    # Field('elipsoide', 'reference Cat_elipsoide_sitio',label=T("Datum"),
-    # 	required='TRUE'), 
-    Field('sitio_muestra_id','reference Sitio_muestra', required='TRUE'),         
-    # Field('distancia_centro','double',
-    # 	label=T("Distancia al centro del sitio (m)"),required='TRUE'),
-    # Field('llovio','boolean',label=T("Llovió durante el muestreo")),
-    # Field('resolucion','reference Cat_resolucion_camara',label=T("Resolución")),
-    # Field('sensibilidad','reference Cat_sensibilidad_camara',
-    # 	label=T("Sensibilidad")),
+	Field('nombre','reference Cat_nombre_camara',label=T("Código cámara"),required=True), 
+	Field('fecha_inicio','date',label=T("Fecha de colocación"),required=True),
+	Field('fecha_termino','date',label=T("Fecha de levantamiento"),required=True),
+	Field('hora_inicio','time',label=T("Hora inicio"),required=True),
+	Field('hora_termino', 'date',label=T("Hora término"),required=True),
+	Field('lat_grado','integer',label=T("grado"),required=True),
+	Field('lat_min','integer',label=T("minuto"),required=True),
+	Field('lat_seg','double',label=T("segundo"),required=True),
+	Field('lon_grado','integer',label=T("grado"),required=True),
+	Field('lon_min','integer',label=T("minuto"),required=True),
+	Field('lon_seg','double',label=T("segundo"),required=True),
+	Field('altitud','double',label=T("Altitud(m)"),required=True),
+	Field('gps_error','double',label=T("Error(m)"),required=True),
+	Field('elipsoide', 'reference Cat_elipsoide_sitio',label=T("Datum"),
+		required=True), 
+    Field('sitio_muestra_id','reference Sitio_muestra',required=True),         
+	Field('distancia_centro','double',
+		label=T("Distancia al centro del sitio (m)"),required=True),
+	Field('llovio','boolean',label=T("Llovió durante el muestreo"),required=True),
+	Field('resolucion','reference Cat_resolucion_camara',label=T("Resolución"),required=True),
+	Field('sensibilidad','reference Cat_sensibilidad_camara',label=T("Sensibilidad"),required=True),
     Field('comentario', 'text',label=T("Observaciones"))
     ]
 
 db.define_table('Camara',*Campos_Camara)
 
-Campos_Imagen_referencia_camara = [
-	Field('camara_id','reference Camara', required='TRUE'),
-    Field('archivo_nombre',required='TRUE'),
-    Field('archivo_nombre_original', 'upload', autodelete=True, label=T("Fotografía"), required='TRUE')]
+########################
+#Imagen_referencia_camara
+########################
 
-db.define_table('Imagen_referencia_camara',*Campos_Imagen_referencia_sitio)
+Campos_Imagen_referencia_camara = [
+	Field('camara_id','reference Camara',required=True),
+    Field('archivo_nombre_original',required=True),
+    Field('archivo', 'upload', autodelete=True, label=T("Fotografía"),required=True)
+    ]
+
+db.define_table('Imagen_referencia_camara',*Campos_Imagen_referencia_camara)
+
+########################
+#Archivo_camara
+########################
+
+Campos_Archivo_camara = [
+	Field('camara_id','reference Camara',required=True),
+    Field('archivo_nombre_original',required=True),
+    Field('archivo', 'upload', autodelete=True, label=T("Fotografía"),required=True)
+    #Field('es_imagen', 'boolean', required=True)
+    ]
+
+db.define_table('Archivo_camara',*Campos_Archivo_camara)
+
+
 
