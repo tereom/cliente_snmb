@@ -23,7 +23,8 @@ def index():
     Field('hay_nombre_cientifico','boolean',label=T("Nombre científico")),
     Field('nombre_cientifico','string'),
     Field('numero_individuos',label="Número de individuos",
-        requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')),    Field('comentario','text',label=T("Observaciones")),
+        requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')),    
+    Field('comentario','text',label=T("Observaciones")),
     # campos huella
     Field('es_huella','boolean',label=T("Huellas")),       
     # campos archivo

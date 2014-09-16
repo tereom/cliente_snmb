@@ -1,70 +1,149 @@
 # coding: utf8
 # try something like
 def index(): 
-	Campos_pestana_3 = [
-	# campos Grabadora
-	    Field('nombre','reference Cat_nombre_grabadora',label=T("Código grabadora"),
-	    	requires=IS_IN_DB(db,db.Cat_nombre_grabadora.id,'%(nombre)s')), 
-    	Field('fecha_inicio', 'date',label=T("Fecha de colocación"),
-    		requires=IS_NOT_EMPTY()),
-    	Field('fecha_termino', 'date',label=T("Fecha de levantamiento"),
-    		requires=IS_NOT_EMPTY()),	
-    	Field('hora_inicio','time',label=T("Hora inicio"),
-    		requires=IS_NOT_EMPTY()),
-    	Field('hora_termino', 'time',label=T("Hora término"),
-    		requires=IS_NOT_EMPTY()),
-    	Field('lat_grado','integer',label=T("grado"),requires=IS_NOT_EMPTY()),
-    	Field('lat_min','integer',label=T("minuto"),requires=IS_NOT_EMPTY()),
-    	Field('lat_seg','double',label=T("segundo"),requires=IS_NOT_EMPTY()),
-    	Field('lon_grado','integer',label=T("grado"),requires=IS_NOT_EMPTY()),
-    	Field('lon_min','integer',label=T("minuto"),requires=IS_NOT_EMPTY()),
-    	Field('lon_seg','double',label=T("segundo"),requires=IS_NOT_EMPTY()),
-    	Field('altitud','double',label=T("Altitud(m)"),requires=IS_NOT_EMPTY()),
-    	Field('gps_error','double',label=T("Error(m)"),requires=IS_NOT_EMPTY()),
-    	Field('elipsoide',label=T("Datum"),
-    		requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),    		
-    	Field('sitio_muestra_id',label=T("Sitio"),
-    		requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(sitio_numero)s')), 
-    	Field('distancia_centro','double',
-    		label=T("Distancia al centro del sitio (m)"),
-    		requires=IS_NOT_EMPTY()),    		
-    	Field('llovio','boolean',label=T("Llovió durante el muestreo")),
-        Field('microfonos_mojados','boolean',
-            label=T("Se mojaron los micrófonos")),
-    	Field('comentario', 'text',label=T("Observaciones")),
-	
-	# campos magen_referencia_grabadora	
-    	Field('archivo_nombre',requires=IS_NOT_EMPTY()),
-    	Field('archivo_nombre_original','upload',autodelete=True,
-    		label=T("Fotografía"),requires=IS_NOT_EMPTY())
-	]
+    Campos_pestana_3 = [
+    # campos Grabadora
+    SELECT(_name='conglomerado_muestra_id',
+        requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+    SELECT(_name='sitio_numero',
+        requires=IS_IN_DB(db,db.Cat_numero_sitio.id,'%(nombre)s')),
+    
+    #Datos de la grabadora
+    INPUT(_name='distancia_centro',_type='double',requires=IS_NOT_EMPTY()),           
+    INPUT(_name='fecha_inicio',_type='date',requires=IS_NOT_EMPTY()),
+    INPUT(_name='fecha_termino',_type='date',requires=IS_NOT_EMPTY()),    
+    INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
+    INPUT(_name='hora_termino',_type='time',requires=IS_NOT_EMPTY()),
+    INPUT(_name='llovio',_type='boolean'),
+        
+    INPUT(_name='lat_grado',_type='integer',requires=IS_NOT_EMPTY()),
+    INPUT(_name='lat_min',_type='integer',requires=IS_NOT_EMPTY()),
+    INPUT(_name='lat_seg',_type='double',requires=IS_NOT_EMPTY()),
+    INPUT(_name='lon_grado',_type='integer',requires=IS_NOT_EMPTY()),
+    INPUT(_name='lon_min',_type='integer',requires=IS_NOT_EMPTY()),
+    INPUT(_name='lon_seg',_type='double',requires=IS_NOT_EMPTY()),
+    INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
+    INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
+    SELECT(_name='elipsoide',
+        requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),          
+    SELECT(_name='nombre',
+        requires=IS_IN_DB(db,db.Cat_nombre_grabadora.id,'%(nombre)s')),
+    INPUT(_name='microfonos_mojados',_type='boolean'),
 
-	forma=SQLFORM.factory(*Campos_pestana_3,table_name='tabla')
+    TEXTAREA(_name='comentario',_type='text'),
 
-	if forma.validate():
-		formaGrabadora=db.Grabadora._filter_fields(forma.vars)
-		grabadoraInsertado = db.Grabadora.insert(**formaGrabadora)
-		formaGrabadora['sitio_muestra_id']=grabadoraInsertado
+    ###########Imagen de referencia grabadora ############
+    INPUT(_name='imagen_grabadora',_type='file',requires=IS_NOT_EMPTY()),
 
-		formaImagen = {}
-		formaImage['grabadora_id']=grabadoraInsertado
+    ###########Imagen de referencia micrófonos ############
+    INPUT(_name='imagen_microfonos',_type='file',requires=IS_NOT_EMPTY()),
+    
+    ###########Archivo referencia grabadora ############
+    INPUT(_name='archivo_metadatos',_type='file',requires=IS_NOT_EMPTY()),
+    
+    ###########Archivos de la grabadora###########
+    INPUT(_name='archivos_grabadora',_type='file',_multiple=True,
+        requires=IS_NOT_EMPTY())
+    ]
 
-	return dict(forma=forma)
+    forma = FORM(*Campos_pestana_3)
 
-# db.Grabadora.nombre.requires=IS_IN_DB(db,db.Grabadora_nombre_opcion.num_nombre,'%(nombre_nombre)s')
-# db.Grabadora.fecha_inicio.requires=IS_NOT_EMPTY()
-# db.Grabadora.fecha_termino.requires=IS_NOT_EMPTY()
-# db.Grabadora.hora_inicio.requires=IS_NOT_EMPTY()
-# db.Grabadora.hora_termino.requires=IS_NOT_EMPTY()
-# db.Grabadora.lat_grado.requires=IS_NOT_EMPTY()
-# db.Grabadora.lat_min.requires=IS_NOT_EMPTY()
-# db.Grabadora.lat_seg.requires=IS_NOT_EMPTY()
-# db.Grabadora.lon_grado.requires=IS_NOT_EMPTY()
-# db.Grabadora.lon_min.requires=IS_NOT_EMPTY()
-# db.Grabadora.lon_seg.requires=IS_NOT_EMPTY()
-# db.Grabadora.altitud.requires=IS_NOT_EMPTY()
-# db.Grabadora.gps_error.requires=IS_NOT_EMPTY()
-# db.Grabadora.elipsoide.requires=IS_NOT_EMPTY()
-# db.Grabadora.distancia_centro.requires=IS_NOT_EMPTY()
-# db.Grabadora.resolucion.requires=IS_NOT_EMPTY()
-# db.Grabadora.sensibilidad.requires=IS_NOT_EMPTY()
+    if forma.accepts(request.vars,formname='formaHTML'):
+    
+        ################Procesando la grabadora#################################
+    
+        #Filtrando los datos correspondientes a la tabla de la grabadora:
+        formaGrabadora = db.Grabadora._filter_fields(forma.vars)
+        
+        #Utilizando la llave del sitio para encontrarlo:
+        
+        idConglomerado = forma.vars['conglomerado_muestra_id']
+        sitioNumero = forma.vars['sitio_numero']
+        
+        sitioGrabadora = db((db.Sitio_muestra.conglomerado_muestra_id==idConglomerado)&
+            (db.Sitio_muestra.sitio_numero==sitioNumero)).select().first()
+        
+        formaGrabadora['sitio_muestra_id'] = sitioGrabadora
+        
+        #Guardando el registro de la cámara en la base de datos:
+        
+        grabadoraInsertada = db.Grabadora.insert(**formaGrabadora)
+        
+        ################Procesando la imagen de referencia grabadora#################################
+        
+        #Guardando la imagen de referencia en la carpeta adecuada
+        imagenRef = db.Imagen_referencia_grabadora.archivo.store(
+            forma.vars.imagen_grabadora.file,
+            forma.vars.imagen_grabadora.filename)
+        
+        #Creando los campos de la tabla Imagen_referencia_grabadora:
+        
+        formaImagenRef = {}
+        formaImagenRef['grabadora_id'] = grabadoraInsertada
+        formaImagenRef['archivo'] = imagenRef
+        formaImagenRef['archivo_nombre_original'] = forma.vars.imagen_grabadora.filename
+        
+        #Insertando el registro en la base de datos:
+        
+        db.Imagen_referencia_grabadora.insert(**formaImagenRef)
+
+        ################Procesando la imagen de referencia micrófonos#################################
+        
+        #Guardando la imagen de referencia en la carpeta adecuada
+        imagenRefMicro = db.Imagen_referencia_microfonos.archivo.store(forma.vars.imagen_microfonos.file,forma.vars.imagen_microfonos.filename)
+        
+        #Creando los campos de la tabla Archivo_referencia_grabadora:
+        
+        formaImagenRefMicro = {}
+        formaImagenRefMicro['grabadora_id'] = grabadoraInsertada
+        formaImagenRefMicro['archivo'] = imagenRefMicro
+        formaImagenRefMicro['archivo_nombre_original'] = forma.vars.imagen_microfonos.filename
+        
+        #Insertando el registro en la base de datos:
+        
+        db.Imagen_referencia_microfonos.insert(**formaImagenRefMicro)
+
+        ################Procesando el archivo de metadatos#################################
+        
+        #Guardando el archivo de metadatos en la carpeta adecuada
+        archivoMeta = db.Archivo_referencia_grabadora.archivo.store(forma.vars.archivo_metadatos.file,forma.vars.archivo_metadatos.filename)
+        
+        #Creando los campos de la tabla Imagen_referencia_microfonos:
+        
+        formaArchivoRef = {}
+        formaArchivoRef['grabadora_id'] = grabadoraInsertada
+        formaArchivoRef['archivo'] = archivoMeta
+        formaArchivoRef['archivo_nombre_original'] = forma.vars.archivo_metadatos.filename
+        
+        #Insertando el registro en la base de datos:
+        
+        db.Archivo_referencia_grabadora.insert(**formaArchivoRef)
+        
+        ################Procesando los archivos múltiples#################################
+        
+        archivos = forma.vars['archivos_grabadora']
+        if not isinstance(archivos, list):
+        
+            archivos = [archivos]
+            
+        for aux in archivos:
+            archivoGrabadora = db.Archivo_grabadora.archivo.store(aux, aux.filename)
+            
+            formaArchivoGrabadora = {}
+            formaArchivoGrabadora['grabadora_id'] = grabadoraInsertada
+            formaArchivoGrabadora['archivo'] = archivoGrabadora
+            formaArchivoGrabadora['archivo_nombre_original'] = aux.filename
+        
+            #Insertando el registro en la base de datos:
+
+            db.Archivo_grabadora.insert(**formaArchivoGrabadora)
+    
+        response.flash = 'Éxito'
+        
+    elif forma.errors:
+       response.flash = 'Hubo un error al llenar la forma'
+       
+    else:
+        response.flash ='Por favor, introduzca los datos de la grabadora'
+
+    return dict()
