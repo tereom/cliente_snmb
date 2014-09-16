@@ -16,7 +16,8 @@ def index():
     
     #Datos para localizar un sitio único y asociarle la cámara a éste.
     #Estos datos deben conformar una llave del sitio.
-    SELECT(_name='conglomerado_muestra_id', requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+    SELECT(_name='conglomerado_muestra_id',
+        requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
     SELECT(_name='sitio_numero',requires=IS_IN_DB(db,db.Cat_numero_sitio.id,'%(nombre)s')),
     
 	#Datos de la cámara
@@ -47,7 +48,7 @@ def index():
     INPUT(_name='imagen_camara',_type='file',requires=IS_NOT_EMPTY()),
     
     ###########Archivos de la cámara###########
-    INPUT(_name='archivos_camara',_type='file', _multiple=True, requires=IS_NOT_EMPTY())
+    INPUT(_name='archivos_camara',_type='file',_multiple=True,requires=IS_NOT_EMPTY())
 
     ]
 
