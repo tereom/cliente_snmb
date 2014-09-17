@@ -54,9 +54,9 @@ db.define_table('Sitio_muestra',*Campos_Sitio_muestra)
 ########################
 
 Campos_Imagen_referencia_sitio = [
-	Field('sitio_muestra_id','reference Sitio_muestra', required='TRUE'),
+	Field('sitio_muestra_id','reference Sitio_muestra',required='TRUE'),
     Field('archivo_nombre_original',required='TRUE'),
-    Field('archivo', 'upload', autodelete=True, label=T("Fotografía"), required='TRUE')]
+    Field('archivo','upload',autodelete=True,label=T("Fotografía"), required='TRUE')]
     
     # La inclusión del siguiente campo no es segura, ya que hay que ver su utilidad. Si se
     #incluye, se necesitará un módulo que lea datos de la forma y los combine para formar
