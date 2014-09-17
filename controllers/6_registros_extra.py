@@ -56,10 +56,6 @@ def index2():
 		INPUT(_name='nombre_cientifico',_type='string'),
 		INPUT(_name='numero_individuos', _type='integer', requires=IS_NOT_EMPTY()),
 		INPUT(_name='archivos_invasora',_type='file', _multiple=True, requires=IS_NOT_EMPTY())
-    ]
-    
-	formaEspecie=SQLFORM.factory(*Campos_especie_invasora_extra,table_name='tabla')
-
 
 	return dict(forma=forma)
 

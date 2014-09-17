@@ -1,38 +1,82 @@
 # coding: utf8
 
-## En esta segción se definen las tablas correspondientes a la pestaña de 
+## En esta sección se definen las tablas correspondientes a la pestaña de 
 ## Grabadora, es decir: Grabadora, Imagen_referencia_grabadora, 
 ## Archivo_referencia_grabadora, Imagen_referencia_microfonos
 ## Microphone_group, File_microphone_group
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
-'''
-Campos_Grabadoora = ['Grabadora',
-                Field('nombre','',\
-                	label=T("Código grabadora")),  
-                Field('fecha_inicio', 'date',label=T("Fecha de colocación"),\
-                        required='TRUE'),
-                Field('fecha_termino', 'date',label=T("Fecha de levantamiento"),\
-                        required='TRUE'),
-                Field('hora_inicio', 'time',label=T("Hora inicio"),\
-                        required='TRUE'),
-                Field('hora_termino', 'date',label=T("Hora término"),\
-                        required='TRUE'),
-                Field('lat_grado','integer',label=T("grado"),required='TRUE'),
-                Field('lat_min','integer',label=T("minuto"),required='TRUE'),
-                Field('lat_seg','double',label=T("segundo"),required='TRUE'),
-                Field('lon_grado','integer',label=T("grado"),required='TRUE'),
-                Field('lon_min','integer',label=T("minuto"),required='TRUE'),
-                Field('lon_seg','double',label=T("segundo"),required='TRUE'),
-                Field('altitud','double',label=T("Altitud(m)"),required='TRUE'),                
-                Field('gps_error','double',label=T("Error(m)"),required='TRUE'),
-                Field('elipsoide', 'reference Sitio_elipsoide_opcion',\
-                        label=T("Datum"),required='TRUE'), 
-                Field('sitio_muestra_id','reference Sitio_muestra'),         
-                Field('distancia_centro','double',label=T("Distancia al centro del sitio (m)"),required='TRUE'),
-                Field('llovio', 'boolean',label=T("Llovió durante el muestreo")),
-                Field('microfonos_mojados', 'boolean',\
-                		label=T("Se mojaron los micrófonos")),
-                Field('comment_', 'text',label=T("Observaciones"))
-                ]
 
-'''
+Campos_Grabadoora = [
+    Field('nombre','reference Cat_nombre_grabadora',required=True), 
+    Field('fecha_inicio','date',required=True),
+    Field('fecha_termino','date',required=True),
+    Field('hora_inicio','time',required=True),
+    Field('hora_termino','date',required=True),
+    Field('lat_grado','integer',required=True),
+    Field('lat_min','integer',required=True),
+    Field('lat_seg','double',required=True),
+    Field('lon_grado','integer',required=True),
+    Field('lon_min','integer',required=True),
+    Field('lon_seg','double',required=True),
+    Field('altitud','double',required=True),
+    Field('gps_error','double',required=True),
+    Field('elipsoide','reference Cat_elipsoide_sitio',required=True),
+    Field('sitio_muestra_id','reference Sitio_muestra',required=True),         
+    Field('distancia_centro','double',required=True),
+    Field('llovio','boolean',required=True),
+    Field('comentario','text'),
+    Field('microfonos_mojados','boolean',label=T("Se mojaron los micrófonos")),
+    Field('comentario', 'text',label=T("Observaciones"))
+    ]
+
+db.define_table('Grabadora',*Campos_Grabadoora)
+
+########################
+#Imagen_referencia_grabadora
+########################
+
+Campos_Imagen_referencia_grabadora = [
+    Field('grabadora_id','reference Grabadora',required=True),
+    Field('archivo_nombre_original',required=True),
+    Field('archivo','upload',autodelete=True,required=True)
+    ]
+
+db.define_table('Imagen_referencia_grabadora',*Campos_Imagen_referencia_grabadora)
+
+########################
+#Imagen_referencia_microfonos
+########################
+
+Campos_Imagen_referencia_microfonos = [
+    Field('grabadora_id','reference Grabadora',required=True),
+    Field('archivo_nombre_original',required=True),
+    Field('archivo','upload',autodelete=True,required=True)
+    ]
+
+db.define_table('Imagen_referencia_microfonos',*Campos_Imagen_referencia_microfonos)
+
+########################
+#Archivo_referencia_grabadora (metadatos)
+########################
+
+Campos_Archivo_referencia_grabadora = [
+    Field('grabadora_id','reference Grabadora',required=True),
+    Field('archivo_nombre_original',required=True),
+    Field('archivo','upload', autodelete=True,required=True)
+    ]
+
+db.define_table('Archivo_referencia_grabadora',
+    *Campos_Archivo_referencia_grabadora)
+
+
+########################
+#Archivo_referencia_grabadora
+########################
+
+Campos_Archivo_grabadora = [
+    Field('grabadora_id','reference Grabadora',required=True),
+    Field('archivo_nombre_original',required=True),
+    Field('archivo','upload', autodelete=True,required=True)
+    ]
+
+db.define_table('Archivo_grabadora',*Campos_Archivo_grabadora)

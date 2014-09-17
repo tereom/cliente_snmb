@@ -14,7 +14,7 @@ Campos_Camara = [
 	Field('fecha_inicio','date',required=True),
 	Field('fecha_termino','date',required=True),
 	Field('hora_inicio','time',required=True),
-	Field('hora_termino', 'date',required=True),
+	Field('hora_termino','date',required=True),
 	Field('lat_grado','integer',required=True),
 	Field('lat_min','integer',required=True),
 	Field('lat_seg','double',required=True),
@@ -23,7 +23,7 @@ Campos_Camara = [
 	Field('lon_seg','double',required=True),
 	Field('altitud','double',required=True),
 	Field('gps_error','double',required=True),
-	Field('elipsoide', 'reference Cat_elipsoide_sitio',required=True),
+	Field('elipsoide','reference Cat_elipsoide_sitio',required=True),
     Field('sitio_muestra_id','reference Sitio_muestra',required=True),         
 	Field('distancia_centro','double',required=True),
 	Field('llovio','boolean',required=True),
@@ -41,7 +41,7 @@ db.define_table('Camara',*Campos_Camara)
 Campos_Imagen_referencia_camara = [
 	Field('camara_id','reference Camara',required=True),
     Field('archivo_nombre_original',required=True),
-    Field('archivo', 'upload', autodelete=True,required=True)
+    Field('archivo','upload',autodelete=True,required=True)
     ]
 
 db.define_table('Imagen_referencia_camara',*Campos_Imagen_referencia_camara)
@@ -53,7 +53,7 @@ db.define_table('Imagen_referencia_camara',*Campos_Imagen_referencia_camara)
 Campos_Archivo_camara = [
 	Field('camara_id','reference Camara',required=True),
     Field('archivo_nombre_original',required=True),
-    Field('archivo', 'upload', autodelete=True,required=True)
+    Field('archivo','upload',required=True)
     #Field('es_imagen', 'boolean', required=True)
     ]
 

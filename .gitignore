@@ -6,6 +6,7 @@ sessions
 languages
 private
 sessions
+uploads
 
 LICENSE
  
@@ -42,3 +43,8 @@ pip-log.txt
  
 #Mr Developer
 .mr.developer.cfg
+
+#Images
+*.jpg
+*.gif
+*.png
