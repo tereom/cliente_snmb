@@ -10,7 +10,7 @@
 
 Campos_Transecto_especies_invasoras_muestra =[
 	    Field('conglomerado_muestra_id','reference Conglomerado_muestra', required=True),
-	     Field('fecha','date',required=True),
+	    Field('fecha','date',required=True),
 	    Field('transecto_numero','reference Cat_numero_transecto', required=True),
 	    Field('tecnico','string',required=True),
     	Field('hora_inicio','time',required=True),

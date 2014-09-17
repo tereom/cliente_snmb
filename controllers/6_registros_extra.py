@@ -1,38 +1,64 @@
 # coding: utf8
-# try something like
-def index(): 
-	Campos_pestana_6=[
 
-    Field('esta_dentro_conglomerado','boolean',
-        label=T("Dentro del conglomerado"),requires=IS_NOT_EMPTY()),
-    Field('fecha','date',label=T("Fecha"),requires=IS_NOT_EMPTY()),
-    Field('hora','time',label=T("Hora"),requires=IS_NOT_EMPTY()),
-    Field('tecnico','string',label=T("Técnico"),requires=IS_NOT_EMPTY()),
-    Field('lat_grado','integer',label=T("Grado")),
-    Field('lat_min','integer',label=T("Minuto")),
-    Field('lat_seg','double',label=T("Segundo")),
-    Field('lon_grado','integer',label=T("Grado")),
-    Field('lon_min','integer',label=T("Minuto")),
-    Field('lon_seg','double',label=T("Segundo")),
-    Field('altitud','double',label=T("Altitud(m)")),
-    Field('gps_error','double',label=T("Error(m)")),
-    Field('elipsoide','reference Cat_elipsoide_sitio',label=T("Datum")), 
-    Field('es_especimen','boolean',label=T("Especimen")),
-    Field('hay_nombre_comun','boolean',label=T("Nombre común")),
-    Field('nombre_comun','string'),
-    Field('hay_nombre_cientifico','boolean',label=T("Nombre científico")),
-    Field('nombre_cientifico','string'),
-    Field('numero_individuos',label="Número de individuos",
-        requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')),    Field('comentario','text',label=T("Observaciones")),
-    # campos huella
-    Field('es_huella','boolean',label=T("Huellas")),       
-    # campos archivo
-    Field('archivo_nombre',requires=IS_NOT_EMPTY()),
-    Field('archivo_nombre_original','upload',autodelete=True,
-        label=T("Fotografías"),requires=IS_NOT_EMPTY())
+def index1():
+
+	Campos_especie_invasora_extra=[
+	
+		SELECT(_name='conglomerado_muestra_id', requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+		INPUT(_name='esta_dentro_conglomerado',_type='string', requires=IS_NOT_EMPTY()),
+		INPUT(_name='tecnico',_type='string',requires=IS_NOT_EMPTY()),
+        INPUT(_name='fecha',_type='date',requires = IS_DATE(format=T('%d-%m-%Y'))),
+        INPUT(_name='hora',_type='time',requires = IS_NOT_EMPTY()),
+        
+        INPUT(_name='lat_grado',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lat_min',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lat_seg',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_grado',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_min',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_seg',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
+    	SELECT(_name='elipsoide', requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+    	
+    	INPUT(_name='hay_nombre_comun',_type='boolean'),
+		INPUT(_name='nombre_comun',_type='string'),
+		INPUT(_name='hay_nombre_cientifico',_type='boolean'),
+		INPUT(_name='nombre_cientifico',_type='string'),
+		INPUT(_name='numero_individuos', _type='integer', requires=IS_NOT_EMPTY()),
+		INPUT(_name='archivos_invasora',_type='file', _multiple=True, requires=IS_NOT_EMPTY())
     ]
     
-	forma=SQLFORM.factory(*Campos_pestana_6,table_name='tabla')
+	formaEspecie=SQLFORM.factory(*Campos_especie_invasora_extra,table_name='tabla')
+
+def index2():
+
+	Campos_huella_excreta_extra=[
+	
+		SELECT(_name='conglomerado_muestra_id', requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+		INPUT(_name='esta_dentro_conglomerado',_type='string', requires=IS_NOT_EMPTY()),
+		INPUT(_name='tecnico',_type='string',requires=IS_NOT_EMPTY()),
+        INPUT(_name='fecha',_type='date',requires = IS_DATE(format=T('%d-%m-%Y'))),
+        INPUT(_name='hora',_type='time',requires = IS_NOT_EMPTY()),
+        
+        INPUT(_name='lat_grado',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lat_min',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lat_seg',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_grado',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_min',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_seg',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
+    	SELECT(_name='elipsoide', requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+    	
+    	INPUT(_name='hay_nombre_comun',_type='boolean'),
+		INPUT(_name='nombre_comun',_type='string'),
+		INPUT(_name='hay_nombre_cientifico',_type='boolean'),
+		INPUT(_name='nombre_cientifico',_type='string'),
+		INPUT(_name='numero_individuos', _type='integer', requires=IS_NOT_EMPTY()),
+		INPUT(_name='archivos_invasora',_type='file', _multiple=True, requires=IS_NOT_EMPTY())
+    ]
+    
+	formaEspecie=SQLFORM.factory(*Campos_especie_invasora_extra,table_name='tabla')
 
 
 	return dict(forma=forma)
