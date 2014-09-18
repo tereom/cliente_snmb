@@ -58,4 +58,3 @@
 # 		INPUT(_name='archivos_invasora',_type='file', _multiple=True, requires=IS_NOT_EMPTY())
 
 # 	return dict(forma=forma)
-
