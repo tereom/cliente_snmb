@@ -55,6 +55,7 @@
 					</div>
 					<div>
 						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+							<option value=""/>
 							{{for conglomerado in listaConglomerados:}}
 								<option value="{{=conglomerado.id}}">
 									{{=conglomerado.nombre}}
@@ -70,7 +71,9 @@
 					<div>
 						<select class="generic-widget" name="sitio_numero" id="tabla_sitio_numero">
 							<option value=""/>
-							<option value="1">Café</option>
+					</div>
+					<!--El siguiente div se llena con AJAX-->
+					<div id="shadow_clone">
 					</div>
 				</td>
 				<td>
@@ -270,3 +273,29 @@
 	</fieldset>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
+
+<script>
+
+	$('#tabla_conglomerado_muestra_id').change
+	(
+    	function()
+    	{
+    		$('#tabla_sitio_numero').remove();
+    		ajax('asignarSitios', ['conglomerado_muestra_id'], 'shadow_clone');
+    	}
+
+
+        	/*if($('#tabla_conglomerado_muestra_id').val()==="")
+        	{
+     				//$('#tabla_sitio_numero').val("");
+        			alert('gato');
+        			//$('#tabla_sitio_numero_2').val("");
+        	}*/
+        	//else
+        	//{
+        		//$('#tabla_sitio_numero').remove();
+        	//}
+ 				//$('#tabla_sitio_numero').remove();
+   		}
+   	)
+</script>
