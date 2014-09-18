@@ -1,0 +1,297 @@
+{{extend 'layout.html'}} 
+{{block head}}
+<style type="text/css">
+    .Especies .generic-widget
+    {
+    	margin-right: 1cm;
+        width: 4cm;
+    }
+    .Especies .integer, .Especies .double, .Especies .string, .Especies .date, .Especies .time
+    {
+    	margin-right: 1cm;
+        width: 4cm;
+    }
+    
+    .Huellas .generic-widget
+    {
+    	margin-right: 0.5cm;
+        width: 4cm;
+    }
+    .Huellas .integer, .Huellas .double, .Huellas .string, .Huellas .date, .Huellas .time
+    {
+    	margin-right: 2cm;
+        width: 4cm;
+    }
+
+    .Centrar
+    {
+        text-align: center;
+    }
+    .CentrarV
+    {
+  		vertical-align:middle;
+	}
+
+	.Campos_sitio, .Campos_conglomerado
+    {
+        table-layout: fixed;
+        width: 120%;
+    }
+   	.Campos_sitio .integer, .Campos_sitio .date, .Campos_sitio .string, .Campos_sitio .double
+    {
+        width: 2cm;
+    }
+    
+    .Campos_sitio .generic-widget
+    {
+        width: 2.5cm;
+    }
+   
+    #enviar
+    {
+        float: left;
+    }
+</style>
+{{end}}
+
+<form action="#" enctype="multipart/form-data" method="post">
+	<fieldset>
+		<legend>
+		Registros adicionales
+		</legend>
+		<input type="hidden"  name="_formname" value="formaEspecieHTML"/>
+		<table class="Especies">
+			<tr>
+				<td rowspan="2" class="CentrarV">
+					<div>
+						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+					</div>
+					<div>
+						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+							<option value=""/>
+							<option value="1">Gato</option>
+						</select>
+					</div>
+				</td>
+				<td>
+					<div style="float:left;padding-right:10px;vertical-align:bottom;">
+						<label for="tabla_esta_dentro_conglomerado">Dentro del conglomerado</label>
+					</div>
+					<div>
+						<input class="boolean" name="dentro_fuera_conglomerado" id="tabla_dentro_fuera_conglomerado" type="radio" value="dentro"/>
+					</div>
+				</td>
+				<td rowspan="2" class="CentrarV">
+					<div>
+						<label for="tabla_tecnico">Técnico</label>
+					</div>
+					<div>
+						<input class="string" name="tecnico" id="tabla_tecnico" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div style="float:left;padding-right:17px;vertical-align:middle;">
+						<label for="tabla_esta_fuera_del_conglomerado">Fuera del conglomerado</label>
+					</div>
+					<div style="float:center;">
+						<input class="boolean" name="dentro_fuera_conglomerado" id="tabla_esta_fuera_del_conglomerado" type="radio" value="fuera"/>
+					</div>
+				</td>
+			</tr>	
+			<tr>
+				<td>
+					<div>
+						<label for="tabla_fecha">Fecha</label>
+					</div>
+					<div>
+						<input class="date" name="fecha" id="tabla_fecha" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_hora">Hora</label>
+					</div>
+					<div>
+						<input class="time" name="hora" id="tabla_hora" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<table class="Campos_sitio">
+        	<tr>
+            	<th colspan="3", class="Centrar">
+                	Latitud
+            	</th>
+            	<th colspan="3", class="Centrar">
+                	Longitud
+            	</th>
+            	<th>
+					<label for="tabla_elipsoide" style="font-weight:bold;">Datum</label>
+				</th>
+				<th>
+					<label for="tabla_altitud" style="font-weight:bold;">Altitud(m)</label>
+				</th>
+				<th>
+					<label for="tabla_gps_error" style="font-weight:bold;">Error(m)</label>
+				</th>
+            </tr>
+            <tr>
+            	<td>
+					<div>
+						<label for="tabla_lat_grado">Grado</label>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_lat_min">Minuto</label>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_lat_seg">Segundo</label>
+					</div>
+				</td>
+            	<td>
+					<div>
+						<label for="tabla_lon_grado">Grado</label>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_lon_min">Minuto</label>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_lon_seg">Segundo</label>
+					</div>
+				</td>				
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<input class="integer" name="lat_grado" id="tabla_lat_grado" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<input class="integer" name="lat_min" id="tabla_lat_min" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<input class="double" name="lat_seg" id="tabla_lat_seg" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<input class="integer" name="lon_grado" id="tabla_lon_grado" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<input class="integer" name="lon_min" id="tabla_lon_min" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<input class="double" name="lon_seg" id="tabla_lon_seg" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<select class="generic-widget" name="elipsoide" id="tabla_elipsoide">								<option value=""/>
+							<option value="1">Gato</option>
+						</select>
+					</div>
+				</td>
+				<td>
+					<div>
+						<input class="double" name="altitud" id="tabla_altitud" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<input class="double" name="gps_error" id="tabla_gps_error" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+		<hr>
+
+		<table class="Especies">
+			<tr>
+				<td rowspan="2" class="CentrarV">
+					<div class=Lista>
+						<label for="tabla_conabio_id">Lista CONABIO especies</label>
+					</div>
+					<div class="Lista">
+						<select class="generic-widget" name="conabio_lista" id="tabla_conabio_lista">
+							<option value=""/>
+							<option value="1">Gato</option>
+						</select>
+					</div>
+				</td>				
+				<td>
+					<div class="Nombre">
+						<div style="float:left;padding-right:10px;">
+							<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
+						</div>
+						<div style="float:left;padding-right:22px">
+							<label for="tabla_comun">Nombre común</label>
+						</div>
+						<div style="float:left;">
+							<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
+						</div>
+					</div>
+				</td>
+				<td rowspan="2" class="CentrarV">
+					<div class="Individuos">
+						<label for="tabla_numero_individuos">Número de individuos</label>
+					</div>
+					<div class="Individuos">
+						<select class="generic-widget" name="numero_individuos" id="tabla_numero_individuos">
+							<option value=""/>
+							<option value="1">Gato</option>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="Nombre">
+						<div style="float:left;padding-right:10px;">
+							<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
+						</div>
+						<div div style="float:left;padding-right:10px">
+							<label for="tabla_cientifico">Nombre científico</label>
+						</div>
+						<div style="float:left;">
+							<input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
+						</div>
+					</div>
+				</td>
+			</tr>		
+		</table>
+		<hr>
+		<div>
+			<label for="tabla_archivos_invasora">Subir imágenes</label>
+		</div>
+		<div>
+			<input type="file" id="tabla_archivos_invasora" name="archivos_invasora" multiple/>
+		</div>
+		<div>
+    		<label for="tabla_comentario">Observaciones</label>
+    	</div>
+    	<div>
+		    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5">
+			</textarea>
+    	</div>		
+	</fieldset>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
+</form>
+
+

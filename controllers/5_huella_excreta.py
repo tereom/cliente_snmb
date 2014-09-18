@@ -44,7 +44,7 @@ def index2():
         INPUT(_name='nombre_comun',_type='string'),
         INPUT(_name='hay_nombre_cientifico',_type='boolean'),
         INPUT(_name='nombre_cientifico',_type='string'),
-#        INPUT(_name='es_huella_excreta',_type='string',requires=IS_NOT_EMPTY()),
+        INPUT(_name='es_huella_excreta',_type='string',requires=IS_NOT_EMPTY()),
         INPUT(_name='largo',_type='double',requires=IS_NOT_EMPTY()),
         INPUT(_name='ancho',_type='double',requires=IS_NOT_EMPTY()),
         
@@ -55,8 +55,7 @@ def index2():
 
     formaHuella = FORM(*Campos_huellas)
     
-    if formaHuella.accepts(request.vars,formname='formaHuellaHTML'):
-        response.flash = 'qiubo'
+    if formaHuella.accepts(request.vars,formname='formaHuellaHTML'):    
         #Filtrando los datos correspondientes a la tabla de huellas:
         formaHuellaExcreta = db.Huella_excreta._filter_fields(formaHuella.vars)
         
