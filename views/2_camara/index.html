@@ -33,6 +33,7 @@
     {
         float: left;
     }
+
 </style>
 {{end}}
 
@@ -54,8 +55,11 @@
 					</div>
 					<div>
 						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-							<option value=""/>
-							<option value="1">Gato</option>
+							{{for conglomerado in listaConglomerados:}}
+								<option value="{{=conglomerado.id}}">
+									{{=conglomerado.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>				
@@ -134,7 +138,33 @@
                 	Longitud
             	</th>
             	<th>
-                	<label for="tabla_elipsoide">Datum</label>
+            	</th>
+            	<th>
+            	</th>
+            	<th>
+            	</th>
+            </tr>
+			<tr>
+            	<th>
+            		<label for="lat_grado">Grado</label>
+            	</th>
+            	<th>
+            		<label for="lat_min">Minuto</label>
+            	</th>
+            	<th>
+            		<label for="lat_seg">Segundo</label>
+            	</th>
+            	<th>
+            		<label for="lon_grado">Grado</label>
+            	</th>
+            	<th>
+        			<label for="lon_min">Minuto</label>
+            	</th>
+            	<th>
+            		<label for="lon_seg">Segundo</label>
+            	</th>
+            	<th>            	    
+            		<label for="tabla_elipsoide">Datum</label>
             	</th>
             	<th>
             		<label for="tabla_altitud">Altitud(m)</label>
@@ -143,24 +173,25 @@
             		<label for="tabla_gps_error">Error(m)</label>
             	</th>
             </tr>
+
             <tr>
             	<td>
-            		<input class="integer" name="lat_grado" id="tabla_lat_grado" type="text" value="Grado"/>
+            		<input class="integer" name="lat_grado" id="tabla_lat_grado" type="text"/>
             	</td>
             	<td>
-            		<input class="integer" name="lat_min" id="tabla_lat_min" type="text" value="Minuto"/>
+            		<input class="integer" name="lat_min" id="tabla_lat_min" type="text"/>
             	</td>
             	<td>
-            		<input class="double" name="lat_seg" id="tabla_lat_seg" type="text" value="Segundo"/>
+            		<input class="double" name="lat_seg" id="tabla_lat_seg" type="text"/>
             	</td>
             	<td>
-            		<input class="integer" name="lon_grado" id="tabla_lon_grado" type="text" value="Grado"/>
+            		<input class="integer" name="lon_grado" id="tabla_lon_grado" type="text"/>
             	</td>
             	<td>
-        			<input class="integer" name="lon_min" id="tabla_lon_min" type="text" value="Minuto"/>
+        			<input class="integer" name="lon_min" id="tabla_lon_min" type="text"/>
             	</td>
             	<td>
-            		<input class="double" name="lon_seg" id="tabla_lon_seg" type="text" value="Segundo"/>
+            		<input class="double" name="lon_seg" id="tabla_lon_seg" type="text"/>
             	</td>
             	<td>
         			<select class="generic-widget" name="elipsoide" id="tabla_elipsoide">
@@ -213,26 +244,29 @@
 				</td>
 				<td>
 					<div>
-						<label for="tabla_imagen_ref_archivo_nombre">Foto cámara y GPS</label>
+						<label for="tabla_imagen_camara">Foto cámara y GPS</label>
 					</div>
 					<div>
-						<input type="file" id="imagen_ref_archivo_nombre" name="imagen_camara"/>
+						<input type="file" id="tabla_imagen_camara" name="imagen_camara"/>
 					</div>
 				</td>
 			</tr>
     	</table>
-    	<div>
-			<label for="tabla_archivos_camara">Subir imágenes/videos</label>
-		</div>
+    </fieldset>
+    <fieldset>
+    	<legend>
+    		Subir imágenes y videos
+    	</legend>
 		<div>
 			<input type="file" id="tabla_archivos_camara" name="archivos_camara" multiple/>
 		</div>
-		<div>
-    		<label for="tabla_comentario">Observaciones</label>
-    	</div>
-    	<div>
-    	    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
-    	</div>
+	</fieldset>
+    <fieldset>
+    	<legend>
+    		Observaciones
+    	</legend>
+    	    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10">
+    	    </textarea>
 	</fieldset>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>

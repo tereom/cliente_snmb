@@ -110,22 +110,13 @@ db.define_table('Archivo_especie_invasora_extra',
 	*Campos_Archivo_especie_invasora_extra)
 
 
-# Registros Extras, es decir:
-# Especie_invasora_extra,
-# Huella_excreta_extra
-# Especimen_restos_extra,
-# Archivo_Especie_invasora_extra
-# Archivo_Huella_excreta_extra
-# Archivo_Especimen_restos_extra
 
-
-##########################################################################
-## Huella_excreta_extra
-##########################################################################
+# ##########################################################################
+# ## Huella_excreta_extra
+# ##########################################################################
 
 Campos_Huella_excreta_extra = [
-    Field('conglomerado_muestra_id','reference Conglomerado_muestra',
-    	required=True),
+    Field('conglomerado_muestra_id','reference Conglomerado_muestra'),
     Field('esta_dentro_conglomerado','boolean',
     	label=T("Dentro del conglomerado"),required=True),
     Field('fecha','date',label=T("Fecha"),required=True),
