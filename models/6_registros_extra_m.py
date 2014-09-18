@@ -285,7 +285,7 @@ db.define_table('Archivo_huella_excreta_extra',
 ##########################################################################
 ## Archivo_Especimen_restos_extra
 ########################################################################
-
+'''
 Campos_Archivo_especimen_restos_extra = [
     Field('especimen_restos_extra_id','reference Especimen_restos_extra',required=True),
     Field('archivo_nombre_original',required=True),
@@ -295,5 +295,5 @@ Campos_Archivo_especimen_restos_extra = [
 db.define_table('Archivo_especimen_restos_extra',
 	*Campos_Archivo_especimen_restos_extra)
 >>>>>>> FETCH_HEAD
-
+'''
 

@@ -24,7 +24,8 @@ def index():
         requires=IS_IN_DB(db,db.Cat_numero_sitio.id,'%(nombre)s')),
     
 	#Datos de la cámara
-    INPUT(_name='distancia_centro',_type='double',requires=IS_NOT_EMPTY()),           
+    SELECT(_name='nombre',
+        requires=IS_IN_DB(db,db.Cat_nombre_camara.id,'%(nombre)s')),  
     INPUT(_name='fecha_inicio',_type='date',requires=IS_NOT_EMPTY()),
     INPUT(_name='fecha_termino',_type='date',requires=IS_NOT_EMPTY()),    
     INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
@@ -41,8 +42,7 @@ def index():
     SELECT(_name='elipsoide',
         requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),          
 
-    SELECT(_name='nombre',
-        requires=IS_IN_DB(db,db.Cat_nombre_camara.id,'%(nombre)s')),
+    INPUT(_name='distancia_centro',_type='double',requires=IS_NOT_EMPTY()),
     SELECT(_name='resolucion',
         requires=IS_IN_DB(db,db.Cat_resolucion_camara.id,'%(nombre)s')),
     SELECT(_name='sensibilidad',
@@ -127,4 +127,10 @@ def index():
     else:
     	response.flash ='Por favor, introduzca los datos de la cámara'
 
-    return dict()
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+
+    listaConglomerados = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
+
+    return dict(listaConglomerados=listaConglomerados)
