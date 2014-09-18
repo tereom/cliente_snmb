@@ -54,10 +54,12 @@
 </style>
 {{end}}
 
+{{=response.toolbar()}}
+
 <form action="#" enctype="multipart/form-data" method="post">
 	<fieldset>
 		<legend>
-		Registros adicionales
+		Registros adicionales: especies invasoras
 		</legend>
 		<input type="hidden"  name="_formname" value="formaEspecieHTML"/>
 		<table class="Especies">
@@ -231,7 +233,11 @@
 					<div class="Lista">
 						<select class="generic-widget" name="conabio_lista" id="tabla_conabio_lista">
 							<option value=""/>
-							<option value="1">Gato</option>
+							{{for especie in listaEspecies:}}
+								<option value="{{=especie.nombre}}">
+									{{=especie.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>				
@@ -254,8 +260,12 @@
 					</div>
 					<div class="Individuos">
 						<select class="generic-widget" name="numero_individuos" id="tabla_numero_individuos">
-							<option value=""/>
-							<option value="1">Gato</option>
+								<option value=""/>
+							{{for individuo in listaNumIndividuos:}}
+								<option value="{{=individuo.id}}">
+									{{=individuo.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>
@@ -294,4 +304,5 @@
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 
-
+<h2>Submitted variables</h2>
+{{=BEAUTIFY(request.vars)}}

@@ -1,4 +1,5 @@
 # coding: utf8
+import re
 
 def index1():
 
@@ -24,12 +25,15 @@ def index1():
         SELECT(_name='elipsoide',
             requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
         
+        SELECT(_name='lista_conabio',_type='string'),
+            # requires=IS_IN_DB(db,db.Cat_conabio_invasoras.nombre,'%(nombre)s')),
+
         INPUT(_name='hay_nombre_comun',_type='boolean'),
         INPUT(_name='nombre_comun',_type='string'),
         INPUT(_name='hay_nombre_cientifico',_type='boolean'),
         INPUT(_name='nombre_cientifico',_type='string'),
         INPUT(_name='numero_individuos', _type='integer', requires=IS_NOT_EMPTY()),
-        INPUT(_name='archivos_invasora',_type='file', _multiple=True, requires=IS_NOT_EMPTY())
+        INPUT(_name='archivos_invasora',_type='file',_multiple=True, requires=IS_NOT_EMPTY())
     ]
     
     formaEspecie=FORM(*Campos_especie_invasora_extra)
@@ -38,13 +42,28 @@ def index1():
         
         #Filtrando los datos correspondientes a la tabla de la especie invasora:
         formaEspecieInvasora = db.Especie_invasora_extra._filter_fields(
-            formaEspecie.vars)        
-    
-        formaEspecieInvasora['nombre_en_lista'] = True                
-        if (formaEspecie.vars['dentro_fuera_conglomerado'])=='dentro':
-            formaEspecieInvasora['esta_dentro_conglomerado']=True
+            formaEspecie.vars)
+
+        # Revisando la selección de lista CONABIO y llenar los campos 
+        # nombre_comun, nombre_cientifico
+        selListaConabio=formaEspecie.vars['lista_conabio']
+        if selListaConabio!='Otros':
+            formaEspecieInvasora['nombre_en_lista'] = True
+            nombre = re.split(' - ', selListaConabio)
+            formaEspecieInvasora['hay_nombre_cientifico'] = True
+            formaEspecieInvasora['nombre_cientifico'] = nombre[0]
+
+            raise HTTP(400, formaEspecieInvasora['nombre_cientifico'])
+
+            formaEspecieInvasora['hay_nombre_comun'] = True
+            formaEspecieInvasora['nombre_comun'] = nombre[1]
         else:
-            formaEspecieInvasora['esta_dentro_conglomerado']=False
+            formaEspecieInvasora['nombre_en_lista'] = False
+
+        if formaEspecie.vars['dentro_fuera_conglomerado']=='dentro':
+            formaEspecieInvasora['esta_dentro_conglomerado'] = True
+        else:
+            formaEspecieInvasora['esta_dentro_conglomerado'] = False
         
         especieInsertada = db.Especie_invasora_extra.insert(
             **formaEspecieInvasora)
@@ -73,7 +92,15 @@ def index1():
         response.flash = 'Hubo un error al llenar la forma'
     else:
         response.flash = 'Hubo un error al llenar la forma'
-    return dict()
+
+    listaNumIndividuos = db(db.Cat_numero_individuos).select(
+        db.Cat_numero_individuos.id, db.Cat_numero_individuos.nombre)
+
+    listaEspecies = db(db.Cat_conabio_invasoras).select(
+        db.Cat_conabio_invasoras.id, db.Cat_conabio_invasoras.nombre)
+
+    return dict(listaNumIndividuos=listaNumIndividuos, 
+        listaEspecies=listaEspecies)
 
 def index2():
 

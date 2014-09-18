@@ -118,8 +118,8 @@ if db(db.Cat_numero_sitio.id>0).count() == 0:
 db.define_table('Cat_elipsoide_sitio', Field('nombre', 'text', required='TRUE'))
 
 if db(db.Cat_elipsoide_sitio.id>0).count() == 0:
-    db.Cat_elipsoide_sitio.insert(nombre='Elipsoide 1')
-    db.Cat_elipsoide_sitio.insert(nombre='Elipsoide 2')
+    db.Cat_elipsoide_sitio.insert(nombre='NAD27')
+    db.Cat_elipsoide_sitio.insert(nombre='WGS84')
 
 ##########################################################################
 ## Pestaña Camara
@@ -182,3 +182,36 @@ if db(db.Cat_numero_individuos.id>0).count() == 0:
     db.Cat_numero_individuos.insert(nombre='1 a 5')
     db.Cat_numero_individuos.insert(nombre='6 a 10')
     db.Cat_numero_individuos.insert(nombre='más de 10')
+
+##########################################################################
+## Lista CONABIO de especies invasoras
+######################################################################## 
+
+db.define_table('Cat_conabio_invasoras', Field('nombre', 'text', required='TRUE'))
+
+if db(db.Cat_conabio_invasoras.id>0).count() == 0:
+    db.Cat_conabio_invasoras.insert(nombre='Arundo donax - Carrizo gigante')
+    db.Cat_conabio_invasoras.insert(nombre='Axis axis - Venado axis')
+    db.Cat_conabio_invasoras.insert(nombre='Bassia scoparia - Rodadora')
+    db.Cat_conabio_invasoras.insert(nombre='Bromus madritensis - Bromo')
+    db.Cat_conabio_invasoras.insert(nombre='Cactoblastis cactorum - Palomilla de nopal')
+    db.Cat_conabio_invasoras.insert(nombre='Carpobrotus sp (C. edulis) - Higo marino')
+    db.Cat_conabio_invasoras.insert(nombre='Cyperus papyrus (ANP)')
+    db.Cat_conabio_invasoras.insert(nombre='Eichhornia crassipes - Lirio acuático')
+    db.Cat_conabio_invasoras.insert(nombre='Hedera helix - Hiedra')
+    db.Cat_conabio_invasoras.insert(nombre='Lepidium draba /Cardaria draba - Flor bábol, capellanes')
+    db.Cat_conabio_invasoras.insert(nombre='Melinis minutiflora - Paja rosada, pasto morado, zacate colorado')
+    db.Cat_conabio_invasoras.insert(nombre='Melinis repens - Paja rosada, pasto morado, zacate colorado')
+    db.Cat_conabio_invasoras.insert(nombre='Mesembryanthemum crystallinum - Vidrillo')
+    db.Cat_conabio_invasoras.insert(nombre='Myiopsitta monachus - Perico monje')
+    db.Cat_conabio_invasoras.insert(nombre='Myocastor coypus - Coipu')
+    db.Cat_conabio_invasoras.insert(nombre='Oeceoclades maculata - Orquídea monje')
+    db.Cat_conabio_invasoras.insert(nombre='Pennisetum clandestinum - Kikuyo, kuyuyú, tapete, colchoncillo')
+    db.Cat_conabio_invasoras.insert(nombre='Pueraria sp. (montana lobata o phaseoloides - Kudzu')
+    db.Cat_conabio_invasoras.insert(nombre='Rottboellia cochinchinensis - Caminadora')
+    db.Cat_conabio_invasoras.insert(nombre='Salsola sp. (vermiculata o tragus) - Rodadora')
+    db.Cat_conabio_invasoras.insert(nombre='Stizlobium prurienes - Picapica')
+    db.Cat_conabio_invasoras.insert(nombre='Sus scrofa - Cerdo europeo')
+    db.Cat_conabio_invasoras.insert(nombre='Tamarix sp. - Pino salado, cedro salado, tamarisco')
+    db.Cat_conabio_invasoras.insert(nombre='Otros')
+
