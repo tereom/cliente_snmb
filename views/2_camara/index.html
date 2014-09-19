@@ -37,7 +37,7 @@
 </style>
 {{end}}
 
-
+{{=URL('asignarSitios')}}
 {{=response.toolbar()}}
 
 
@@ -68,13 +68,14 @@
 					<div>
 						<label for="tabla_sitio_numero">Sitio</label>
 					</div>
-					<div>
+					<div id="shadow_clone">
 						<select class="generic-widget" name="sitio_numero" id="tabla_sitio_numero">
 							<option value=""/>
+						</select>
 					</div>
 					<!--El siguiente div se llena con AJAX-->
-					<div id="shadow_clone">
-					</div>
+					<!--<div id="shadow_clone">
+					</div>-->
 				</td>
 				<td>
 					<div>
@@ -273,7 +274,6 @@
 	</fieldset>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
-
 <script>
 
 	$('#tabla_conglomerado_muestra_id').change
@@ -281,10 +281,11 @@
     	function()
     	{
     		$('#tabla_sitio_numero').remove();
-    		ajax('asignarSitios', ['conglomerado_muestra_id'], 'shadow_clone');
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+    		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
     	}
-
-
         	/*if($('#tabla_conglomerado_muestra_id').val()==="")
         	{
      				//$('#tabla_sitio_numero').val("");
@@ -296,6 +297,31 @@
         		//$('#tabla_sitio_numero').remove();
         	//}
  				//$('#tabla_sitio_numero').remove();
-   		}
    	)
+	/*
+   	function sitiosCascada()
+		{
+			alert('primero');
+			$('#tabla_sitio_numero').remove();
+			var xmlhttp;
+			if (window.XMLHttpRequest)
+  			{// code for IE7+, Firefox, Chrome, Opera, Safari
+  				xmlhttp=new XMLHttpRequest();
+  			}
+			else
+  			{// code for IE6, IE5
+  				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  			}
+			xmlhttp.onreadystatechange=function()
+  			{
+  				//if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    			//{
+    			document.getElementById("shadow_clone").innerHTML='<p>gato</p>';
+    			//}
+  			}
+			xmlhttp.open("POST","{{=URL('asignarSitios')}}",true);
+
+			xmlhttp.send();
+			}
+		*/
 </script>
