@@ -144,11 +144,15 @@ def asignarSitios():
         ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
 
     dropdownHTML = "<select class='generic-widget' name='sitio_numero' id='tabla_sitio_numero'>"
+
     for sitio in sitiosAsignados:
 
         #Obteniendo el nombre asociado al numero de sitio, del catálogo correspondiente:
         nombreSitio = db(db.Cat_numero_sitio.id==sitio.sitio_numero).select().first().nombre
+
         dropdownHTML += "<option value='" + str(sitio.id) + "'>" + nombreSitio + "</option>"  
+    
     dropdownHTML += "</select>"
+    
     return XML(dropdownHTML)
 
