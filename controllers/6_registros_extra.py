@@ -138,3 +138,8 @@ def index2():
 
     formaHuella=FORM(*Campos_huella_excreta_extra)
 
+def index2():
+    return dict()
+
+def index3():
+    return dict()
