@@ -115,11 +115,11 @@ if db(db.Cat_numero_sitio.id>0).count() == 0:
 
 #########################################################################
 
-db.define_table('Cat_elipsoide_sitio', Field('nombre', 'text', required='TRUE'))
+db.define_table('Cat_elipsoide', Field('nombre', 'text', required='TRUE'))
 
-if db(db.Cat_elipsoide_sitio.id>0).count() == 0:
-    db.Cat_elipsoide_sitio.insert(nombre='NAD27')
-    db.Cat_elipsoide_sitio.insert(nombre='WGS84')
+if db(db.Cat_elipsoide.id>0).count() == 0:
+    db.Cat_elipsoide.insert(nombre='NAD27')
+    db.Cat_elipsoide.insert(nombre='WGS84')
 
 ##########################################################################
 ## Pestaña Camara

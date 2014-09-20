@@ -25,7 +25,7 @@ Campos_Especimen_restos_extra = [
 	Field('lon_seg','double',label=T("Segundo"),required=True),
     Field('altitud','double',label=T("Altitud(m)"),required=True),
     Field('gps_error','double',label=T("Error(m)"),required=True),
-	Field('elipsoide','reference Cat_elipsoide_sitio',label=T("Datum"),
+	Field('elipsoide','reference Cat_elipsoide',label=T("Datum"),
 		required=True),
 
 	Field('es_especimen','boolean',label=T("Especimen"),required=True),
@@ -76,7 +76,7 @@ Campos_Especie_invasora_extra = [
 	Field('lon_seg','double',label=T("Segundo"),required=True),
     Field('altitud','double',label=T("Altitud(m)"),required=True),
     Field('gps_error','double',label=T("Error(m)"),required=True),
-	Field('elipsoide','reference Cat_elipsoide_sitio',label=T("Datum"),
+	Field('elipsoide','reference Cat_elipsoide',label=T("Datum"),
 		required=True), 	
 
 	Field('nombre_en_lista','boolean',label=T("Lista CONABIO de especies"),
@@ -131,7 +131,7 @@ Campos_Huella_excreta_extra = [
 	Field('lon_seg','double',label=T("Segundo"),required=True),
     Field('altitud','double',label=T("Altitud(m)"),required=True),
     Field('gps_error','double',label=T("Error(m)"),required=True),
-	Field('elipsoide','reference Cat_elipsoide_sitio',label=T("Datum"), 
+	Field('elipsoide','reference Cat_elipsoide',label=T("Datum"), 
 		required=True), 	
 
 	Field('es_huella','boolean',label=T("Huellas"),required=True),		

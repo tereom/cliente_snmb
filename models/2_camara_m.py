@@ -27,7 +27,7 @@ Campos_Camara = [
 	Field('lon_seg','double',required=True),
 	Field('altitud','double',required=True),
 	Field('gps_error','double',required=True),
-	Field('elipsoide','reference Cat_elipsoide_sitio',required=True),
+	Field('elipsoide','reference Cat_elipsoide',required=True),
 
 	Field('distancia_centro','double',required=True),
 	Field('llovio','boolean',required=True),

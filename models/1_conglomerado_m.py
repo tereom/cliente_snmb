@@ -43,7 +43,7 @@ Campos_Sitio_muestra = [
 	Field('lon_seg','double',label=T("Segundo")),
     Field('altitud','double',label=T("Altitud(m)")),
     Field('gps_error','double',label=T("Error(m)")),
-	Field('elipsoide', 'reference Cat_elipsoide_sitio',label=T("Datum")), 
+	Field('elipsoide', 'reference Cat_elipsoide',label=T("Datum")), 
     Field('evidencia', 'boolean',label=XML("Evidencia <br/> anterior"))
     ] 
 

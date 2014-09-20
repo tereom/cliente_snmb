@@ -40,7 +40,7 @@ def index():
     INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
     INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
     SELECT(_name='elipsoide',
-        requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),          
+        requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
 
     INPUT(_name='distancia_centro',_type='double',requires=IS_NOT_EMPTY()),
     SELECT(_name='resolucion',
@@ -130,10 +130,29 @@ def index():
     #Regresando los nombres de todos los conglomerados insertados en la tabla de
     #conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
-    listaConglomerados = db(db.Conglomerado_muestra).select(
+    listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-    return dict(listaConglomerados=listaConglomerados)
+    #De la misma manera, llenando las combobox de nombre, resolución y sensibilidad:
+
+    listaNombreCamara = db(db.Cat_nombre_camara).select(
+        db.Cat_nombre_camara.id, db.Cat_nombre_camara.nombre)
+
+    listaResolucion = db(db.Cat_resolucion_camara).select(
+        db.Cat_resolucion_camara.id, db.Cat_resolucion_camara.nombre)
+
+    listaSensibilidad = db(db.Cat_sensibilidad_camara).select(
+        db.Cat_sensibilidad_camara.id, db.Cat_sensibilidad_camara.nombre)
+
+    listaElipsoide = db(db.Cat_elipsoide).select(
+        db.Cat_elipsoide.id, db.Cat_elipsoide.nombre)
+
+
+    return dict(listaConglomerado=listaConglomerado,\
+        listaNombreCamara=listaNombreCamara,\
+        listaResolucion=listaResolucion,\
+        listaSensibilidad=listaSensibilidad,\
+        listaElipsoide=listaElipsoide)
 
 def asignarSitios():
 

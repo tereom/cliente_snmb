@@ -37,10 +37,6 @@
 </style>
 {{end}}
 
-{{=URL('asignarSitios')}}
-{{=response.toolbar()}}
-
-
 <form action="" enctype="multipart/form-data" method="post">
 	<input type="hidden" name="_formname" value="formaHTML"/>
 	<fieldset>
@@ -54,9 +50,9 @@
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
 							<option value=""/>
-							{{for conglomerado in listaConglomerados:}}
+							{{for conglomerado in listaConglomerado:}}
 								<option value="{{=conglomerado.id}}">
 									{{=conglomerado.nombre}}
 								</option>
@@ -80,7 +76,7 @@
 						<label for="tabla_distancia_centro">Distancia al centro del sitio (m)</label>
 					</div>
 					<div>
-						<input class="double" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
+						<input class="double obligatorio" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
 					</div>
 				</td>
 			</tr>
@@ -90,7 +86,7 @@
 						<label for="tabla_fecha_inicio">Fecha de colocación</label>
 					</div>
 					<div>
-						<input class="date" name="fecha_inicio" id="tabla_fecha_inicio" type="text" value=""/>
+						<input class="date obligatorio" name="fecha_inicio" id="tabla_fecha_inicio" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -98,7 +94,7 @@
 						<label for="tabla_hora_inicio">Hora inicio</label>
 					</div>
 					<div>
-						<input class="time" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
+						<input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -116,7 +112,7 @@
 						<label for="tabla_fecha_termino">Fecha de levantamiento</label>
 					</div>
 					<div>
-						<input class="date" name="fecha_termino" id="tabla_fecha_termino" type="text" value=""/>
+						<input class="date obligatorio" name="fecha_termino" id="tabla_fecha_termino" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -124,7 +120,7 @@
 						<label for="tabla_hora_termino">Hora término</label>
 					</div>
 					<div>
-						<input class="time" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
+						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -178,34 +174,38 @@
 
             <tr>
             	<td>
-            		<input class="integer" name="lat_grado" id="tabla_lat_grado" type="text"/>
+            		<input class="integer obligatorio" name="lat_grado" id="tabla_lat_grado" type="text"/>
             	</td>
             	<td>
-            		<input class="integer" name="lat_min" id="tabla_lat_min" type="text"/>
+            		<input class="integer obligatorio" name="lat_min" id="tabla_lat_min" type="text"/>
             	</td>
             	<td>
-            		<input class="double" name="lat_seg" id="tabla_lat_seg" type="text"/>
+            		<input class="double obligatorio" name="lat_seg" id="tabla_lat_seg" type="text"/>
             	</td>
             	<td>
-            		<input class="integer" name="lon_grado" id="tabla_lon_grado" type="text"/>
+            		<input class="integer obligatorio" name="lon_grado" id="tabla_lon_grado" type="text"/>
             	</td>
             	<td>
-        			<input class="integer" name="lon_min" id="tabla_lon_min" type="text"/>
+        			<input class="integer obligatorio" name="lon_min" id="tabla_lon_min" type="text"/>
             	</td>
             	<td>
-            		<input class="double" name="lon_seg" id="tabla_lon_seg" type="text"/>
+            		<input class="double obligatorio" name="lon_seg" id="tabla_lon_seg" type="text"/>
             	</td>
             	<td>
-        			<select class="generic-widget" name="elipsoide" id="tabla_elipsoide">
-        					<option value=""/>
-							<option value="1">Gato</option>
+        			<select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
+						<option value=""/>
+						{{for elipsoide in listaElipsoide:}}
+							<option value="{{=elipsoide.id}}">
+								{{=elipsoide.nombre}}
+							</option>
+						{{pass}}
 					</select>
             	</td>
             	<td>
-            		<input class="double" name="altitud" id="tabla_altitud" type="text" value=""/>
+            		<input class="double obligatorio" name="altitud" id="tabla_altitud" type="text" value=""/>
             	</td>
             	<td>
-            	    <input class="double" name="gps_error" id="tabla_gps_error" type="text" value=""/>
+            	    <input class="double obligatorio" name="gps_error" id="tabla_gps_error" type="text" value=""/>
             	</td>
             </tr>
     	</table>
@@ -216,9 +216,13 @@
 						<label for="tabla_nombre">Código cámara</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="nombre" id="tabla_nombre">
+						<select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
 							<option value=""/>
-							<option value="1">Gato</option>			
+							{{for nombreCamara in listaNombreCamara:}}
+								<option value="{{=nombreCamara.id}}">
+									{{=nombreCamara.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>
@@ -227,9 +231,13 @@
 						<label for="tabla_resolucion">Resolución</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="resolucion" id="tabla_resolucion">
+						<select class="generic-widget obligatorio" name="resolucion" id="tabla_resolucion">
 							<option value=""/>
-							<option value="1">Gato</option>
+							{{for resolucion in listaResolucion:}}
+								<option value="{{=resolucion.id}}">
+									{{=resolucion.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>
@@ -238,9 +246,13 @@
 						<label for="tabla_sensibilidad">Sensibilidad</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="sensibilidad" id="tabla_sensibilidad">
+						<select class="generic-widget obligatorio" name="sensibilidad" id="tabla_sensibilidad">
 							<option value=""/>
-							<option value="1">Gato</option>
+							{{for sensibilidad in listaSensibilidad:}}
+								<option value="{{=sensibilidad.id}}">
+									{{=sensibilidad.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>
@@ -249,7 +261,7 @@
 						<label for="tabla_imagen_camara">Foto cámara y GPS</label>
 					</div>
 					<div>
-						<input type="file" id="tabla_imagen_camara" name="imagen_camara"/>
+						<input class="obligatorio" type="file" id="tabla_imagen_camara" name="imagen_camara"/>
 					</div>
 				</td>
 			</tr>
@@ -260,18 +272,18 @@
     		Subir imágenes y videos
     	</legend>
 		<div>
-			<input type="file" id="tabla_archivos_camara" name="archivos_camara" multiple/>
+			<input class="obligatorio" type="file" id="tabla_archivos_camara" name="archivos_camara" multiple/>
 		</div>
 	</fieldset>
     <fieldset>
     	<legend>
     		Observaciones
     	</legend>
-    	    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10">
-    	    </textarea>
+    	    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
 	</fieldset>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
+
 <script>
 
 	$('#tabla_conglomerado_muestra_id').change
@@ -286,4 +298,84 @@
     		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
     	}
    	)
+
+	//Validando 
+   	$('form').submit
+   	(
+   		function()
+   		{
+   			flag =true;
+   			campos=$('.obligatorio');
+   			campos.each(function() 
+   			{
+  				if(!$(this).val())
+  				{
+  					 flag = false;
+  				}
+			}
+			);
+			if(!flag)
+            {
+                alert('Faltó llenar un campo o subir alguna imagen');
+            	return false;
+			}
+   		}
+   	)
+    	/*function()
+    	{
+
+    		//Si falta algún campo, flag=false y no se envía el formulario.
+    		flag = true;
+
+
+    		camposObligatorios= jQuery.grep(
+    			campos, function(campo)
+    			{
+					return !campo.val()
+				}
+			);
+
+			if(camposObligatorios.length>0)
+			{
+				flag = false
+			}
+
+
+    		/*   			
+    		if(!$('#tabla_archivo_1').val() || !$('#tabla_archivo_c').val())
+    			flag = false;
+    			                	                        
+            if(!$('#tabla_existe_2').prop('checked'))
+    		{
+    		    $('.Sitio_info_2 select').val("1");
+    			$('.Sitio_info_2 input').not('#tabla_evidencia_2, #tabla_archivo_2').val("0");
+            }
+            
+            else if(!$('#tabla_archivo_2').val())
+            	flag = false;
+            
+            if(!$('#tabla_existe_3').prop('checked'))
+    		{
+    		    $('.Sitio_info_3 select').val("1");
+    			$('.Sitio_info_3 input').not('#tabla_evidencia_3, #tabla_archivo_3').val("0");
+            }
+            
+            else if(!$('#tabla_archivo_3').val())
+            	flag = false;
+            
+            if(!$('#tabla_existe_4').prop('checked'))
+    		{
+    		    $('.Sitio_info_4 select').val("1");
+    			$('.Sitio_info_4 input').not('#tabla_evidencia_4, #tabla_archivo_4').val("0");
+            }
+            
+            else if(!$('#tabla_archivo_4').val())
+            	flag = false;*/
+            	
+            /*if(!flag)
+            {
+                alert('Faltó adjuntar una imagen a algún sitio existente');
+            	return false;
+			}
+    	}*/
 </script>

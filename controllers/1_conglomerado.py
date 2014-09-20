@@ -60,7 +60,7 @@ def index():
 		Field('lon_seg_1','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_1','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_1','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_1',label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+		Field('elipsoide_1',label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
     	Field('evidencia_1', 'boolean',label=XML("Evidencia <br/> anterior")),
     	
      	###########Imagen############
@@ -89,7 +89,7 @@ def index():
 		Field('lon_seg_2','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_2','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_2','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_2', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+		Field('elipsoide_2', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
     	Field('evidencia_2', 'boolean',label=XML("Evidencia <br/> anterior")),
     	
      	###########Imagen############
@@ -108,7 +108,7 @@ def index():
 		Field('lon_seg_3','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_3','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_3','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_3', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+		Field('elipsoide_3', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
     	Field('evidencia_3', 'boolean',label=XML("Evidencia <br/> anterior")),
      	
      	###########Imagen############
@@ -127,7 +127,7 @@ def index():
 		Field('lon_seg_4','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_4','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_4','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-    	Field('elipsoide_4', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+    	Field('elipsoide_4', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
     	Field('evidencia_4', 'boolean',label=XML("Evidencia <br/> anterior")),
      	
      	###########Imagen############
@@ -145,7 +145,7 @@ def index():
 		Field('lon_seg_c','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
     	Field('altitud_c','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
     	Field('gps_error_c','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_c', label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide_sitio.id,'%(nombre)s')),
+		Field('elipsoide_c', label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
     	Field('evidencia_c', 'boolean',label=XML("Evidencia <br/> anterior")),
 	
      	###########Imagen############
