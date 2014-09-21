@@ -127,6 +127,7 @@
 				</td>
 			</tr>
     	</table>
+        <hr/>
     	<table class="GPS">
     		<tr>
     			<th colspan="3", class="Centrar">
@@ -209,6 +210,7 @@
             	</td>
             </tr>
     	</table>
+        <hr/>
     	<table class="No_GPS">
     		<tr>
     			<td>
@@ -286,6 +288,7 @@
 
 <script>
 
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
 	$('#tabla_conglomerado_muestra_id').change
 	(
     	function()
@@ -299,7 +302,7 @@
     	}
    	)
 
-	//Validando 
+	//Validando, para ello utilizamos la clase "obligatorio":
    	$('form').submit
    	(
    		function()
@@ -321,61 +324,4 @@
 			}
    		}
    	)
-    	/*function()
-    	{
-
-    		//Si falta algún campo, flag=false y no se envía el formulario.
-    		flag = true;
-
-
-    		camposObligatorios= jQuery.grep(
-    			campos, function(campo)
-    			{
-					return !campo.val()
-				}
-			);
-
-			if(camposObligatorios.length>0)
-			{
-				flag = false
-			}
-
-
-    		/*   			
-    		if(!$('#tabla_archivo_1').val() || !$('#tabla_archivo_c').val())
-    			flag = false;
-    			                	                        
-            if(!$('#tabla_existe_2').prop('checked'))
-    		{
-    		    $('.Sitio_info_2 select').val("1");
-    			$('.Sitio_info_2 input').not('#tabla_evidencia_2, #tabla_archivo_2').val("0");
-            }
-            
-            else if(!$('#tabla_archivo_2').val())
-            	flag = false;
-            
-            if(!$('#tabla_existe_3').prop('checked'))
-    		{
-    		    $('.Sitio_info_3 select').val("1");
-    			$('.Sitio_info_3 input').not('#tabla_evidencia_3, #tabla_archivo_3').val("0");
-            }
-            
-            else if(!$('#tabla_archivo_3').val())
-            	flag = false;
-            
-            if(!$('#tabla_existe_4').prop('checked'))
-    		{
-    		    $('.Sitio_info_4 select').val("1");
-    			$('.Sitio_info_4 input').not('#tabla_evidencia_4, #tabla_archivo_4').val("0");
-            }
-            
-            else if(!$('#tabla_archivo_4').val())
-            	flag = false;*/
-            	
-            /*if(!flag)
-            {
-                alert('Faltó adjuntar una imagen a algún sitio existente');
-            	return false;
-			}
-    	}*/
 </script>

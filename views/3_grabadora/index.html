@@ -2,6 +2,12 @@
 {{block head}}
 <style type="text/css">
 
+	.tabla
+	{
+		table-layout: fixed;
+        width: 100%;
+	}
+
     .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
     {
         margin-right: 2cm;
@@ -36,8 +42,6 @@
 </style>
 {{end}}
 
-{{=response.toolbar()}}
-
 <form action="" enctype="multipart/form-data" method="post">
 	<input type="hidden" name="_formname" value="formaHTML"/>
 	<fieldset>
@@ -51,9 +55,13 @@
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
 							<option value=""/>
-							<option value="1">Gato</option>
+							{{for conglomerado in listaConglomerado:}}
+								<option value="{{=conglomerado.id}}">
+									{{=conglomerado.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>
@@ -61,10 +69,11 @@
 					<div>
 						<label for="tabla_sitio_numero">Sitio</label>
 					</div>
-					<div>
+					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
 						<select class="generic-widget" name="sitio_numero" id="tabla_sitio_numero">
 							<option value=""/>
-							<option value="1">Café</option>
+						</select>
 					</div>
 				</td>
 				<td>
@@ -72,7 +81,7 @@
 						<label for="tabla_distancia_centro">Distancia al centro del sitio (m)</label>
 					</div>
 					<div>
-						<input class="double" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
+						<input class="double obligatorio" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
 					</div>
 				</td>
 			</tr>
@@ -82,7 +91,7 @@
 						<label for="tabla_fecha_inicio">Fecha de colocación</label>
 					</div>
 					<div>
-						<input class="date" name="fecha_inicio" id="tabla_fecha_inicio" type="text" value=""/>
+						<input class="date obligatorio" name="fecha_inicio" id="tabla_fecha_inicio" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -90,7 +99,7 @@
 						<label for="tabla_hora_inicio">Hora inicio</label>
 					</div>
 					<div>
-						<input class="time" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
+						<input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -108,7 +117,7 @@
 						<label for="tabla_fecha_termino">Fecha de levantamiento</label>
 					</div>
 					<div>
-						<input class="date" name="fecha_termino" id="tabla_fecha_termino" type="text" value=""/>
+						<input class="date obligatorio" name="fecha_termino" id="tabla_fecha_termino" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -116,21 +125,20 @@
 						<label for="tabla_hora_termino">Hora término</label>
 					</div>
 					<div>
-						<input class="time" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
+						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
 					</div>
 				</td>
 				<td>
 					<div>
-						<label for="tabla_mojaron">Se mojaron los micrófonos</label>
+						<label for="tabla_microfonos_mojados">Se mojaron los micrófonos</label>
 					</div>
 					<div>
-						<input class="boolean" name="microfonons_mojados" id="tabla_mojaron" type="checkbox" value="on"/>
+						<input class="boolean" name="microfonos_mojados" id="tabla_microfonos_mojados" type="checkbox" value="on"/>
 					</div>
-				</td>
-				<td>
 				</td>
 			</tr>
     	</table>
+    	<hr/>
     	<table class="GPS">
     		<tr>
     			<th colspan="3", class="Centrar">
@@ -140,7 +148,33 @@
                 	Longitud
             	</th>
             	<th>
-                	<label for="tabla_elipsoide">Datum</label>
+            	</th>
+            	<th>
+            	</th>
+            	<th>
+            	</th>
+            </tr>
+			<tr>
+            	<th>
+            		<label for="lat_grado">Grado</label>
+            	</th>
+            	<th>
+            		<label for="lat_min">Minuto</label>
+            	</th>
+            	<th>
+            		<label for="lat_seg">Segundo</label>
+            	</th>
+            	<th>
+            		<label for="lon_grado">Grado</label>
+            	</th>
+            	<th>
+        			<label for="lon_min">Minuto</label>
+            	</th>
+            	<th>
+            		<label for="lon_seg">Segundo</label>
+            	</th>
+            	<th>            	    
+            		<label for="tabla_elipsoide">Datum</label>
             	</th>
             	<th>
             		<label for="tabla_altitud">Altitud(m)</label>
@@ -151,37 +185,42 @@
             </tr>
             <tr>
             	<td>
-            		<input class="integer" name="lat_grado" id="tabla_lat_grado" type="text" value="Grado"/>
+            		<input class="integer obligatorio" name="lat_grado" id="tabla_lat_grado" type="text"/>
             	</td>
             	<td>
-            		<input class="integer" name="lat_min" id="tabla_lat_min" type="text" value="Minuto"/>
+            		<input class="integer obligatorio" name="lat_min" id="tabla_lat_min" type="text"/>
             	</td>
             	<td>
-            		<input class="double" name="lat_seg" id="tabla_lat_seg" type="text" value="Segundo"/>
+            		<input class="double obligatorio" name="lat_seg" id="tabla_lat_seg" type="text"/>
             	</td>
             	<td>
-            		<input class="integer" name="lon_grado" id="tabla_lon_grado" type="text" value="Grado"/>
+            		<input class="integer obligatorio" name="lon_grado" id="tabla_lon_grado" type="text"/>
             	</td>
             	<td>
-        			<input class="integer" name="lon_min" id="tabla_lon_min" type="text" value="Minuto"/>
+        			<input class="integer obligatorio" name="lon_min" id="tabla_lon_min" type="text"/>
             	</td>
             	<td>
-            		<input class="double" name="lon_seg" id="tabla_lon_seg" type="text" value="Segundo"/>
+            		<input class="double obligatorio" name="lon_seg" id="tabla_lon_seg" type="text"/>
             	</td>
             	<td>
-        			<select class="generic-widget" name="elipsoide" id="tabla_elipsoide">
-							<option value=""/>
-							<option value="1">Café</option>
+        			<select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
+						<option value=""/>
+						{{for elipsoide in listaElipsoide:}}
+							<option value="{{=elipsoide.id}}">
+								{{=elipsoide.nombre}}
+							</option>
+						{{pass}}
 					</select>
             	</td>
             	<td>
-            		<input class="double" name="altitud" id="tabla_altitud" type="text" value=""/>
+            		<input class="double obligatorio" name="altitud" id="tabla_altitud" type="text" value=""/>
             	</td>
             	<td>
-            	    <input class="double" name="gps_error" id="tabla_gps_error" type="text" value=""/>
+            	    <input class="double obligatorio" name="gps_error" id="tabla_gps_error" type="text" value=""/>
             	</td>
             </tr>
     	</table>
+    	<hr/>
     	<table class="No_GPS">
     		<tr>
     			<td>
@@ -189,9 +228,13 @@
 						<label for="tabla_nombre">Código grabadora</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="nombre" id="tabla_nombre">
+						<select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
 							<option value=""/>
-							<option value="1">Café</option>
+							{{for nombreGrabadora in listaNombreGrabadora:}}
+								<option value="{{=nombreGrabadora.id}}">
+									{{=nombreGrabadora.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>
@@ -200,56 +243,57 @@
 						<label for="tabla_archivo_metadatos">Metadatos</label>
 					</div>
 					<div>
-						<input type="file" id="tabla_archivo_metadatos" name="archivo_metadatos"/>
-					</div>
-				</td>
-<!--					<div>
-						<select class="generic-widget" name="metadatos" id="tabla_metadatos">
-							<option value=""/>
-							<option value="1">Café</option>
-						</select>
-					</div>  -->
-				</td>
-				<td>
-					<div>
-						<label for="tabla_imagen_ref_archivo_nombre">Foto grabadora</label>
-					</div>
-					<div>
-						<input type="file" id="imagen_ref_archivo_nombre" name="imagen_grabadora"/>
+						<input type="file" class="obligatorio" id="tabla_archivo_metadatos" name="archivo_metadatos"/>
 					</div>
 				</td>
 				<td>
 					<div>
-						<label for="tabla_imagen_ref_archivo_nombre_mic">Foto micrófonos</label>
+						<label for="tabla_imagen_grabadora">Foto grabadora</label>
 					</div>
 					<div>
-						<input type="file" id="imagen_ref_archivo_nombre_mic" name="imagen_microfonos"/>
+						<input type="file" class="obligatorio" id="tabla_imagen_grabadora" name="imagen_grabadora"/>
 					</div>
 				</td>
-
+				<td>
+					<div>
+						<label for="tabla_imagen_microfonos">Foto micrófonos</label>
+					</div>
+					<div>
+						<input type="file" class="obligatorio" id="tabla_imagen_microfonos" name="imagen_microfonos"/>
+					</div>
+				</td>
+		</table>
+	</fieldset>
+	<fieldset>
+		<legend>
+			Subir archivos de audio
+		</legend>
+		<table class="tabla">
     		</tr>
     		<tr>
-    			<td>
+    			<td colspan="2">
     				<div>
-						<label for="tabla_archivos_grabadora">Subir archivos micrófono audible</label>
+						<label for="tabla_archivos_audibles">Micrófono audible</label>
 					</div>
 					<div>
-						<input type="file" id="tabla_archivos_grabadora" name="archivos_grabadora" multiple/>
+						<input type="file" class="obligatorio" id="tabla_archivos_audibles" name="archivos_audibles" multiple/>
 					</div>
 				</td>
-				<td>
+				<td colspan="2">
     				<div>
-						<label for="tabla_archivos_microfonos">Subir archivos micrófono ultrasónico</label>
+						<label for="tabla_archivos_ultrasonicos">Micrófono ultrasónico</label>
 					</div>
 					<div>
-						<input type="file" id="tabla_archivos_" name="archivos_grabadora" multiple/>
+						<input type="file" class="obligatorio" id="tabla_archivos_ultrasonicos" name="archivos_ultrasonicos" multiple/>
 					</div>
 				</td> 
 			</tr>
 		</table>
-    	<div>
-    		<label for="tabla_comentario">Observaciones</label>
-    	</div>
+	</fieldset>
+	<fieldset>
+		<legend>
+			Observaciones
+		</legend>
     	<div>
     	    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10">
     	    </textarea>
@@ -258,3 +302,42 @@
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 <!-- {{=BEAUTIFY(response._vars)}} -->
+
+<script>
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+	$('#tabla_conglomerado_muestra_id').change
+	(
+    	function()
+    	{
+    		$('#tabla_sitio_numero').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+    		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+    	}
+   	)
+
+	//Validando, para ello utilizamos la clase "obligatorio":
+   	$('form').submit
+   	(
+   		function()
+   		{
+   			flag =true;
+   			campos=$('.obligatorio');
+   			campos.each(function() 
+   			{
+  				if(!$(this).val())
+  				{
+  					 flag = false;
+  				}
+			}
+			);
+			if(!flag)
+            {
+                alert('Faltó llenar un campo o subir algún archivo');
+            	return false;
+			}
+   		}
+   	)
+</script>

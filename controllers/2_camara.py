@@ -4,11 +4,7 @@ def index():
     Campos_pestana_2 = [
     
     # campos cámara
-    
-    # Posteriormente habrá dropdowns en cascada para los campos de conglomerado 
-    # y sitio, para abordar el caso en el que los sitios de un conglomerado
-    # puedan no existir.
-    
+        
     # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
     # para incluir las dropdowns en cascada y la subida de múltiples archivos.
     
@@ -91,14 +87,14 @@ def index():
         
 		#Creando los campos de la tabla Imagen_referencia_camara:
 		
-        formaImagenRef = {}
-        formaImagenRef['camara_id'] = camaraInsertada
-        formaImagenRef['archivo'] = imagenRef
-        formaImagenRef['archivo_nombre_original'] = forma.vars.imagen_camara.filename
+        datosImagenRef = {}
+        datosImagenRef['camara_id'] = camaraInsertada
+        datosImagenRef['archivo'] = imagenRef
+        datosImagenRef['archivo_nombre_original'] = forma.vars.imagen_camara.filename
 		
 		#Insertando el registro en la base de datos:
 		
-        db.Imagen_referencia_camara.insert(**formaImagenRef)
+        db.Imagen_referencia_camara.insert(**datosImagenRef)
         
     	################Procesando los archivos múltiples#################################
     	
@@ -110,14 +106,14 @@ def index():
     	for aux in archivos:
     		archivoCamara = db.Archivo_camara.archivo.store(aux, aux.filename)
     		
-    		formaArchivoCamara = {}
-    		formaArchivoCamara['camara_id'] = camaraInsertada
-    		formaArchivoCamara['archivo'] = archivoCamara
-    		formaArchivoCamara['archivo_nombre_original'] = aux.filename
+    		datosArchivoCamara = {}
+    		datosArchivoCamara['camara_id'] = camaraInsertada
+    		datosArchivoCamara['archivo'] = archivoCamara
+    		datosArchivoCamara['archivo_nombre_original'] = aux.filename
     	
     		#Insertando el registro en la base de datos:
 
-    		db.Archivo_camara.insert(**formaArchivoCamara)
+    		db.Archivo_camara.insert(**datosArchivoCamara)
 	
         response.flash = 'Éxito'
         
@@ -127,13 +123,15 @@ def index():
     else:
     	response.flash ='Por favor, introduzca los datos de la cámara'
 
+    ##########Enviando la información de las dropdowns##########################
+
     #Regresando los nombres de todos los conglomerados insertados en la tabla de
     #conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-    #De la misma manera, llenando las combobox de nombre, resolución y sensibilidad:
+    #De la misma manera, llenando las combobox de nombre y elipsoide:
 
     listaNombreCamara = db(db.Cat_nombre_camara).select(
         db.Cat_nombre_camara.id, db.Cat_nombre_camara.nombre)
@@ -154,13 +152,21 @@ def index():
         listaSensibilidad=listaSensibilidad,\
         listaElipsoide=listaElipsoide)
 
+#La siguiente función es invocada mediante AJAX para llenar la combobox de número
+#de sitio a partir de los sitios existentes de un conglomerado seleccionado.
+
 def asignarSitios():
 
+    #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+
+    #Obteniendo los sitios que existen en dicho conglomerado
     sitiosAsignados = db(
         (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
         (db.Sitio_muestra.existe==True)
         ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
+
+    #Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
 
     dropdownHTML = "<select class='generic-widget' name='sitio_numero' id='tabla_sitio_numero'>"
 
