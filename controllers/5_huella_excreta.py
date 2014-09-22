@@ -1,31 +1,80 @@
 # coding: utf8
-# try something like
+
 def index1():
-    Campos_transecto_huellas = [
-        SELECT(_name='conglomerado_muestra_id', 
+
+    Campos_transecto_huellas_excretas = [
+
+    # campos transecto huellas y excretas
+
+    # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
+    # para incluir las dropdowns en cascada y la subida de múltiples archivos.
+    
+    #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
+    # de datos y así, evitar excepciones.
+    
+    # No se ingresarán los tres muestreos de transecto de especies invasoras al 
+    # mismo tiempo porque puede ser que los hagan a distintos tiempos, y prefieran
+    # llenar un transecto mientras descansan.
+
+        SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
         SELECT(_name='transecto_numero',
             requires=IS_IN_DB(db,db.Cat_numero_transecto.id,'%(nombre)s')),
         INPUT(_name='tecnico',_type='string',requires=IS_NOT_EMPTY()),
-        INPUT(_name='fecha',_type='date',
-            requires=IS_DATE(format=T('%d-%m-%Y'))),
+        INPUT(_name='fecha',_type='date',requires=IS_NOT_EMPTY()),
         INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
         INPUT(_name='hora_termino',_type='time',requires=IS_NOT_EMPTY()),
         TEXTAREA(_name='comentario'),
     ]
-    
-    formaTransecto = FORM(*Campos_transecto_huellas)
 
+    #IS_DATE(format=T('%d-%m-%Y'))),
+    
+    formaTransecto = FORM(*Campos_transecto_huellas_excretas)
+    
     if formaTransecto.accepts(request.vars,formname='formaTransectoHTML'):
-        response.flash = 'qiubo'
         db.Transecto_huellas_excretas_muestra.insert(**formaTransecto.vars)
         response.flash = 'Éxito'
     elif formaTransecto.errors:
-        response.flash = 'Hubo un error al llenar la forma de transecto'
+        response.flash = 'Hubo un error al llenar la forma'
     else:
-        response.flash ='Por favor, primero envíe los datos del transecto y luego las huellas/excretas asociadas'
+        response.flash ='Por favor, asegúrese que registra cada transecto sólo una vez'
 
-    return dict()
+    ##########Enviando la información de las dropdowns##########################
+
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
+
+    #De la misma manera, llenando la combobox de números de transecto:
+
+    listaNumeroTransecto = db(db.Cat_numero_transecto).select(
+        db.Cat_numero_transecto.id, db.Cat_numero_transecto.nombre)
+
+    return dict(listaConglomerado=listaConglomerado,\
+        listaNumeroTransecto=listaNumeroTransecto)
+
+#AJAX para revisar que no se haya ingresado el mismo transecto con anterioridad.
+#El AJAX se activará cuando seleccionen un conglomerado y un número de transecto.
+
+def transectoExistente():
+
+    #Obteniendo la información del conglomerado que seleccionó el usuario:
+    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+    numTransectoElegido = request.vars.transecto_numero
+
+    #Haciendo un query a la tabla de Transecto_huellas_excretas_muestra con la
+    #información anterior:
+
+    transectoYaInsertado=db(
+    (db.Transecto_huellas_excretas_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
+    (db.Transecto_huellas_excretas_muestra.transecto_numero==numTransectoElegido)
+    ).select()
+
+    #regresa la longitud de trasectoYaInsertado para que sea interpretada por JS
+
+    return len(transectoYaInsertado)
 
 def index2():
     Campos_huellas = [

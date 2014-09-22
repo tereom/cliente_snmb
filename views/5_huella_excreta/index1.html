@@ -1,18 +1,19 @@
 {{extend 'layout.html'}}
 {{block head}}
 <style type="text/css">
-	.Tabla
+
+	/*.Tabla
     {
         table-layout: fixed;
         width: 80%;
-    }
+    }*/
 
-    .Especies .generic-widget
+    .Tabla .generic-widget
     {
     	margin-right: 1cm;
         width: 4.4cm;
     }
-    .Especies .integer, .Especies .double, .Especies .string, .Especies .date, .Especies .time
+    .Tabla .integer, .Tabla .double, .Tabla .string, .Tabla .date, .Tabla .time
     {
     	margin-right: 1cm;
         width: 4cm;
@@ -22,16 +23,7 @@
     {
         text-align: center;
     }
-    .CentrarV
-    {
- 		/* padding 0 10px;
-  		font-size:0.8em;
-  		**line-height: 0.8em;**
-  		float:right;
-  		height:100%;
-  		display:table; */
-  		vertical-align:middle;
-	}    
+ 
     #enviar
     {
         float: left;
@@ -39,22 +31,26 @@
 </style>
 {{end}}
 
-<form action="" enctype="multipart/form-data" method="post">
+<form action="" enctype="multipart/form-data" method="post" id="forma">
 	<fieldset>
 		<legend>
 		Transecto huellas y excretas
 		</legend>
 		<input type="hidden"  name="_formname" value="formaTransectoHTML"/>
-		<table class="Especies" class="Tabla">
+		<table class="Tabla">
 			<tr>
 				<td>
 					<div>
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
 							<option value=""/>
-							<option value="1">Gato</option>
+							{{for conglomerado in listaConglomerado:}}
+								<option value="{{=conglomerado.id}}">
+									{{=conglomerado.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>
@@ -63,9 +59,14 @@
 						<label for="tabla_transecto_numero">Transecto</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="transecto_numero" id="tabla_transecto_numero">
+						<select class="generic-widget obligatorio" name="transecto_numero" id="tabla_transecto_numero">
 							<option value=""/>
-							<option value="1">Café</option>
+							{{for transectoNumero in listaNumeroTransecto:}}
+								<option value="{{=transectoNumero.id}}">
+									{{=transectoNumero.nombre}}
+								</option>
+							{{pass}}
+						</select>
 					</div>
 				</td>
 				<td>
@@ -73,44 +74,96 @@
 						<label for="tabla_tecnico">Técnico</label>
 					</div>
 					<div>
-						<input class="string" name="tecnico" id="tabla_tecnico" type="text" value=""/>
+						<input class="string obligatorio" name="tecnico" id="tabla_tecnico" type="text" value=""/>
 					</div>
 				</td>
 			</tr>
-		<tr>
-			<td>
-				<div>
-					<label for="tabla_fecha">Fecha</label>
-				</div>
-				<div>
-					<input class="date" name="fecha" id="tabla_fecha" type="text" value=""/>
-				</div>
-			</td>
-			<td>
-				<div>
-					<label for="tabla_hora_inicio">Hora inicio</label>
-				</div>
-				<div>
-					<input class="time" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
-				</div>
-			</td>
-			<td>
-				<div>
-					<label for="tabla_hora_termino">Hora término</label>
-				</div>
-				<div>
-					<input class="time" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
-				</div>
-			</td>
-		</tr>
-	</table>
-		<div>
-    		<label for="tabla_comentario">Observaciones</label>
-    	</div>
+			<tr>
+				<td>
+					<div>
+						<label for="tabla_fecha">Fecha</label>
+					</div>
+					<div>
+						<input class="date obligatorio" name="fecha" id="tabla_fecha" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_hora_inicio">Hora inicio</label>
+					</div>
+					<div>
+						<input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_hora_termino">Hora término</label>
+					</div>
+					<div>
+						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<fieldset>
+		<legend>
+			Observaciones
+		</legend>
     	<div>
-		    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10">
-			</textarea>
+		    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
     	</div>
     </fieldset>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
+<script>
+
+	//AJAX para advertir al usuario que un transecto ya ha sido asignado con anterioridad
+	$('#tabla_transecto_numero').change
+	(
+    	function()
+    	{
+    		$.ajax
+    		(
+    			{
+					type: "POST",
+        			data: $('#forma').serialize(),
+        			url: "{{=URL('transectoExistente')}}",
+        			success: function(resultado)
+        			{
+        				//alert(resultado);
+        				if(resultado>=1)
+    					{
+    						alert('Este transecto ya ha sido declarado');
+    						$('#tabla_transecto_numero').val("");
+    					}
+        			}
+    			}
+    		);
+		}
+   	);
+
+
+	//Validando, para ello utilizamos la clase "obligatorio":
+   	$('form').submit
+   	(
+   		function()
+   		{
+   			flag =true;
+   			campos=$('.obligatorio');
+   			campos.each(function() 
+   			{
+  				if(!$(this).val())
+  				{
+  					 flag = false;
+  				}
+			}
+			);
+			if(!flag)
+            {
+                alert('Faltó llenar algún campo obligatorio');
+            	return false;
+			}
+   		}
+   	)
+</script>

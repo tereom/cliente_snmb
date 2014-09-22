@@ -3,19 +3,23 @@
 ## En esta sección se definen las tablas correspondientes a la pestaña de 
 ## Huellas y Excretas, es decir: Transecto_huellas_excretas_muestra, 
 ## Huella_excreta, Archivo_huella_excreta
-Campos_Transecto_huellas_excretas = [
+
+##########################################################################
+## Transecto_huellas_excretas_muestra
+########################################################################
+
+Campos_Transecto_huellas_excretas_muestra = [
     Field('conglomerado_muestra_id','reference Conglomerado_muestra',
         required=True),
-    Field('transecto_numero',label=T("Transecto"),required=True),  
-    Field('fecha','date',label=T("Fecha"),required=True),
-    Field('hora_inicio','time',label=T("Hora inicio"),required=True),
-    Field('hora_termino','time',label=T("Hora término"),required=True),
-    Field('tecnico','string',label=T("Técnico"),required=True),
-    Field('comentario','text',label=T("Observaciones"))
+    Field('fecha','date',required=True),
+    Field('transecto_numero','reference Cat_numero_transecto', required=True),
+    Field('tecnico','string',required=True),
+    Field('hora_inicio','time',required=True),
+    Field('hora_termino','time',required=True),
+    Field('comentario','text')
     ]
 
-db.define_table('Transecto_huellas_excretas_muestra',
-        *Campos_Transecto_huellas_excretas)
+db.define_table('Transecto_huellas_excretas_muestra',*Campos_Transecto_huellas_excretas_muestra)
 
 Campos_Huella_excreta = [
     Field('transecto_huellas_excretas_id',
