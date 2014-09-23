@@ -2,7 +2,7 @@
 {{block head}}
 <style type="text/css">
 
-	.tabla
+	.TablaMicrofonos
 	{
 		table-layout: fixed;
         width: 100%;
@@ -155,31 +155,31 @@
             	</th>
             </tr>
 			<tr>
-            	<th>
+            	<th class="Centrar">
             		<label for="lat_grado">Grado</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="lat_min">Minuto</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="lat_seg">Segundo</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="lon_grado">Grado</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
         			<label for="lon_min">Minuto</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="lon_seg">Segundo</label>
             	</th>
-            	<th>            	    
+            	<th class="Centrar">            	    
             		<label for="tabla_elipsoide">Datum</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="tabla_altitud">Altitud(m)</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="tabla_gps_error">Error(m)</label>
             	</th>
             </tr>
@@ -268,7 +268,7 @@
 		<legend>
 			Subir archivos de audio
 		</legend>
-		<table class="tabla">
+		<table class="TablaMicrofonos">
     		</tr>
     		<tr>
     			<td colspan="2">
@@ -290,13 +290,13 @@
 			</tr>
 		</table>
 	</fieldset>
+	<br/>
 	<fieldset>
 		<legend>
 			Observaciones
 		</legend>
     	<div>
-    	    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10">
-    	    </textarea>
+    	    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
     	</div>
 	</fieldset>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>

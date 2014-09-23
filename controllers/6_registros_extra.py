@@ -114,7 +114,7 @@ def index1():
             archivoInvasora = db.Archivo_especie_invasora_extra.archivo.store(aux, aux.filename)
             
             datosArchivoInvasora = {}
-            datosArchivoInvasora['especie_invasora_id'] = especieInsertada
+            datosArchivoInvasora['especie_invasora_extra_id'] = especieInsertada
             datosArchivoInvasora['archivo'] = archivoInvasora
             datosArchivoInvasora['archivo_nombre_original'] = aux.filename
         
