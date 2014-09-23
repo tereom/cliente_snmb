@@ -212,6 +212,13 @@
 			}
 			);
 
+			//Validando los radio-botones
+			if(!$('input:radio[name=es_huella_excreta]:checked').val())
+			{
+				flag = false;
+				alert('falta presionar un radio-botón');
+			}
+
    			//Si no se marcó ninguna casilla para ingresar el nombre
    			if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
    			{
@@ -246,5 +253,4 @@
 			}
    		}
    	)
-//FALTA VALIDAR LOS RADIO-BOTONES
 </script>
