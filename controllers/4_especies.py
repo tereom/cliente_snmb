@@ -1,5 +1,4 @@
 # coding: utf8
-
 def index1():
 
     Campos_transecto_invasoras = [
@@ -80,7 +79,7 @@ def index2():
 
     Campos_especie_invasora = [
 
-		#Datos para localizar un transecto único y asociarle la cámara a éste.
+		#Datos para localizar un transecto único y asociarle la observación a éste.
    		#Estos datos deben conformar una llave del transecto.
 
    		SELECT(_name='conglomerado_muestra_id',
@@ -91,15 +90,20 @@ def index2():
         #de que un transecto asociado a un conglomerado existente no se haya declarado.
 
 		#Catálogo CONABIO
+        #Debido a la forma como se maneja la inserción de datos en la base
+        #(no hay ningún campo que haga referencia a la lista conabio como tal),
+        #es mejor si el formulario regresa los nombres en el catálogo (en lugar
+        #de los ID's):
 		INPUT(_name='conabio_lista',
-            requires=IS_IN_DB(db,db.Cat_conabio_invasoras.id,'%(nombre)s')),
+            requires=IS_IN_DB(db,db.Cat_conabio_invasoras.nombre,'%(nombre)s')),
 
         #Campos de una especie invasora
 		INPUT(_name='hay_nombre_comun',_type='boolean'),
 		INPUT(_name='nombre_comun',_type='string'),
 		INPUT(_name='hay_nombre_cientifico',_type='boolean'),
 		INPUT(_name='nombre_cientifico',_type='string'),
-		INPUT(_name='numero_individuos', _type='integer',requires=IS_NOT_EMPTY()),
+		SELECT(_name='numero_individuos',
+         requires=IS_IN_DB(db,db.Cat_numero_individuos.id, '%(nombre)s')),
 		
 		###########Imágenes############
 		INPUT(_name='archivos_invasora',_type='file', _multiple=True,
@@ -109,10 +113,10 @@ def index2():
     formaEspecie = FORM(*Campos_especie_invasora)
     
     if formaEspecie.accepts(request.vars,formname='formaEspecieHTML'):
-        
-		#Filtrando los datos correspondientes a la tabla de la especie invasora:
+
+        #Filtrando los datos correspondientes a la tabla de la especie invasora:
         datosEspecie = db.Especie_invasora._filter_fields(formaEspecie.vars)
-        
+                
         #Utilizando la llave del transecto para encontrarlo:
         
         idConglomerado = formaEspecie.vars['conglomerado_muestra_id']
@@ -125,29 +129,42 @@ def index2():
         #También garantizamos que los transectos en la dropdown de especie
         #invasora sí estén registrados con anterioridad en el conglomerado.
                 
-        transectoEspecie = db((db.Transecto_especies_invasoras_muestra.conglomerado_muestra_id==idConglomerado)&\
-        (db.Transecto_especies_invasoras_muestra.transecto_numero==transectoNumero)).select().first()
+        transectoEspecie = db((db.Transecto_especies_invasoras_muestra.\
+            conglomerado_muestra_id==idConglomerado)&(
+            db.Transecto_especies_invasoras_muestra.transecto_numero==\
+            transectoNumero)).select().first()
         
         datosEspecie['transecto_especies_invasoras_id'] = transectoEspecie
 
-        #Administrando los nombres:
+        # Revisando la selección de lista CONABIO
+
+        selListaConabio=formaEspecie.vars['conabio_lista']
 
         #Si se eligió una especie invasora de la lista CONABIO, entonces se marcan
         #las casillas de:
         #nombre_en_lista
         #hay_nombre_común
         #hay_nombre_científico
-        #y se llenan los campos de:
+        #y utilizando el valor de seleccionado se llenan los campos de:
         #nombre_comun
         #nombre_cientifico.
 
-        if formaEspecie.vars['conabio_lista'] !=
+        if selListaConabio!='Otros':
 
-        #En otro caso, en la vista se asegura que se haya marcado al menos una
-        #casilla de hay_nombre_... y se haya llenado el texto correspondiente.
-        
-        #Guardando el registro de la especie invasora en la base de datos:
-        
+            datosEspecie['nombre_en_lista'] = True
+
+            #Separando el valor obtenido en mombre común y científico:
+            nombre = selListaConabio.split(' - ')
+            datosEspecie['nombre_cientifico'] = nombre[0]
+            datosEspecie['nombre_comun'] = nombre[1]
+
+        else:
+
+            datosEspecie['nombre_en_lista'] = False
+        #Los otros valores se obtuvieron con anterioridad, al leerlos del formulario.
+
+        #Insertando el registro en la base de datos:
+
         especieInsertada = db.Especie_invasora.insert(**datosEspecie)
 
 		################Procesando los archivos múltiples#################################
@@ -158,16 +175,18 @@ def index2():
     		archivos = [archivos]
     		
     	for aux in archivos:
+
+            #Guardando el archivo en la carpeta adecuada
     		archivoInvasora = db.Archivo_especie_invasora.archivo.store(aux, aux.filename)
     		
-    		formaArchivoInvasora = {}
-    		formaArchivoInvasora['especie_invasora_id'] = especieInsertada
-    		formaArchivoInvasora['archivo'] = archivoInvasora
-    		formaArchivoInvasora['archivo_nombre_original'] = aux.filename
+    		datosArchivoInvasora = {}
+    		datosArchivoInvasora['especie_invasora_id'] = especieInsertada
+    		datosArchivoInvasora['archivo'] = archivoInvasora
+    		datosArchivoInvasora['archivo_nombre_original'] = aux.filename
     	
     		#Insertando el registro en la base de datos:
 
-    		db.Archivo_especie_invasora.insert(**formaArchivoInvasora)
+    		db.Archivo_especie_invasora.insert(**datosArchivoInvasora)
         
         response.flash = 'Éxito'
         
@@ -179,4 +198,52 @@ def index2():
     
     	response.flash = 'Por favor, llene los campos pedidos'
 
-    return dict()
+    ##########Enviando la información de las dropdowns##########################
+
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
+
+    #De la misma manera, llenando la lista CONABIO (en este caso no requerimos
+    #de los ID's, como se mencionó anteriormente) y la lista de número de individuos
+
+    listaConabio = db(db.Cat_conabio_invasoras).select(db.Cat_conabio_invasoras.nombre)
+
+    listaNumIndividuos = db(db.Cat_numero_individuos).select(
+        db.Cat_numero_individuos.id, db.Cat_numero_individuos.nombre)
+
+    return dict(listaConglomerado=listaConglomerado,\
+        listaConabio=listaConabio,\
+        listaNumIndividuos=listaNumIndividuos)
+
+#La siguiente función es invocada mediante AJAX para llenar la combobox de número
+#de transecto a partir de los transectos declarados en un conglomerado seleccionado.
+
+def asignarTransectos():
+
+    #Obteniendo la información del conglomerado que seleccionó el usuario:
+    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+
+    #Obteniendo los transectos declarados en dicho conglomerado
+    transectosDeclarados = db(
+        db.Transecto_especies_invasoras_muestra.conglomerado_muestra_id==conglomeradoElegidoID
+        ).select(db.Transecto_especies_invasoras_muestra.transecto_numero,\
+        db.Transecto_especies_invasoras_muestra.id)
+
+    #Creando la dropdown de transectos y enviándola a la vista para que sea desplegada:
+
+    dropdownHTML = "<select class='generic-widget' name='transecto_numero' id='tabla_transecto_numero'>"
+
+    for transecto in transectosDeclarados:
+
+        #Obteniendo el nombre asociado al numero de transecto, del catálogo correspondiente:
+        nombreTransecto = db(db.Cat_numero_transecto.id==transecto.transecto_numero).select().first().nombre
+
+        dropdownHTML += "<option value='" + str(transecto.id) + "'>" + nombreTransecto + "</option>"  
+    
+    dropdownHTML += "</select>"
+    
+    return XML(dropdownHTML)
+

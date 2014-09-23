@@ -2,55 +2,52 @@
 {{block head}}
 <style type="text/css">
 
-    .Especies .generic-widget
+    .Tabla .double, .Tabla .string
     {
-    	margin-right: 1cm;
-        width: 4.4cm;
-    }
-    .Especies .integer, .Especies .double, .Especies .string, .Especies .date, .Especies .time
-    {
-    	margin-right: 1cm;
+        margin-right: 2cm;
         width: 4cm;
     }
     
-    .Centrar
+    .Tabla .generic-widget
     {
-        text-align: center;
+    	margin-right: 2cm;
+        width: 4.4cm;
     }
-    .CentrarV
-    {
- 		/* padding 0 10px;
-  		font-size:0.8em;
-  		**line-height: 0.8em;**
-  		float:right;
-  		height:100%;
-  		display:table; */
-  		vertical-align:middle;
-	}    
-    #enviar
+    
+    .FlotaIzquierda
     {
         float: left;
     }
+
+    #campoEspecial
+    {
+    	padding-top: 10px;
+    	padding-bottom: 10px;
+    }
+
 </style>
 {{end}}
 
-{{=response.toolbar()}}
 <form action="" enctype="multipart/form-data" method="post">
+	<input type="hidden"  name="_formname" value="formaHuellaExcretaHTML"/>
 	<fieldset>
 		<legend>
-		Huella/Excreta
+		Huellas y excretas
 		</legend>
-		<input type="hidden"  name="_formname" value="formaHuellaHTML"/>
-		<table class="Especies" class="Tabla">
+		<table class="Tabla">
 			<tr>
 				<td>
 					<div>
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
 							<option value=""/>
-							<option value="1">Gato</option>
+							{{for conglomerado in listaConglomerado:}}
+								<option value="{{=conglomerado.id}}">
+									{{=conglomerado.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>
@@ -58,69 +55,54 @@
 					<div>
 						<label for="tabla_transecto_numero">Transecto</label>
 					</div>
-					<div>
+					<!-- El ID es para cambiar la lista de transectos asociados a un conglomerado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
 						<select class="generic-widget" name="transecto_numero" id="tabla_transecto_numero">
 							<option value=""/>
-							<option value="1">Café</option>
+						</select>
 					</div>
 				</td>
 			</tr>
 			<tr>
-				<th>
-					<div style="float:left;padding-right:10px;">
-						<label for="tabla_es_huella">Huellas</label>
+				<td id="campoEspecial" colspan="2">
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<label for="tabla_es_huella">Huella</label>
 					</div>
-					<div style="float:center;">
+					<div class="FlotaIzquierda" style="padding-right:30px;">
 						<input class="boolean" name="es_huella_excreta" id="tabla_es_huella" type="radio" value="huella"/>
 					</div>
-				</th>
-				<th>
-				</th>
-			</tr>
-			<tr>
-				<th>
-					<div style="float:left;padding-right:10px;padding-bottom: 10px">
-						<label for="tabla_es_excreta">Excretas</label>
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<label for="tabla_es_excreta">Excreta</label>
 					</div>
-					<div style="float:center;">
+					<div class="FlotaIzquierda">
 						<input class="boolean" name="es_huella_excreta" id="tabla_es_excreta" type="radio" value="excreta"/>
 					</div>
-				</th>
-				<th>
-				</th>
-			</tr>
-			<tr>
-				<td>
-					<div>
-						<div style="float:left;padding-right:10px;">
-							<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
-						</div>
-						<div style="float:left;padding-right:22px;">
-							<label for="tabla_comun">Nombre común</label>
-						</div>
-						<div style="float:left;">
-							<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
-						</div>
-					</div>
-				</td>
-				<td>
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<div>
-						<div style="float:left;padding-right:10px;">
-							<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
-						</div>
-						<div div style="float:left;padding-right:10px;">
-							<label for="tabla_cientifico">Nombre científico</label>
-						</div>
-						<div style="float:left;">
-							<input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
-						</div>
+				<td colspan="2">
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
+					</div>
+					<div class="FlotaIzquierda" style="padding-right:22px;">
+						<label for="tabla_nombre_comun">Nombre común</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
 					</div>
 				</td>
-				<td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
+					</div>
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<label for="tabla_nombre_cientifico">Nombre científico</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -129,7 +111,7 @@
 						<label for="tabla_largo">Largo(cm)</label>
 					</div>
 					<div>
-						<input class="double" name="largo" id="tabla_largo" type="text" value=""/>
+						<input class="double obligatorio" name="largo" id="tabla_largo" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -137,17 +119,132 @@
 						<label for="tabla_ancho">Ancho(cm)</label>
 					</div>
 					<div>
-						<input class="double" name="ancho" id="tabla_ancho" type="text" value=""/>
+						<input class="double obligatorio" name="ancho" id="tabla_ancho" type="text" value=""/>
 					</div>
 				</td>
 			</tr>
 		</table>
-		<div>
-			<label for="tabla_archivos_huella">Subir imágenes</label>
-		</div>
-		<div>
-			<input type="file" id="tabla_archivos_huella" name="archivos_huella" multiple/>
+	</fieldset>
+	<fieldset>
+		<legend>
+			Subir archivos
+		</legend>
+		<div id="campoEspecial">
+			<input type="file" class="obligatorio" id="tabla_archivos_huella_excreta" name="archivos_huella_excreta" multiple/>
 		</div>	
 	</fieldset>
-	<input type="submit" value="Enviar" class="btn" id="enviar"/>
+	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
+
+<script>
+
+    //AJAX para llenar la combobox con los transectos declarados al elegir el conglomerado
+	$('#tabla_conglomerado_muestra_id').change
+	(
+    	function()
+    	{
+    		$('#tabla_transecto_numero').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+    		ajax("{{=URL('asignarTransectos')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+    	}
+   	)
+
+   	$(document).ready
+    (
+        function()
+        {
+           /*Cuando el documento se carga, las casillas para seleccionar nombres
+           están seleccionadas y los campos de texto son visibles (default):*/
+            $('#tabla_hay_nombre_comun').prop('checked', true);
+
+			$('#tabla_hay_nombre_cientifico').prop('checked', true);
+        }
+    )
+
+    /*Fade in/out de los campos de ingreso de nombre común/científico, de acuerdo
+    a si se marcó o no la casilla correspondiente*/
+
+    $('#tabla_hay_nombre_comun').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('#tabla_nombre_comun').fadeIn();
+            else
+                $('#tabla_nombre_comun').fadeOut();
+        }
+    )
+
+    $('#tabla_hay_nombre_cientifico').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('#tabla_nombre_cientifico').fadeIn();
+            else
+                $('#tabla_nombre_cientifico').fadeOut();
+        }
+    )
+
+   	//Validando, para ello utilizamos la clase "obligatorio":
+   	$('form').submit
+   	(
+   		function()
+   		{
+   			/*flag es un indicador de que la forma está completa
+   			faltanNombres es un indicador de que es necesario que se escriban
+   			ya sea el nombre común o el científico de la especia (ésto es cuando
+   			la especie no se encuentra en la lista de invasoras), y sin embargo,
+   			no se ha hecho.*/
+   			flag = true;
+   			faltanNombres = false;
+
+   			campos=$('.obligatorio');
+   			campos.each(function() 
+   			{
+  				if(!$(this).val())
+  				{
+  					 flag = false;
+  				}
+			}
+			);
+
+   			//Si no se marcó ninguna casilla para ingresar el nombre
+   			if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+   			{
+   				flag = false;
+   				faltanNombres = true;
+   				alert('caso1');
+   			}
+   			else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
+   			/*Si se marcó la casilla de nombre común pero no se escribió
+   			nada en el campo subsecuente.*/
+   			{
+   				flag = false;
+   				faltanNombres = true;
+   				alert('caso2');
+   			}
+   			 //Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
+   			else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
+   			{
+   				flag = false;
+   				faltanNombres = true;
+   				alert('caso3');
+   			}
+
+   			if(!flag)
+        	{
+          		if(faltanNombres)
+            		alert('Favor de escribir al menos un nombre (ya sea común científico)');
+          		else
+            		alert('Faltó llenar un campo o subir alguna imagen.');
+
+          		return false;
+			}
+   		}
+   	)
+//FALTA VALIDAR LOS RADIO-BOTONES
+</script>

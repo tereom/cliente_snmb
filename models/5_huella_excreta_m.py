@@ -9,6 +9,7 @@
 ########################################################################
 
 Campos_Transecto_huellas_excretas_muestra = [
+
     Field('conglomerado_muestra_id','reference Conglomerado_muestra',
         required=True),
     Field('fecha','date',required=True),
@@ -21,21 +22,30 @@ Campos_Transecto_huellas_excretas_muestra = [
 
 db.define_table('Transecto_huellas_excretas_muestra',*Campos_Transecto_huellas_excretas_muestra)
 
+##########################################################################
+## Huella_excreta
+########################################################################
+
+
 Campos_Huella_excreta = [
-    Field('transecto_huellas_excretas_id',
-        'reference Transecto_huellas_excretas_muestra'),
-    Field('es_huella','boolean',label=T("Huellas")),
-    Field('hay_nombre_comun','boolean',label=T("Nombre común")),
+
+    Field('transecto_huellas_excretas_id','reference Transecto_huellas_excretas_muestra',
+        required=True),
+    Field('es_huella','boolean', required=True),
     Field('nombre_comun','string'),
-    Field('hay_nombre_cientifico','boolean',label=T("Nombre científico")),
     Field('nombre_cientifico','string'),
-    Field('largo','double',label=T("Largo")),
-    Field('ancho','double',label=T("Ancho"))
+    Field('largo','double',required=True),
+    Field('ancho','double',required=True)
     ]
 
 db.define_table('Huella_excreta',*Campos_Huella_excreta)
 
+##########################################################################
+## Archivo_huella_excreta
+########################################################################
+
 Campos_Archivo_huella_excreta = [
+
     Field('huella_excreta_id','reference Huella_excreta',required=True),
     Field('archivo_nombre_original',required=True),
     Field('archivo', 'upload', autodelete=True,required=True)

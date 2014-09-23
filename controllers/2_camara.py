@@ -104,6 +104,8 @@ def index():
     		archivos = [archivos]
     		
     	for aux in archivos:
+
+            #Guardando el archivo en la carpeta adecuada
     		archivoCamara = db.Archivo_camara.archivo.store(aux, aux.filename)
     		
     		datosArchivoCamara = {}

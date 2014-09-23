@@ -144,6 +144,8 @@ def index():
             archivosAudibles = [archivosAudibles]
             
         for aux in archivosAudibles:
+
+            #Guardando el archivo en la carpeta adecuada
             ArchivoAudible = db.Archivo_grabadora.archivo.store(aux, aux.filename)
             
             datosArchivoAudible = {}

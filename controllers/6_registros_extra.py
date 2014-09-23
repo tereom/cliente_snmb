@@ -53,8 +53,6 @@ def index1():
             formaEspecieInvasora['hay_nombre_cientifico'] = True
             formaEspecieInvasora['nombre_cientifico'] = nombre[0]
 
-            raise HTTP(200, request.vars.tecnico)
-
             formaEspecieInvasora['hay_nombre_comun'] = True
             formaEspecieInvasora['nombre_comun'] = nombre[1]
         else:

@@ -32,11 +32,9 @@ Campos_Especie_invasora =[
 
 	Field('transecto_especies_invasoras_id','reference Transecto_especies_invasoras_muestra', required=True),
 	Field('nombre_en_lista','boolean', required=True),
-	Field('hay_nombre_comun', 'boolean', required=True),
 	Field('nombre_comun','string'),
-	Field('hay_nombre_cientifico', 'boolean', required=True),
     Field('nombre_cientifico','string'),
-    Field('numero_individuos', 'integer', required=True)
+    Field('numero_individuos', 'reference Cat_numero_individuos', required=True)
 ]
 
 db.define_table('Especie_invasora', *Campos_Especie_invasora)

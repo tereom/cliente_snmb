@@ -1,21 +1,52 @@
 {{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .Tabla .double, .Tabla .date, .Tabla .string, .Tabla .time
+    {
+        margin-right: 2cm;
+        width: 4cm;
+    }
+    
+    .Tabla .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4.4cm;
+    }
+    
+    .CentrarV
+    {
+  		vertical-align: middle;
+	  }    
+
+    .FlotaIzquierda
+    {
+        float: left;
+    }
+
+</style>
+{{end}}
 
 <form action="" enctype="multipart/form-data" method="post">
+	<input type="hidden"  name="_formname" value="formaEspecieHTML"/>
 	<fieldset>
 		<legend>
 		Especies invasoras
 		</legend>
-		<input type="hidden"  name="_formname" value="formaEspecieHTML"/>
-		<table class="Especies" class="Tabla">
+		<table class="Tabla">
 			<tr>
 				<td>
 					<div>
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
-						<select class="generic-widget" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
 							<option value=""/>
-							<option value="1">Gato</option>
+							{{for conglomerado in listaConglomerado:}}
+								<option value="{{=conglomerado.id}}">
+									{{=conglomerado.nombre}}
+								</option>
+							{{pass}}
 						</select>
 					</div>
 				</td>
@@ -23,136 +54,231 @@
 					<div>
 						<label for="tabla_transecto_numero">Transecto</label>
 					</div>
-					<div>
+					<!-- El ID es para cambiar la lista de transectos asociados a un conglomerado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
 						<select class="generic-widget" name="transecto_numero" id="tabla_transecto_numero">
 							<option value=""/>
-							<option value="1">Café</option>
-					</div>
-				</td>
-				<!--
-				<td>
-				</td>
-				-->
-			</tr>
-			<tr>
-			<!--
-				<td rowspan="2" class="CentrarV">
-				
-					<div>
-						<label for="tabla_conabio_lista">Lista CONABIO especies</label>
-					</div>
-					<div>
-						<select class="generic-widget" name="conabio_lista" id="tabla_conabio_lista">
-							<option value=""/>
-							<option value="1">Arundo donax<Carrizo gigante>
-							<option value="2">Axis axis<Venado axis>
-							<option value="3">Bassia scoparia<Rodadora>
-							<option value="4">Bromus madritensis">Bromo>
-							<option value="5">Cactoblastis cactorum<Palomilla de nopal>
-							<option value="6">Carpobrotus sp (C. edulis)<Higo marino>
-							<option value="7">Cyperus papyrus (ANP)<>
-							<option value="8">Eichhornia crassipes<Lirio acuático>
-							<option value="9">Hedera helix<Hiedra>
-							<option value="10">Lepidium draba /Cardaria draba<Flor bábol, capellanes>
-							<option value="11">Melinis minutiflora<Paja rosada, pasto morado, Zacate colorado>
-							<option value="12">Melinis repens<Paja rosada, pasto morado, Zacate colorado>
-							<option value="13">Mesembryanthemum crystallinum<Vidrillo>
-							<option value="14">Myiopsitta monachus<Perico monje>
-							<option value="15">Myocastor coypus<Coipu>
-							<option value="16">Oeceoclades maculata<Orquidea monje>
-							<option value="17">Pennisetum clandestinum<Kikuyo, Kuyuyú, tapete, colchoncillo>
-							<option value="18">Pueraria sp. (montana lobata o phaseoloides<Kudzu>
-							<option value="19">Rottboellia cochinchinensis<Caminadora>
-							<option value="20">Salsola sp. (vermiculata o tragus)<Rodadora>
-							<option value="21">Stizlobium prurienes<Picapica>
-							<option value="22">Sus scrofa<Cerdo europeo>
-							<option value="23">Tamarix sp.<Pino salado, cedro salado, tamarisco>
-
-							<option value="24">Otros</option>
 						</select>
 					</div>
-				</td>-->		
-				<!--<td>
+				</td>
+			</tr>
+			<tr>
+				<td rowspan="2" class="CentrarV">
 					<div>
-						<label for="tabla_hay_nombre_comun"></label>
+						<label for="tabla_conabio_lista">Lista CONABIO invasoras</label>
 					</div>
 					<div>
+						<select class="generic-widget obligatorio" name="conabio_lista" id="tabla_conabio_lista">
+							<option value=""/>
+							{{for especie in listaConabio:}}
+								<option value="{{=especie.nombre}}">
+									{{=especie.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>		
+				<td>
+					<div class="Nombre FlotaIzquierda" style="padding-right:10px;">
 						<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
 					</div>
-				</td>-->
-				<td class="Nombre">
-					<div>
-						<div style="float:left;padding-right:10px;">
-							<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
-						</div>
-						<div style="float:center;">
-							<label for="tabla_comun">Nombre común</label>
-						</div>
-						<div style="float:left;">
-							<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
-						</div>
+					<div class="Nombre FlotaIzquierda" style="padding-right:22px;">
+						<label for="tabla_nombre_comun">Nombre común</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
 					</div>
 				</td>
-				<td rowspan="2" class="CentrarV">
+			</tr>
+			<tr>
+				<td>
+					<div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+						<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
+					</div>
+					<div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+						<label for="tabla_nombre_cientifico">Nombre científico</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<div>
 						<label for="tabla_numero_individuos">Número de individuos</label>
 					</div>
 					<div>
-						<input class="integer" name="numero_individuos" id="tabla_numero_individuos" type="text">
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td class="Nombre">
-					<div>
-						<div style="float:left;padding-right:10px;">
-							<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
-						</div>
-						<div div style="float:center;">
-							<label for="tabla_cientifico">Nombre científico</label>
-						</div>
-						<div style="float:left;">
-							<input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
-						</div>
+						<select class="generic-widget obligatorio" name="numero_individuos" id="tabla_numero_individuos">
+							<option value=""/>
+							{{for numIndividuos in listaNumIndividuos:}}
+								<option value="{{=numIndividuos.id}}">
+									{{=numIndividuos.nombre}}
+								</option>
+							{{pass}}
+						</select>
 					</div>
 				</td>
 				<td>
+					<div>
+						<label for="tabla_archivos_invasora">Subir imágenes</label>
+					</div>
+					<div>
+						<input class="obligatorio" type="file" id="tabla_archivos_invasora" name="archivos_invasora" multiple/>
+					</div>
 				</td>
-				<!--<td>
-				</td>-->
 			</tr>
 		</table>
-		<div>
-			<label for="tabla_archivos_invasora">Subir imágenes</label>
-		</div>
-		<div>
-			<input type="file" id="tabla_archivos_invasora" name="archivos_invasora" multiple/>
-		</div>
-
 	</fieldset>
-	<input type="submit" value="Enviar" class="btn" id="enviar"/>
+	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
-<!--
+
 <script>
+
+    //AJAX para llenar la combobox con los transectos declarados al elegir el conglomerado
+	$('#tabla_conglomerado_muestra_id').change
+	(
+    	function()
+    	{
+    		$('#tabla_transecto_numero').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+    		ajax("{{=URL('asignarTransectos')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+    	}
+   	)
+
     $(document).ready
     (
         function()
         {
-           /*Cuando el documento se carga, el campo de vegetación está escondido*/
-           $('#tabla_conabio_lista').val("");
+           /*Cuando el documento se carga, los campos para ingresar nombre están
+           escondidos*/
+           // La clase Nombre engloba las checkbox y las etiquetas.
            $('.Nombre').hide();
+
+           $('#tabla_nombre_comun').hide();
+           $('#tabla_nombre_cientifico').hide();
         }
     )
+
+
+	/*Fade in de los campos de ingreso de nombre de especie si no se encuentra en
+	la lista.*/
 
     $('#tabla_conabio_lista').change
     (
         function()
         {
-            if($(this).find(":selected").text()=="Otros")
-                $('.Nombre').fadeIn();
+            if($(this).val()=="Otros")
+            {
+            	//Aparecen las casillas y etiquetas
+              $('.Nombre').fadeIn();
+
+              $('#tabla_hay_nombre_comun').prop('checked', true);
+              $('#tabla_nombre_comun').fadeIn();
+
+    			    $('#tabla_hay_nombre_cientifico').prop('checked', true);
+    			    $('#tabla_nombre_cientifico').fadeIn();
+            }
             else
-                $('.Nombre').fadeOut();
+            {
+              $('#tabla_hay_nombre_comun').prop('checked', false);
+              $('#tabla_nombre_comun').fadeOut();
+
+    			    $('#tabla_hay_nombre_cientifico').prop('checked', false);
+				      $('#tabla_nombre_cientifico').fadeOut();
+
+				      $('.Nombre').fadeOut();
+            }
         }
     )
+
+    /*Fade in/out de los campos de ingreso de nombre común/científico, de acuerdo
+    a si se marcó o no la casilla correspondiente*/
+
+    $('#tabla_hay_nombre_comun').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('#tabla_nombre_comun').fadeIn();
+            else
+                $('#tabla_nombre_comun').fadeOut();
+        }
+    )
+
+     $('#tabla_hay_nombre_cientifico').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('#tabla_nombre_cientifico').fadeIn();
+            else
+                $('#tabla_nombre_cientifico').fadeOut();
+        }
+    )
+
+	//Validando, para ello utilizamos la clase "obligatorio":
+   	$('form').submit
+   	(
+   		function()
+   		{
+   			/*flag es un indicador de que la forma está completa
+   			faltanNombres es un indicador de que es necesario que se escriban
+   			ya sea el nombre común o el científico de la especia (ésto es cuando
+   			la especie no se encuentra en la lista de invasoras), y sin embargo,
+   			no se ha hecho.*/
+   			flag = true;
+   			faltanNombres = false;
+
+   			campos=$('.obligatorio');
+   			campos.each(function() 
+   			{
+  				if(!$(this).val())
+  				{
+  					 flag = false;
+  				}
+			  });
+
+			 /*Validando: si el nombre de la especie no se encuentra en la lista 
+   			CONABIO. entonces:*/
+			  if($('#tabla_conabio_lista').val()=="Otros")
+   		  {
+   			  //Si no se marcó ninguna casilla para ingresar el nombre
+   				if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+   				{
+   					flag = false;
+   					faltanNombres = true;
+   					//alert('caso1');
+   				}
+   				else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
+   				/*Si se marcó la casilla de nombre común pero no se escribió
+   				nada en el campo subsecuente.*/
+   				{
+   					flag = false;
+   					faltanNombres = true;
+   					//alert('caso2');
+   				}
+   			 	//Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
+   				else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
+   				{
+   					flag = false;
+   					faltanNombres = true;
+   					//alert('caso3');
+   				}
+   			}
+
+			  if(!flag)
+        {
+          if(faltanNombres)
+            alert('Favor de escribir al menos un nombre (ya sea común científico)');
+          else
+            alert('Faltó llenar un campo o subir alguna imagen.');
+
+          return false;
+			  }
+   		}
+   	) 
 </script>
--->
