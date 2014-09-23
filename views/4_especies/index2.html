@@ -104,32 +104,35 @@
 				</td>
 			</tr>
 			<tr>
-				<td>
-					<div>
-						<label for="tabla_numero_individuos">Número de individuos</label>
-					</div>
-					<div>
-						<select class="generic-widget obligatorio" name="numero_individuos" id="tabla_numero_individuos">
-							<option value=""/>
-							{{for numIndividuos in listaNumIndividuos:}}
-								<option value="{{=numIndividuos.id}}">
-									{{=numIndividuos.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_archivos_invasora">Subir imágenes</label>
-					</div>
-					<div>
-						<input class="obligatorio" type="file" id="tabla_archivos_invasora" name="archivos_invasora" multiple/>
-					</div>
-				</td>
-			</tr>
-		</table>
+        <td>
+          <div>
+            <label for="tabla_numero_individuos">Número de individuos</label>
+          </div>
+          <div>
+            <select class="generic-widget obligatorio" name="numero_individuos" id="tabla_numero_individuos">
+              <option value=""/>
+              {{for numIndividuos in listaNumIndividuos:}}
+                <option value="{{=numIndividuos.id}}">
+                  {{=numIndividuos.nombre}}
+                </option>
+              {{pass}}
+            </select>
+          </div>
+        </td>
+        <td>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
+  <fieldset>
+    <legend>
+    Subir archivos
+    </legend>
+		<div>
+			<input class="obligatorio" type="file" id="tabla_archivos_invasora" name="archivos_invasora" multiple/>
+		</div>
 	</fieldset>
+  <br/>
 	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
