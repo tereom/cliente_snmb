@@ -11,10 +11,10 @@
 
 Campos_Conglomerado_muestra = [
 	Field('nombre','integer',label=T("Número de conglomerado"),required='TRUE'),
-	Field('fecha_visita', 'date',label=T("Fecha de visita"),required='TRUE'),
+	Field('fecha_visita', 'date',label=T("Fecha visita"),required='TRUE'),
 	Field('tipo','reference Cat_tipo_conglomerado',label=T("Tipo de conglomerado"),required='TRUE'),
     Field('estado','reference Cat_estado_conglomerado',label=T("Estado"),required='TRUE'),
-    Field('municipio','integer',label=T("Clave del municipio"),required='TRUE'),
+    Field('municipio','reference Cat_municipio_conglomerado',label=T("Municipio"),required='TRUE'),
     Field('predio','string',label=T("Predio"),required='TRUE'),
     Field('tenencia','reference Cat_tenencia_conglomerado',label=T("Tenencia"), required='TRUE'),
     Field('uso_suelo_tipo', 'reference Cat_suelo_conglomerado',label=T("Tipo de uso de suelo"),required='TRUE'),

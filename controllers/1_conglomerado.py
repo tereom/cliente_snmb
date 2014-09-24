@@ -29,7 +29,7 @@ def index():
     	Field('estado',label=T("Estado"),
     		requires=IS_IN_DB(db,db.Cat_estado_conglomerado.id,'%(nombre)s')),
     	Field('municipio','integer',label=T("Clave del municipio"),
-    		requires=IS_NOT_EMPTY()),
+    		requires=IS_IN_DB(db,db.Cat_municipio_conglomerado.id,'%(nombre)s')),
     	Field('predio','string',label=T("Predio"),
     		requires=IS_NOT_EMPTY()),
     	Field('tenencia', label=T("Tenencia"),

@@ -17,7 +17,7 @@ Campos_Camara = [
 	Field('fecha_inicio','date',required=True),
 	Field('fecha_termino','date',required=True),
 	Field('hora_inicio','time',required=True),
-	Field('hora_termino','date',required=True),
+	Field('hora_termino','time',required=True),
 
 	Field('lat_grado','integer',required=True),
 	Field('lat_min','integer',required=True),
