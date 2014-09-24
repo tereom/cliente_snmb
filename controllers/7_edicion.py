@@ -17,9 +17,17 @@
 #         fields=[db.Huella_excreta.es_huella])
 #     return locals()
 
-def admin_huella_excreta():
-    grid = SQLFORM.grid(db.Archivo_huella_excreta,user_signature=False)
-    return locals()
+db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.id,'%(nombre)s')
+
+def editar_conglomerado():
+
+	grid = SQLFORM.smartgrid(db.Conglomerado_muestra,user_signature=False)
+	return locals()
+
+
+# def admin_huella_excreta():
+#     grid = SQLFORM.grid(db.Archivo_huella_excreta,user_signature=False)
+#     return locals()
 
 # def admin_huellas():
 #     grid = SQLFORM.smartgrid(db.Transecto_huellas_excretas_muestra)
