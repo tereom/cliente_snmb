@@ -12,13 +12,6 @@
 
 # # coding: utf8
 
-def options_widget(field,value,**kwargs):
-    """ Use web2py's intelligence to set up the right HTML for the select field
-     the widgets knows about the database model """
-    w = SQLFORM.widgets.options.widget
-    xml = w(field,value,**kwargs)
-    return xml
-
 def admin_huella_excreta():
     db.Huella_excreta.id.writable = False
     db.Huella_excreta.id.readable = False
@@ -51,6 +44,18 @@ def admin_conglomerado():
     	selectable = lambda ids : redirect(URL('default', 'mapping_multiple', vars=dict(id=ids))))
         #fields=[db.Huella_excreta.es_huella])
     return locals()
+
+db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.id,'%(nombre)s')
+
+def editar_conglomerado():
+
+	grid = SQLFORM.smartgrid(db.Conglomerado_muestra,user_signature=False)
+	return locals()
+
+
+# def admin_huella_excreta():
+#     grid = SQLFORM.grid(db.Archivo_huella_excreta,user_signature=False)
+#     return locals()
 
 # def admin_huella_excreta():
 #    grid = SQLFORM.grid(db.Archivo_huella_excreta,user_signature=False)

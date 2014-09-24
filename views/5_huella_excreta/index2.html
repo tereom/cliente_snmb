@@ -14,15 +14,15 @@
         width: 4.4cm;
     }
     
-    .FlotaIzquierda
-    {
-        float: left;
-    }
-
     #campoEspecial
     {
     	padding-top: 10px;
     	padding-bottom: 10px;
+    }
+
+    .FlotaIzquierda
+    {
+        float: left;
     }
 
 </style>
@@ -217,7 +217,7 @@
 			if(!$('input:radio[name=es_huella_excreta]:checked').val())
 			{
 				flag = false;
-				alert('falta presionar un radio-botón');
+				//alert('falta presionar un radio-botón');
 			}
 
    			//Si no se marcó ninguna casilla para ingresar el nombre
@@ -225,7 +225,7 @@
    			{
    				flag = false;
    				faltanNombres = true;
-   				alert('caso1');
+   				//alert('caso1');
    			}
    			else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
    			/*Si se marcó la casilla de nombre común pero no se escribió
@@ -233,14 +233,14 @@
    			{
    				flag = false;
    				faltanNombres = true;
-   				alert('caso2');
+   				//alert('caso2');
    			}
    			 //Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
    			else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
    			{
    				flag = false;
    				faltanNombres = true;
-   				alert('caso3');
+   				//alert('caso3');
    			}
 
    			if(!flag)

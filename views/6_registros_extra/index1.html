@@ -1,56 +1,44 @@
 {{extend 'layout.html'}} 
 {{block head}}
 <style type="text/css">
-    .Especies .generic-widget
+
+    .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
     {
-    	margin-right: 1cm;
-        width: 4cm;
-    }
-    .Especies .integer, .Especies .double, .Especies .string, .Especies .date, .Especies .time
-    {
-    	margin-right: 1cm;
+        margin-right: 2cm;
         width: 4cm;
     }
     
-    .Huellas .generic-widget
-    {
-    	margin-right: 0.5cm;
-        width: 4cm;
-    }
-    .Huellas .integer, .Huellas .double, .Huellas .string, .Huellas .date, .Huellas .time
+    .No_GPS .generic-widget
     {
     	margin-right: 2cm;
-        width: 4cm;
+        width: 4.4cm;
+    }
+
+    .GPS .integer, .GPS .double
+    {
+        width: 2cm;
+    }
+    
+    .GPS .generic-widget
+    {
+        width: 2.5cm;
     }
 
     .Centrar
     {
         text-align: center;
     }
+
     .CentrarV
     {
   		vertical-align:middle;
 	}
-
-	.Campos_sitio, .Campos_conglomerado
-    {
-        table-layout: fixed;
-        width: 120%;
-    }
-   	.Campos_sitio .integer, .Campos_sitio .date, .Campos_sitio .string, .Campos_sitio .double
-    {
-        width: 2cm;
-    }
-    
-    .Campos_sitio .generic-widget
-    {
-        width: 2.5cm;
-    }
    
-    #enviar
+    .FlotaIzquierda
     {
         float: left;
     }
+
 </style>
 {{end}}
 
@@ -60,7 +48,7 @@
 		<legend>
 		Registros adicionales: especies invasoras
 		</legend>
-		<table class="Especies">
+		<table class="No_GPS">
 			<tr>
 				<td rowspan="2" class="CentrarV">
 					<div>
@@ -78,7 +66,7 @@
 					</div>
 				</td>
 				<td>
-					<div style="float:left;padding-right:10px;vertical-align:bottom;">
+					<div class="FlotaIzquierda" style="padding-right:10px;">
 						<label for="tabla_dentro_conglomerado">Dentro del conglomerado</label>
 					</div>
 					<div>
@@ -90,16 +78,16 @@
 						<label for="tabla_tecnico">Técnico</label>
 					</div>
 					<div>
-						<input class="string" name="tecnico" id="tabla_tecnico" type="text" value=""/>
+						<input class="string obligatorio" name="tecnico" id="tabla_tecnico" type="text" value=""/>
 					</div>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<div style="float:left;padding-right:17px;vertical-align:middle;">
+					<div class="FlotaIzquierda" style="padding-right:17px">
 						<label for="tabla_fuera_conglomerado">Fuera del conglomerado</label>
 					</div>
-					<div style="float:center;">
+					<div>
 						<input class="boolean" name="dentro_fuera_conglomerado" id="tabla_fuera_conglomerado" type="radio" value="fuera"/>
 					</div>
 				</td>
@@ -110,7 +98,7 @@
 						<label for="tabla_fecha">Fecha</label>
 					</div>
 					<div>
-						<input class="date" name="fecha" id="tabla_fecha" type="text" value=""/>
+						<input class="date obligatorio" name="fecha" id="tabla_fecha" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -118,7 +106,7 @@
 						<label for="tabla_hora">Hora</label>
 					</div>
 					<div>
-						<input class="time" name="hora" id="tabla_hora" type="text" value=""/>
+						<input class="time obligatorio" name="hora" id="tabla_hora" type="text" value=""/>
 					</div>
 				</td>
 				<td>
@@ -127,7 +115,7 @@
 		</table>
 
         <hr/>
-        
+
     	<table class="GPS">
     		<tr>
     			<th colspan="3", class="Centrar">
@@ -144,31 +132,31 @@
             	</th>
             </tr>
 			<tr>
-            	<th>
+            	<th class="Centrar">
             		<label for="lat_grado">Grado</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="lat_min">Minuto</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="lat_seg">Segundo</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="lon_grado">Grado</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
         			<label for="lon_min">Minuto</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="lon_seg">Segundo</label>
             	</th>
-            	<th>            	    
+            	<th class="Centrar">            	    
             		<label for="tabla_elipsoide">Datum</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="tabla_altitud">Altitud(m)</label>
             	</th>
-            	<th>
+            	<th class="Centrar">
             		<label for="tabla_gps_error">Error(m)</label>
             	</th>
             </tr>
@@ -213,82 +201,230 @@
 
         <hr/>
 
-		<table class="Especies">
-			<tr>
+        <table class="No_GPS">
+        	<tr>
 				<td rowspan="2" class="CentrarV">
-					<div class=Lista>
-						<label for="tabla_conabio_id">Lista CONABIO especies</label>
+					<div>
+						<label for="tabla_conabio_lista">Lista CONABIO invasoras</label>
 					</div>
-					<div class="Lista">
-						<select class="generic-widget" name="conabio_lista" id="tabla_conabio_lista">
+					<div>
+						<select class="generic-widget obligatorio" name="conabio_lista" id="tabla_conabio_lista">
 							<option value=""/>
-								<option value="">
-								</option>
-						</select>
-					</div>
-				</td>				
-				<td>
-					<div class="Nombre">
-						<div style="float:left;padding-right:10px;">
-							<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
-						</div>
-						<div style="float:left;padding-right:22px">
-							<label for="tabla_comun">Nombre común</label>
-						</div>
-						<div style="float:left;">
-							<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
-						</div>
-					</div>
-				</td>
-				<td rowspan="2" class="CentrarV">
-					<div class="Individuos">
-						<label for="tabla_numero_individuos">Número de individuos</label>
-					</div>
-					<div class="Individuos">
-						<select class="generic-widget" name="numero_individuos" id="tabla_numero_individuos">
-								<option value=""/>
-							{{for individuo in listaNumIndividuos:}}
-								<option value="{{=individuo.id}}">
-									{{=individuo.nombre}}
+							{{for especie in listaConabio:}}
+								<option value="{{=especie.nombre}}">
+									{{=especie.nombre}}
 								</option>
 							{{pass}}
 						</select>
+					</div>
+				</td>		
+				<td>
+					<div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+						<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
+					</div>
+					<div class="Nombre FlotaIzquierda" style="padding-right:22px;">
+						<label for="tabla_nombre_comun">Nombre común</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
 					</div>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<div class="Nombre">
-						<div style="float:left;padding-right:10px;">
-							<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
-						</div>
-						<div div style="float:left;padding-right:10px">
-							<label for="tabla_cientifico">Nombre científico</label>
-						</div>
-						<div style="float:left;">
-							<input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
-						</div>
+					<div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+						<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
+					</div>
+					<div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+						<label for="tabla_nombre_cientifico">Nombre científico</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
 					</div>
 				</td>
-			</tr>		
-		</table>
-		<hr>
+			</tr>
+			<tr>
+        		<td>
+          			<div>
+            			<label for="tabla_numero_individuos">Número de individuos</label>
+          			</div>
+          			<div>
+            			<select class="generic-widget obligatorio" name="numero_individuos" id="tabla_numero_individuos">
+              				<option value=""/>
+              				{{for numIndividuos in listaNumIndividuos:}}
+                				<option value="{{=numIndividuos.id}}">
+                  				{{=numIndividuos.nombre}}
+                				</option>
+              				{{pass}}
+            			</select>
+          			</div>
+        		</td>
+        		<td>
+        		</td>
+      		</tr>
+    	</table>
+  	</fieldset>
+  	<fieldset>
+    	<legend>
+    	Subir archivos
+    	</legend>
 		<div>
-			<label for="tabla_archivos_invasora">Subir imágenes</label>
+			<input class="obligatorio" type="file" id="tabla_archivos_invasora_extra" name="archivos_invasora_extra" multiple/>
 		</div>
-		<div>
-			<input type="file" id="tabla_archivos_invasora" name="archivos_invasora" multiple/>
-		</div>
-		<div>
-    		<label for="tabla_comentario">Observaciones</label>
-    	</div>
+	</fieldset>
+	<br/>
+	<fieldset>
+		<legend>
+		Observaciones
+		</legend>
     	<div>
-		    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5">
-			</textarea>
+		    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
     	</div>		
 	</fieldset>
-	<input type="submit" value="Enviar" class="btn" id="enviar"/>
+	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
-<h2>Submitted variables</h2>
-{{=BEAUTIFY(request.vars)}}
+<!--<h2>Submitted variables</h2>-->
+{{#=BEAUTIFY(request.vars)}}
+
+<script>
+    $(document).ready
+    (
+        function()
+        {
+           /*Cuando el documento se carga, los campos para ingresar nombre están
+           escondidos*/
+           // La clase Nombre engloba las checkbox y las etiquetas.
+           $('.Nombre').hide();
+
+           $('#tabla_nombre_comun').hide();
+           $('#tabla_nombre_cientifico').hide();
+        }
+    )
+
+
+	/*Fade in de los campos de ingreso de nombre de especie si no se encuentra en
+	la lista.*/
+
+    $('#tabla_conabio_lista').change
+    (
+        function()
+        {
+            if($(this).val()=="Otros")
+            {
+            	//Aparecen las casillas y etiquetas
+              $('.Nombre').fadeIn();
+
+              $('#tabla_hay_nombre_comun').prop('checked', true);
+              $('#tabla_nombre_comun').fadeIn();
+
+    			    $('#tabla_hay_nombre_cientifico').prop('checked', true);
+    			    $('#tabla_nombre_cientifico').fadeIn();
+            }
+            else
+            {
+              $('#tabla_hay_nombre_comun').prop('checked', false);
+              $('#tabla_nombre_comun').fadeOut();
+
+    			    $('#tabla_hay_nombre_cientifico').prop('checked', false);
+				      $('#tabla_nombre_cientifico').fadeOut();
+
+				      $('.Nombre').fadeOut();
+            }
+        }
+    )
+
+    /*Fade in/out de los campos de ingreso de nombre común/científico, de acuerdo
+    a si se marcó o no la casilla correspondiente*/
+
+    $('#tabla_hay_nombre_comun').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('#tabla_nombre_comun').fadeIn();
+            else
+                $('#tabla_nombre_comun').fadeOut();
+        }
+    )
+
+     $('#tabla_hay_nombre_cientifico').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('#tabla_nombre_cientifico').fadeIn();
+            else
+                $('#tabla_nombre_cientifico').fadeOut();
+        }
+    )
+
+	//Validando, para ello utilizamos la clase "obligatorio":
+   	$('form').submit
+   	(
+   		function()
+   		{
+   			/*flag es un indicador de que la forma está completa
+   			faltanNombres es un indicador de que es necesario que se escriban
+   			ya sea el nombre común o el científico de la especia (ésto es cuando
+   			la especie no se encuentra en la lista de invasoras), y sin embargo,
+   			no se ha hecho.*/
+   			flag = true;
+   			faltanNombres = false;
+
+   			campos=$('.obligatorio');
+   			campos.each(function() 
+   			{
+  				if(!$(this).val())
+  				{
+  					 flag = false;
+  				}
+			});
+
+			//Validando los radio-botones
+			if(!$('input:radio[name=dentro_fuera_conglomerado]:checked').val())
+			{
+				flag = false;
+				//alert('falta presionar un radio-botón');
+			}
+
+			/*Validando: si el nombre de la especie no se encuentra en la lista 
+   			CONABIO. entonces:*/
+			if($('#tabla_conabio_lista').val()=="Otros")
+   		  	{
+   			  //Si no se marcó ninguna casilla para ingresar el nombre
+   				if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+   				{
+   					flag = false;
+   					faltanNombres = true;
+   					//alert('caso1');
+   				}
+   				else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
+   				/*Si se marcó la casilla de nombre común pero no se escribió
+   				nada en el campo subsecuente.*/
+   				{
+   					flag = false;
+   					faltanNombres = true;
+   					//alert('caso2');
+   				}
+   			 	//Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
+   				else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
+   				{
+   					flag = false;
+   					faltanNombres = true;
+   					//alert('caso3');
+   				}
+   			}
+
+			if(!flag)
+        	{
+          		if(faltanNombres)
+            		alert('Favor de escribir al menos un nombre (ya sea común científico)');
+          		else
+            		alert('Faltó llenar un campo o subir alguna imagen.');
+
+          		return false;
+			}
+   		}
+   	) 
+</script>
