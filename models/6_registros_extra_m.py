@@ -45,7 +45,7 @@ Campos_Archivo_especie_invasora_extra =[
 
     Field('especie_invasora_extra_id','reference Especie_invasora_extra',required=True),
     Field('archivo_nombre_original',required=True),
-    Field('archivo', 'upload', autodelete=True,required=True)
+    Field('archivo','upload', autodelete=True,required=True)
 ]
 
 db.define_table('Archivo_especie_invasora_extra',
@@ -145,3 +145,4 @@ Campos_Archivo_especimen_restos_extra = [
 
 db.define_table('Archivo_especimen_restos_extra',
 	*Campos_Archivo_especimen_restos_extra)
+
