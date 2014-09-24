@@ -1,4 +1,5 @@
 # coding: utf8
+
 #def check(form):
 #    if form.vars.b and not form.vars.c:
 #        form.errors.c = "If the b is checked, c must be filled"
@@ -11,171 +12,190 @@
 
 def index():
 
-# Se define el formulario a partir de una única tabla virtual ya que necesitamos un único
-#botón submit para las formas.
-
 	Campos_pestana_1= [
+
+    # Utilizamos una FORM porque nos brinda mayor flexibilidad que una SQLFORM.
+    
+    #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
+    # de datos y así, evitar excepciones.
 
 		###############################
 		#Campos del conglomerado
 		###############################
 
-		Field('nombre','integer',label=T("Número de conglomerado"),
-			requires=IS_NOT_EMPTY()),
-		Field('fecha_visita', 'date',label=T("Fecha de visita"),
-			requires=IS_NOT_EMPTY()),
-		Field('tipo',label=T("Tipo de conglomerado"),
+		INPUT(_name='nombre',_type='integer',requires=IS_NOT_EMPTY()),
+		INPUT(_name='fecha_visita',_type='date',requires=IS_NOT_EMPTY()),
+		SELECT(_name='tipo',
 			requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.id,'%(nombre)s')),
-    	Field('estado',label=T("Estado"),
+    	SELECT(_name='estado',
     		requires=IS_IN_DB(db,db.Cat_estado_conglomerado.id,'%(nombre)s')),
-    	Field('municipio','integer',label=T("Clave del municipio"),
-    		requires=IS_NOT_EMPTY()),
-    	Field('predio','string',label=T("Predio"),
-    		requires=IS_NOT_EMPTY()),
-    	Field('tenencia', label=T("Tenencia"),
+    	SELECT(_name='municipio',
+    		requires=IS_IN_DB(db,db.Cat_municipio_conglomerado.id,'%(nombre)s')),
+    	INPUT(_name='predio',_type='string',requires=IS_NOT_EMPTY()),
+    	SELECT(_name='tenencia',
     		requires=IS_IN_DB(db,db.Cat_tenencia_conglomerado.id,'%(nombre)s')),
-    	Field('uso_suelo_tipo',label=T("Tipo de uso de suelo"),
+    	SELECT(_name='uso_suelo_tipo',
     		requires=IS_IN_DB(db,db.Cat_suelo_conglomerado.id,'%(nombre)s')),
-		Field('vegetacion_tipo', label=T("Tipo de vegetación"),
-			requires=IS_IN_DB(db,db.Cat_vegetacion_conglomerado.id,'%(nombre)s')),
-    	Field('perturbado','boolean',label=T("Perturbado")),
-		Field('comentario','text',label=T("Observaciones")),
+
+    	#El campo de vegetación_tipo posiblemente se envíe vacío de la vista (si
+    	#vegetación no es el uso de suelo principal), por ello, conviene ponerlo
+    	#como un entero, para que no requiera que esté en la base de datos (y
+    	#por ende, no vacío).
+		INPUT(_name='vegetacion_tipo',_type='integer'),
+
+    	INPUT(_name='perturbado',_type='boolean'),
+		INPUT(_name='comentario',_type='text'),
 
 		################################
-		#Campos del sitio 1
+		#Campos del sitio 1 (centro)
 		###############################
 
-		##Los campos sombreados se encuentran en las tablas pero no se preguntarán al usuario
-
-		#Field('conglomerado_muestra_id','reference Conglomerado_muestra', required='TRUE'),
-		#Field('sitio_numero', 'reference Cat_numero_sitio', label=T("Número de sitio"), required='TRUE'),
-		#Field('existe', 'boolean', label=T("existe)", required='TRUE'),
 		# El centro del conglomerado y el punto de control siempre existen.
 		
-    	Field('lat_grado_1','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_1','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_1','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_1','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_1','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_1','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-    	Field('altitud_1','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
-    	Field('gps_error_1','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_1',label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
-    	Field('evidencia_1', 'boolean',label=XML("Evidencia <br/> anterior")),
+    	INPUT(_name='lat_grado_1',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lat_min_1',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lat_seg_1',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_grado_1',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_min_1',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_seg_1',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='altitud_1',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='gps_error_1',_type='double',requires=IS_NOT_EMPTY()),
+    	SELECT(_name='elipsoide_1',
+        requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
+    	INPUT(_name='hay_evidencia_1',_type='boolean'),
     	
      	###########Imagen############
-		Field('archivo_1', 'upload', label=T("Fotografía"), uploadfolder="naruto"),
-		
-		#La validación de la imagen se realizará directo en la vista, puesto que resultaría
-		#muy impráctico poner una imagen default para que los sitios no existentes pasen
-		#la validación de la muestra.
- 	
+		INPUT(_name='imagen_1',_type='file',requires=IS_NOT_EMPTY()),
+		 	
 		###############################
 		#Campos del sitio 2
 		###############################
-		
-		##Los campos condicionales a existe se definirán como obligatorios, sin embargo, si el
-		##sitio no existe, se esconderán y se les asignará un valor arbitrario para que pasen
-		##la validación de la forma. Posteriormente aquí en el controlador se borrarán dichos valores.
-		##Esto porque en Web2py no es sencillo definir:
-		##	"si este campo está marcado, entonces este otro es obligatorio, si no, ni aparece".
-	
-		Field('existe_2', 'boolean',label=T("Existe")),
-		Field('lat_grado_2','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_2','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_2','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_2','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_2','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_2','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-    	Field('altitud_2','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
-    	Field('gps_error_2','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_2', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
-    	Field('evidencia_2', 'boolean',label=XML("Evidencia <br/> anterior")),
+			
+		INPUT(_name='existe_2',_type='boolean'),
+
+		#Como el campo 2 puede no existir, no se pueden pedir como obligatorios
+		#los siguientes campos (sin embargo, el validador de la vista se encar-
+		#gará de que los llenen)
+    	INPUT(_name='lat_grado_2',_type='integer'),
+    	INPUT(_name='lat_min_2',_type='integer'),
+    	INPUT(_name='lat_seg_2',_type='double'),
+    	INPUT(_name='lon_grado_2',_type='integer'),
+    	INPUT(_name='lon_min_2',_type='integer'),
+    	INPUT(_name='lon_seg_2',_type='double'),
+    	INPUT(_name='altitud_2',_type='double'),
+    	INPUT(_name='gps_error_2',_type='double'),
+
+    	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
+    	#conviene ponerlo como un entero, para que no requiera que esté en la
+    	#base de datos (y por ende, no vacío).
+    	INPUT(_name='elipsoide_2',_type='integer'),          
+    	INPUT(_name='hay_evidencia_2',_type='boolean'),
     	
      	###########Imagen############
- 		Field('archivo_2', 'upload', label=T("Fotografía"), uploadfolder="naruto"),
+		INPUT(_name='imagen_2',_type='file'),
  
 		###############################
 		#Campos del sitio 3
 		###############################
 	
-		Field('existe_3', 'boolean',label=T("Existe")),
-		Field('lat_grado_3','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_3','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_3','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_3','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_3','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_3','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-    	Field('altitud_3','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
-    	Field('gps_error_3','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_3', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
-    	Field('evidencia_3', 'boolean',label=XML("Evidencia <br/> anterior")),
-     	
+		INPUT(_name='existe_3',_type='boolean'),
+
+		#Como el campo 3 puede no existir, no se pueden pedir como obligatorios
+		#los siguientes campos (sin embargo, el validador de la vista se encar-
+		#gará de que los llenen)
+    	INPUT(_name='lat_grado_3',_type='integer'),
+    	INPUT(_name='lat_min_3',_type='integer'),
+    	INPUT(_name='lat_seg_3',_type='double'),
+    	INPUT(_name='lon_grado_3',_type='integer'),
+    	INPUT(_name='lon_min_3',_type='integer'),
+    	INPUT(_name='lon_seg_3',_type='double'),
+    	INPUT(_name='altitud_3',_type='double'),
+    	INPUT(_name='gps_error_3',_type='double'),
+
+    	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
+    	#conviene ponerlo como un entero, para que no requiera que esté en la
+    	#base de datos (y por ende, no vacío).
+    	INPUT(_name='elipsoide_3',_type='integer'),          
+    	INPUT(_name='hay_evidencia_3',_type='boolean'),
+    	
      	###########Imagen############
- 		Field('archivo_3', 'upload', label=T("Fotografía"), uploadfolder="naruto"),
- 
+		INPUT(_name='imagen_3',_type='file'),
+
 		###############################
 		#Campos del sitio 4
 		###############################
 	
-		Field('existe_4', 'boolean',label=T("Existe")),
-		Field('lat_grado_4','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_4','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_4','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_4','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_4','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_4','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-    	Field('altitud_4','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
-    	Field('gps_error_4','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-    	Field('elipsoide_4', label=T("Datum"), requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
-    	Field('evidencia_4', 'boolean',label=XML("Evidencia <br/> anterior")),
-     	
+		INPUT(_name='existe_4',_type='boolean'),
+
+		#Como el campo 4 puede no existir, no se pueden pedir como obligatorios
+		#los siguientes campos (sin embargo, el validador de la vista se encar-
+		#gará de que los llenen)
+    	INPUT(_name='lat_grado_4',_type='integer'),
+    	INPUT(_name='lat_min_4',_type='integer'),
+    	INPUT(_name='lat_seg_4',_type='double'),
+    	INPUT(_name='lon_grado_4',_type='integer'),
+    	INPUT(_name='lon_min_4',_type='integer'),
+    	INPUT(_name='lon_seg_4',_type='double'),
+    	INPUT(_name='altitud_4',_type='double'),
+    	INPUT(_name='gps_error_4',_type='double'),
+
+    	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
+    	#conviene ponerlo como un entero, para que no requiera que esté en la
+    	#base de datos (y por ende, no vacío).
+    	INPUT(_name='elipsoide_4',_type='integer'),          
+    	INPUT(_name='hay_evidencia_4',_type='boolean'),
+    	
      	###########Imagen############
- 		Field('archivo_4', 'upload', label=T("Fotografía"), uploadfolder="naruto"),
- 
+		INPUT(_name='imagen_4',_type='file'),
+
 		###############################
 		#Campos del punto de control
 		###############################
 
-		Field('lat_grado_c','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lat_min_c','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lat_seg_c','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-		Field('lon_grado_c','integer',label=T("Grado"), requires=IS_NOT_EMPTY()),
-		Field('lon_min_c','integer',label=T("Minuto"), requires=IS_NOT_EMPTY()),
-		Field('lon_seg_c','double',label=T("Segundo"), requires=IS_NOT_EMPTY()),
-    	Field('altitud_c','double',label=T("Altitud(m)"), requires=IS_NOT_EMPTY()),
-    	Field('gps_error_c','double',label=T("Error(m)"), requires=IS_NOT_EMPTY()),
-		Field('elipsoide_c', label=T("Datum"),requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
-    	Field('evidencia_c', 'boolean',label=XML("Evidencia <br/> anterior")),
-	
+		# El centro del conglomerado y el punto de control siempre existen.
+		
+    	INPUT(_name='lat_grado_c',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lat_min_c',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lat_seg_c',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_grado_c',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_min_c',_type='integer',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='lon_seg_c',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='altitud_c',_type='double',requires=IS_NOT_EMPTY()),
+    	INPUT(_name='gps_error_c',_type='double',requires=IS_NOT_EMPTY()),
+    	SELECT(_name='elipsoide_c',
+        requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
+    	INPUT(_name='hay_evidencia_c',_type='boolean'),
+    	
      	###########Imagen############
-     	Field('archivo_c', 'upload', label=T("Fotografía"), uploadfolder="naruto")
- 
+		INPUT(_name='imagen_c',_type='file',requires=IS_NOT_EMPTY()),
+		 	
 	##Cerrando la lista de campos para el formulario
 	]
 
-	forma=SQLFORM.factory(*Campos_pestana_1, table_name='tabla')
-	# El nombre de la tabla: table_name se utiliza únicamente para los estilos, ya que 
-	# determina los ID's de los campos en el formulario
+    forma = FORM(*Campos_pestana_1)
 
-	#if forma.accepts(request.vars):
-	if forma.validate():
-	
-		##################Procesando los datos del conglomerado######################
+    if forma.accepts(request.vars,formname='formaHTML'):
+
+	##################Procesando los datos del conglomerado######################
 		
-		formaConglomerado=db.Conglomerado_muestra._filter_fields(forma.vars)
-		ID_suelo_vegetacion = db(db.Cat_suelo_conglomerado.nombre=='Vegetación').select().first().id
+		datosConglomerado=db.Conglomerado_muestra._filter_fields(forma.vars)
+
+		ID_suelo_vegetacion = db(db.Cat_suelo_conglomerado.nombre=='Vegetación'
+			).select().first().id
   		
         #Casteando para asegurarnos que la comparación sea entre enteros.
-		if int(formaConglomerado['uso_suelo_tipo'])!=int(ID_suelo_vegetacion):
-		#Si el uso de suelo no es vegetación, tanto el campo de 'perturbado' como el campo
-		#de 'vegetacion_tipo' se anulan.
+
+        #Si escogieron "uso_suelo_tipo" como "Vegetación" y no marcaron la casilla
+        #de perturbado, entonces hay que asignarle "False" a esta, para diferen-
+        #ciarla de cuando no es requerida.
+
+		if int(datosConglomerado['uso_suelo_tipo'])==int(ID_suelo_vegetacion)\
+			and not(bool(datosConglomerado['perturbado'])):
 		
-			formaConglomerado['perturbado']=None
-			formaConglomerado['vegetacion_tipo']=None
+			datosConglomerado['perturbado']=False
 			
 		#Insertando en la base de datos:
-		conglomeradoInsertado = db.Conglomerado_muestra.insert(**formaConglomerado)
+		conglomeradoInsertado = db.Conglomerado_muestra.insert(**datosConglomerado)
 		
 		################Procesando los datos del sitio 1##############################
 
@@ -200,34 +220,30 @@ def index():
 		
 		#Si hay evidencia, entonces True se guarda en la base de datos, en caso contrario,
 		#se tiene que guardar manualmente False, pues si no, Web2py guarda Null.
-		if bool(forma.vars['evidencia_1']):
-			formaSitio1['evidencia']=forma.vars['evidencia_1']
+		if bool(forma.vars['hay_evidencia_1']):
+			formaSitio1['hay_evidencia']=forma.vars['hay_evidencia_1']
 		else:
-			formaSitio1['evidencia']=False
+			formaSitio1['hay_evidencia']=False
 			
 		#Insertando en la base de datos:
 		sitio1Insertado = db.Sitio_muestra.insert(**formaSitio1)
 
 		################Procesando la imagen 1##########################################
 		
-		#try:
+		#Guardando la imagen de referencia en la carpeta adecuada
+        imagen1 = db.Imagen_referencia_sitio.archivo.store(
+            forma.vars.imagen_1.file, forma.vars.imagen_1.filename)
+        
+		#Creando los campos de la tabla Imagen_referencia_sitio:
 		
-		formaImagen1 = {}
-			
-		formaImagen1['sitio_muestra_id']=sitio1Insertado
-		formaImagen1['archivo_nombre_original']=request.vars['archivo_1'].filename
-		#formaImagen1['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
-
-		#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
-		#a la base de datos:
-
-		formaImagen1['archivo']=forma.vars['archivo_1']
-
-			#Insertando en la base de datos:
-		db.Imagen_referencia_sitio.insert(**formaImagen1)
-			
-		#except:
-			#pass
+        datosImagen1 = {}
+        datosImagen1['sitio_muestra_id'] = sitio1Insertado
+        datosImagen1['archivo'] = imagen1
+        datosImagen1['archivo_nombre_original'] = forma.vars.imagen_1.filename
+		
+		#Insertando el registro en la base de datos:
+		
+        db.Imagen_referencia_sitio.insert(**datosImagen1)
 			
 		################Procesando los datos del sitio 2##############################
 
@@ -252,10 +268,10 @@ def index():
 			formaSitio2['gps_error']=forma.vars['gps_error_2']
 			formaSitio2['elipsoide']=forma.vars['elipsoide_2']
 			
-			if bool(forma.vars['evidencia_2']):
-				formaSitio2['evidencia']=forma.vars['evidencia_2']
+			if bool(forma.vars['hay_evidencia_2']):
+				formaSitio2['hay_evidencia']=forma.vars['hay_evidencia_2']
 			else:
-				formaSitio2['evidencia']=False
+				formaSitio2['hay_evidencia']=False
 				
 		else:
 			formaSitio2['existe']=False
@@ -266,27 +282,21 @@ def index():
 		################Procesando la imagen 2##########################################
 		
 		if bool(forma.vars['existe_2']):
-			
-			try:
-			
-				formaImagen2 = {}
-			
-				formaImagen2['sitio_muestra_id']=sitio2Insertado
-				formaImagen2['archivo_nombre_original']=request.vars['archivo_2'].filename
-				#formaImagen2['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
-
-				#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
-				#a la base de datos:
-
-				formaImagen2['archivo']=forma.vars['archivo_2']
-
-				#Insertando en la base de datos:
-				db.Imagen_referencia_sitio.insert(**formaImagen2)
-
-				
-			except:
-			
-				pass
+						
+			#Guardando la imagen de referencia en la carpeta adecuada
+        	imagen2 = db.Imagen_referencia_sitio.archivo.store(
+            	forma.vars.imagen_2.file, forma.vars.imagen_2.filename)
+        
+			#Creando los campos de la tabla Imagen_referencia_sitio:
+		
+        	datosImagen2 = {}
+        	datosImagen2['sitio_muestra_id'] = sitio2Insertado
+        	datosImagen2['archivo'] = imagen2
+        	datosImagen2['archivo_nombre_original'] = forma.vars.imagen_2.filename
+		
+			#Insertando el registro en la base de datos:
+		
+        	db.Imagen_referencia_sitio.insert(**datosImagen2)
 
 		################Procesando los datos del sitio 3##############################
 
@@ -311,10 +321,10 @@ def index():
 			formaSitio3['gps_error']=forma.vars['gps_error_3']
 			formaSitio3['elipsoide']=forma.vars['elipsoide_3']
 			
-			if bool(forma.vars['evidencia_3']):
-				formaSitio3['evidencia']=forma.vars['evidencia_3']
+			if bool(forma.vars['hay_evidencia_3']):
+				formaSitio3['hay_evidencia']=forma.vars['hay_evidencia_3']
 			else:
-				formaSitio3['evidencia']=False
+				formaSitio3['hay_evidencia']=False
 				
 		else:
 			formaSitio3['existe']=False
@@ -325,25 +335,21 @@ def index():
 		################Procesando la imagen 3##########################################
 		
 		if bool(forma.vars['existe_3']):
-			
-			try:
-
-				formaImagen3 = {}
-			
-				formaImagen3['sitio_muestra_id']=sitio3Insertado
-				formaImagen3['archivo_nombre_original']=request.vars['archivo_3'].filename
-				#formaImagen3['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
-
-				#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
-				#a la base de datos:
-
-				formaImagen3['archivo']=forma.vars['archivo_3']
-
-				#Insertando en la base de datos:
-				db.Imagen_referencia_sitio.insert(**formaImagen3)
-				
-			except:
-				pass
+						
+			#Guardando la imagen de referencia en la carpeta adecuada
+        	imagen3 = db.Imagen_referencia_sitio.archivo.store(
+            	forma.vars.imagen_3.file, forma.vars.imagen_3.filename)
+        
+			#Creando los campos de la tabla Imagen_referencia_sitio:
+		
+        	datosImagen3 = {}
+        	datosImagen3['sitio_muestra_id'] = sitio3Insertado
+        	datosImagen3['archivo'] = imagen3
+        	datosImagen3['archivo_nombre_original'] = forma.vars.imagen_3.filename
+		
+			#Insertando el registro en la base de datos:
+		
+        	db.Imagen_referencia_sitio.insert(**datosImagen3)
 
 		################Procesando los datos del sitio 4##############################
 
@@ -368,10 +374,10 @@ def index():
 			formaSitio4['gps_error']=forma.vars['gps_error_4']
 			formaSitio4['elipsoide']=forma.vars['elipsoide_4']
 			
-			if bool(forma.vars['evidencia_4']):
-				formaSitio4['evidencia']=forma.vars['evidencia_4']
+			if bool(forma.vars['hay_evidencia_4']):
+				formaSitio4['hay_evidencia']=forma.vars['hay_evidencia_4']
 			else:
-				formaSitio4['evidencia']=False
+				formaSitio4['hay_evidencia']=False
 				
 		else:
 			formaSitio4['existe']=False
@@ -382,25 +388,22 @@ def index():
 		################Procesando la imagen##########################################
 		
 		if bool(forma.vars['existe_4']):
-			
-			try:
+						
+			#Guardando la imagen de referencia en la carpeta adecuada
+        	imagen4 = db.Imagen_referencia_sitio.archivo.store(
+            	forma.vars.imagen_4.file, forma.vars.imagen_4.filename)
+        
+			#Creando los campos de la tabla Imagen_referencia_sitio:
+		
+        	datosImagen4 = {}
+        	datosImagen4['sitio_muestra_id'] = sitio4Insertado
+        	datosImagen4['archivo'] = imagen4
+        	datosImagen4['archivo_nombre_original'] = forma.vars.imagen_4.filename
+		
+			#Insertando el registro en la base de datos:
+		
+        	db.Imagen_referencia_sitio.insert(**datosImagen4)
 
-				formaImagen4 = {}
-			
-				formaImagen4['sitio_muestra_id']=sitio4Insertado
-				formaImagen4['archivo_nombre_original']=request.vars['archivo_4'].filename
-				#formaImagen4['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
-
-				#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
-				#a la base de datos:
-
-				formaImagen4['archivo']=forma.vars['archivo_4']
-
-				#Insertando en la base de datos:
-				db.Imagen_referencia_sitio.insert(**formaImagen4)
-				
-			except:
-				pass
 
 		################Procesando los datos del punto de control#########################
 
@@ -422,33 +425,95 @@ def index():
 		formaSitioC['gps_error']=forma.vars['gps_error_c']
 		formaSitioC['elipsoide']=forma.vars['elipsoide_c']
 		
-		if bool(forma.vars['evidencia_c']):
-			formaSitioC['evidencia']=forma.vars['evidencia_c']
+		if bool(forma.vars['hay_evidencia_c']):
+			formaSitioC['hay_evidencia']=forma.vars['hay_evidencia_c']
 		else:
-			formaSitioC['evidencia']=False
+			formaSitioC['hay_evidencia']=False
 			
 		#Insertando en la base de datos:
 		sitioCInsertado=db.Sitio_muestra.insert(**formaSitioC)
 		
 		################Procesando la imagen del control##########################################
 		
-		try:
+		#Guardando la imagen de referencia en la carpeta adecuada
+        imagenC = db.Imagen_referencia_sitio.archivo.store(
+            forma.vars.imagen_c.file, forma.vars.imagen_c.filename)
+        
+		#Creando los campos de la tabla Imagen_referencia_sitio:
 		
-			formaImagenC = {}
-			
-			formaImagenC['sitio_muestra_id']=sitioCInsertado
-			formaImagenC['archivo_nombre_original']=request.vars['archivo_c'].filename
-			#formaImagenC['archivo_nombre_CONAFOR']=nombreCONAFOR(foo,bar)
-
-			#El archivo se guarda al hacer la validación, por lo que sólo es necesario asociarlo
-			#a la base de datos:
-
-			formaImagenC['archivo']=forma.vars['archivo_c']
-
-			#Insertando en la base de datos:
-			db.Imagen_referencia_sitio.insert(**formaImagenC)
+        datosImagenC = {}
+        datosImagenC['sitio_muestra_id'] = sitioCInsertado
+        datosImagenC['archivo'] = imagenC
+        datosImagenC['archivo_nombre_original'] = forma.vars.imagen_c.filename
 		
-		except:
-			pass
+		#Insertando el registro en la base de datos:
+		
+        db.Imagen_referencia_sitio.insert(**datosImagenC)
 
-	return dict(forma=forma)
+        response.flash = 'Éxito'
+        
+    elif forma.errors:
+
+       response.flash = 'Hubo un error al llenar la forma'
+       
+    else:
+    	response.flash ='Por favor, introduzca los datos del conglomerado y sitios'
+
+    ##########Enviando la información de las dropdowns##########################
+
+    #Llenando las combobox de tipo de conglomerado, estado, tenencia, principal
+    #uso de suelo, tipo de vegetación y datum
+
+    listaTipo = db(db.Cat_tipo_conglomerado).select(
+        db.Cat_tipo_conglomerado.id, db.Cat_tipo_conglomerado.nombre)
+
+    listaEstado = db(db.Cat_estado_conglomerado).select(
+        db.Cat_estado_conglomerado.id, db.Cat_estado_conglomerado.nombre)
+
+    listaTenencia = db(db.Cat_tenencia_conglomerado).select(
+        db.Cat_tenencia_conglomerado.id, db.Cat_tenencia_conglomerado.nombre)
+
+    listaUsoSuelo = db(db.Cat_suelo_conglomerado).select(
+    	db.Cat_suelo_conglomerado.id, db.Cat_suelo_conglomerado.nombre)
+
+    listaVegetacion = db(db.Cat_vegetacion_conglomerado).select(
+    	db.Cat_vegetacion_conglomerado.id, db.Cat_vegetacion_conglomerado.nombre)
+
+    listaElipsoide = db(db.Cat_elipsoide).select(
+        db.Cat_elipsoide.id, db.Cat_elipsoide.nombre)
+
+    return dict(listaTipo=listaTipo,\
+        listaEstado=listaEstado,\
+        listaTenencia=listaTenencia,\
+        listaUsoSuelo=listaUsoSuelo,\
+        listaVegetacion=listaVegetacion,\
+        listaElipsoide=listaElipsoide)
+
+#La siguiente función es invocada mediante AJAX para llenar la combobox de municipio
+# a partir del estado seleccionado.
+
+def asignarMunicipios():
+
+	#Obteniendo la información del estado que seleccionó el usuario:
+    estadoElegidoID = request.vars.estado
+
+    #Obteniendo los municipios que existen en dicho estado
+    municipiosAsignados = db(
+        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
+        (db.Sitio_muestra.existe==True)
+        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
+
+    #Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
+
+    dropdownHTML = "<select class='generic-widget' name='sitio_numero' id='tabla_sitio_numero'>"
+
+    for sitio in sitiosAsignados:
+
+        #Obteniendo el nombre asociado al numero de sitio, del catálogo correspondiente:
+        nombreSitio = db(db.Cat_numero_sitio.id==sitio.sitio_numero).select().first().nombre
+
+        dropdownHTML += "<option value='" + str(sitio.id) + "'>" + nombreSitio + "</option>"  
+    
+    dropdownHTML += "</select>"
+    
+    return XML(dropdownHTML)
