@@ -58,7 +58,8 @@ db.define_table('Imagen_referencia_camara',*Campos_Imagen_referencia_camara)
 Campos_Archivo_camara = [
 	Field('camara_id','reference Camara',required=True),
     Field('archivo_nombre_original',required=True),
-    Field('archivo','upload',required=True),
+    Field('archivo','upload',required=True,
+    	uploadfolder='static/pictures'),
     Field('presencia','boolean')
     ]
 
