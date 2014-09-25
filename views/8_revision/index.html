@@ -1,0 +1,51 @@
+{{extend 'layout.html'}}
+<form>
+	<select class="generic-widget" name="foto" id="tabla_foto">
+		<option value=""/>
+		{{for fotoCamara in fotosCamara:}}
+		<option value="{{=fotoCamara.id}}">
+			{{=fotoCamara.archivo_nombre_original}}
+		</option>
+		{{pass}}
+	</select>
+</form>
+
+<div id="shadow_clone"></div>
+
+
+<script>
+
+    //AJAX para llenar la pestaña de revisión de fotografías
+	$('#tabla_foto').change
+	(
+    	function()
+    	{
+    		$('#forma').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+    		ajax("{{=URL('obtenerFotografia')}}", ['foto'], 'shadow_clone');
+    	}
+   	)
+
+    //AJAX para editar la información de una fotografia
+	$('#enviar').click
+	(
+    	function()
+    	{
+    		$.ajax
+    		(
+    			{
+    				type: "POST",
+    				data: $('#forma').serialize(),
+    				url: "{{=URL('actualizarFotografia')}}",
+    				success: function(resultado)
+    				{
+        					alert('Registro actualizado exitosamente');
+        			}
+        		}
+        	);
+    	}
+    )
+</script>
