@@ -287,6 +287,7 @@
 'Imágenes cámaras': 'Imágenes cámaras',
 'Imágenes gradadoras': 'Imágenes gradadoras',
 'Imágenes micrófonos': 'Imágenes micrófonos',
+'Imágenes sitios': 'Imágenes sitios',
 'in': 'en',
 'includes': 'incluye',
 'Index': 'Índice',
