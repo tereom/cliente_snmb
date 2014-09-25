@@ -87,12 +87,14 @@ db.Especimen_restos_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide,'%(nom
 db.Especimen_restos_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')
 
 def editar():
-    pestana1 = SQLFORM.smartgrid(db.Conglomerado_muestra,
-        linked_tables=['Sitio_muestra'],
-        user_signature=False, 
-        csv=False
-        )
-    pestana2 = SQLFORM.smartgrid(db.Camara,user_signature=False)
+    
+    db.Archivo_camara.archivo.requires=IS_IMAGE()
+    #pestana1 = SQLFORM.smartgrid(db.Conglomerado_muestra,
+    #    linked_tables=['Sitio_muestra'],
+    #    user_signature=False, 
+    #    csv=False
+    #    )
+    #pestana2 = SQLFORM.smartgrid(db.Camara,user_signature=False)
     grid = SQLFORM.smartgrid(db.Archivo_camara,user_signature=False)
     return locals()
 
