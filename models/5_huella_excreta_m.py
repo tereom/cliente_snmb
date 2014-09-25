@@ -20,7 +20,10 @@ Campos_Transecto_huellas_excretas_muestra = [
     Field('comentario','text')
     ]
 
-db.define_table('Transecto_huellas_excretas_muestra',*Campos_Transecto_huellas_excretas_muestra)
+db.define_table('Transecto_huellas_excretas_muestra',
+    *Campos_Transecto_huellas_excretas_muestra,
+    singular='Transecto huellas y excretas',
+    plural='Transectos huellas y excretas')
 
 ##########################################################################
 ## Huella_excreta
@@ -38,7 +41,8 @@ Campos_Huella_excreta = [
     Field('ancho','double',required=True)
     ]
 
-db.define_table('Huella_excreta',*Campos_Huella_excreta)
+db.define_table('Huella_excreta',*Campos_Huella_excreta,
+    singular='Huellas/excretas',plural='Huellas/excretas')
 
 ##########################################################################
 ## Archivo_huella_excreta
@@ -51,4 +55,5 @@ Campos_Archivo_huella_excreta = [
     Field('archivo', 'upload', autodelete=True,required=True)
     ]
 
-db.define_table('Archivo_huella_excreta',*Campos_Archivo_huella_excreta)
+db.define_table('Archivo_huella_excreta',*Campos_Archivo_huella_excreta,
+    singular='Archivo huellas/excretas',plural='Archivos huellas/excretas')

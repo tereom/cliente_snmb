@@ -5,8 +5,8 @@
 ## Customize your APP title, subtitle and menus here
 #########################################################################
 
-response.logo = A(B('web',SPAN(2),'py'),XML('&trade;&nbsp;'),
-                  _class="brand",_href="http://www.web2py.com/")
+# response.logo = A(B('web',SPAN(2),'py'),XML('&trade;&nbsp;'),
+#                   _class="brand",_href="http://www.web2py.com/")
 response.title = request.application.replace('_',' ').title()
 response.subtitle = ''
 
@@ -23,10 +23,32 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
-]
+    (T('Conglomerado'), False, URL('1_conglomerado', 'index'), []),
+    (T('Cámara'), False, URL('2_camara', 'index'), []),
+    (T('Grabadora'), False, URL('3_grabadora', 'index'), []),
+    (T('Especies invasoras'), False, URL('4_especies_invasoras', 'index1'), [
+      (T('Transecto especies invasoras'), False, URL('4_especies_invasoras', 'index1')),
+      (T('Especies invasoras'), False, URL('4_especies_invasoras', 'index2'))]),
+    (T('Huellas y excretas'), False, URL('5_huellas_excretas', 'index1'), [
+      (T('Transecto huellas y excretas'), False, URL('5_huellas_excretas', 'index1')),
+      (T('Huellas y excretas'), False, URL('5_huellas_excretas', 'index2'))]),
+    (T('Registros extra'), False, URL('6_registros_extra', 'index1'), [
+      (T('Especies invasoras'), False, URL('6_registros_extra', 'index1')),
+      (T('Huellas y excretas'), False, URL('6_registros_extra', 'index2')),
+      (T('Especmenes y restos'), False, URL('6_registros_extra', 'index3'))]),
+    # Edición
+    (T('Revisar registros'), False, URL('7_edicion', 'editarConglomerado'), [
+      (T('Conglomerado'), False, URL('7_edicion', 'editarConglomerado')),
+      (T('Cámara'), False, URL('7_edicion', 'editarCamara')),
+      (T('Grabadora'), False, URL('7_edicion', 'editarGrabadora')),
+      (T('Especies Invasoras'), False, URL('7_edicion', 'editarEspeciesInvasoras')),
+      (T('Huellas y excretas'), False, URL('7_edicion', 'editarHuellasExcretas')),
+      (T('Especies Invasoras extra'), False, URL('7_edicion', 'editarEspeciesInvasorasExtra')),
+      (T('Huellas y excretas extra'), False, URL('7_edicion', 'editarHuellasExcretasExtra')),
+      (T('Especímenes extra'), False, URL('7_edicion', 'editarEspecimenExtra'))])
+    ]
 
-DEVELOPMENT_MENU = True
+DEVELOPMENT_MENU = False
 
 #########################################################################
 ## provide shortcuts for development. remove in production

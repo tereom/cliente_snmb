@@ -20,7 +20,9 @@ Campos_Transecto_especies_invasoras_muestra =[
     Field('comentario','text')
 ]
 
-db.define_table('Transecto_especies_invasoras_muestra',*Campos_Transecto_especies_invasoras_muestra)
+db.define_table('Transecto_especies_invasoras_muestra',
+	*Campos_Transecto_especies_invasoras_muestra, 
+	singular='Transecto especies invasoras',plural='Transectos especies invasoras')
 
 #db.Transecto_especies_invasoras_muestra.fecha.requires=IS_DATE('%d-%m-%Y')
 
@@ -37,7 +39,8 @@ Campos_Especie_invasora =[
     Field('numero_individuos', 'reference Cat_numero_individuos', required=True)
 ]
 
-db.define_table('Especie_invasora', *Campos_Especie_invasora)
+db.define_table('Especie_invasora',*Campos_Especie_invasora,
+	singular='Especie invasora',plural='Especies invasoras')
 
 ##########################################################################
 ## Archivo_especie_invasora
@@ -50,4 +53,5 @@ Campos_Archivo_especie_invasora =[
     Field('archivo', 'upload', autodelete=True,required=True)
 ]
 
-db.define_table('Archivo_especie_invasora',*Campos_Archivo_especie_invasora)
+db.define_table('Archivo_especie_invasora',*Campos_Archivo_especie_invasora,
+	singular='Archivo especies invasoras',plural='Archivos especies invasoras')

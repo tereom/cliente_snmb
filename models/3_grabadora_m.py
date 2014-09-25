@@ -48,7 +48,8 @@ Campos_Imagen_referencia_grabadora = [
     Field('archivo','upload',autodelete=True,required=True)
     ]
 
-db.define_table('Imagen_referencia_grabadora',*Campos_Imagen_referencia_grabadora)
+db.define_table('Imagen_referencia_grabadora',*Campos_Imagen_referencia_grabadora,
+    singular='Imagen grabadora', plural='Imágenes gradadoras')
 
 ########################
 #Imagen_referencia_microfonos
@@ -60,7 +61,8 @@ Campos_Imagen_referencia_microfonos = [
     Field('archivo','upload',autodelete=True,required=True)
     ]
 
-db.define_table('Imagen_referencia_microfonos',*Campos_Imagen_referencia_microfonos)
+db.define_table('Imagen_referencia_microfonos',*Campos_Imagen_referencia_microfonos,
+    singular='Imágen micrófonos', plural='Imágenes micrófonos')
 
 ########################
 #Archivo_referencia_grabadora (metadatos)
@@ -72,7 +74,8 @@ Campos_Archivo_referencia_grabadora = [
     Field('archivo','upload', autodelete=True,required=True)
     ]
 
-db.define_table('Archivo_referencia_grabadora',*Campos_Archivo_referencia_grabadora)
+db.define_table('Archivo_referencia_grabadora',*Campos_Archivo_referencia_grabadora, 
+    singular='Archivo metadatos', plural='Archivos metadatos')
 
 ########################
 #Archivo_grabadora
@@ -85,4 +88,5 @@ Campos_Archivo_grabadora = [
     Field('es_audible','boolean',required=True)
     ]
 
-db.define_table('Archivo_grabadora',*Campos_Archivo_grabadora)
+db.define_table('Archivo_grabadora',*Campos_Archivo_grabadora, 
+    singular='Archivo grabadora', plurals='Archivos grabadoras')

@@ -27,7 +27,8 @@ Campos_Conglomerado_muestra = [
 	Field('comentario','text')
 	]
 
-db.define_table('Conglomerado_muestra', *Campos_Conglomerado_muestra)
+db.define_table('Conglomerado_muestra', *Campos_Conglomerado_muestra, 
+	singular='Conglomerado', plural='Conglomerados')
 
 ########################
 #Sitio_muestra
@@ -52,7 +53,8 @@ Campos_Sitio_muestra = [
     Field('hay_evidencia','boolean')
     ] 
 
-db.define_table('Sitio_muestra',*Campos_Sitio_muestra)
+db.define_table('Sitio_muestra',*Campos_Sitio_muestra,singular='Sitio', 
+	plural='Sitios')
 
 ########################
 #Imagen_referencia_sitio
@@ -65,7 +67,8 @@ Campos_Imagen_referencia_sitio = [
     Field('archivo','upload',autodelete=True,required=True)
     ]
     
-db.define_table('Imagen_referencia_sitio',*Campos_Imagen_referencia_sitio)
+db.define_table('Imagen_referencia_sitio',*Campos_Imagen_referencia_sitio, 
+	singular='Imagen sitio',plural='Imágenes sitios')
 
 ########################################################################
 ## Fields can be 'string','text','password','integer','double','boolean'

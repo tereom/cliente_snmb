@@ -1,14 +1,14 @@
 # coding: utf8
 
 # def manage_users():
-#     grid = SQLFORM.grid(db.Huella_excreta.hay_nombre_comun==False,user_signature=False)
-#     return locals()
+#     form = SQLFORM.grid(db.Huella_excreta.hay_nombre_comun==False,user_signature=False)
+#     return dict(form=form)
 
 # def manage():
 #     table = request.args(0) or 'auth_user'
 #     if not table in db.tables(): redirect(URL('error'))
-#     grid = SQLFORM.smartgrid(db[table],args=request.args[:1])
-#     return locals()
+#     form = SQLFORM.smartgrid(db[table],args=request.args[:1])
+#     return dict(form=form)
 
 # # coding: utf8
 
@@ -16,9 +16,9 @@
 #     db.Huella_excreta.id.writable = False
 #     db.Huella_excreta.id.readable = False
 #     db.Huella_excreta.transecto_huellas_excretas_id.writable = False
-#     grid = SQLFORM.grid(db.Huella_excreta,user_signature=False)
+#     form = SQLFORM.grid(db.Huella_excreta,user_signature=False)
 #         #fields=[db.Huella_excreta.es_huella])
-#     return locals()
+#     return dict(form=form)
 
 # def admin_especies():
 #     #db.Especie_invasora.id.writable = False
@@ -33,18 +33,18 @@
 #     db.Huella_excreta.transecto_huellas_excretas_id.writable = False
 #     grid_huellas = SQLFORM.grid(db.Huella_excreta,user_signature=False)
 
-#     return locals()
+#     return dict(form=form)
 
 # def admin_conglomerado():
 #     db.Conglomerado_muestra.id.writable = False
 #     db.Conglomerado_muestra.id.readable = False
 #     db.Conglomerado_muestra.estado.represent = lambda value,row: options_widget(db.Conglomerado_muestra.estado,value,**{'_name':'home_state_row_%s' % row.id})
-#     grid = SQLFORM.grid(db.Conglomerado_muestra,
+#     form = SQLFORM.grid(db.Conglomerado_muestra,
 #     	fields=[db.Conglomerado_muestra.estado],
 #     	user_signature=False,
 #     	selectable = lambda ids : redirect(URL('default', 'mapping_multiple', vars=dict(id=ids))))
 #         #fields=[db.Huella_excreta.es_huella])
-#     return locals()
+#     return dict(form=form)
 
 # Conglomerado
 db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.id,'%(nombre)s')
@@ -86,55 +86,70 @@ db.Huella_excreta_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide,'%(nombr
 db.Especimen_restos_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide,'%(nombre)s')
 db.Especimen_restos_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')
 
-def editar():
-<<<<<<< HEAD
-    A_Conglomerado = SQLFORM.smartgrid(db.Conglomerado_muestra,
-        linked_tables=['Sitio_muestra'],
+def editarConglomerado():
+    form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+        linked_tables=['Sitio_muestra', 'Imagen_referencia_sitio'],
         user_signature=False, 
-        csv=False
+        csv=False,
         )
-    B_Camara = SQLFORM.grid(db.Camara,
+    return dict(form=form)
+    
+def editarCamara():
+    form = SQLFORM.smartgrid(db.Camara,
+        
         csv=False,
         user_signature=False)
-    C_Grabadora = SQLFORM.grid(db.Grabadora,
+    return dict(form=form)
+
+def editarGrabadora():
+    form = SQLFORM.smartgrid(db.Grabadora,
+        #linked_tables=['Imagen_referencia_microfonos', 
+        #    'Archivo_referencia_grabadora', 'Archivo_grabadora'],
         csv=False,
         user_signature=False)
-    D_Especie = SQLFORM.smartgrid(db.Transecto_especies_invasoras_muestra,
-        linked_tables=['Especie_invasora'],
+    return dict(form=form)
+
+def editarEspeciesInvasoras():
+    form = SQLFORM.smartgrid(db.Transecto_especies_invasoras_muestra,
+        #linked_tables=['Especie_invasora'],
         csv=False,
         user_signature=False)
-    E_Huella = SQLFORM.smartgrid(db.Transecto_huellas_excretas_muestra,
+    return dict(form=form)
+
+def editarHuellasExcretas():
+    form = SQLFORM.smartgrid(db.Transecto_huellas_excretas_muestra,
         linked_tables=['Huella_excreta'],
         csv=False,
         user_signature=False)
-    F_Especie_extra = SQLFORM.grid(db.Especie_invasora_extra,
-        csv=False,
-        user_signature=False)
-    G_Huella_extra = SQLFORM.grid(db.Huella_excreta_extra,
-        csv=False,
-        user_signature=False)
-    H_Especimen_extra = SQLFORM.grid(db.Especimen_restos_extra,
-        csv=False,
-        user_signature=False)
+    return dict(form=form)
 
-    db.Archivo_camara.archivo.requires=IS_IMAGE()
-    #pestana1 = SQLFORM.smartgrid(db.Conglomerado_muestra,
-    #    linked_tables=['Sitio_muestra'],
-    #    user_signature=False, 
-    #    csv=False
-    #    )
-    #pestana2 = SQLFORM.smartgrid(db.Camara,user_signature=False)
-    grid = SQLFORM.smartgrid(db.Archivo_camara,user_signature=False)
-    return locals()
+def editarEspeciesInvasorasExtra():
+    form = SQLFORM.smartgrid(db.Especie_invasora_extra,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
 
-# def admin_huella_excreta():
-#     grid = SQLFORM.grid(db.Archivo_huella_excreta,user_signature=False)
-#     return locals()
+def editarHuellasExcretasExtra():
+    form = SQLFORM.smartgrid(db.Huella_excreta_extra,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
+def editarEspecimenExtra():
+    form = SQLFORM.smartgrid(db.Especimen_restos_extra,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
 
 # def admin_huella_excreta():
-#    grid = SQLFORM.grid(db.Archivo_huella_excreta,user_signature=False)
-#    return locals()
+#     form = SQLFORM.grid(db.Archivo_huella_excreta,user_signature=False)
+#     return dict(form=form)
+
+# def admin_huella_excreta():
+#    form = SQLFORM.grid(db.Archivo_huella_excreta,user_signature=False)
+#    return dict(form=form)
 
 # def admin_huellas():
-#     grid = SQLFORM.smartgrid(db.Transecto_huellas_excretas_muestra)
-#     return locals()
+#     form = SQLFORM.smartgrid(db.Transecto_huellas_excretas_muestra)
+#     return dict(form=form)
