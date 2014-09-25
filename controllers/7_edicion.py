@@ -87,13 +87,35 @@ db.Especimen_restos_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide,'%(nom
 db.Especimen_restos_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')
 
 def editar():
-    pestana1 = SQLFORM.smartgrid(db.Conglomerado_muestra,
+    A_Conglomerado = SQLFORM.smartgrid(db.Conglomerado_muestra,
         linked_tables=['Sitio_muestra'],
         user_signature=False, 
         csv=False
         )
-    pestana2 = SQLFORM.smartgrid(db.Camara,user_signature=False)
-    grid = SQLFORM.smartgrid(db.Archivo_camara,user_signature=False)
+    B_Camara = SQLFORM.grid(db.Camara,
+        csv=False,
+        user_signature=False)
+    C_Grabadora = SQLFORM.grid(db.Grabadora,
+        csv=False,
+        user_signature=False)
+    D_Especie = SQLFORM.smartgrid(db.Transecto_especies_invasoras_muestra,
+        linked_tables=['Especie_invasora'],
+        csv=False,
+        user_signature=False)
+    E_Huella = SQLFORM.smartgrid(db.Transecto_huellas_excretas_muestra,
+        linked_tables=['Huella_excreta'],
+        csv=False,
+        user_signature=False)
+    F_Especie_extra = SQLFORM.grid(db.Especie_invasora_extra,
+        csv=False,
+        user_signature=False)
+    G_Huella_extra = SQLFORM.grid(db.Huella_excreta_extra,
+        csv=False,
+        user_signature=False)
+    H_Especimen_extra = SQLFORM.grid(db.Especimen_restos_extra,
+        csv=False,
+        user_signature=False)
+
     return locals()
 
 # def admin_huella_excreta():
