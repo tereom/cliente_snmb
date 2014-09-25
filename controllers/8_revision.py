@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 def index():
 
+    #Obteniendo los registros en la tabla de Archivo_camara
     fotosCamara = db(db.Archivo_camara).select()
     return dict(fotosCamara=fotosCamara)
 
@@ -20,14 +21,26 @@ def obtenerFotografia():
         revisionHTML = "<form id='forma_shadow'><input type='hidden' name='id_foto' value='" +\
             str(datosFoto.id) + "'/><img src='/cliente/8_revision/download/"+datosFoto.archivo+\
             "' alt='Error al cargar la fotografía' style='width:304px;height:228px'/>"+\
-            "<br/><div><label for='tabla_hay_individuo' style='float:left;'>Hay individuo</label>"+\
+            "<hr/><div><label for='tabla_hay_individuo' style='float:left;padding-right:20px;'>Hay individuo</label>"+\
             "<input type='checkbox' name='hay_individuo' value='on' id='tabla_hay_individuo'"
+
+#         <form id='forma_shadow'>
+#           <input type='hidden' name='id_foto' value='datosFoto.id'/>
+#           <img src='/cliente/8_revision/download/datosFoto.archivo'/>
+#           <hr/>
+#           <div>
+#               <label for='tabla_hay_individuo'>Hay individuo</label>
+#               <input type='checkbox' name='hay_individuo' value='on' id='tabla_hay_individuo' checked='true'/>
+#           </div>
+#           <br/>
+#           <input type='button' value='Enviar' id='tabla_enviar'/>
+#         </form>
 
         if datosFoto.presencia:
 
             revisionHTML += "checked='true'"
         
-        revisionHTML += "/></div><input type='button' value='Enviar' id='tabla_enviar'/></form>"
+        revisionHTML += "/></div><br/><input type='button' value='Enviar' id='tabla_enviar'/></form>"
 
     except:
 
@@ -36,6 +49,9 @@ def obtenerFotografia():
     return XML(revisionHTML)
 
 def actualizarFotografia():
+
+    #Utilizando los datos enviados de la forma_shadow, se actualiza el registro
+    #de una foto en la base de datos.
 
     fotoElegidaID = request.vars.id_foto
     hay_individuo = request.vars.hay_individuo
