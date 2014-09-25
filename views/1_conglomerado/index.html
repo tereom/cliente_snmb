@@ -2,31 +2,30 @@
 {{block head}}
 <style type="text/css">
 
-	.Campos_sitio, .Campos_conglomerado
+	/*.Campos_sitio, .Campos_conglomerado
     {
         table-layout: fixed;
         width: 120%;
-    }
+    }*/
 
-    .Campos_conglomerado .integer, .Campos_conglomerado .date, .Campos_conglomerado .string,
-    .Campos_conglomerado .double
+    .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
     {
         margin-right: 2cm;
         width: 4cm;
     }
     
-    .Campos_conglomerado .generic-widget
+    .No_GPS .generic-widget
     {
     	margin-right: 2cm;
         width: 4.4cm;
     }
 
-    .Campos_sitio .integer, .Campos_sitio .date, .Campos_sitio .string, .Campos_sitio .double
+    .GPS .integer, .GPS .date, .GPS .string, .GPS .double
     {
         width: 2cm;
     }
     
-    .Campos_sitio .generic-widget
+    .GPS .generic-widget
     {
         width: 2.5cm;
     }
@@ -36,497 +35,495 @@
         text-align: center;
     }
     
-    #enviar
+    .FlotaIzquierda
     {
         float: left;
     }
+
 </style>
 {{end}}
 
 {{#=response.toolbar()}}
 
-<!--
 <form action="" enctype="multipart/form-data" method="post">
-    <input name="_formname" type="hidden" value="imagenForm">
-    <input class="string" name="imagen_nombre" type="text" value="">
-    <input class="upload" name="imagen_archivo" type="file">
-    <input type="submit" value="Submit">
+    <input type="hidden" name="_formname" value="formaHTML"/>
+    <fieldset class='No_GPS'>
+        <legend>
+            Datos del conglomerado
+        </legend>
+        <table>
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_nombre">Número de conglomerado</label>
+                    </div>
+                    <div>
+                        <input class="integer obligatorio" name="nombre" id="tabla_nombre" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_fecha_visita">Fecha de visita</label>
+                    </div>
+                    <div>
+                        <input class="date obligatorio" name="fecha_visita" id="tabla_fecha_visita" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_tipo">Tipo de conglomerado</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="tipo" id="tabla_tipo">
+                            <option value=""/>
+                            {{for tipo in listaTipo:}}
+                                <option value="{{=tipo.id}}">
+                                    {{=tipo.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_estado">Estado</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="estado" id="tabla_estado">
+                        <option value=""/>
+                        {{for estado in listaEstado:}}
+                            <option value="{{=estado.id}}">
+                                {{=estado.nombre}}
+                            </option>
+                        {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_municipio">Municipio</label>
+                    </div>
+                    <!-- El ID es para cambiar la lista de municipios asociados a un estado dinámicamente, utilizando AJAX-->
+                    <div id="shadow_clone">
+                        <select class="generic-widget" name="municipio" id="tabla_municipio">
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_predio">Predio</label>
+                    </div>
+                    <div>
+                        <input class="string obligatorio" name="predio" id="tabla_predio" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_tenencia">Tenencia</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="tenencia" id="tabla_tenencia">
+                            <option value=""/>
+                            {{for tenencia in listaTenencia:}}
+                                <option value="{{=tenencia.id}}">
+                                    {{=tenencia.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_uso_suelo_tipo">Tipo de uso de suelo</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="uso_suelo_tipo" id="tabla_uso_suelo_tipo">
+                            <option value=""/>
+                            <!--Como se lee el texto de este campo para ver si se activa el de vegetación, es mejor
+                            ponerlo todo en el mismo renglón (abajo)-->
+                            {{for usoSuelo in listaUsoSuelo:}}
+                                <option value="{{=usoSuelo.id}}">{{=usoSuelo.nombre}}</option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <!--La clase vegetación sirve para el JQuery que desvanece/reaparece el campo-->
+                    <div class="Vegetacion">
+                        <label for="tabla_vegetacion_tipo">Tipo de vegetación</label>
+                    </div>
+                    <div class="Vegetacion">
+                        <select class="generic-widget" name="vegetacion_tipo" id="tabla_vegetacion_tipo">
+                            <option value=""/>
+                            {{for vegetacion in listaVegetacion:}}
+                                <option value="{{=vegetacion.id}}">
+                                    {{=vegetacion.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="Vegetacion">
+                        <label for="tabla_perturbado">Perturbado</label>
+                    </div>
+                    <div class="Vegetacion">
+                        <input class="boolean" name="perturbado" id="tabla_perturbado" type="checkbox" value="on"/>
+                    </div>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <fieldset>
+        <legend>
+            Observaciones
+        </legend>
+        <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
+    </fieldset>
+
+    <fieldset class="GPS">
+        <legend>
+            Datos de los sitios y punto de control
+        </legend>
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+                <th colspan="3", class="Centrar">Latitud</th>
+                <th colspan="3", class="Centrar">Longitud</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td class="Centrar">Existe</td>
+                <td class="Centrar">Elemento</td>
+                <td class="Centrar">Grado</td>
+                <td class="Centrar">Minuto</td>
+                <td class="Centrar">Segundo</td>
+                <td class="Centrar">Grado</td>
+                <td class="Centrar">Minuto</td>
+                <td class="Centrar">Segundo</td>
+                <td class="Centrar">Datum</td>
+                <td class="Centrar">Altitud(m)</td>
+                <td class="Centrar">Error(m)</td>
+                <td class="Centrar">Evidencia<br/>anterior</td>
+                <td class="Centrar">Archivo</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Punto de control</td>                
+                <td>
+                    <input class="integer obligatorio" name="lat_grado_c" id="tabla_lat_grado_c" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lat_min_c" id="tabla_lat_min_c" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="lat_seg_c" id="tabla_lat_seg_c" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lon_grado_c" id="tabla_lon_grado_c" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lon_min_c" id="tabla_lon_min_c" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="lon_seg_c" id="tabla_lon_seg_c" type="text" value=""/>
+                </td>
+                <td>
+                    <select class="generic-widget obligatorio" name="elipsoide_c" id="tabla_elipsoide_c">
+                        <option value=""/>
+                        {{for elipsoide in listaElipsoide:}}
+                            <option value="{{=elipsoide.id}}">
+                                {{=elipsoide.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="altitud_c" id="tabla_altitud_c" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="gps_error_c" id="tabla_gps_error_c" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="boolean" name="hay_evidencia_c" id="tabla_hay_evidencia_c" type="checkbox" value="on"/>
+                </td>
+                <td>
+                    <input class="obligatorio" type="file" id="tabla_imagen_c" name="imagen_c"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    Sitio 1
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lat_grado_1" id="tabla_lat_grado_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lat_min_1" id="tabla_lat_min_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="lat_seg_1" id="tabla_lat_seg_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lon_grado_1" id="tabla_lon_grado_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lon_min_1" id="tabla_lon_min_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="lon_seg_1" id="tabla_lon_seg_1" type="text" value=""/>
+                </td>
+                <td>
+                    <select class="generic-widget obligatorio" name="elipsoide_1" id="tabla_elipsoide_1">
+                        <option value=""/>
+                        {{for elipsoide in listaElipsoide:}}
+                            <option value="{{=elipsoide.id}}">
+                                {{=elipsoide.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="altitud_1" id="tabla_altitud_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="gps_error_1" id="tabla_gps_error_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="boolean" name="hay_evidencia_1" id="tabla_hay_evidencia_1" type="checkbox" value="on"/>
+                </td>
+                <td>
+                    <input class="obligatorio" type="file" id="tabla_imagen_1" name="imagen_1"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="Centrar">
+                    <input class="boolean" name="existe_2" id="tabla_existe_2" type="checkbox" value="on"/>
+                </td>
+                <td>
+                    Sitio 2
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <input class="integer" name="lat_grado_2" id="tabla_lat_grado_2" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <input class="integer" name="lat_min_2" id="tabla_lat_min_2" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <input class="double" name="lat_seg_2" id="tabla_lat_seg_2" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <input class="integer" name="lon_grado_2" id="tabla_lon_grado_2" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <input class="integer" name="lon_min_2" id="tabla_lon_min_2" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <input class="double" name="lon_seg_2" id="tabla_lon_seg_2" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <select class="generic-widget" name="elipsoide_2" id="tabla_elipsoide_2">
+                            <option value=""/>
+                            {{for elipsoide in listaElipsoide:}}
+                                <option value="{{=elipsoide.id}}">
+                                    {{=elipsoide.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <input class="double" name="altitud_2" id="tabla_altitud_2" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <input class="double" name="gps_error_2" id="tabla_gps_error_2" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_2">
+                        <input class="boolean" name="hay_evidencia_2" id="tabla_hay_evidencia_2" type="checkbox" value="on"/>
+                    </div>
+                </td>                
+                <td>
+                    <div class="Sitio_info_2">
+                        <input type="file" id="tabla_imagen_2" name="imagen_2"/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="Centrar">
+                    <input class="boolean" name="existe_3" id="tabla_existe_3" type="checkbox" value="on"/>
+                </td>
+                <td>
+                    Sitio 3
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <input class="integer" name="lat_grado_3" id="tabla_lat_grado_3" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <input class="integer" name="lat_min_3" id="tabla_lat_min_3" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <input class="double" name="lat_seg_3" id="tabla_lat_seg_3" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <input class="integer" name="lon_grado_3" id="tabla_lon_grado_3" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <input class="integer" name="lon_min_3" id="tabla_lon_min_3" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <input class="double" name="lon_seg_3" id="tabla_lon_seg_3" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <select class="generic-widget" name="elipsoide_3" id="tabla_elipsoide_3">
+                            <option value=""/>
+                            {{for elipsoide in listaElipsoide:}}
+                                <option value="{{=elipsoide.id}}">
+                                    {{=elipsoide.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <input class="double" name="altitud_3" id="tabla_altitud_3" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <input class="double" name="gps_error_3" id="tabla_gps_error_3" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_3">
+                        <input class="boolean" name="hay_evidencia_3" id="tabla_hay_evidencia_3" type="checkbox" value="on"/>
+                    </div>
+                </td>                
+                <td>
+                    <div class="Sitio_info_3">
+                        <input type="file" id="tabla_imagen_3" name="imagen_3"/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="Centrar">
+                    <input class="boolean" name="existe_4" id="tabla_existe_4" type="checkbox" value="on"/>
+                </td>
+                <td>
+                    Sitio 4
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <input class="integer" name="lat_grado_4" id="tabla_lat_grado_4" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <input class="integer" name="lat_min_4" id="tabla_lat_min_4" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <input class="double" name="lat_seg_4" id="tabla_lat_seg_4" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <input class="integer" name="lon_grado_4" id="tabla_lon_grado_4" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <input class="integer" name="lon_min_4" id="tabla_lon_min_4" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <input class="double" name="lon_seg_4" id="tabla_lon_seg_4" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <select class="generic-widget" name="elipsoide_4" id="tabla_elipsoide_4">
+                            <option value=""/>
+                            {{for elipsoide in listaElipsoide:}}
+                                <option value="{{=elipsoide.id}}">
+                                    {{=elipsoide.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <input class="double" name="altitud_4" id="tabla_altitud_4" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <input class="double" name="gps_error_4" id="tabla_gps_error_4" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div class="Sitio_info_4">
+                        <input class="boolean" name="hay_evidencia_4" id="tabla_hay_evidencia_4" type="checkbox" value="on"/>
+                    </div>
+                </td>                
+                <td>
+                    <div class="Sitio_info_4">
+                        <input type="file" id="tabla_imagen_4" name="imagen_4"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
- -->
-
-
-{{=forma.custom.begin}}
-<fieldset class='Campos_conglomerado'>
-    <legend>
-        Datos del conglomerado
-    </legend>
-    <table>
-        <tr>
-            <td>
-                <div>
-                    {{=forma.custom.label.nombre}}
-                </div>
-                <div>
-                    {{=forma.custom.widget.nombre}}
-                </div>
-            </td>
-            <td>
-                <div>
-                    {{=forma.custom.label.fecha_visita}}
-                </div>
-                <div>
-                    {{=forma.custom.widget.fecha_visita}}
-                </div>
-            </td>
-            <td>
-                <div>
-                    {{=forma.custom.label.tipo}}
-                </div>
-                <div>
-                    {{=forma.custom.widget.tipo}}
-                </div>
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div>
-                    {{=forma.custom.label.estado}}
-                </div>
-                <div>
-                    {{=forma.custom.widget.estado}}
-                </div>
-            </td>
-            <td>
-                <div>
-                    {{=forma.custom.label.municipio}}
-                </div>
-                <div>
-                    {{=forma.custom.widget.municipio}}
-                </div>
-            </td>
-            <td>
-                <div>
-                    {{=forma.custom.label.predio}}
-                </div>
-                <div>
-                    {{=forma.custom.widget.predio}}
-                </div>
-            </td>
-            <td>
-                <div>
-                    {{=forma.custom.label.tenencia}}
-                </div>
-                <div>
-                    {{=forma.custom.widget.tenencia}}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div>
-                    {{=forma.custom.label.uso_suelo_tipo}}
-                </div>
-                <div>
-                    {{=forma.custom.widget.uso_suelo_tipo}}
-                </div>
-            </td>
-            <td>
-                <!--La clase vegetación sirve para el JQuery que desvanece/reaparece el campo-->
-                <div class="Vegetacion">
-                     {{=forma.custom.label.vegetacion_tipo}}
-                </div>
-                <div class="Vegetacion">
-                    {{=forma.custom.widget.vegetacion_tipo}}
-                </div>
-            </td>
-            <td>
-                <div class="Vegetacion">
-                    {{=forma.custom.label.perturbado}}
-                </div>
-                <div class="Vegetacion">
-                    {{=forma.custom.widget.perturbado}}
-                </div>
-            </td>
-            <td>
-            </td>
-        </tr>
-    </table>
-    <div>
-        <div>
-            {{=forma.custom.label.comentario}}
-        </div>
-        <div>
-            {{=forma.custom.widget.comentario}}
-        </div>
-    </div>
-</fieldset>
-
-<fieldset class="Campos_sitio">
-    <legend>
-        Datos de los sitios y punto de control
-    </legend>
-    <table>
-        <tr>
-            <th class="Centrar">        
-                {{=forma.custom.label.existe_2}}
-            </th>
-            <th>
-                Elemento
-            </th>
-            <th colspan="3", class="Centrar">
-                Latitud
-            </th>
-            <th colspan="3", class="Centrar">
-                Longitud
-            </th>
-            <th>
-                {{=forma.custom.label.elipsoide_c}}
-            </th>
-            <th>
-                 {{=forma.custom.label.altitud_c}}
-            </th>
-            <th>
-                 {{=forma.custom.label.gps_error_c}}
-            </th>
-            <th>
-                 {{=forma.custom.label.evidencia_c}}
-            </th>
-            <th>
-                {{=forma.custom.label.archivo_c}}
-            </th>
-        </tr>
-        <tr>
-            <th>
-            </th>
-            <th>
-            </th>
-            <th>
-                {{=forma.custom.label.lat_grado_c}}
-            </th>
-            <th>
-                {{=forma.custom.label.lat_min_c}}
-            </th>
-            <th>
-                {{=forma.custom.label.lat_seg_c}}
-            </th>
-            <th>
-                {{=forma.custom.label.lon_grado_c}}
-            </th>
-            <th>
-                {{=forma.custom.label.lon_min_c}}
-            </th>
-            <th>
-                {{=forma.custom.label.lon_seg_c}}
-            </th>
-            <th>
-            </th>
-            <th>
-            </th>
-            <th>
-            </th>
-            <th>
-            </th>
-            <th>                
-            </th>
-        </tr>
-        <tr>
-            <td>
-            </td>
-            <td>
-                Punto de control
-            </td>                
-            <td>
-                {{=forma.custom.widget.lat_grado_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.lat_min_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.lat_seg_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.lon_grado_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.lon_min_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.lon_seg_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.elipsoide_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.altitud_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.gps_error_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.evidencia_c}}
-            </td>
-            <td>
-                {{=forma.custom.widget.archivo_c}}
-            </td>
-
-        </tr>
-        <tr>
-            <td
-            </td>
-            <td>
-                Sitio 1
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.lat_grado_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.lat_min_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.lat_seg_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.lon_grado_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.lon_min_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.lon_seg_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.elipsoide_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.altitud_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.gps_error_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.evidencia_1}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_1">
-                    {{=forma.custom.widget.archivo_1}}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="Centrar">
-                {{=forma.custom.widget.existe_2}}
-            </td>
-            <td>
-                Sitio 2
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.lat_grado_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.lat_min_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.lat_seg_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.lon_grado_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.lon_min_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.lon_seg_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.elipsoide_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.altitud_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.gps_error_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.evidencia_2}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_2">
-                    {{=forma.custom.widget.archivo_2}}
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="Centrar">
-                {{=forma.custom.widget.existe_3}}
-            </td>
-            <td>
-                Sitio 3
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.lat_grado_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.lat_min_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.lat_seg_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.lon_grado_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.lon_min_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.lon_seg_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.elipsoide_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.altitud_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.gps_error_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.evidencia_3}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_3">
-                    {{=forma.custom.widget.archivo_3}}
-                </div>
-            </td>
-         </tr>
-         <tr>
-            <td class="Centrar">
-                {{=forma.custom.widget.existe_4}}
-            </td>
-            <td>
-                Sitio 4
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.lat_grado_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.lat_min_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.lat_seg_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.lon_grado_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.lon_min_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.lon_seg_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.elipsoide_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.altitud_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.gps_error_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.evidencia_4}}
-                </div>
-            </td>
-            <td>
-                <div class="Sitio_info_4">
-                    {{=forma.custom.widget.archivo_4}}
-                </div>
-            </td>
-        </tr>
-    </table>
-</fieldset>
-{{=forma.custom.submit}}
-{{=forma.custom.end}}
 
 <!--<br/>
 <div>
@@ -539,6 +536,21 @@
 </div>-->
 
 <script>
+
+    //AJAX para llenar la combobox con los municipios asociados al estado elegido
+    $('#tabla_estado').change
+    (
+        function()
+        {
+            $('#tabla_municipio').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+            ajax("{{=URL('asignarMunicipios')}}", ['estado'], 'shadow_clone');
+        }
+    )
+
     $(document).ready
     (
         function()
@@ -568,7 +580,9 @@
         function()
         {
             if($(this).find(":selected").text()=="Vegetación")
+            {
                 $('.Vegetacion').fadeIn();
+            }
             else
                 $('.Vegetacion').fadeOut();
         }
@@ -613,82 +627,81 @@
         }
     )
     
-    /*Antes de enviar la forma, se escriben los valores por default, para que el formulario
-    pase la validación de Web2py. Posteriormente, en el controlador se administrarán los 
-    valores que realmente se introducen en la base de datos*/
-    
+    //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
     (
-    	function()
-    	{
+        function()
+        {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                     flag = false;
+                }
+            }
+            );
 
-    		//Si falta alguna imagen, var=false y no se envía el formulario.
-    		flag = true;
-    		
-    		
-    		if($('#tabla_uso_suelo_tipo').find(":selected").text()!="Vegetación")
-    			$('#tabla_vegetacion_tipo').val("1");
-    			
-    		if(!$('#tabla_archivo_1').val() || !$('#tabla_archivo_c').val())
-    			flag = false;
-    			                	                        
-            if(!$('#tabla_existe_2').prop('checked'))
-    		{
-    		    $('.Sitio_info_2 select').val("1");
-    			$('.Sitio_info_2 input').not('#tabla_evidencia_2, #tabla_archivo_2').val("0");
+            /*Validando que esté lleno el campo de "vegetacion_tipo" cuando el
+            tipo de uso de suelo es vegetación"*/
+
+            if(($('#tabla_uso_suelo_tipo').find(":selected").text()=="Vegetación") && !$('#tabla_vegetacion_tipo').val())
+            {
+                flag = false;
+                //alert('Falta seleccionar un tipo de vegetación');
             }
-            
-            else if(!$('#tabla_archivo_2').val())
-            	flag = false;
-            
-            if(!$('#tabla_existe_3').prop('checked'))
-    		{
-    		    $('.Sitio_info_3 select').val("1");
-    			$('.Sitio_info_3 input').not('#tabla_evidencia_3, #tabla_archivo_3').val("0");
+
+            /*Validando que los campos correspondientes a un sitio 2,3,4 estén 
+            llenos si estos existen*/
+
+            if($('#tabla_existe_2').prop('checked'))
+            {
+                campos=$('.Sitio_info_2 input, .Sitio_info_2 select').not('#tabla_hay_evidencia_2');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
             }
-            
-            else if(!$('#tabla_archivo_3').val())
-            	flag = false;
-            
-            if(!$('#tabla_existe_4').prop('checked'))
-    		{
-    		    $('.Sitio_info_4 select').val("1");
-    			$('.Sitio_info_4 input').not('#tabla_evidencia_4, #tabla_archivo_4').val("0");
+
+            if($('#tabla_existe_3').prop('checked'))
+            {
+                campos=$('.Sitio_info_3 input, .Sitio_info_3 select').not('#tabla_hay_evidencia_3');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
             }
-            
-            else if(!$('#tabla_archivo_4').val())
-            	flag = false;
-            	
+
+            if($('#tabla_existe_4').prop('checked'))
+            {
+                campos=$('.Sitio_info_4 input, .Sitio_info_4 select').not('#tabla_hay_evidencia_4');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+
             if(!flag)
             {
-                alert('Faltó adjuntar una imagen a algún sitio existente');
-            	return false;
-			}
-    	}
+                alert('Faltó llenar un campo o subir alguna imagen');
+                return false;
+            }
+        }
     )
-    
-    /*$('form').submit
-    (
-    	function()
-    	{
-    		if($('#tabla_uso_suelo_tipo').find(":selected").text()!="Vegetación")
-    			$('#tabla_vegetacion_tipo').val("1");
-    	
-    		if($('#tabla_existe_2').prop('checked') == false)
-    		{
-    			$('.Sitio_info_2 input').not('#tabla_evidencia_2, #tabla_archivo_2').val("0");
-            	$('.Sitio_info_2 select').val("1");
-            }
-            if($('#tabla_existe_3').prop('checked') == false)
-    		{
-    			$('.Sitio_info_3 input').not('#tabla_evidencia_3, #tabla_archivo_3').val("0");
-            	$('.Sitio_info_3 select').val("1");
-            }
-            if($('#tabla_existe_4').prop('checked') == false)
-    		{
-    			$('.Sitio_info_4 input').not('#tabla_evidencia_4, #tabla_archivo_4').val("0");
-            	$('.Sitio_info_4 select').val("1");
-            }
-    	}
-    )*/
 </script>

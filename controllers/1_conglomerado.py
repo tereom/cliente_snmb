@@ -61,7 +61,7 @@ def index():
     	INPUT(_name='altitud_1',_type='double',requires=IS_NOT_EMPTY()),
     	INPUT(_name='gps_error_1',_type='double',requires=IS_NOT_EMPTY()),
     	SELECT(_name='elipsoide_1',
-        requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
+		requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
     	INPUT(_name='hay_evidencia_1',_type='boolean'),
     	
      	###########Imagen############
@@ -75,7 +75,7 @@ def index():
 
 		#Como el campo 2 puede no existir, no se pueden pedir como obligatorios
 		#los siguientes campos (sin embargo, el validador de la vista se encar-
-		#gará de que los llenen)
+		#gará de que los llenen en caso de que sí)
     	INPUT(_name='lat_grado_2',_type='integer'),
     	INPUT(_name='lat_min_2',_type='integer'),
     	INPUT(_name='lat_seg_2',_type='double'),
@@ -115,7 +115,7 @@ def index():
     	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
     	#conviene ponerlo como un entero, para que no requiera que esté en la
     	#base de datos (y por ende, no vacío).
-    	INPUT(_name='elipsoide_3',_type='integer'),          
+    	INPUT(_name='elipsoide_3',_type='integer'),
     	INPUT(_name='hay_evidencia_3',_type='boolean'),
     	
      	###########Imagen############
@@ -142,7 +142,7 @@ def index():
     	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
     	#conviene ponerlo como un entero, para que no requiera que esté en la
     	#base de datos (y por ende, no vacío).
-    	INPUT(_name='elipsoide_4',_type='integer'),          
+    	INPUT(_name='elipsoide_4',_type='integer'),
     	INPUT(_name='hay_evidencia_4',_type='boolean'),
     	
      	###########Imagen############
@@ -163,7 +163,7 @@ def index():
     	INPUT(_name='altitud_c',_type='double',requires=IS_NOT_EMPTY()),
     	INPUT(_name='gps_error_c',_type='double',requires=IS_NOT_EMPTY()),
     	SELECT(_name='elipsoide_c',
-        requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
+		requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
     	INPUT(_name='hay_evidencia_c',_type='boolean'),
     	
      	###########Imagen############
@@ -172,9 +172,9 @@ def index():
 	##Cerrando la lista de campos para el formulario
 	]
 
-    forma = FORM(*Campos_pestana_1)
+	forma = FORM(*Campos_pestana_1)
 
-    if forma.accepts(request.vars,formname='formaHTML'):
+	if forma.accepts(request.vars,formname='formaHTML'):
 
 	##################Procesando los datos del conglomerado######################
 		
@@ -185,12 +185,20 @@ def index():
   		
         #Casteando para asegurarnos que la comparación sea entre enteros.
 
-        #Si escogieron "uso_suelo_tipo" como "Vegetación" y no marcaron la casilla
+        #Si no escogieron "uso_suelo_tipo" como "Vegetación", entonces anulamos
+        #(por consistencia en base de datos), los valores que se pudieran haber
+        #ingresado en los datos dependientes de esta opción:
+
+		if int(datosConglomerado['uso_suelo_tipo'])!=int(ID_suelo_vegetacion):
+
+			datosConglomerado['vegetacion_tipo']=None
+			datosConglomerado['perturbado']=None
+
+		#Si escogieron "uso_suelo_tipo" como "Vegetación" y no marcaron la casilla
         #de perturbado, entonces hay que asignarle "False" a esta, para diferen-
         #ciarla de cuando no es requerida.
 
-		if int(datosConglomerado['uso_suelo_tipo'])==int(ID_suelo_vegetacion)\
-			and not(bool(datosConglomerado['perturbado'])):
+		elif not(bool(datosConglomerado['perturbado'])):
 		
 			datosConglomerado['perturbado']=False
 			
@@ -231,19 +239,19 @@ def index():
 		################Procesando la imagen 1##########################################
 		
 		#Guardando la imagen de referencia en la carpeta adecuada
-        imagen1 = db.Imagen_referencia_sitio.archivo.store(
+		imagen1 = db.Imagen_referencia_sitio.archivo.store(
             forma.vars.imagen_1.file, forma.vars.imagen_1.filename)
         
 		#Creando los campos de la tabla Imagen_referencia_sitio:
-		
-        datosImagen1 = {}
-        datosImagen1['sitio_muestra_id'] = sitio1Insertado
-        datosImagen1['archivo'] = imagen1
-        datosImagen1['archivo_nombre_original'] = forma.vars.imagen_1.filename
+
+		datosImagen1 = {}
+		datosImagen1['sitio_muestra_id'] = sitio1Insertado
+		datosImagen1['archivo'] = imagen1
+		datosImagen1['archivo_nombre_original'] = forma.vars.imagen_1.filename
 		
 		#Insertando el registro en la base de datos:
 		
-        db.Imagen_referencia_sitio.insert(**datosImagen1)
+		db.Imagen_referencia_sitio.insert(**datosImagen1)
 			
 		################Procesando los datos del sitio 2##############################
 
@@ -284,19 +292,19 @@ def index():
 		if bool(forma.vars['existe_2']):
 						
 			#Guardando la imagen de referencia en la carpeta adecuada
-        	imagen2 = db.Imagen_referencia_sitio.archivo.store(
+			imagen2 = db.Imagen_referencia_sitio.archivo.store(
             	forma.vars.imagen_2.file, forma.vars.imagen_2.filename)
-        
-			#Creando los campos de la tabla Imagen_referencia_sitio:
 		
-        	datosImagen2 = {}
-        	datosImagen2['sitio_muestra_id'] = sitio2Insertado
-        	datosImagen2['archivo'] = imagen2
-        	datosImagen2['archivo_nombre_original'] = forma.vars.imagen_2.filename
+			#Creando los campos de la tabla Imagen_referencia_sitio:
+
+			datosImagen2 = {}
+			datosImagen2['sitio_muestra_id'] = sitio2Insertado
+			datosImagen2['archivo'] = imagen2
+			datosImagen2['archivo_nombre_original'] = forma.vars.imagen_2.filename
 		
 			#Insertando el registro en la base de datos:
 		
-        	db.Imagen_referencia_sitio.insert(**datosImagen2)
+			db.Imagen_referencia_sitio.insert(**datosImagen2)
 
 		################Procesando los datos del sitio 3##############################
 
@@ -337,19 +345,19 @@ def index():
 		if bool(forma.vars['existe_3']):
 						
 			#Guardando la imagen de referencia en la carpeta adecuada
-        	imagen3 = db.Imagen_referencia_sitio.archivo.store(
+			imagen3 = db.Imagen_referencia_sitio.archivo.store(
             	forma.vars.imagen_3.file, forma.vars.imagen_3.filename)
         
 			#Creando los campos de la tabla Imagen_referencia_sitio:
 		
-        	datosImagen3 = {}
-        	datosImagen3['sitio_muestra_id'] = sitio3Insertado
-        	datosImagen3['archivo'] = imagen3
-        	datosImagen3['archivo_nombre_original'] = forma.vars.imagen_3.filename
+			datosImagen3 = {}
+			datosImagen3['sitio_muestra_id'] = sitio3Insertado
+			datosImagen3['archivo'] = imagen3
+			datosImagen3['archivo_nombre_original'] = forma.vars.imagen_3.filename
 		
 			#Insertando el registro en la base de datos:
 		
-        	db.Imagen_referencia_sitio.insert(**datosImagen3)
+			db.Imagen_referencia_sitio.insert(**datosImagen3)
 
 		################Procesando los datos del sitio 4##############################
 
@@ -385,24 +393,24 @@ def index():
 		#Insertando en la base de datos:
 		sitio4Insertado=db.Sitio_muestra.insert(**formaSitio4)
 		
-		################Procesando la imagen##########################################
+		################Procesando la imagen 4##########################################
 		
 		if bool(forma.vars['existe_4']):
 						
 			#Guardando la imagen de referencia en la carpeta adecuada
-        	imagen4 = db.Imagen_referencia_sitio.archivo.store(
+			imagen4 = db.Imagen_referencia_sitio.archivo.store(
             	forma.vars.imagen_4.file, forma.vars.imagen_4.filename)
         
 			#Creando los campos de la tabla Imagen_referencia_sitio:
 		
-        	datosImagen4 = {}
-        	datosImagen4['sitio_muestra_id'] = sitio4Insertado
-        	datosImagen4['archivo'] = imagen4
-        	datosImagen4['archivo_nombre_original'] = forma.vars.imagen_4.filename
+			datosImagen4 = {}
+			datosImagen4['sitio_muestra_id'] = sitio4Insertado
+			datosImagen4['archivo'] = imagen4
+			datosImagen4['archivo_nombre_original'] = forma.vars.imagen_4.filename
 		
 			#Insertando el registro en la base de datos:
 		
-        	db.Imagen_referencia_sitio.insert(**datosImagen4)
+			db.Imagen_referencia_sitio.insert(**datosImagen4)
 
 
 		################Procesando los datos del punto de control#########################
@@ -436,53 +444,53 @@ def index():
 		################Procesando la imagen del control##########################################
 		
 		#Guardando la imagen de referencia en la carpeta adecuada
-        imagenC = db.Imagen_referencia_sitio.archivo.store(
+		imagenC = db.Imagen_referencia_sitio.archivo.store(
             forma.vars.imagen_c.file, forma.vars.imagen_c.filename)
         
 		#Creando los campos de la tabla Imagen_referencia_sitio:
 		
-        datosImagenC = {}
-        datosImagenC['sitio_muestra_id'] = sitioCInsertado
-        datosImagenC['archivo'] = imagenC
-        datosImagenC['archivo_nombre_original'] = forma.vars.imagen_c.filename
+		datosImagenC = {}
+		datosImagenC['sitio_muestra_id'] = sitioCInsertado
+		datosImagenC['archivo'] = imagenC
+		datosImagenC['archivo_nombre_original'] = forma.vars.imagen_c.filename
 		
 		#Insertando el registro en la base de datos:
 		
-        db.Imagen_referencia_sitio.insert(**datosImagenC)
+		db.Imagen_referencia_sitio.insert(**datosImagenC)
 
-        response.flash = 'Éxito'
+		response.flash = 'Éxito'
         
-    elif forma.errors:
+	elif forma.errors:
 
-       response.flash = 'Hubo un error al llenar la forma'
+		response.flash = 'Hubo un error al llenar la forma'
        
-    else:
-    	response.flash ='Por favor, introduzca los datos del conglomerado y sitios'
+	else:
+		response.flash ='Por favor, introduzca los datos del conglomerado y sitios'
 
     ##########Enviando la información de las dropdowns##########################
 
     #Llenando las combobox de tipo de conglomerado, estado, tenencia, principal
     #uso de suelo, tipo de vegetación y datum
 
-    listaTipo = db(db.Cat_tipo_conglomerado).select(
+	listaTipo = db(db.Cat_tipo_conglomerado).select(
         db.Cat_tipo_conglomerado.id, db.Cat_tipo_conglomerado.nombre)
 
-    listaEstado = db(db.Cat_estado_conglomerado).select(
+	listaEstado = db(db.Cat_estado_conglomerado).select(
         db.Cat_estado_conglomerado.id, db.Cat_estado_conglomerado.nombre)
 
-    listaTenencia = db(db.Cat_tenencia_conglomerado).select(
+	listaTenencia = db(db.Cat_tenencia_conglomerado).select(
         db.Cat_tenencia_conglomerado.id, db.Cat_tenencia_conglomerado.nombre)
 
-    listaUsoSuelo = db(db.Cat_suelo_conglomerado).select(
+	listaUsoSuelo = db(db.Cat_suelo_conglomerado).select(
     	db.Cat_suelo_conglomerado.id, db.Cat_suelo_conglomerado.nombre)
 
-    listaVegetacion = db(db.Cat_vegetacion_conglomerado).select(
+	listaVegetacion = db(db.Cat_vegetacion_conglomerado).select(
     	db.Cat_vegetacion_conglomerado.id, db.Cat_vegetacion_conglomerado.nombre)
 
-    listaElipsoide = db(db.Cat_elipsoide).select(
+	listaElipsoide = db(db.Cat_elipsoide).select(
         db.Cat_elipsoide.id, db.Cat_elipsoide.nombre)
 
-    return dict(listaTipo=listaTipo,\
+	return dict(listaTipo=listaTipo,\
         listaEstado=listaEstado,\
         listaTenencia=listaTenencia,\
         listaUsoSuelo=listaUsoSuelo,\
@@ -497,22 +505,22 @@ def asignarMunicipios():
 	#Obteniendo la información del estado que seleccionó el usuario:
     estadoElegidoID = request.vars.estado
 
-    #Obteniendo los municipios que existen en dicho estado
+    #Obteniendo la clave de dicho estado:
+    estadoElegidoClave = db(db.Cat_estado_conglomerado.id==estadoElegidoID
+    	).select().first().clave_ent
+
+    #Obteniendo los municipios que existen en dicho estado a partir de la clave
     municipiosAsignados = db(
-        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
-        (db.Sitio_muestra.existe==True)
-        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
+    	db.Cat_municipio_conglomerado.clave_ent==estadoElegidoClave
+        ).select(db.Cat_municipio_conglomerado.nombre,db.Cat_municipio_conglomerado.id)
 
     #Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
 
-    dropdownHTML = "<select class='generic-widget' name='sitio_numero' id='tabla_sitio_numero'>"
+    dropdownHTML = "<select class='generic-widget' name='municipio' id='tabla_municipio'>"
 
-    for sitio in sitiosAsignados:
+    for municipio in municipiosAsignados:
 
-        #Obteniendo el nombre asociado al numero de sitio, del catálogo correspondiente:
-        nombreSitio = db(db.Cat_numero_sitio.id==sitio.sitio_numero).select().first().nombre
-
-        dropdownHTML += "<option value='" + str(sitio.id) + "'>" + nombreSitio + "</option>"  
+		dropdownHTML += "<option value='" + str(municipio.id) + "'>" + municipio.nombre + "</option>"  
     
     dropdownHTML += "</select>"
     
