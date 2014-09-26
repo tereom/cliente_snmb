@@ -16,20 +16,21 @@
     </fieldset>
 </form>
 
-<!--Al elegir una fotografía de la dropdown anterior, este elemento se actualiza
-mediante AJAX: se crea una nueva forma_shadow con un input "hidden" que contiene
-la ID de la foto elegida. Asimismo, se utiliza el nombre de la foto para poder
-desplegarla en pantalla. La forma, como único control visible, tiene una casilla
-que sale marcada si presencia=True.-->
-
 <div id="shadow_clone">
     <form id='forma_shadow'>
     </form>
 </div>
 
-<!--La forma anterior también tienen un botón de id="tabla_enviar", que al
+<!--Al elegir una fotografía de la dropdown anterior, este elemento se actualiza
+mediante AJAX: se crea una nueva forma_shadow con un input "hidden" que contiene
+la ID de la foto elegida. Asimismo, se utiliza el nombre de la foto para poder
+desplegarla en pantalla. La forma, como únicos controles visibles, presenta
+radio-botones que se pueden marcar para señalar la presencia/ausencia de animal.
+
+La forma anterior también tienen un botón de id="tabla_enviar", que al
 hacerle clic envía la información del formulario "forma_shadow" (ID de la foto
 y hay_individuo, para poder actualizar la base de datos-->
+
 <script>
 
     //AJAX para llenar la pestaña de revisión de fotografías
