@@ -182,20 +182,15 @@ def asignarSitios():
 
 # def camaraExistente():
 
-#     #Obteniendo la información del conglomerado que seleccionó el usuario:
-#     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
-#     numSitioElegido = request.vars.sitio_numero
+#     #Obteniendo la información del sitio que seleccionó el usuario:
+#     sitioElegidoID = request.vars.sitio_muestra_id
 
-#     #Haciendo un query a la tabla de Transecto_especies_invasoras_muestra con la
-#     #información anterior:
+#     #Haciendo un query a la tabla de Camara con la información anterior:
 
-#     transectoYaInsertado=(db(
-#     (db.Transecto_especies_invasoras_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
-#     (db.Transecto_especies_invasoras_muestra.transecto_numero==numSitioElegido)
-#     )).select()
+#     camaraYaInsertada=db(db.Camara.sitio_muestra_id==sitioElegidoID).select()
 
-#     #regresa la longitud de trasectoYaInsertado para que sea interpretada por JS
+#     #regresa la longitud de camaraYaInsertada para que sea interpretada por JS
 
-#     return len(transectoYaInsertado)
+#     return len(camaraYaInsertada)
 
 

@@ -226,4 +226,22 @@ def asignarSitios():
     
     return XML(dropdownHTML)
 
+#AJAX para revisar que no se haya ingresado una grabadora en el mismo sitio con
+#anterioridad.
+#El AJAX se activará cuando seleccionen un conglomerado y un número de sitio.
+
+# def grabadoraExistente():
+
+#     #Obteniendo la información del sitio que seleccionó el usuario:
+#     sitioElegidoID = request.vars.sitio_muestra_id
+
+#     #Haciendo un query a la tabla de Grabadora con la información anterior:
+
+#     grabadoraYaInsertada=db(db.Grabadora.sitio_muestra_id==sitioElegidoID).select()
+
+#     #regresa la longitud de grabadoraYaInsertada para que sea interpretada por JS
+
+#     return len(grabadoraYaInsertada)
+
+
 
