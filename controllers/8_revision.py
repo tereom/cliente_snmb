@@ -19,18 +19,18 @@ def obtenerFotografia():
     try:
 
         revisionHTML = "<form id='forma_shadow'><input type='hidden' name='id_foto' value='" +\
-            str(datosFoto.id) + "'/><img src='/cliente_web2py/8_revision/download/"+datosFoto.archivo+\
+            str(datosFoto.id) + "'/><img src='/cliente/8_revision/download/"+datosFoto.archivo+\
             "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"+\
             "<hr/><div><label for='tabla_hay_individuo' style='float:left;padding-right:20px;'>Hay individuo</label>"+\
             "<input type='checkbox' name='hay_individuo' value='on' id='tabla_hay_individuo'"
 
 #         <form id='forma_shadow'>
 #           <input type='hidden' name='id_foto' value='datosFoto.id'/>
-#           <img src='/cliente/8_revision/download/datosFoto.archivo' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>
+#           <img src='/cliente/8_revision/download/datosFoto.archivo'/>
 #           <hr/>
 #           <div>
-#               <label for='tabla_presencia'>Hay individuo</label>
-#               <input type='radio' name='presencia_ausencia' value='on' id='tabla_presencia' checked='true'/>
+#               <label for='tabla_hay_individuo'>Hay individuo</label>
+#               <input type='checkbox' name='hay_individuo' value='on' id='tabla_hay_individuo' checked='true'/>
 #           </div>
 #           <br/>
 #           <input type='button' value='Enviar' id='tabla_enviar'/>
