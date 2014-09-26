@@ -50,6 +50,11 @@
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
+						<!--este campo, en realidad sólo sirve para encontrar
+						con AJAX los sitios existentes asociados al conglomerado
+						elegido, al enviar la forma al controlador, se utilizará
+						para guardar el registro de la cámara, únicamente el id
+						del sitio (de la dropdown generada mediante AJAX)-->
 						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
 							<option value=""/>
 							{{for conglomerado in listaConglomerado:}}
@@ -62,11 +67,11 @@
 				</td>				
 				<td>
 					<div>
-						<label for="tabla_sitio_numero">Sitio</label>
+						<label for="tabla_sitio_muestra_id">Sitio</label>
 					</div>
 					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
 					<div id="shadow_clone">
-						<select class="generic-widget" name="sitio_numero" id="tabla_sitio_numero">
+						<select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
 							<option value=""/>
 						</select>
 					</div>
@@ -292,13 +297,21 @@
 </form>
 
 <script>
-
+	
+		/*function validateEmail($email) {
+ 			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+  			if( !emailReg.test( $email ) ) {
+    			return false;
+  			} else {
+    			return true;
+  			}
+		}*/
     //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
 	$('#tabla_conglomerado_muestra_id').change
 	(
     	function()
     	{
-    		$('#tabla_sitio_numero').remove();
+    		$('#tabla_sitio_muestra_id').remove();
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
@@ -318,15 +331,32 @@
    			{
   				if(!$(this).val())
   				{
-  					 flag = false;
+  					flag = false;
   				}
 			}
 			);
+
+   			var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+   			campos_fecha=$('.date');
+   			flag_m = true;
+   			campos_fecha.each(function() 
+   			{	
+   				if(!fechaReg.test($(this).val()))
+  				{
+  					flag_m = false;
+  				}
+			}
+			);   			
 			if(!flag)
             {
                 alert('Faltó llenar un campo o subir alguna imagen');
             	return false;
 			}
+			else if(!flag_m){
+				alert('El formato de fecha es aaaa-mm-dd');
+            	return false;
+			}
    		}
    	)
+
 </script>

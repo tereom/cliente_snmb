@@ -1,5 +1,8 @@
 {{extend 'layout.html'}}
 {{block head}}
+
+{{=response.toolbar()}}
+
 <style type="text/css">
 
     .Tabla .string
@@ -135,6 +138,16 @@
   <br/>
 	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
+  
+<br/>
+<br/>
+
+<fieldset>
+<legend>
+  Revisión archivos
+</legend>
+</fieldset>
+{{=grid}}
 
 <script>
 

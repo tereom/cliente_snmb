@@ -84,8 +84,7 @@ def index2():
 
    		SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
-    	SELECT(_name='transecto_numero',
-            requires=IS_IN_DB(db,db.Cat_numero_transecto.id,'%(nombre)s')),
+    	SELECT(_name='transecto_numero'),
     	#En estos campos se necesita AJAX (cascadas) para solucionar el problema
         #de que un transecto asociado a un conglomerado existente no se haya declarado.
 
@@ -128,7 +127,7 @@ def index2():
 
         #También garantizamos que los transectos en la dropdown de especie
         #invasora sí estén registrados con anterioridad en el conglomerado.
-                
+        
         transectoEspecie = db((db.Transecto_especies_invasoras_muestra.\
             conglomerado_muestra_id==idConglomerado)&(
             db.Transecto_especies_invasoras_muestra.transecto_numero==\
@@ -214,9 +213,17 @@ def index2():
     listaNumIndividuos = db(db.Cat_numero_individuos).select(
         db.Cat_numero_individuos.id, db.Cat_numero_individuos.nombre)
 
+    grid = SQLFORM.smartgrid(db.Especie_invasora,
+        #linked_tables=['Especie_invasora'],
+        csv=False,
+        user_signature=False)
+
+    
+
     return dict(listaConglomerado=listaConglomerado,\
         listaConabio=listaConabio,\
-        listaNumIndividuos=listaNumIndividuos)
+        listaNumIndividuos=listaNumIndividuos, 
+        grid=grid)
 
 #La siguiente función es invocada mediante AJAX para llenar la combobox de número
 #de transecto a partir de los transectos declarados en un conglomerado seleccionado.
@@ -239,11 +246,12 @@ def asignarTransectos():
     for transecto in transectosDeclarados:
 
         #Obteniendo el nombre asociado al numero de transecto, del catálogo correspondiente:
-        nombreTransecto = db(db.Cat_numero_transecto.id==transecto.transecto_numero).select().first().nombre
+        nombreTransecto = db(db.Cat_numero_transecto.id==transecto.transecto_numero).select().first()
 
-        dropdownHTML += "<option value='" + str(transecto.id) + "'>" + nombreTransecto + "</option>"  
+        dropdownHTML += "<option value='" + str(nombreTransecto.id) + "'>" + nombreTransecto.nombre + "</option>"  
     
     dropdownHTML += "</select>"
     
     return XML(dropdownHTML)
+
 
