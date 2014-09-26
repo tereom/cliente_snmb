@@ -451,6 +451,7 @@
 'restore': 'restaurar',
 'Retrieve username': 'Recuperar nombre de usuario',
 'revert': 'revertir',
+'Revisar imágenes': 'Revisar imágenes',
 'Revisar registros': 'Revisar registros',
 'Role': 'Rol',
 'Rows in Table': 'Filas en la tabla',

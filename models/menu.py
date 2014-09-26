@@ -45,7 +45,8 @@ response.menu = [
       (T('Huellas y excretas'), False, URL('7_edicion', 'editarHuellasExcretas')),
       (T('Especies Invasoras extra'), False, URL('7_edicion', 'editarEspeciesInvasorasExtra')),
       (T('Huellas y excretas extra'), False, URL('7_edicion', 'editarHuellasExcretasExtra')),
-      (T('Especímenes extra'), False, URL('7_edicion', 'editarEspecimenExtra'))])
+      (T('Especímenes extra'), False, URL('7_edicion', 'editarEspecimenExtra'))]),
+    (T('Revisar imágenes'), False, URL('8_revision', 'index'), [])
     ]
 
 DEVELOPMENT_MENU = False
