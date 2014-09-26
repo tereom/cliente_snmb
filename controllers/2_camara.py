@@ -17,7 +17,7 @@ def index():
     SELECT(_name='conglomerado_muestra_id',
         requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
     SELECT(_name='sitio_muestra_id',
-        requires=IS_IN_DB(db,db.Cat_numero_sitio.id,'%(nombre)s')),
+        requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
     
 	#Datos de la cámara
     SELECT(_name='nombre',

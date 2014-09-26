@@ -62,6 +62,7 @@
 'Archivo Nombre Original': 'Archivo Nombre Original',
 'Archivo referencia grabadoras': 'Archivo referencia grabadoras',
 'Archivos cámaras': 'Archivos cámaras',
+'Archivos especies invasoras': 'Archivos especies invasoras',
 'Archivos metadatos': 'Archivos metadatos',
 'Are you sure you want to delete file "%s"?': '¿Está seguro que desea eliminar el archivo "%s"?',
 'Are you sure you want to delete this object?': '¿Está seguro que desea borrar este objeto?',

@@ -1,6 +1,4 @@
 # coding: utf8
-
-
 def index(): 
     Campos_pestana_3 = [
 
@@ -17,8 +15,8 @@ def index():
 
     SELECT(_name='conglomerado_muestra_id',
         requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
-    SELECT(_name='sitio_numero',
-        requires=IS_IN_DB(db,db.Cat_numero_sitio.id,'%(nombre)s')),
+    SELECT(_name='sitio_muestra_id',
+        requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
     
     #Datos de la grabadora
     SELECT(_name='nombre',
@@ -70,18 +68,8 @@ def index():
     
         #Filtrando los datos correspondientes a la tabla de la grabadora:
         datosGrabadora = db.Grabadora._filter_fields(forma.vars)
-        
-        #Utilizando la llave del sitio para encontrarlo:
-        
-        idConglomerado = forma.vars['conglomerado_muestra_id']
-        sitioNumero = forma.vars['sitio_numero']
-        
-        sitioGrabadora = db((db.Sitio_muestra.conglomerado_muestra_id==idConglomerado)&
-            (db.Sitio_muestra.sitio_numero==sitioNumero)).select().first()
-        
-        datosGrabadora['sitio_muestra_id'] = sitioGrabadora
-        
-        #Guardando el registro de la cámara en la base de datos:
+                
+        #Guardando el registro de la grabadora en la base de datos:
         
         grabadoraInsertada = db.Grabadora.insert(**datosGrabadora)
         
@@ -213,7 +201,8 @@ def asignarSitios():
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
-    puntoControlId = db(db.Cat_numero_sitio.nombre=='Punto de control').select().first()
+    puntoControlId = db(db.Cat_numero_sitio.nombre=='Punto de control'
+        ).select().first().id
 
     #Obteniendo los sitios que existen en dicho conglomerado
     sitiosAsignados = db(
@@ -224,7 +213,7 @@ def asignarSitios():
 
     #Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
 
-    dropdownHTML = "<select class='generic-widget' name='sitio_numero' id='tabla_sitio_numero'>"
+    dropdownHTML = "<select class='generic-widget' name='sitio_muestra_id' id='tabla_sitio_muestra_id'>"
 
     for sitio in sitiosAsignados:
 

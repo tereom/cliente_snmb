@@ -85,8 +85,8 @@ def index2():
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
-        SELECT(_name='transecto_numero',
-            requires=IS_IN_DB(db,db.Cat_numero_transecto.id,'%(nombre)s')),
+        SELECT(_name='transecto_huellas_excretas_id',
+            requires=IS_IN_DB(db,db.Transecto_huellas_excretas_muestra.id,'%(nombre)s')),
         #En estos campos se necesita AJAX (cascadas) para solucionar el problema de que un
         #transecto asociado a un conglomerado existente no se haya declarado,
 
@@ -112,13 +112,9 @@ def index2():
     if formaHuellaExcreta.accepts(request.vars,formname='formaHuellaExcretaHTML'):
 
         #Filtrando los datos correspondientes a la tabla de huellas:
+
         datosHuellaExcreta = db.Huella_excreta._filter_fields(formaHuellaExcreta.vars)
-        
-        #Utilizando la llave del transecto para encontrarlo:
-        
-        idConglomerado = formaHuellaExcreta.vars['conglomerado_muestra_id']
-        transectoNumero = formaHuellaExcreta.vars['transecto_numero']
-        
+                
         #Por medio de AJAX, estamos garantizando que cuando registran los
         #transectos sólo se registre uno de cada número para cada muestreo del
         #conglomerado.
@@ -126,13 +122,7 @@ def index2():
         #También garantizamos que los transectos en la dropdown de especie
         #invasora sí estén registrados con anterioridad en el conglomerado.
         
-        transectoHuellaExcreta = db((db.Transecto_huellas_excretas_muestra.\
-            conglomerado_muestra_id==idConglomerado)&(\
-            db.Transecto_huellas_excretas_muestra.transecto_numero==\
-            transectoNumero)).select().first()
         
-        datosHuellaExcreta['transecto_huellas_excretas_id'] = transectoHuellaExcreta
-
         #Asociando el valor de la variable es_huella a partir del valor del control
         #es_huella_excreta
         
@@ -202,7 +192,7 @@ def asignarTransectos():
 
     #Creando la dropdown de transectos y enviándola a la vista para que sea desplegada:
 
-    dropdownHTML = "<select class='generic-widget' name='transecto_numero' id='tabla_transecto_numero'>"
+    dropdownHTML = "<select class='generic-widget' name='transecto_huellas_excretas_id' id='tabla_transecto_huellas_excretas_id'>"
 
     for transecto in transectosDeclarados:
 
