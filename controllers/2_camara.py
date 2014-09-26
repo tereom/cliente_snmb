@@ -161,7 +161,8 @@ def asignarSitios():
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
-    puntoControlId = db(db.Cat_numero_sitio.nombre=='Punto de control').select().first()
+    puntoControlId = db(db.Cat_numero_sitio.nombre=='Punto de control'
+        ).select().first().id
 
     #Obteniendo los sitios que existen en dicho conglomerado
     sitiosAsignados = db(
@@ -184,4 +185,27 @@ def asignarSitios():
     dropdownHTML += "</select>"
     
     return XML(dropdownHTML)
+
+#AJAX para revisar que no se haya ingresado una cámara en el mismo sitio con
+#anterioridad.
+#El AJAX se activará cuando seleccionen un conglomerado y un número de sitio.
+
+# def camaraExistente():
+
+#     #Obteniendo la información del conglomerado que seleccionó el usuario:
+#     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+#     numSitioElegido = request.vars.sitio_numero
+
+#     #Haciendo un query a la tabla de Transecto_especies_invasoras_muestra con la
+#     #información anterior:
+
+#     transectoYaInsertado=(db(
+#     (db.Transecto_especies_invasoras_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
+#     (db.Transecto_especies_invasoras_muestra.transecto_numero==numSitioElegido)
+#     )).select()
+
+#     #regresa la longitud de trasectoYaInsertado para que sea interpretada por JS
+
+#     return len(transectoYaInsertado)
+
 

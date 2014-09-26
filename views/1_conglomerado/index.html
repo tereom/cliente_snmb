@@ -551,6 +551,38 @@
         }
     )
 
+    $('#tabla_nombre').keyup
+    (
+        function()
+        {
+            $.ajax
+            (
+                {
+                    type: "POST",
+                    data: $('#tabla_nombre').serialize(),
+                    url: "{{=URL('conglomeradoExistente')}}",
+                    success: function(resultado)
+                    {
+                        //alert(resultado);
+                        if(resultado>=1)
+                        {
+                            alert('Este conglomerado ya ha sido declarado');
+                            $('#tabla_nombre').val("");
+                        }
+                        else if(resultado==-1)
+                        {
+                            alert('El número de conglomerado consta de 5 caracteres');
+                            $('#tabla_nombre').val("");
+                        }
+                    }
+                }
+            );
+        }
+    );
+
+
+    //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
+
     $(document).ready
     (
         function()

@@ -525,3 +525,40 @@ def asignarMunicipios():
     dropdownHTML += "</select>"
     
     return XML(dropdownHTML)
+
+#AJAX para revisar que no se haya ingresado el mismo conglomerado con anterioridad.
+#El AJAX se activará cuando escriban un caracter del nombre de conglomerado.
+
+def conglomeradoExistente():
+
+    #Obteniendo la información del conglomerado que ha ingresado el usuario.
+    #Puede ser que no haya terminado de escribir, por ello, se revisa primero
+    #la longitud del caracter:
+
+    longitudNombres = 5
+
+    #El resultado en el tercer caso será el número de registros en la base de
+    #datos con el mismo nombre de conglomerado, que se regresará a JS para
+    #su interpretación:
+
+    if (len(request.vars.nombre) < longitudNombres):
+    	resultado = 0
+
+    elif (len(request.vars.nombre) > longitudNombres):
+    	resultado = -1
+
+    else:
+
+    	conglomeradoElegidoNombre = request.vars.nombre
+
+    #Haciendo un query a la tabla de Conglomerado_muestra con la
+    #información anterior:
+
+    	conglomeradoYaInsertado=db(
+    		db.Conglomerado_muestra.nombre==conglomeradoElegidoNombre).select()
+
+    #regresa la longitud de conglomeradoYaInsertado para que sea interpretada por JS
+
+    	resultado = len(conglomeradoYaInsertado)
+
+    return resultado
