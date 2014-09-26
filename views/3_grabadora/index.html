@@ -55,6 +55,11 @@
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
+						<!--este campo, en realidad sólo sirve para encontrar
+						con AJAX los sitios existentes asociados al conglomerado
+						elegido, al enviar la forma al controlador, se utilizará
+						para guardar el registro de la grabadora, únicamente el
+						id del sitio (de la dropdown generada mediante AJAX)-->
 						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
 							<option value=""/>
 							{{for conglomerado in listaConglomerado:}}
@@ -67,11 +72,11 @@
 				</td>
 				<td>
 					<div>
-						<label for="tabla_sitio_numero">Sitio</label>
+						<label for="tabla_sitio_muestra_id">Sitio</label>
 					</div>
 					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
 					<div id="shadow_clone">
-						<select class="generic-widget" name="sitio_numero" id="tabla_sitio_numero">
+						<select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
 							<option value=""/>
 						</select>
 					</div>
@@ -309,7 +314,7 @@
 	(
     	function()
     	{
-    		$('#tabla_sitio_numero').remove();
+    		$('#tabla_sitio_muestra_id').remove();
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID

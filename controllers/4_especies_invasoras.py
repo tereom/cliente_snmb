@@ -84,7 +84,9 @@ def index2():
 
    		SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
-    	SELECT(_name='transecto_numero'),
+
+    	SELECT(_name='transecto_especies_invasoras_id',
+            requires=IS_IN_DB(db,db.Transecto_especies_invasoras_muestra.id,'%(nombre)s')),
     	#En estos campos se necesita AJAX (cascadas) para solucionar el problema
         #de que un transecto asociado a un conglomerado existente no se haya declarado.
 
@@ -116,24 +118,12 @@ def index2():
         #Filtrando los datos correspondientes a la tabla de la especie invasora:
         datosEspecie = db.Especie_invasora._filter_fields(formaEspecie.vars)
                 
-        #Utilizando la llave del transecto para encontrarlo:
-        
-        idConglomerado = formaEspecie.vars['conglomerado_muestra_id']
-        transectoNumero = formaEspecie.vars['transecto_numero']
-
         #Por medio de AJAX, estamos garantizando que cuando registran los
         #transectos sólo se registre uno de cada número para cada muestreo del
         #conglomerado.
 
         #También garantizamos que los transectos en la dropdown de especie
         #invasora sí estén registrados con anterioridad en el conglomerado.
-        
-        transectoEspecie = db((db.Transecto_especies_invasoras_muestra.\
-            conglomerado_muestra_id==idConglomerado)&(
-            db.Transecto_especies_invasoras_muestra.transecto_numero==\
-            transectoNumero)).select().first()
-        
-        datosEspecie['transecto_especies_invasoras_id'] = transectoEspecie
 
         # Revisando la selección de lista CONABIO
 
@@ -241,7 +231,7 @@ def asignarTransectos():
 
     #Creando la dropdown de transectos y enviándola a la vista para que sea desplegada:
 
-    dropdownHTML = "<select class='generic-widget' name='transecto_numero' id='tabla_transecto_numero'>"
+    dropdownHTML = "<select class='generic-widget' name='transecto_especies_invasoras_id' id='tabla_transecto_especies_invasoras_id'>"
 
     for transecto in transectosDeclarados:
 
