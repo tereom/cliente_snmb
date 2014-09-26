@@ -71,7 +71,7 @@ db.Grabadora.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')
 # Especies
 db.Transecto_especies_invasoras_muestra.transecto_numero.requires=IS_IN_DB(db,
     db.Cat_numero_transecto,'%(nombre)s')
-db.Especie_invasora.numero_individuos.requires=(db,db.Cat_numero_individuos,'%(nombre)s')
+db.Especie_invasora.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')
 
 # Huellas excreta
 db.Transecto_huellas_excretas_muestra.transecto_numero.requires=IS_IN_DB(db,
