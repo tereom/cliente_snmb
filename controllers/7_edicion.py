@@ -133,23 +133,23 @@ def editarHuellasExcretas():
 
 def editarEspeciesInvasorasExtra():
     db.Especie_invasora_extra.conglomerado_muestra_id.writable = False
-    db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable=False
-    db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
-    db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable = False
-    db.Especimen_restos_extra.conglomerado_muestra_id.writable = False
-    db.Archivo_especimen_restos_extra.especimen_restos_extra = False
+    db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable=False    
     form = SQLFORM.smartgrid(db.Especie_invasora_extra,
         csv=False,
         user_signature=False)
     return dict(form=form)
 
 def editarHuellasExcretasExtra():
+    db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
+    db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable = False
     form = SQLFORM.smartgrid(db.Huella_excreta_extra,
         csv=False,
         user_signature=False)
     return dict(form=form)
 
 def editarEspecimenExtra():
+    db.Especimen_restos_extra.conglomerado_muestra_id.writable = False
+    db.Archivo_especimen_restos_extra.especimen_restos_extra_id.writable = False
     form = SQLFORM.smartgrid(db.Especimen_restos_extra,
         csv=False,
         user_signature=False)
