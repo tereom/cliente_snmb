@@ -2,33 +2,33 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .generic-widget
-    {
-    	margin-right: 2cm;
-        width: 4.4cm;
-    }
-    .Tabla .integer, .Tabla .double, .Tabla .string, .Tabla .date, .Tabla .time
-    {
-    	margin-right: 2cm;
-        width: 4cm;
-    }
-    
-    .Centrar
-    {
-        text-align: center;
-    }
- 
-    #enviar
-    {
-        float: left;
-    }
+.Tabla .generic-widget
+{
+	margin-right: 2cm;
+	width: 4.4cm;
+}
+.Tabla .integer, .Tabla .double, .Tabla .string, .Tabla .date, .Tabla .time
+{
+	margin-right: 2cm;
+	width: 4cm;
+}
+
+.Centrar
+{
+	text-align: center;
+}
+
+#enviar
+{
+	float: left;
+}
 </style>
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post" id="forma">
 	<fieldset>
 		<legend>
-		Transecto especies invasoras
+			Transecto especies invasoras
 		</legend>
 		<input type="hidden"  name="_formname" value="formaTransectoHTML"/>
 		<table class="Tabla">
@@ -41,9 +41,9 @@
 						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
 							<option value=""/>
 							{{for conglomerado in listaConglomerado:}}
-								<option value="{{=conglomerado.id}}">
-									{{=conglomerado.nombre}}
-								</option>
+							<option value="{{=conglomerado.id}}">
+								{{=conglomerado.nombre}}
+							</option>
 							{{pass}}
 						</select>
 					</div>
@@ -56,9 +56,9 @@
 						<select class="generic-widget obligatorio" name="transecto_numero" id="tabla_transecto_numero">
 							<option value=""/>
 							{{for transectoNumero in listaNumeroTransecto:}}
-								<option value="{{=transectoNumero.id}}">
-									{{=transectoNumero.nombre}}
-								</option>
+							<option value="{{=transectoNumero.id}}">
+								{{=transectoNumero.nombre}}
+							</option>
 							{{pass}}
 						</select>
 					</div>
@@ -104,10 +104,10 @@
 		<legend>
 			Observaciones
 		</legend>
-    	<div>
-		    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
-    	</div>
-    </fieldset>
+		<div>
+			<textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
+		</div>
+	</fieldset>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 <script>
@@ -115,49 +115,64 @@
 	//AJAX para advertir al usuario que un transecto ya ha sido asignado con anterioridad
 	$('#tabla_transecto_numero').change
 	(
-    	function()
-    	{
-    		$.ajax
-    		(
-    			{
-					type: "POST",
-        			data: $('#forma').serialize(),
-        			url: "{{=URL('transectoExistente')}}",
-        			success: function(resultado)
-        			{
+		function()
+		{
+			$.ajax
+			(
+			{
+				type: "POST",
+				data: $('#forma').serialize(),
+				url: "{{=URL('transectoExistente')}}",
+				success: function(resultado)
+				{
         				//alert(resultado);
         				if(resultado>=1)
-    					{
-    						alert('Este transecto ya ha sido declarado');
-    						$('#tabla_transecto_numero').val("");
-    					}
+        				{
+        					alert('Este transecto ya ha sido declarado');
+        					$('#tabla_transecto_numero').val("");
+        				}
         			}
-    			}
-    		);
+        		}
+        		);
 		}
-   	);
+		);
 
 
 	//Validando, para ello utilizamos la clase "obligatorio":
-   	$('form').submit
-   	(
-   		function()
-   		{
-   			flag =true;
-   			campos=$('.obligatorio');
-   			campos.each(function() 
-   			{
-  				if(!$(this).val())
-  				{
-  					 flag = false;
-  				}
+	$('form').submit
+	(
+		function()
+		{
+			flag =true;
+			campos=$('.obligatorio');
+			campos.each(function() 
+			{
+				if(!$(this).val())
+				{
+					flag = false;
+				}
 			}
 			);
-			if(!flag)
-            {
-                alert('Faltó llenar algún campo obligatorio');
-            	return false;
+			var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+			campos_fecha=$('.date');
+			flag_m = true;
+			campos_fecha.each(function() 
+			{
+				if(!fechaReg.test($(this).val()))
+				{
+					flag_m = false;
+				}
 			}
-   		}
-   	)
-</script>
+			);               
+			if(!flag)
+			{
+				alert('Faltó llenar algún campo obligatorio');
+				return false;
+			}
+			else if(!flag_m){
+				alert('El formato de fecha es aaaa-mm-dd');
+				return false;
+			}
+		}
+		)
+	</script>

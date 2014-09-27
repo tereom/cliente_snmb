@@ -309,40 +309,55 @@
 <!-- {{=BEAUTIFY(response._vars)}} -->
 
 <script>
-    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
-	$('#tabla_conglomerado_muestra_id').change
-	(
-    	function()
-    	{
-    		$('#tabla_sitio_muestra_id').remove();
+    $('#tabla_conglomerado_muestra_id').change
+    (
+        function()
+        {
+            $('#tabla_sitio_muestra_id').remove();
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
-    		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-    	}
-   	)
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        }
+       )
 
-	//Validando, para ello utilizamos la clase "obligatorio":
-   	$('form').submit
-   	(
-   		function()
-   		{
-   			flag =true;
-   			campos=$('.obligatorio');
-   			campos.each(function() 
-   			{
-  				if(!$(this).val())
-  				{
-  					 flag = false;
-  				}
-			}
-			);
-			if(!flag)
-            {
-                alert('Faltó llenar un campo o subir algún archivo');
-            	return false;
-			}
-   		}
-   	)
+    //Validando, para ello utilizamos la clase "obligatorio":
+       $('form').submit
+       (
+           function()
+           {
+                flag =true;
+                campos=$('.obligatorio');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        flag = false;
+                    }
+                }
+                );
+
+                var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+                campos_fecha=$('.date');
+                flag_m = true;
+                campos_fecha.each(function() 
+                {
+                    if(!fechaReg.test($(this).val()))
+                    {
+                       flag_m = false;
+                    }
+                }
+                );               
+                if(!flag)
+                {
+                    alert('Faltó llenar un campo o subir alguna imagen');
+                    return false;
+                }
+                else if(!flag_m){
+                    alert('El formato de fecha es aaaa-mm-dd');
+                    return false;
+                }
+           }
+        )
 </script>

@@ -10,7 +10,7 @@
     
     .No_GPS .generic-widget
     {
-    	margin-right: 2cm;
+        margin-right: 2cm;
         width: 4.4cm;
     }
 
@@ -38,325 +38,325 @@
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post">
-	<input type="hidden" name="_formname" value="formaHTML"/>
-	<fieldset>
-		<legend>
-		Datos de la cámara
-		</legend>
-		<table class="No_GPS">
-			<tr>
-				<td>
-					<div>
-						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
-					</div>
-					<div>
-						<!--este campo, en realidad sólo sirve para encontrar
-						con AJAX los sitios existentes asociados al conglomerado
-						elegido, al enviar la forma al controlador, se utilizará
-						para guardar el registro de la cámara, únicamente el id
-						del sitio (de la dropdown generada mediante AJAX)-->
-						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-							<option value=""/>
-							{{for conglomerado in listaConglomerado:}}
-								<option value="{{=conglomerado.id}}">
-									{{=conglomerado.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
-				</td>				
-				<td>
-					<div>
-						<label for="tabla_sitio_muestra_id">Sitio</label>
-					</div>
-					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
-					<div id="shadow_clone">
-						<select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
-							<option value=""/>
-						</select>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_distancia_centro">Distancia al centro del sitio (m)</label>
-					</div>
-					<div>
-						<input class="double obligatorio" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div>
-						<label for="tabla_fecha_inicio">Fecha inicio 
-						</label>
-					</div>
-					<div>
-						<input class="date obligatorio" name="fecha_inicio" id="tabla_fecha_inicio" type="text" value=""/>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_hora_inicio">Hora inicio</label>
-					</div>
-					<div>
-						<input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_llovio">Llovió durante el muestreo</label>
-					</div>
-					<div>
-						<input class="boolean" name="llovio" id="tabla_llovio" type="checkbox" value="on"/>
-					</div>
-				</td>
-			</tr>
-        	<tr>
-        		<td>
-					<div>
-						<label for="tabla_fecha_termino">Fecha término
-						</label>
-					</div>
-					<div>
-						<input class="date obligatorio" name="fecha_termino" id="tabla_fecha_termino" type="text" value=""/>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_hora_termino">Hora término</label>
-					</div>
-					<div>
-						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
-					</div>
-				</td>
-				<td>
-				</td>
-			</tr>
-    	</table>
-        <hr/>
-    	<table class="GPS">
-    		<tr>
-    			<th colspan="3", class="Centrar">
-                	Latitud
-            	</th>
-            	<th colspan="3", class="Centrar">
-                	Longitud
-            	</th>
-            	<th>
-            	</th>
-            	<th>
-            	</th>
-            	<th>
-            	</th>
+    <input type="hidden" name="_formname" value="formaHTML"/>
+    <fieldset>
+        <legend>
+        Datos de la cámara
+        </legend>
+        <table class="No_GPS">
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+                    </div>
+                    <div>
+                        <!--este campo, en realidad sólo sirve para encontrar
+                        con AJAX los sitios existentes asociados al conglomerado
+                        elegido, al enviar la forma al controlador, se utilizará
+                        para guardar el registro de la cámara, únicamente el id
+                        del sitio (de la dropdown generada mediante AJAX)-->
+                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                            <option value=""/>
+                            {{for conglomerado in listaConglomerado:}}
+                                <option value="{{=conglomerado.id}}">
+                                    {{=conglomerado.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>                
+                <td>
+                    <div>
+                        <label for="tabla_sitio_muestra_id">Sitio</label>
+                    </div>
+                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+                    <div id="shadow_clone">
+                        <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+                            <option value=""/>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_distancia_centro">Distancia al centro del sitio (m)</label>
+                    </div>
+                    <div>
+                        <input class="double obligatorio" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
+                    </div>
+                </td>
             </tr>
-			<tr>
-            	<th class="Centrar">
-            		<label for="lat_grado">Grado</label>
-            	</th>
-            	<th class="Centrar">
-            		<label for="lat_min">Minuto</label>
-            	</th>
-            	<th class="Centrar">
-            		<label for="lat_seg">Segundo</label>
-            	</th>
-            	<th class="Centrar">
-            		<label for="lon_grado">Grado</label>
-            	</th>
-            	<th class="Centrar">
-        			<label for="lon_min">Minuto</label>
-            	</th>
-            	<th class="Centrar">
-            		<label for="lon_seg">Segundo</label>
-            	</th>
-            	<th class="Centrar">            	    
-            		<label for="tabla_elipsoide">Datum</label>
-            	</th>
-            	<th class="Centrar">
-            		<label for="tabla_altitud">Altitud(m)</label>
-            	</th>
-            	<th class="Centrar">
-            		<label for="tabla_gps_error">Error(m)</label>
-            	</th>
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_fecha_inicio">Fecha inicio 
+                        </label>
+                    </div>
+                    <div>
+                        <input class="date obligatorio" name="fecha_inicio" id="tabla_fecha_inicio" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_hora_inicio">Hora inicio</label>
+                    </div>
+                    <div>
+                        <input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_llovio">Llovió durante el muestreo</label>
+                    </div>
+                    <div>
+                        <input class="boolean" name="llovio" id="tabla_llovio" type="checkbox" value="on"/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_fecha_termino">Fecha término
+                        </label>
+                    </div>
+                    <div>
+                        <input class="date obligatorio" name="fecha_termino" id="tabla_fecha_termino" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_hora_termino">Hora término</label>
+                    </div>
+                    <div>
+                        <input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                </td>
+            </tr>
+        </table>
+        <hr/>
+        <table class="GPS">
+            <tr>
+                <th colspan="3", class="Centrar">
+                    Latitud
+                </th>
+                <th colspan="3", class="Centrar">
+                    Longitud
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+                <th>
+                </th>
+            </tr>
+            <tr>
+                <th class="Centrar">
+                    <label for="lat_grado">Grado</label>
+                </th>
+                <th class="Centrar">
+                    <label for="lat_min">Minuto</label>
+                </th>
+                <th class="Centrar">
+                    <label for="lat_seg">Segundo</label>
+                </th>
+                <th class="Centrar">
+                    <label for="lon_grado">Grado</label>
+                </th>
+                <th class="Centrar">
+                    <label for="lon_min">Minuto</label>
+                </th>
+                <th class="Centrar">
+                    <label for="lon_seg">Segundo</label>
+                </th>
+                <th class="Centrar">                    
+                    <label for="tabla_elipsoide">Datum</label>
+                </th>
+                <th class="Centrar">
+                    <label for="tabla_altitud">Altitud(m)</label>
+                </th>
+                <th class="Centrar">
+                    <label for="tabla_gps_error">Error(m)</label>
+                </th>
             </tr>
 
             <tr>
-            	<td>
-            		<input class="integer obligatorio" name="lat_grado" id="tabla_lat_grado" type="text"/>
-            	</td>
-            	<td>
-            		<input class="integer obligatorio" name="lat_min" id="tabla_lat_min" type="text"/>
-            	</td>
-            	<td>
-            		<input class="double obligatorio" name="lat_seg" id="tabla_lat_seg" type="text"/>
-            	</td>
-            	<td>
-            		<input class="integer obligatorio" name="lon_grado" id="tabla_lon_grado" type="text"/>
-            	</td>
-            	<td>
-        			<input class="integer obligatorio" name="lon_min" id="tabla_lon_min" type="text"/>
-            	</td>
-            	<td>
-            		<input class="double obligatorio" name="lon_seg" id="tabla_lon_seg" type="text"/>
-            	</td>
-            	<td>
-        			<select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
-						<option value=""/>
-						{{for elipsoide in listaElipsoide:}}
-							<option value="{{=elipsoide.id}}">
-								{{=elipsoide.nombre}}
-							</option>
-						{{pass}}
-					</select>
-            	</td>
-            	<td>
-            		<input class="double obligatorio" name="altitud" id="tabla_altitud" type="text" value=""/>
-            	</td>
-            	<td>
-            	    <input class="double obligatorio" name="gps_error" id="tabla_gps_error" type="text" value=""/>
-            	</td>
+                <td>
+                    <input class="integer obligatorio" name="lat_grado" id="tabla_lat_grado" type="text"/>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lat_min" id="tabla_lat_min" type="text"/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="lat_seg" id="tabla_lat_seg" type="text"/>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lon_grado" id="tabla_lon_grado" type="text"/>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="lon_min" id="tabla_lon_min" type="text"/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="lon_seg" id="tabla_lon_seg" type="text"/>
+                </td>
+                <td>
+                    <select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
+                        <option value=""/>
+                        {{for elipsoide in listaElipsoide:}}
+                            <option value="{{=elipsoide.id}}">
+                                {{=elipsoide.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="altitud" id="tabla_altitud" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="gps_error" id="tabla_gps_error" type="text" value=""/>
+                </td>
             </tr>
-    	</table>
+        </table>
 
         <hr/>
 
-    	<table class="No_GPS">
-    		<tr>
-    			<td>
-					<div>
-						<label for="tabla_nombre">Código cámara</label>
-					</div>
-					<div>
-						<select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
-							<option value=""/>
-							{{for nombreCamara in listaNombreCamara:}}
-								<option value="{{=nombreCamara.id}}">
-									{{=nombreCamara.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_resolucion">Resolución</label>
-					</div>
-					<div>
-						<select class="generic-widget obligatorio" name="resolucion" id="tabla_resolucion">
-							<option value=""/>
-							{{for resolucion in listaResolucion:}}
-								<option value="{{=resolucion.id}}">
-									{{=resolucion.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_sensibilidad">Sensibilidad</label>
-					</div>
-					<div>
-						<select class="generic-widget obligatorio" name="sensibilidad" id="tabla_sensibilidad">
-							<option value=""/>
-							{{for sensibilidad in listaSensibilidad:}}
-								<option value="{{=sensibilidad.id}}">
-									{{=sensibilidad.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_imagen_camara">Foto cámara y GPS</label>
-					</div>
-					<div>
-						<input class="obligatorio" type="file" id="tabla_imagen_camara" name="imagen_camara"/>
-					</div>
-				</td>
-			</tr>
-    	</table>
+        <table class="No_GPS">
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_nombre">Código cámara</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
+                            <option value=""/>
+                            {{for nombreCamara in listaNombreCamara:}}
+                                <option value="{{=nombreCamara.id}}">
+                                    {{=nombreCamara.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_resolucion">Resolución</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="resolucion" id="tabla_resolucion">
+                            <option value=""/>
+                            {{for resolucion in listaResolucion:}}
+                                <option value="{{=resolucion.id}}">
+                                    {{=resolucion.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_sensibilidad">Sensibilidad</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="sensibilidad" id="tabla_sensibilidad">
+                            <option value=""/>
+                            {{for sensibilidad in listaSensibilidad:}}
+                                <option value="{{=sensibilidad.id}}">
+                                    {{=sensibilidad.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_imagen_camara">Foto cámara y GPS</label>
+                    </div>
+                    <div>
+                        <input class="obligatorio" type="file" id="tabla_imagen_camara" name="imagen_camara"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </fieldset>
     <fieldset>
-    	<legend>
-    		Subir imágenes y videos
-    	</legend>
-		<div>
-			<input class="obligatorio" type="file" id="tabla_archivos_camara" name="archivos_camara" multiple/>
-		</div>
-	</fieldset>
-	<br/>
+        <legend>
+            Subir imágenes y videos
+        </legend>
+        <div>
+            <input class="obligatorio" type="file" id="tabla_archivos_camara" name="archivos_camara" multiple/>
+        </div>
+    </fieldset>
+    <br/>
     <fieldset>
-    	<legend>
-    		Observaciones
-    	</legend>
-    	    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
-	</fieldset>
-	<input type="submit" value="Enviar" class="btn" id="enviar"/>
+        <legend>
+            Observaciones
+        </legend>
+            <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
+    </fieldset>
+    <input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 
 <script>
-	
-		/*function validateEmail($email) {
- 			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-  			if( !emailReg.test( $email ) ) {
-    			return false;
-  			} else {
-    			return true;
-  			}
-		}*/
+    
+        /*function validateEmail($email) {
+             var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+              if( !emailReg.test( $email ) ) {
+                return false;
+              } else {
+                return true;
+              }
+        }*/
     //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
-	$('#tabla_conglomerado_muestra_id').change
-	(
-    	function()
-    	{
-    		$('#tabla_sitio_muestra_id').remove();
+    $('#tabla_conglomerado_muestra_id').change
+    (
+        function()
+        {
+            $('#tabla_sitio_muestra_id').remove();
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
-    		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-    	}
-   	)
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        }
+       )
 
-	//Validando, para ello utilizamos la clase "obligatorio":
-   	$('form').submit
-   	(
-   		function()
-   		{
-   			flag =true;
-   			campos=$('.obligatorio');
-   			campos.each(function() 
-   			{
-  				if(!$(this).val())
-  				{
-  					flag = false;
-  				}
-			}
-			);
+    //Validando, para ello utilizamos la clase "obligatorio":
+       $('form').submit
+       (
+           function()
+           {
+                flag =true;
+                campos=$('.obligatorio');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        flag = false;
+                    }
+                }
+                );
 
-   			var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
-   			campos_fecha=$('.date');
-   			flag_m = true;
-   			campos_fecha.each(function() 
-   			{	
-   				if(!fechaReg.test($(this).val()))
-  				{
-  					flag_m = false;
-  				}
-			}
-			);   			
-			if(!flag)
-            {
-                alert('Faltó llenar un campo o subir alguna imagen');
-            	return false;
-			}
-			else if(!flag_m){
-				alert('El formato de fecha es aaaa-mm-dd');
-            	return false;
-			}
-   		}
-   	)
+                var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+                campos_fecha=$('.date');
+                flag_m = true;
+                campos_fecha.each(function() 
+                {
+                    if(!fechaReg.test($(this).val()))
+                    {
+                       flag_m = false;
+                    }
+                }
+                );               
+                if(!flag)
+                {
+                    alert('Faltó llenar un campo o subir alguna imagen');
+                    return false;
+                }
+                else if(!flag_m){
+                    alert('El formato de fecha es aaaa-mm-dd');
+                    return false;
+                }
+           }
+       )
 
 </script>

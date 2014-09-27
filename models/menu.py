@@ -35,7 +35,7 @@ response.menu = [
     (T('Registros extra'), False, URL('6_registros_extra', 'index1'), [
       (T('Especies invasoras'), False, URL('6_registros_extra', 'index1')),
       (T('Huellas y excretas'), False, URL('6_registros_extra', 'index2')),
-      (T('Especmenes y restos'), False, URL('6_registros_extra', 'index3'))]),
+      (T('Especímenes y restos'), False, URL('6_registros_extra', 'index3'))]),
     # Edición
     (T('Revisar registros'), False, URL('7_edicion', 'editarConglomerado'), [
       (T('Conglomerado'), False, URL('7_edicion', 'editarConglomerado')),
