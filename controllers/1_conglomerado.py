@@ -514,7 +514,7 @@ def asignarMunicipios():
     	db.Cat_municipio_conglomerado.clave_ent==estadoElegidoClave
         ).select(db.Cat_municipio_conglomerado.nombre,db.Cat_municipio_conglomerado.id)
 
-    #Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
+    #Creando la dropdown de municipios y enviándola a la vista para que sea desplegada:
 
     dropdownHTML = "<select class='generic-widget' name='municipio' id='tabla_municipio'>"
 

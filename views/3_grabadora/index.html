@@ -309,11 +309,47 @@
 <!-- {{=BEAUTIFY(response._vars)}} -->
 
 <script>
+<<<<<<< HEAD
     $('#tabla_conglomerado_muestra_id').change
     (
         function()
         {
             $('#tabla_sitio_muestra_id').remove();
+=======
+
+	// //AJAX para advertir al usuario que una grabadora ya ha sido asignada
+	// //con anterioridad
+	// $('#tabla_sitio_muestra_id').change
+	// (
+ //    	function()
+ //    	{
+ //    		$.ajax
+ //    		(
+ //    			{
+	// 				type: "POST",
+ //        			data: $('#tabla_sitio_muestra_id').serialize(),
+ //        			url: "{{=URL('grabadoraExistente')}}",
+ //        			success: function(resultado)
+ //        			{
+ //        				//alert(resultado);
+ //        				if(resultado>=1)
+ //    					{
+ //    						alert('Esta grabadora ya ha sido declarada');
+ //    						$('#tabla_sitio_muestra_id').val("");
+ //    					}
+ //        			}
+ //    			}
+ //    		);
+	// 	}
+ //   	);
+
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+	$('#tabla_conglomerado_muestra_id').change
+	(
+    	function()
+    	{
+    		$('#tabla_sitio_muestra_id').remove();
+>>>>>>> 903562a79bf78a3d8b7d11109093d39b4d70d236
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
