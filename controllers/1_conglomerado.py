@@ -183,11 +183,11 @@ def index():
 		ID_suelo_vegetacion = db(db.Cat_suelo_conglomerado.nombre=='Vegetación'
 			).select().first().id
   		
-        #Casteando para asegurarnos que la comparación sea entre enteros.
-
         #Si no escogieron "uso_suelo_tipo" como "Vegetación", entonces anulamos
         #(por consistencia en base de datos), los valores que se pudieran haber
         #ingresado en los datos dependientes de esta opción:
+
+        #Casteando para asegurarnos que la comparación sea entre enteros.
 
 		if int(datosConglomerado['uso_suelo_tipo'])!=int(ID_suelo_vegetacion):
 
