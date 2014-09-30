@@ -201,7 +201,7 @@ def index2():
 
     listaNumIndividuos = db(db.Cat_numero_individuos).select(db.Cat_numero_individuos.nombre)
 
-    grid = SQLFORM.smartgrid(db.Especie_invasora,csv=False,user_signature=False)
+    grid = SQLFORM.smartgrid(db.Especie_invasora,csv=False,user_signature=False,create=False)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaConabio=listaConabio,\
@@ -228,10 +228,7 @@ def asignarTransectos():
 
     for transecto in transectosDeclarados:
 
-        #Obteniendo el nombre asociado al numero de transecto, del catálogo correspondiente:
-        nombreTransecto = db(db.Cat_numero_transecto.id==transecto.transecto_numero).select().first()
-
-        dropdownHTML += "<option value='" + str(transecto.id) + "'>" + nombreTransecto.nombre + "</option>"  
+        dropdownHTML += "<option value='" + str(transecto.id) + "'>" + transecto.transecto_numero + "</option>"  
     
     dropdownHTML += "</select>"
     
