@@ -16,7 +16,7 @@ if db(db.Cat_tipo_conglomerado.id>0).count() == 0:
     db.Cat_tipo_conglomerado.insert(nombre='Inaccesible social')
     db.Cat_tipo_conglomerado.insert(nombre='Inaccesible gabinete')
     db.Cat_tipo_conglomerado.insert(nombre='Supervisión interna')
-
+    db.Cat_tipo_conglomerado.insert(nombre='Biodiversidad')
 #########################################################################
 
 db.define_table('Cat_estado_conglomerado', 

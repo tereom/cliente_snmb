@@ -173,8 +173,11 @@ def index2():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-    grid = SQLFORM.smartgrid(db.Especie_invasora,csv=False,user_signature=False,
-        create=False)
+    # Tabla de revisión de registros ingresados
+    db.Huella_excreta.transecto_huellas_excretas_id.writable = False
+    db.Archivo_huella_excreta.huella_excreta_id.writable =False
+    grid = SQLFORM.smartgrid(db.Huella_excreta,csv=False,user_signature=False,
+        create=False,searchable=False)
 
     return dict(listaConglomerado=listaConglomerado,
         grid=grid)
