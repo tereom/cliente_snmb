@@ -147,8 +147,6 @@ def asignarSitios():
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
-    #puntoControlId = db(db.Cat_numero_sitio.nombre=='Punto de control'
-        #).select().first().id
 
     #Obteniendo los sitios que existen en dicho conglomerado
     sitiosAsignados = db(
@@ -163,10 +161,7 @@ def asignarSitios():
 
     for sitio in sitiosAsignados:
 
-        #Obteniendo el nombre asociado al numero de sitio, del catálogo correspondiente:
-        nombreSitio = db(db.Cat_numero_sitio.id==sitio.sitio_numero).select().first().nombre
-
-        dropdownHTML += "<option value='" + str(sitio.id) + "'>" + nombreSitio + "</option>"  
+        dropdownHTML += "<option value='" + str(sitio.id) + "'>" + sitio.sitio_numero + "</option>"  
     
     dropdownHTML += "</select>"
     

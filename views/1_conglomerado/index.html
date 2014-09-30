@@ -147,10 +147,10 @@
                     <div>
                         <select class="generic-widget obligatorio" name="uso_suelo_tipo" id="tabla_uso_suelo_tipo">
                             <option value=""/>
-                            <!--Como se lee el texto de este campo para ver si se activa el de vegetación, es mejor
-                            ponerlo todo en el mismo renglón (abajo)-->
                             {{for usoSuelo in listaUsoSuelo:}}
-                                <option value="{{=usoSuelo.nombre}}">{{=usoSuelo.nombre}}</option>
+                                <option value="{{=usoSuelo.nombre}}">
+                                    {{=usoSuelo.nombre}}
+                                </option>
                             {{pass}}
                         </select>
                     </div>

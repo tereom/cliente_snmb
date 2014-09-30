@@ -203,7 +203,7 @@
                     <select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
                         <option value=""/>
                         {{for elipsoide in listaElipsoide:}}
-                            <option value="{{=elipsoide.id}}">
+                            <option value="{{=elipsoide.nombre}}">
                                 {{=elipsoide.nombre}}
                             </option>
                         {{pass}}
@@ -230,7 +230,7 @@
                         <select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
                             <option value=""/>
                             {{for nombreCamara in listaNombreCamara:}}
-                                <option value="{{=nombreCamara.id}}">
+                                <option value="{{=nombreCamara.nombre}}">
                                     {{=nombreCamara.nombre}}
                                 </option>
                             {{pass}}
@@ -245,7 +245,7 @@
                         <select class="generic-widget obligatorio" name="resolucion" id="tabla_resolucion">
                             <option value=""/>
                             {{for resolucion in listaResolucion:}}
-                                <option value="{{=resolucion.id}}">
+                                <option value="{{=resolucion.nombre}}">
                                     {{=resolucion.nombre}}
                                 </option>
                             {{pass}}
@@ -260,7 +260,7 @@
                         <select class="generic-widget obligatorio" name="sensibilidad" id="tabla_sensibilidad">
                             <option value=""/>
                             {{for sensibilidad in listaSensibilidad:}}
-                                <option value="{{=sensibilidad.id}}">
+                                <option value="{{=sensibilidad.nombre}}">
                                     {{=sensibilidad.nombre}}
                                 </option>
                             {{pass}}
