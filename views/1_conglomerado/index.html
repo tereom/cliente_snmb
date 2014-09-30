@@ -77,7 +77,7 @@
                         <select class="generic-widget obligatorio" name="tipo" id="tabla_tipo">
                             <option value=""/>
                             {{for tipo in listaTipo:}}
-                                <option value="{{=tipo.id}}">
+                                <option value="{{=tipo.nombre}}">
                                     {{=tipo.nombre}}
                                 </option>
                             {{pass}}
@@ -96,7 +96,7 @@
                         <select class="generic-widget obligatorio" name="estado" id="tabla_estado">
                         <option value=""/>
                         {{for estado in listaEstado:}}
-                            <option value="{{=estado.id}}">
+                            <option value="{{=estado.nombre}}">
                                 {{=estado.nombre}}
                             </option>
                         {{pass}}
@@ -129,7 +129,7 @@
                         <select class="generic-widget obligatorio" name="tenencia" id="tabla_tenencia">
                             <option value=""/>
                             {{for tenencia in listaTenencia:}}
-                                <option value="{{=tenencia.id}}">
+                                <option value="{{=tenencia.nombre}}">
                                     {{=tenencia.nombre}}
                                 </option>
                             {{pass}}
@@ -148,7 +148,7 @@
                             <!--Como se lee el texto de este campo para ver si se activa el de vegetación, es mejor
                             ponerlo todo en el mismo renglón (abajo)-->
                             {{for usoSuelo in listaUsoSuelo:}}
-                                <option value="{{=usoSuelo.id}}">{{=usoSuelo.nombre}}</option>
+                                <option value="{{=usoSuelo.nombre}}">{{=usoSuelo.nombre}}</option>
                             {{pass}}
                         </select>
                     </div>
@@ -162,7 +162,7 @@
                         <select class="generic-widget" name="vegetacion_tipo" id="tabla_vegetacion_tipo">
                             <option value=""/>
                             {{for vegetacion in listaVegetacion:}}
-                                <option value="{{=vegetacion.id}}">
+                                <option value="{{=vegetacion.nombre}}">
                                     {{=vegetacion.nombre}}
                                 </option>
                             {{pass}}
@@ -245,7 +245,7 @@
                     <select class="generic-widget obligatorio" name="elipsoide_c" id="tabla_elipsoide_c">
                         <option value=""/>
                         {{for elipsoide in listaElipsoide:}}
-                            <option value="{{=elipsoide.id}}">
+                            <option value="{{=elipsoide.nombre}}">
                                 {{=elipsoide.nombre}}
                             </option>
                         {{pass}}
@@ -291,7 +291,7 @@
                     <select class="generic-widget obligatorio" name="elipsoide_1" id="tabla_elipsoide_1">
                         <option value=""/>
                         {{for elipsoide in listaElipsoide:}}
-                            <option value="{{=elipsoide.id}}">
+                            <option value="{{=elipsoide.nombre}}">
                                 {{=elipsoide.nombre}}
                             </option>
                         {{pass}}
@@ -352,7 +352,7 @@
                         <select class="generic-widget" name="elipsoide_2" id="tabla_elipsoide_2">
                             <option value=""/>
                             {{for elipsoide in listaElipsoide:}}
-                                <option value="{{=elipsoide.id}}">
+                                <option value="{{=elipsoide.nombre}}">
                                     {{=elipsoide.nombre}}
                                 </option>
                             {{pass}}
@@ -422,7 +422,7 @@
                         <select class="generic-widget" name="elipsoide_3" id="tabla_elipsoide_3">
                             <option value=""/>
                             {{for elipsoide in listaElipsoide:}}
-                                <option value="{{=elipsoide.id}}">
+                                <option value="{{=elipsoide.nombre}}">
                                     {{=elipsoide.nombre}}
                                 </option>
                             {{pass}}
@@ -492,7 +492,7 @@
                         <select class="generic-widget" name="elipsoide_4" id="tabla_elipsoide_4">
                             <option value=""/>
                             {{for elipsoide in listaElipsoide:}}
-                                <option value="{{=elipsoide.id}}">
+                                <option value="{{=elipsoide.nombre}}">
                                     {{=elipsoide.nombre}}
                                 </option>
                             {{pass}}
@@ -551,6 +551,8 @@
         }
     )
 
+    //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
+
     $('#tabla_nombre').keyup
     (
         function()
@@ -580,8 +582,6 @@
         }
     );
 
-    //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
-
     $(document).ready
     (
         function()
@@ -610,7 +610,7 @@
     (
         function()
         {
-            if($(this).find(":selected").text()=="Vegetación")
+            if($(this).val()=="Vegetación")
             {
                 $('.Vegetacion').fadeIn();
             }
@@ -677,7 +677,7 @@
             /*Validando que esté lleno el campo de "vegetacion_tipo" cuando el
             tipo de uso de suelo es vegetación"*/
 
-            if(($('#tabla_uso_suelo_tipo').find(":selected").text()=="Vegetación") && !$('#tabla_vegetacion_tipo').val())
+            if(($('#tabla_uso_suelo_tipo').val()=="Vegetación") && !$('#tabla_vegetacion_tipo').val())
             {
                 flag = false;
                 //alert('Falta seleccionar un tipo de vegetación');
@@ -739,7 +739,7 @@
                     flag_m = false;
                 }
             }
-            
+
             ); 
             if(!flag)
             {

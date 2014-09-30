@@ -13,7 +13,9 @@ Campos_Camara = [
 
 	Field('sitio_muestra_id','reference Sitio_muestra',required=True),         
 
-	Field('nombre','reference Cat_nombre_camara',required=True),
+ 	#Se insertará a partir de un catálogo
+	Field('nombre','string',required=True),
+
 	Field('fecha_inicio','date',required=True),
 	Field('fecha_termino','date',required=True),
 	Field('hora_inicio','time',required=True),
@@ -27,12 +29,17 @@ Campos_Camara = [
 	Field('lon_seg','double',required=True),
 	Field('altitud','double',required=True),
 	Field('gps_error','double',required=True),
-	Field('elipsoide','reference Cat_elipsoide',required=True),
+
+	#Se insertará a partir de un catálogo
+	Field('elipsoide','string',required=True),
 
 	Field('distancia_centro','double',required=True),
 	Field('llovio','boolean',required=True),
-	Field('resolucion','reference Cat_resolucion_camara',required=True),
-	Field('sensibilidad','reference Cat_sensibilidad_camara',required=True),
+
+	#Se insertarán a partir de un catálogo
+	Field('resolucion','string',required=True),
+	Field('sensibilidad','string',required=True),
+
     Field('comentario', 'text')
     ]
 
@@ -60,7 +67,7 @@ Campos_Archivo_camara = [
 	Field('camara_id','reference Camara',required=True),
     Field('archivo_nombre_original',required=True),
     Field('archivo','upload',required=True),
-#    	uploadfolder='static/pictures'),      pensar estructura de carpetas
+# uploadfolder='static/pictures'),      pensar estructura de carpetas
     Field('presencia','boolean')
     ]
 

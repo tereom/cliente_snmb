@@ -26,22 +26,22 @@ def index():
 		INPUT(_name='nombre',_type='integer',requires=IS_NOT_EMPTY()),
 		INPUT(_name='fecha_visita',_type='date',requires=IS_NOT_EMPTY()),
 		SELECT(_name='tipo',
-			requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.id,'%(nombre)s')),
+			requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.nombre,'%(nombre)s')),
     	SELECT(_name='estado',
-    		requires=IS_IN_DB(db,db.Cat_estado_conglomerado.id,'%(nombre)s')),
+    		requires=IS_IN_DB(db,db.Cat_estado_conglomerado.nombre,'%(nombre)s')),
     	SELECT(_name='municipio',
-    		requires=IS_IN_DB(db,db.Cat_municipio_conglomerado.id,'%(nombre)s')),
+    		requires=IS_IN_DB(db,db.Cat_municipio_conglomerado.nombre,'%(nombre)s')),
     	INPUT(_name='predio',_type='string',requires=IS_NOT_EMPTY()),
     	SELECT(_name='tenencia',
-    		requires=IS_IN_DB(db,db.Cat_tenencia_conglomerado.id,'%(nombre)s')),
+    		requires=IS_IN_DB(db,db.Cat_tenencia_conglomerado.nombre,'%(nombre)s')),
     	SELECT(_name='uso_suelo_tipo',
-    		requires=IS_IN_DB(db,db.Cat_suelo_conglomerado.id,'%(nombre)s')),
+    		requires=IS_IN_DB(db,db.Cat_suelo_conglomerado.nombre,'%(nombre)s')),
 
     	#El campo de vegetación_tipo posiblemente se envíe vacío de la vista (si
     	#vegetación no es el uso de suelo principal), por ello, conviene ponerlo
-    	#como un entero, para que no requiera que esté en la base de datos (y
+    	#como un string, para que no requiera que esté en la base de datos (y
     	#por ende, no vacío).
-		INPUT(_name='vegetacion_tipo',_type='integer'),
+		INPUT(_name='vegetacion_tipo',_type='string'),
 
     	INPUT(_name='perturbado',_type='boolean'),
 		INPUT(_name='comentario',_type='text'),
@@ -61,7 +61,7 @@ def index():
     	INPUT(_name='altitud_1',_type='double',requires=IS_NOT_EMPTY()),
     	INPUT(_name='gps_error_1',_type='double',requires=IS_NOT_EMPTY()),
     	SELECT(_name='elipsoide_1',
-		requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
+		requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),
     	INPUT(_name='hay_evidencia_1',_type='boolean'),
     	
      	###########Imagen############
@@ -86,9 +86,9 @@ def index():
     	INPUT(_name='gps_error_2',_type='double'),
 
     	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
-    	#conviene ponerlo como un entero, para que no requiera que esté en la
+    	#conviene ponerlo como un string, para que no requiera que esté en la
     	#base de datos (y por ende, no vacío).
-    	INPUT(_name='elipsoide_2',_type='integer'),          
+    	INPUT(_name='elipsoide_2',_type='string'),          
     	INPUT(_name='hay_evidencia_2',_type='boolean'),
     	
      	###########Imagen############
@@ -113,9 +113,9 @@ def index():
     	INPUT(_name='gps_error_3',_type='double'),
 
     	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
-    	#conviene ponerlo como un entero, para que no requiera que esté en la
+    	#conviene ponerlo como un string, para que no requiera que esté en la
     	#base de datos (y por ende, no vacío).
-    	INPUT(_name='elipsoide_3',_type='integer'),
+    	INPUT(_name='elipsoide_3',_type='string'),
     	INPUT(_name='hay_evidencia_3',_type='boolean'),
     	
      	###########Imagen############
@@ -140,9 +140,9 @@ def index():
     	INPUT(_name='gps_error_4',_type='double'),
 
     	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
-    	#conviene ponerlo como un entero, para que no requiera que esté en la
+    	#conviene ponerlo como un string, para que no requiera que esté en la
     	#base de datos (y por ende, no vacío).
-    	INPUT(_name='elipsoide_4',_type='integer'),
+    	INPUT(_name='elipsoide_4',_type='string'),
     	INPUT(_name='hay_evidencia_4',_type='boolean'),
     	
      	###########Imagen############
@@ -163,7 +163,7 @@ def index():
     	INPUT(_name='altitud_c',_type='double',requires=IS_NOT_EMPTY()),
     	INPUT(_name='gps_error_c',_type='double',requires=IS_NOT_EMPTY()),
     	SELECT(_name='elipsoide_c',
-		requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
+		requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),          
     	INPUT(_name='hay_evidencia_c',_type='boolean'),
     	
      	###########Imagen############
@@ -179,9 +179,6 @@ def index():
 	##################Procesando los datos del conglomerado######################
 		
 		datosConglomerado=db.Conglomerado_muestra._filter_fields(forma.vars)
-
-		ID_suelo_vegetacion = db(db.Cat_suelo_conglomerado.nombre=='Vegetación'
-			).select().first().id
   		
         #Si no escogieron "uso_suelo_tipo" como "Vegetación", entonces anulamos
         #(por consistencia en base de datos), los valores que se pudieran haber
@@ -189,7 +186,7 @@ def index():
 
         #Casteando para asegurarnos que la comparación sea entre enteros.
 
-		if int(datosConglomerado['uso_suelo_tipo'])!=int(ID_suelo_vegetacion):
+		if str(datosConglomerado['uso_suelo_tipo'])!='Vegetación':
 
 			datosConglomerado['vegetacion_tipo']=None
 			datosConglomerado['perturbado']=None
@@ -212,7 +209,7 @@ def index():
 		formaSitio1 = {}
 		
 		formaSitio1['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitio1['sitio_numero']=1
+		formaSitio1['sitio_numero']='Centro'
 		formaSitio1['existe']=True
 		
 		#Leyendo los datos del formulario:
@@ -259,7 +256,7 @@ def index():
 		
 		formaSitio2 = {}
 		formaSitio2['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitio2['sitio_numero']=2
+		formaSitio2['sitio_numero']='Sitio 2'
 		
 		#Si existe el sitio 2:
 		if bool(forma.vars['existe_2']):
@@ -312,7 +309,7 @@ def index():
 		
 		formaSitio3 = {}
 		formaSitio3['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitio3['sitio_numero']=3
+		formaSitio3['sitio_numero']='Sitio 3'
 		
 		#Si existe el sitio 3:
 		if bool(forma.vars['existe_3']):
@@ -365,7 +362,7 @@ def index():
 		
 		formaSitio4 = {}
 		formaSitio4['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitio4['sitio_numero']=4
+		formaSitio4['sitio_numero']='Sitio 4'
 		
 		#Si existe el sitio 4:
 		if bool(forma.vars['existe_4']):
@@ -419,7 +416,7 @@ def index():
 		
 		formaSitioC = {}
 		formaSitioC['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitioC['sitio_numero']=5
+		formaSitioC['sitio_numero']='Punto de control'
 		formaSitioC['existe']=True
 		
 		#Leyendo los datos del formulario:
@@ -472,23 +469,17 @@ def index():
     #Llenando las combobox de tipo de conglomerado, estado, tenencia, principal
     #uso de suelo, tipo de vegetación y datum
 
-	listaTipo = db(db.Cat_tipo_conglomerado).select(
-        db.Cat_tipo_conglomerado.id, db.Cat_tipo_conglomerado.nombre)
+	listaTipo = db(db.Cat_tipo_conglomerado).select(db.Cat_tipo_conglomerado.nombre)
 
-	listaEstado = db(db.Cat_estado_conglomerado).select(
-        db.Cat_estado_conglomerado.id, db.Cat_estado_conglomerado.nombre)
+	listaEstado = db(db.Cat_estado_conglomerado).select(db.Cat_estado_conglomerado.nombre)
 
-	listaTenencia = db(db.Cat_tenencia_conglomerado).select(
-        db.Cat_tenencia_conglomerado.id, db.Cat_tenencia_conglomerado.nombre)
+	listaTenencia = db(db.Cat_tenencia_conglomerado).select(db.Cat_tenencia_conglomerado.nombre)
 
-	listaUsoSuelo = db(db.Cat_suelo_conglomerado).select(
-    	db.Cat_suelo_conglomerado.id, db.Cat_suelo_conglomerado.nombre)
+	listaUsoSuelo = db(db.Cat_suelo_conglomerado).select(db.Cat_suelo_conglomerado.nombre)
 
-	listaVegetacion = db(db.Cat_vegetacion_conglomerado).select(
-    	db.Cat_vegetacion_conglomerado.id, db.Cat_vegetacion_conglomerado.nombre)
+	listaVegetacion = db(db.Cat_vegetacion_conglomerado).select(db.Cat_vegetacion_conglomerado.nombre)
 
-	listaElipsoide = db(db.Cat_elipsoide).select(
-        db.Cat_elipsoide.id, db.Cat_elipsoide.nombre)
+	listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
 	return dict(listaTipo=listaTipo,\
         listaEstado=listaEstado,\
@@ -503,16 +494,16 @@ def index():
 def asignarMunicipios():
 
 	#Obteniendo la información del estado que seleccionó el usuario:
-    estadoElegidoID = request.vars.estado
+    estadoElegidoNombre = request.vars.estado
 
     #Obteniendo la clave de dicho estado:
-    estadoElegidoClave = db(db.Cat_estado_conglomerado.id==estadoElegidoID
+    estadoElegidoClave = db(db.Cat_estado_conglomerado.nombre==estadoElegidoNombre
     	).select().first().clave_ent
 
     #Obteniendo los municipios que existen en dicho estado a partir de la clave
     municipiosAsignados = db(
     	db.Cat_municipio_conglomerado.clave_ent==estadoElegidoClave
-        ).select(db.Cat_municipio_conglomerado.nombre,db.Cat_municipio_conglomerado.id)
+        ).select(db.Cat_municipio_conglomerado.nombre)
 
     #Creando la dropdown de municipios y enviándola a la vista para que sea desplegada:
 
@@ -520,7 +511,7 @@ def asignarMunicipios():
 
     for municipio in municipiosAsignados:
 
-		dropdownHTML += "<option value='" + str(municipio.id) + "'>" + municipio.nombre + "</option>"  
+		dropdownHTML += "<option value='" + str(municipio.nombre) + "'>" + municipio.nombre + "</option>"  
     
     dropdownHTML += "</select>"
     

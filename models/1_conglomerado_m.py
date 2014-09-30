@@ -13,15 +13,20 @@ Campos_Conglomerado_muestra = [
 
 	Field('nombre','integer',required=True),
 	Field('fecha_visita','date',required=True),
-	Field('tipo','reference Cat_tipo_conglomerado',required=True),
-    Field('estado','reference Cat_estado_conglomerado',required=True),
-    Field('municipio','reference Cat_municipio_conglomerado',required=True),
-    Field('predio','string',required=True),
-    Field('tenencia','reference Cat_tenencia_conglomerado',required=True),
-    Field('uso_suelo_tipo', 'reference Cat_suelo_conglomerado',required=True),
+	Field('predio','string',required=True),
+
+	#Se insertarán a partir de un catálogo
+	Field('tipo','string',required=True),
+    Field('estado','string',required=True),
+    Field('municipio','string',required=True),
+    Field('tenencia','string',required=True),
+    Field('uso_suelo_tipo', 'string',required=True),
 
     #Los dos siguientes campos sólo se eligen si uso_suelo_tipo="Vegetación"
-	Field('vegetacion_tipo','reference Cat_vegetacion_conglomerado'),
+
+    #Se insertará a partir de un catálogo
+	Field('vegetacion_tipo','string'),
+
     Field('perturbado','boolean'),
 
 	Field('comentario','text')
@@ -37,7 +42,7 @@ db.define_table('Conglomerado_muestra', *Campos_Conglomerado_muestra,
 Campos_Sitio_muestra = [
 
 	Field('conglomerado_muestra_id','reference Conglomerado_muestra',required=True),
-	Field('sitio_numero','reference Cat_numero_sitio',required=True),
+	Field('sitio_numero','string',required=True),
 	Field('existe', 'boolean',required=True),
 
 	Field('lat_grado','integer'),
@@ -48,7 +53,9 @@ Campos_Sitio_muestra = [
 	Field('lon_seg','double'),
     Field('altitud','double'),
     Field('gps_error','double'),
-	Field('elipsoide','reference Cat_elipsoide'), 
+
+    #Se insertará a partir de un catálogo
+	Field('elipsoide','string'), 
 	
     Field('hay_evidencia','boolean')
     ] 

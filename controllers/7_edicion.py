@@ -40,16 +40,16 @@
 #     return dict(form=form)
 
 # Conglomerado
-db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.id,'%(nombre)s')
-db.Conglomerado_muestra.estado.requires=IS_IN_DB(db,db.Cat_estado_conglomerado.id,'%(nombre)s')
-db.Conglomerado_muestra.municipio.requires=IS_IN_DB(db,db.Cat_municipio_conglomerado.id,'%(nombre)s')
-db.Conglomerado_muestra.tenencia.requires=IS_IN_DB(db,db.Cat_tenencia_conglomerado.id,'%(nombre)s')
-db.Conglomerado_muestra.uso_suelo_tipo.requires=IS_IN_DB(db,db.Cat_suelo_conglomerado.id,'%(nombre)s')
-db.Conglomerado_muestra.vegetacion_tipo.requires=IS_IN_DB(db,db.Cat_vegetacion_conglomerado.id,'%(nombre)s')
+db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.estado.requires=IS_IN_DB(db,db.Cat_estado_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.municipio.requires=IS_IN_DB(db,db.Cat_municipio_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.tenencia.requires=IS_IN_DB(db,db.Cat_tenencia_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.uso_suelo_tipo.requires=IS_IN_DB(db,db.Cat_suelo_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.vegetacion_tipo.requires=IS_IN_DB(db,db.Cat_vegetacion_conglomerado.nombre,'%(nombre)s')
 
 # Sitio
-db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Cat_numero_sitio.id,'%(nombre)s')
-db.Sitio_muestra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')
+db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Cat_numero_sitio.nombre,'%(nombre)s')
+db.Sitio_muestra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
 
 # Cámara
 db.Camara.nombre.requires=IS_IN_DB(db,db.Cat_nombre_camara.id,'%(nombre)s')
