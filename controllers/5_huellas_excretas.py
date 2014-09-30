@@ -173,7 +173,11 @@ def index2():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-    return dict(listaConglomerado=listaConglomerado)
+    grid = SQLFORM.smartgrid(db.Especie_invasora,csv=False,user_signature=False,
+        create=False)
+
+    return dict(listaConglomerado=listaConglomerado,
+        grid=grid)
 
 #La siguiente función es invocada mediante AJAX para llenar la combobox de número
 #de transecto a partir de los transectos declarados en un conglomerado seleccionado.
