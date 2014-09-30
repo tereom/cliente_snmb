@@ -190,7 +190,7 @@
               <select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
             <option value=""/>
             {{for elipsoide in listaElipsoide:}}
-              <option value="{{=elipsoide.id}}">
+              <option value="{{=elipsoide.nombre}}">
                 {{=elipsoide.nombre}}
               </option>
             {{pass}}
@@ -301,7 +301,7 @@
            están seleccionadas y los campos de texto son visibles (default):*/
             $('#tabla_hay_nombre_comun').prop('checked', true);
 
-      $('#tabla_hay_nombre_cientifico').prop('checked', true);
+            $('#tabla_hay_nombre_cientifico').prop('checked', true);
         }
     )
 
@@ -352,6 +352,8 @@
           }
       }
       );
+
+      //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
       var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
       campos_fecha=$('.date');
       flag_m = true;

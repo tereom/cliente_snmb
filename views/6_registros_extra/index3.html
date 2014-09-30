@@ -190,7 +190,7 @@
           <select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
             <option value=""/>
             {{for elipsoide in listaElipsoide:}}
-            <option value="{{=elipsoide.id}}">
+            <option value="{{=elipsoide.nombre}}">
               {{=elipsoide.nombre}}
             </option>
             {{pass}}
@@ -259,7 +259,7 @@
             <select class="generic-widget obligatorio" name="numero_individuos" id="tabla_numero_individuos">
               <option value=""/>
               {{for numIndividuos in listaNumIndividuos:}}
-              <option value="{{=numIndividuos.id}}">
+              <option value="{{=numIndividuos.nombre}}">
                 {{=numIndividuos.nombre}}
               </option>
               {{pass}}
@@ -353,18 +353,19 @@ $('form').submit
       }
     }
     );
-      var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
-      campos_fecha=$('.date');
-      flag_m = true;
-      campos_fecha.each(function() 
-      {
-        if(!fechaReg.test($(this).val()))
-        {
-                flag_m = false;
-              }
-          }
-      );  
 
+    //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
+    var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+    campos_fecha=$('.date');
+    flag_m = true;
+    campos_fecha.each(function() 
+    {
+      if(!fechaReg.test($(this).val()))
+      {
+              flag_m = false;
+      }
+    }
+    );  
 
     //Validando los radio-botones "dentro_fuera_conglomerado"
     if(!$('input:radio[name=dentro_fuera_conglomerado]:checked').val())
@@ -413,7 +414,8 @@ $('form').submit
 
               return false;
       }
-      else if(!flag_m){
+      else if(!flag_m)
+      {
         alert('El formato de fecha es aaaa-mm-dd');
         return false;
       }

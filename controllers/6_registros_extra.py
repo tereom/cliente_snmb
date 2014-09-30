@@ -29,7 +29,7 @@ def index1():
         INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
         INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
         SELECT(_name='elipsoide',
-            requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
+            requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),          
         
         #Catálogo CONABIO
         #Debido a la forma como se maneja la inserción de datos en la base
@@ -45,7 +45,7 @@ def index1():
         INPUT(_name='hay_nombre_cientifico',_type='boolean'),
         INPUT(_name='nombre_cientifico',_type='string'),
         SELECT(_name='numero_individuos',
-         requires=IS_IN_DB(db,db.Cat_numero_individuos.id, '%(nombre)s')),
+         requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre, '%(nombre)s')),
 
         TEXTAREA(_name='comentario',_type='text'),
         
@@ -146,11 +146,9 @@ def index1():
 
     listaConabio = db(db.Cat_conabio_invasoras).select(db.Cat_conabio_invasoras.nombre)
 
-    listaNumIndividuos = db(db.Cat_numero_individuos).select(
-        db.Cat_numero_individuos.id, db.Cat_numero_individuos.nombre)
+    listaNumIndividuos = db(db.Cat_numero_individuos).select(db.Cat_numero_individuos.nombre)
 
-    listaElipsoide = db(db.Cat_elipsoide).select(
-        db.Cat_elipsoide.id, db.Cat_elipsoide.nombre)
+    listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaConabio=listaConabio,\
@@ -181,7 +179,7 @@ def index2():
         INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
         INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
         SELECT(_name='elipsoide',
-            requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
+            requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),          
         
         #Campos de una huella o excreta
         #El siguiente campo va a leer de radio-botones, por eso admite un string
@@ -271,8 +269,7 @@ def index2():
 
     #Haciendo lo mismo con los elipsoides:
 
-    listaElipsoide = db(db.Cat_elipsoide).select(
-        db.Cat_elipsoide.id, db.Cat_elipsoide.nombre)
+    listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaElipsoide=listaElipsoide)
@@ -301,7 +298,7 @@ def index3():
         INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
         INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
         SELECT(_name='elipsoide',
-            requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),          
+            requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),          
         
         #Campos de un especimen o restos
         #El siguiente campo va a leer de radio-botones, por eso admite un string
@@ -313,7 +310,7 @@ def index3():
         INPUT(_name='hay_nombre_cientifico',_type='boolean'),
         INPUT(_name='nombre_cientifico',_type='string'),
         SELECT(_name='numero_individuos',
-            requires=IS_IN_DB(db,db.Cat_numero_individuos.id, '%(nombre)s')),
+            requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre, '%(nombre)s')),
 
         TEXTAREA(_name='comentario',_type='text'),
 
@@ -392,11 +389,9 @@ def index3():
 
     #Haciendo lo mismo con los elipsoides y categorías de número de individuos:
 
-    listaElipsoide = db(db.Cat_elipsoide).select(
-        db.Cat_elipsoide.id, db.Cat_elipsoide.nombre)
+    listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
-    listaNumIndividuos = db(db.Cat_numero_individuos).select(
-        db.Cat_numero_individuos.id, db.Cat_numero_individuos.nombre)
+    listaNumIndividuos = db(db.Cat_numero_individuos).select(db.Cat_numero_individuos.nombre)
 
 
     return dict(listaConglomerado=listaConglomerado,\

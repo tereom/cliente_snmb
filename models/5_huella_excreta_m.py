@@ -13,7 +13,10 @@ Campos_Transecto_huellas_excretas_muestra = [
     Field('conglomerado_muestra_id','reference Conglomerado_muestra',
         required=True),
     Field('fecha','date',required=True),
-    Field('transecto_numero','reference Cat_numero_transecto', required=True),
+
+    #Se insertará a partir de un catálogo
+    Field('transecto_numero','string', required=True),
+    
     Field('tecnico','string',required=True),
     Field('hora_inicio','time',required=True),
     Field('hora_termino','time',required=True),

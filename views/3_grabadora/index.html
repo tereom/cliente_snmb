@@ -211,7 +211,7 @@
         			<select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
 						<option value=""/>
 						{{for elipsoide in listaElipsoide:}}
-							<option value="{{=elipsoide.id}}">
+							<option value="{{=elipsoide.nombre}}">
 								{{=elipsoide.nombre}}
 							</option>
 						{{pass}}
@@ -236,7 +236,7 @@
 						<select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
 							<option value=""/>
 							{{for nombreGrabadora in listaNombreGrabadora:}}
-								<option value="{{=nombreGrabadora.id}}">
+								<option value="{{=nombreGrabadora.nombre}}">
 									{{=nombreGrabadora.nombre}}
 								</option>
 							{{pass}}
@@ -315,8 +315,11 @@
         function()
         {
             $('#tabla_sitio_muestra_id').remove();
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        }
+       )
 
-	// //AJAX para advertir al usuario que una grabadora ya ha sido asignada
+    	// //AJAX para advertir al usuario que una grabadora ya ha sido asignada
 	// //con anterioridad
 	// $('#tabla_sitio_muestra_id').change
 	// (
@@ -347,9 +350,7 @@
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
-            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-        }
-       )
+
 
     //Validando, para ello utilizamos la clase "obligatorio":
        $('form').submit
@@ -367,6 +368,8 @@
                 }
                 );
 
+
+            	//Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
                 var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
                 campos_fecha=$('.date');
                 flag_m = true;
@@ -377,7 +380,8 @@
                        flag_m = false;
                     }
                 }
-                );               
+                );
+
                 if(!flag)
                 {
                     alert('Faltó llenar un campo o subir alguna imagen');

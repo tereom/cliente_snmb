@@ -18,7 +18,7 @@ def index1():
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
         SELECT(_name='transecto_numero',
-            requires=IS_IN_DB(db,db.Cat_numero_transecto.id,'%(nombre)s')),
+            requires=IS_IN_DB(db,db.Cat_numero_transecto.nombre,'%(nombre)s')),
         INPUT(_name='tecnico',_type='string',requires=IS_NOT_EMPTY()),
         INPUT(_name='fecha',_type='date',requires=IS_NOT_EMPTY()),
         INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
@@ -48,8 +48,7 @@ def index1():
 
     #De la misma manera, llenando la combobox de números de transecto:
 
-    listaNumeroTransecto = db(db.Cat_numero_transecto).select(
-        db.Cat_numero_transecto.id, db.Cat_numero_transecto.nombre)
+    listaNumeroTransecto = db(db.Cat_numero_transecto).select(db.Cat_numero_transecto.nombre)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaNumeroTransecto=listaNumeroTransecto)
@@ -104,7 +103,7 @@ def index2():
 		INPUT(_name='hay_nombre_cientifico',_type='boolean'),
 		INPUT(_name='nombre_cientifico',_type='string'),
 		SELECT(_name='numero_individuos',
-         requires=IS_IN_DB(db,db.Cat_numero_individuos.id, '%(nombre)s')),
+         requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre, '%(nombre)s')),
 		
 		###########Imágenes############
 		INPUT(_name='archivos_invasora',_type='file', _multiple=True,
@@ -200,15 +199,9 @@ def index2():
 
     listaConabio = db(db.Cat_conabio_invasoras).select(db.Cat_conabio_invasoras.nombre)
 
-    listaNumIndividuos = db(db.Cat_numero_individuos).select(
-        db.Cat_numero_individuos.id, db.Cat_numero_individuos.nombre)
+    listaNumIndividuos = db(db.Cat_numero_individuos).select(db.Cat_numero_individuos.nombre)
 
-    grid = SQLFORM.smartgrid(db.Especie_invasora,
-        #linked_tables=['Especie_invasora'],
-        csv=False,
-        user_signature=False)
-
-    
+    grid = SQLFORM.smartgrid(db.Especie_invasora,csv=False,user_signature=False)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaConabio=listaConabio,\

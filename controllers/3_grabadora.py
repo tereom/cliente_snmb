@@ -20,7 +20,7 @@ def index():
     
     #Datos de la grabadora
     SELECT(_name='nombre',
-        requires=IS_IN_DB(db,db.Cat_nombre_grabadora.id,'%(nombre)s')),
+        requires=IS_IN_DB(db,db.Cat_nombre_grabadora.nombre,'%(nombre)s')),
     INPUT(_name='fecha_inicio',_type='date',requires=IS_NOT_EMPTY()),
     INPUT(_name='fecha_termino',_type='date',requires=IS_NOT_EMPTY()),    
     INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
@@ -34,8 +34,10 @@ def index():
     INPUT(_name='lon_seg',_type='double',requires=IS_NOT_EMPTY()),
     INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
     INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
+
+    #Datos de la grabadora
     SELECT(_name='elipsoide',
-        requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')),
+        requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),
 
     INPUT(_name='distancia_centro',_type='double',requires=IS_NOT_EMPTY()),           
     INPUT(_name='llovio',_type='boolean'),
@@ -184,11 +186,9 @@ def index():
 
     #De la misma manera, llenando las combobox de nombre y elipsoide:
 
-    listaNombreGrabadora = db(db.Cat_nombre_grabadora).select(
-        db.Cat_nombre_grabadora.id, db.Cat_nombre_grabadora.nombre)
+    listaNombreGrabadora = db(db.Cat_nombre_grabadora).select(db.Cat_nombre_grabadora.nombre)
 
-    listaElipsoide = db(db.Cat_elipsoide).select(
-        db.Cat_elipsoide.id, db.Cat_elipsoide.nombre)
+    listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaNombreGrabadora=listaNombreGrabadora,\
@@ -201,14 +201,12 @@ def asignarSitios():
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
-    puntoControlId = db(db.Cat_numero_sitio.nombre=='Punto de control'
-        ).select().first().id
 
     #Obteniendo los sitios que existen en dicho conglomerado
     sitiosAsignados = db(
         (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
         (db.Sitio_muestra.existe==True)&\
-        (db.Sitio_muestra.sitio_numero!=puntoControlId)
+        (db.Sitio_muestra.sitio_numero!='Punto de control')
         ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
 
     #Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:

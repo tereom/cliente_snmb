@@ -13,7 +13,10 @@ Campos_Transecto_especies_invasoras_muestra =[
 	Field('conglomerado_muestra_id','reference Conglomerado_muestra',
 		required=True),
 	Field('fecha','date',required=True),
-	Field('transecto_numero','reference Cat_numero_transecto', required=True),
+
+    #Se insertará a partir de un catálogo
+	Field('transecto_numero','string', required=True),
+
 	Field('tecnico','string',required=True),
     Field('hora_inicio','time',required=True),
 	Field('hora_termino','time',required=True),
@@ -36,7 +39,9 @@ Campos_Especie_invasora =[
 	Field('nombre_en_lista','boolean', required=True),
 	Field('nombre_comun','string'),
     Field('nombre_cientifico','string'),
-    Field('numero_individuos', 'reference Cat_numero_individuos', required=True)
+
+    #Se insertará a partir de un catálogo
+    Field('numero_individuos', 'string', required=True)
 ]
 
 db.define_table('Especie_invasora',*Campos_Especie_invasora,

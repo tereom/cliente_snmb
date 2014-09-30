@@ -19,7 +19,7 @@ def index1():
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
         SELECT(_name='transecto_numero',
-            requires=IS_IN_DB(db,db.Cat_numero_transecto.id,'%(nombre)s')),
+            requires=IS_IN_DB(db,db.Cat_numero_transecto.nombre,'%(nombre)s')),
         INPUT(_name='tecnico',_type='string',requires=IS_NOT_EMPTY()),
         INPUT(_name='fecha',_type='date',requires=IS_NOT_EMPTY()),
         INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
@@ -49,8 +49,7 @@ def index1():
 
     #De la misma manera, llenando la combobox de números de transecto:
 
-    listaNumeroTransecto = db(db.Cat_numero_transecto).select(
-        db.Cat_numero_transecto.id, db.Cat_numero_transecto.nombre)
+    listaNumeroTransecto = db(db.Cat_numero_transecto).select(db.Cat_numero_transecto.nombre)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaNumeroTransecto=listaNumeroTransecto)

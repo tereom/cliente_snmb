@@ -14,7 +14,9 @@ Campos_Grabadora = [
 
     Field('sitio_muestra_id','reference Sitio_muestra',required=True),         
 
-    Field('nombre','reference Cat_nombre_grabadora',required=True), 
+    #Se insertará a partir de un catálogo
+    Field('nombre','string',required=True),
+
     Field('fecha_inicio','date',required=True),
     Field('fecha_termino','date',required=True),
     Field('hora_inicio','time',required=True),
@@ -28,7 +30,9 @@ Campos_Grabadora = [
     Field('lon_seg','double',required=True),
     Field('altitud','double',required=True),
     Field('gps_error','double',required=True),
-    Field('elipsoide','reference Cat_elipsoide',required=True),
+
+    #Se insertará a partir de un catálogo
+    Field('elipsoide','string',required=True),
 
     Field('distancia_centro','double',required=True),
     Field('llovio','boolean',required=True),

@@ -26,12 +26,17 @@ Campos_Especie_invasora_extra = [
     Field('lon_seg','double',required=True),
     Field('altitud','double',required=True),
     Field('gps_error','double',required=True),
-    Field('elipsoide','reference Cat_elipsoide',required=True),
+
+    #Se insertará a partir de un catálogo
+    Field('elipsoide','string',required=True),
 
     Field('nombre_en_lista','boolean', required=True),
     Field('nombre_comun','string'),
     Field('nombre_cientifico','string'),
-    Field('numero_individuos', 'reference Cat_numero_individuos', required=True),
+
+    #Se insertará a partir de un catálogo
+    Field('numero_individuos', 'string', required=True),
+
     Field('comentario', 'text')
     ]
 
@@ -75,7 +80,9 @@ Campos_Huella_excreta_extra = [
     Field('lon_seg','double',required=True),
     Field('altitud','double',required=True),
     Field('gps_error','double',required=True),
-    Field('elipsoide','reference Cat_elipsoide',required=True),
+
+    #Se insertará a partir de un catálogo
+    Field('elipsoide','string',required=True),
 
     Field('es_huella','boolean', required=True),
     Field('nombre_comun','string'),
@@ -124,12 +131,16 @@ Campos_Especimen_restos_extra = [
     Field('lon_seg','double',required=True),
     Field('altitud','double',required=True),
     Field('gps_error','double',required=True),
-    Field('elipsoide','reference Cat_elipsoide',required=True),
+
+    #Se insertará a partir de un catálogo
+    Field('elipsoide','string',required=True),
 
 	Field('es_especimen','boolean',required=True),
     Field('nombre_comun','string'),
     Field('nombre_cientifico','string'),
-    Field('numero_individuos','reference Cat_numero_individuos',required=True),
+
+    #Se insertará a partir de un catálogo
+    Field('numero_individuos','string',required=True),
     Field('comentario','text')
     ]
 

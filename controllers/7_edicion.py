@@ -52,32 +52,32 @@ db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Cat_numero_sitio.nombre,'%
 db.Sitio_muestra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
 
 # Cámara
-db.Camara.nombre.requires=IS_IN_DB(db,db.Cat_nombre_camara.id,'%(nombre)s')
-db.Camara.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')
-db.Camara.resolucion.requires=IS_IN_DB(db,db.Cat_resolucion_camara.id,'%(nombre)s')
-db.Camara.sensibilidad.requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.id,'%(nombre)s')
+db.Camara.nombre.requires=IS_IN_DB(db,db.Cat_nombre_camara.nombre,'%(nombre)s')
+db.Camara.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
+db.Camara.resolucion.requires=IS_IN_DB(db,db.Cat_resolucion_camara.nombre,'%(nombre)s')
+db.Camara.sensibilidad.requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.nombre,'%(nombre)s')
 
 # Grabadora
-db.Grabadora.nombre.requires=IS_IN_DB(db,db.Cat_nombre_grabadora.id,'%(nombre)s')
-db.Grabadora.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.id,'%(nombre)s')
+db.Grabadora.nombre.requires=IS_IN_DB(db,db.Cat_nombre_grabadora.nombre,'%(nombre)s')
+db.Grabadora.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
 
 # Especies
 db.Transecto_especies_invasoras_muestra.transecto_numero.requires=IS_IN_DB(db,
-    db.Cat_numero_transecto,'%(nombre)s')
-db.Especie_invasora.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')
+    db.Cat_numero_transecto.nombre,'%(nombre)s')
+db.Especie_invasora.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre,'%(nombre)s')
 
 # Huellas excreta
 db.Transecto_huellas_excretas_muestra.transecto_numero.requires=IS_IN_DB(db,
-    db.Cat_numero_transecto,'%(nombre)s')
+    db.Cat_numero_transecto.nombre,'%(nombre)s')
 
 # Registros extra
-db.Especie_invasora_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide,'%(nombre)s')
-db.Especie_invasora_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')
+db.Especie_invasora_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
+db.Especie_invasora_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre,'%(nombre)s')
 
-db.Huella_excreta_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide,'%(nombre)s')
+db.Huella_excreta_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
 
-db.Especimen_restos_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide,'%(nombre)s')
-db.Especimen_restos_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos,'%(nombre)s')
+db.Especimen_restos_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
+db.Especimen_restos_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre,'%(nombre)s')
 
 def editarConglomerado():
     db.Sitio_muestra.conglomerado_muestra_id.writable = False

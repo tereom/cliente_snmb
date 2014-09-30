@@ -355,6 +355,7 @@
                 }
                 );
 
+                //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
                 var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
                 campos_fecha=$('.date');
                 flag_m = true;
@@ -365,7 +366,8 @@
                        flag_m = false;
                     }
                 }
-                );               
+                );
+
                 if(!flag)
                 {
                     alert('Faltó llenar un campo o subir alguna imagen');
