@@ -45,6 +45,8 @@
 
 {{#=response.toolbar()}}
 
+<!-- <body onload="preventBack();" onpageshow="if (event.persisted) preventBack();" onunload=""> -->
+
 <form action="" enctype="multipart/form-data" method="post">
     <input type="hidden" name="_formname" value="formaHTML"/>
     <fieldset class='No_GPS'>
@@ -535,8 +537,11 @@
 {{#=BEAUTIFY(forma.errors)}}
 </div>-->
 
+<!-- <script type="text/javascript"> 
+    Intento de bloquear botón back
+    //window.history.forward();
+    //function preventBack() { window.history.forward(); }-->
 <script>
-
     //AJAX para llenar la combobox con los municipios asociados al estado elegido
     $('#tabla_estado').change
     (
