@@ -169,9 +169,9 @@ if db(db.Cat_nombre_grabadora.id>0).count() == 0:
 db.define_table('Cat_numero_transecto', Field('nombre', 'string', required='TRUE'))
 
 if db(db.Cat_numero_transecto.id>0).count() == 0:
-    db.Cat_numero_transecto.insert(nombre='Transecto 1')
     db.Cat_numero_transecto.insert(nombre='Transecto 2')
     db.Cat_numero_transecto.insert(nombre='Transecto 3')
+    db.Cat_numero_transecto.insert(nombre='Transecto 4')
 
 
 ##########################################################################

@@ -202,10 +202,7 @@ def asignarTransectos():
 
     for transecto in transectosDeclarados:
 
-        #Obteniendo el nombre asociado al numero de transecto, del catálogo correspondiente:
-        nombreTransecto = db(db.Cat_numero_transecto.id==transecto.transecto_numero).select().first().nombre
-
-        dropdownHTML += "<option value='" + str(transecto.id) + "'>" + nombreTransecto + "</option>"  
+        dropdownHTML += "<option value='" + str(transecto.id) + "'>" + transecto.transecto_numero + "</option>"  
     
     dropdownHTML += "</select>"
     
