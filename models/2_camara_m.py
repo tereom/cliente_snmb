@@ -68,7 +68,8 @@ Campos_Archivo_camara = [
     Field('archivo_nombre_original',required=True),
     Field('archivo','upload',required=True),
 # uploadfolder='static/pictures'),      pensar estructura de carpetas
-    Field('presencia','boolean')
+    Field('presencia','boolean'),
+    Field('especie','string')
     ]
 
 db.define_table('Archivo_camara',*Campos_Archivo_camara, 

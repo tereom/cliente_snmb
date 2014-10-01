@@ -1,5 +1,10 @@
 {{extend 'layout.html'}}
 
+<div id="shadow_clone">
+    <form id='forma_shadow'>
+    </form>
+</div>
+
 <form>
     <fieldset>
         <legend>
@@ -16,10 +21,6 @@
     </fieldset>
 </form>
 
-<div id="shadow_clone">
-    <form id='forma_shadow'>
-    </form>
-</div>
 
 <!--Al elegir una fotografía de la dropdown anterior, este elemento se actualiza
 mediante AJAX: se crea una nueva forma_shadow con un input "hidden" que contiene
@@ -58,6 +59,11 @@ y hay_individuo, para poder actualizar la base de datos-->
             success: function()
             {
                alert('Registro actualizado exitosamente');
+
+               indice = $("#tabla_foto")[0].selectedIndex;
+               //alert(indice);
+               $('#tabla_foto').prop('selectedIndex', indice+1);
+               //$('#tabla_foto').trigger('change');
             }
         }
         );
