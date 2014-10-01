@@ -95,14 +95,17 @@
     <!-- Masthead ================================================== -->
     <header class="mastheader row" id="header">
       {{if response.title:}}
-        <div class="span12">
+      <center>
+        <img src="{{=URL('static','logos')}}"/>
+      </center>
+<!--        <div class="span12">
             <div class="page-header">
                 <h1>
                     SNMB
                     <small>{{=response.subtitle or ''}}</small>
-                </h1>
+                </h1>                
             </div>
-        </div>
+        </div>  -->
 	{{pass}}
     </header>
 
