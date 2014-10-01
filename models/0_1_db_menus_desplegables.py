@@ -199,7 +199,7 @@ if db(db.Cat_conabio_invasoras.id>0).count() == 0:
     db.Cat_conabio_invasoras.insert(nombre='Bromus madritensis - Bromo')
     db.Cat_conabio_invasoras.insert(nombre='Cactoblastis cactorum - Palomilla de nopal')
     db.Cat_conabio_invasoras.insert(nombre='Carpobrotus sp (C. edulis) - Higo marino')
-    db.Cat_conabio_invasoras.insert(nombre='Cyperus papyrus (ANP)')
+    db.Cat_conabio_invasoras.insert(nombre='Cyperus papyrus (ANP) - Papiro')
     db.Cat_conabio_invasoras.insert(nombre='Eichhornia crassipes - Lirio acuático')
     db.Cat_conabio_invasoras.insert(nombre='Hedera helix - Hiedra')
     db.Cat_conabio_invasoras.insert(nombre='Lepidium draba /Cardaria draba - Flor bábol, capellanes')
