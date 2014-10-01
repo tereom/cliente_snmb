@@ -733,6 +733,14 @@
                 );
             }
 
+            //Validando que el nombre del conglomerado conste de 5 caracteres:
+            flag_lon = true;
+            if($('#tabla_nombre').val().length<5)
+            {
+                flag_lon = false;
+            }
+            //alert(flag_lon);
+
             //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
             var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
             campos_fecha=$('.date');
@@ -754,7 +762,12 @@
             else if(!flag_m){
                 alert('El formato de fecha es aaaa-mm-dd');
                 return false;
+            }    
+            else if(!flag_lon){
+                alert('El número de conglomerado consta de 5 caracteres. Ejemplo: 00123');
+                return false;
             }        
+    
         }
     )
 </script>

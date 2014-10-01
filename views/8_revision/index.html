@@ -58,12 +58,12 @@ y hay_individuo, para poder actualizar la base de datos-->
             url: "{{=URL('actualizarFotografia')}}",
             success: function()
             {
-               alert('Registro actualizado exitosamente');
+               //alert('Registro actualizado exitosamente');
 
                indice = $("#tabla_foto")[0].selectedIndex;
                //alert(indice);
                $('#tabla_foto').prop('selectedIndex', indice+1);
-               //$('#tabla_foto').trigger('change');
+               $('#tabla_foto').trigger('change');
             }
         }
         );
