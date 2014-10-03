@@ -46,9 +46,11 @@ response.menu = [
       (T('Especies Invasoras extra'), False, URL('7_edicion', 'editarEspeciesInvasorasExtra')),
       (T('Huellas y excretas extra'), False, URL('7_edicion', 'editarHuellasExcretasExtra')),
       (T('Especímenes extra'), False, URL('7_edicion', 'editarEspecimenExtra'))]),
-    (T('Revisar imágenes'), False, URL('8_revision', 'index'), [])
+    (T('Revisar imágenes'), False, URL('8_revision', 'index'), []),
+    # Exportación
+    (T('Exportar datos'), False, URL('9_exportador', 'index'), [])
     ]
-
+    
 DEVELOPMENT_MENU = False
 
 #########################################################################
@@ -159,4 +161,4 @@ def _():
          )]
 if DEVELOPMENT_MENU: _()
 
-if "auth" in locals(): auth.wikimenu() 
+if "auth" in locals(): auth.wikimenu()

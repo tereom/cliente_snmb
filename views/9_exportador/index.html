@@ -1,0 +1,13 @@
+{{extend 'layout.html'}}
+
+<form action="" enctype="multipart/form-data" method="post">
+    <input type="hidden"  name="_formname" value="formaHTML"/>
+    <fieldset>
+        <legend>
+            Exportador de la base de datos (para uso interno de CONAFOR)
+        </legend>
+        <label for="tabla_nombre_archivo">Nombre del archivo (alfanumérico):</label>
+        <input class="string obligatorio" name="nombre_archivo" id="tabla_nombre_archivo" type="text" value=""/>
+    </fieldset>
+    <input type="submit" value="Enviar" class="btn" id="enviar"/>
+</form>
