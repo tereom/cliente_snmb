@@ -31,12 +31,12 @@ def obtenerFotografia():
 
         if terminacion == 'avi':
 
-            revisionHTML +="<video src='/init/8_revision/download/"+datosFoto.archivo+\
+            revisionHTML +="<video src='/cliente_web2py/8_revision/download/"+datosFoto.archivo+\
                 "' controls='controls' autoplay='autoplay' style='width:800px;height:600px;'/>"
 
         else:
 
-            revisionHTML +="<img src='/init/8_revision/download/"+datosFoto.archivo+\
+            revisionHTML +="<img src='/cliente_web2py/8_revision/download/"+datosFoto.archivo+\
                 "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"
 
         revisionHTML +="</center><hr/><div><div style='float:left;padding-right:60px;'>"+\
