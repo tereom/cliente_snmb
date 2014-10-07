@@ -7,7 +7,7 @@ def index():
 
 def obtenerFotografia():
 
-    #Obteniendo la información del conglomerado que seleccionó el usuario:
+    #Obteniendo la información de la foto que seleccionó el usuario:
     fotoElegidaID = request.vars.foto
 
     #Obteniendo la información de dicha foto
@@ -19,11 +19,30 @@ def obtenerFotografia():
     try:
 
         revisionHTML = "<form id='forma_shadow'><input type='hidden' name='id_foto' value='" +\
-            str(datosFoto.id) + "'/><center><img src='/cliente_web2py/8_revision/download/"+datosFoto.archivo+\
-            "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/></center>"+\
-            "<hr/><div><div style='float:left;padding-right:60px;'><label for='tabla_fauna_evidente' "+\
-            "style='float:left;padding-right:20px;'>Fauna evidente</label><input type='radio' "+\
-            "name='fauna_evidente' value='encontrada' id='tabla_fauna_evidente'"
+            str(datosFoto.id) + "'/><center>"
+
+        #Revisando la terminación del archivo para ver si desplegar una imagen
+        #o un video:
+
+        nombre = datosFoto.archivo_nombre_original.split('.')
+        terminacion = nombre[1].lower()
+
+        #Revisando la terminación del archivo:
+
+        if terminacion == 'avi':
+
+            revisionHTML +="<video src='/init/8_revision/download/"+datosFoto.archivo+\
+                "' controls='controls' autoplay='autoplay' style='width:800px;height:600px;'/>"
+
+        else:
+
+            revisionHTML +="<img src='/init/8_revision/download/"+datosFoto.archivo+\
+                "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"
+
+        revisionHTML +="</center><hr/><div><div style='float:left;padding-right:60px;'>"+\
+            "<label for='tabla_fauna_evidente' style='float:left;padding-right:20px;'>"+\
+            "Fauna evidente</label><input type='radio' name='fauna_evidente'"+\
+            "value='encontrada' id='tabla_fauna_evidente'"
 
     #Si el campo de presencia de la foto elegida es True, entonces la casilla "fauna evidente" aparece marcada.
 
