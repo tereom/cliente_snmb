@@ -72,6 +72,7 @@ Campos_Imagen_referencia_sitio = [
 	Field('sitio_muestra_id','reference Sitio_muestra',required=True),
     Field('archivo_nombre_original',required=True),
     Field('archivo','upload',autodelete=True,required=True)
+    #uploadfolder='')
     ]
     
 db.define_table('Imagen_referencia_sitio',*Campos_Imagen_referencia_sitio, 
