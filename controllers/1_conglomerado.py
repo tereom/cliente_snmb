@@ -27,6 +27,8 @@ def index():
 		INPUT(_name='fecha_visita',_type='date',requires=IS_NOT_EMPTY()),
 		SELECT(_name='tipo',
 			requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.nombre,'%(nombre)s')),
+		SELECT(_name='compania',
+			requires=IS_IN_DB(db,db.Cat_compania.nombre,'%(nombre)s')),
     	SELECT(_name='estado',
     		requires=IS_IN_DB(db,db.Cat_estado_conglomerado.nombre,'%(nombre)s')),
     	SELECT(_name='municipio',
@@ -481,12 +483,15 @@ def index():
 
 	listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
+	listaCompania = db(db.Cat_compania).select(db.Cat_compania.nombre)
+
 	return dict(listaTipo=listaTipo,\
         listaEstado=listaEstado,\
         listaTenencia=listaTenencia,\
         listaUsoSuelo=listaUsoSuelo,\
         listaVegetacion=listaVegetacion,\
-        listaElipsoide=listaElipsoide)
+        listaElipsoide=listaElipsoide,\
+        listaCompania=listaCompania)
 
 #La siguiente función es invocada mediante AJAX para llenar la combobox de municipio
 # a partir del estado seleccionado.

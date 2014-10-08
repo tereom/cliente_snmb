@@ -6,6 +6,15 @@
 ## Pestaña Conglomerado
 ########################################################################
 
+db.define_table('Cat_compania', Field('nombre', 'string', required='TRUE'))
+
+## El if indica que las tablas se llenarán únicamente cuando estan vacías
+if db(db.Cat_compania.id>0).count() == 0:
+    db.Cat_compania.insert(nombre='Compañía 1')
+    db.Cat_compania.insert(nombre='Compañía 2')
+#########################################################################
+
+
 db.define_table('Cat_tipo_conglomerado', Field('nombre', 'string', required='TRUE'))
 
 ## El if indica que las tablas se llenarán únicamente cuando estan vacías

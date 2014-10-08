@@ -14,6 +14,7 @@ Campos_Conglomerado_muestra = [
 	Field('nombre','integer',required=True),
 	Field('fecha_visita','date',required=True),
 	Field('predio','string',required=True),
+	Field('compania','string',required=True),
 
 	#Se insertarán a partir de un catálogo
 	Field('tipo','string',required=True),

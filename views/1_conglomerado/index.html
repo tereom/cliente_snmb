@@ -87,6 +87,19 @@
                     </div>
                 </td>
                 <td>
+                    <div>
+                        <label for="tabla_compania">Companía</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="compania" id="tabla_compania">
+                            <option value=""/>
+                            {{for compania in listaCompania:}}
+                                <option value="{{=compania.nombre}}">
+                                    {{=compania.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
                 </td>
             </tr>
             <tr>

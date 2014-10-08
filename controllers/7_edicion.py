@@ -41,6 +41,7 @@
 
 # Conglomerado
 db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.compania.requires=IS_IN_DB(db,db.Cat_compania.nombre,'%(nombre)s')
 db.Conglomerado_muestra.estado.requires=IS_IN_DB(db,db.Cat_estado_conglomerado.nombre,'%(nombre)s')
 db.Conglomerado_muestra.municipio.requires=IS_IN_DB(db,db.Cat_municipio_conglomerado.nombre,'%(nombre)s')
 db.Conglomerado_muestra.tenencia.requires=IS_IN_DB(db,db.Cat_tenencia_conglomerado.nombre,'%(nombre)s')
