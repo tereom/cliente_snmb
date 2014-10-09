@@ -284,8 +284,17 @@
 	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
-<!--<h2>Submitted variables</h2>-->
-{{#=BEAUTIFY(request.vars)}}
+  
+<br/>
+<br/>
+
+<!-- Tabla de revisión de registros-->
+<fieldset>
+<legend>
+  Revisión de archivos
+</legend>
+</fieldset>
+{{=grid}}
 
 <script>
     $(document).ready
