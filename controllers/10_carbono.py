@@ -1,531 +1,169 @@
 # coding: utf8
 
-def index():
+def index1():
 
-	Campos_pestana_1= [
-		#Datos para localizar un sitio único y asociarle la cámara a éste.
-		#Estos datos deben conformar una llave del sitio.
+    Campos_pestana_transectos_ramas = [
 
-		SELECT(_name='conglomerado_muestra_id',
-			requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
-		SELECT(_name='sitio_muestra_id',
-			requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
+        # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
+        # para incluir las dropdowns en cascada y la subida de múltiples archivos.
+    
+    #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
+    # de datos y así, evitar excepciones.
+
+        #Datos para localizar un sitio único y asociarle la cámara a éste.
+        #Estos datos deben conformar una llave del sitio.
+        SELECT(_name='conglomerado_muestra_id',
+            requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='sitio_muestra_id',
+            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
+
+        ### Tabla de frecuencias de transecto por grosor de material
+
+        # Transecto 1N
+        INPUT(_name='pendiente_1N',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_1h_1N',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_10h_1N',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_100h_1N',_type='integer',requires=IS_NOT_EMPTY()),
+        #INPUT(_name='abundancia_1000h_1N',_type='integer',requires=IS_NOT_EMPTY()),
+
+        # Transecto 2E
+        INPUT(_name='pendiente_2E',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_1h_2E',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_10h_2E',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_100h_2E',_type='integer',requires=IS_NOT_EMPTY()),
+        #INPUT(_name='abundancia_1000h_2E',_type='integer',requires=IS_NOT_EMPTY()),
+
+        # Transecto 3S
+        INPUT(_name='pendiente_3S',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_1h_3S',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_10h_3S',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_100h_3S',_type='integer',requires=IS_NOT_EMPTY()),
+        #INPUT(_name='abundancia_1000h_3S',_type='integer',requires=IS_NOT_EMPTY()),
+
+        # Transecto 4W
+        INPUT(_name='pendiente_4W',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_1h_4W',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_10h_4W',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='abundancia_100h_4W',_type='integer',requires=IS_NOT_EMPTY()),
+        #INPUT(_name='abundancia_1000h_4W',_type='integer',requires=IS_NOT_EMPTY())
+    ]
+    
+    forma = FORM(*Campos_pestana_transectos_ramas)  
+
+    if forma.accepts(request.vars,formname='formaHTML'):
+
+        ### Transecto Norte
+
+        formaTransecto1 = {}
+
+        formaTransecto1['sitio_muestra_id'] = forma.vars['sitio_muestra_id']
+        formaTransecto1['transecto_ramas_direccion'] = 'Norte'
+
+        formaTransecto1['pendiente'] = forma.vars['pendiente_1N']
+        formaTransecto1['abundancia_1h'] = forma.vars['abundancia_1h_1N']
+        formaTransecto1['abundancia_10h'] = forma.vars['abundancia_10h_1N']
+        formaTransecto1['abundancia_100h'] = forma.vars['abundancia_100h_1N']
+
+        # Insertando en la base de datos:
+        db.Transecto_ramas.insert(**formaTransecto1)
+
+        ### Transecto Este
+
+        formaTransecto2 = {}
+
+        formaTransecto2['sitio_muestra_id'] = forma.vars['sitio_muestra_id']
+        formaTransecto2['transecto_ramas_direccion'] = 'Este'
+
+        formaTransecto2['pendiente'] = forma.vars['pendiente_2E']
+        formaTransecto2['abundancia_1h'] = forma.vars['abundancia_1h_2E']
+        formaTransecto2['abundancia_10h'] = forma.vars['abundancia_10h_2E']
+        formaTransecto2['abundancia_100h'] = forma.vars['abundancia_100h_2E']
+
+        # Insertando en la base de datos:
+        db.Transecto_ramas.insert(**formaTransecto2)
 
 
-		### Tabla de frecuencias de transecto por grosor de material
+        ### Transecto Sur
 
-		# Transecto 1N
-		INPUT(_name='pendiente_1N',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_1h_1N',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_10h_1N',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_100h_1N',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_1000h_1N',_type='integer',requires=IS_NOT_EMPTY()),
+        formaTransecto3 = {}
 
-		# Transecto 2E
-		INPUT(_name='pendiente_2E',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_1h_2E',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_10h_2E',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_100h_2E',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_1000h_2E',_type='integer',requires=IS_NOT_EMPTY()),
+        formaTransecto3['sitio_muestra_id'] = forma.vars['sitio_muestra_id']
+        formaTransecto3['transecto_ramas_direccion'] = 'Sur'
 
-		# Transecto 3S
-		INPUT(_name='pendiente_3S',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_1h_3S',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_10h_3S',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_100h_3S',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_1000h_3S',_type='integer',requires=IS_NOT_EMPTY()),
-
-		# Transecto 4W
-		INPUT(_name='pendiente_4W',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_1h_4W',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_10h_4W',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_100h_4W',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='abundancia_1000h_4W',_type='integer',requires=IS_NOT_EMPTY()),
-
-		### Desglose de material 1000h (0-15m)
-		SELECT(_name='transecto_ramas_id',
-			requires=IS_IN_DB(db,db.Cat_numero_transecto_carbono.id,'%(nombre)s')),
+        formaTransecto3['pendiente'] = forma.vars['pendiente_3S']
+        formaTransecto3['abundancia_1h'] = forma.vars['abundancia_1h_3S']
+        formaTransecto3['abundancia_10h'] = forma.vars['abundancia_10h_3S']
+        formaTransecto3['abundancia_100h'] = forma.vars['abundancia_100h_3S']
+    
+        # Insertando en la base de datos:
+        db.Transecto_ramas.insert(**formaTransecto3)
 
 
-		INPUT(_name='existe_2',_type='boolean'),
+        ### Transecto Oeste
 
-		#Como el campo 2 puede no existir, no se pueden pedir como obligatorios
-		#los siguientes campos (sin embargo, el validador de la vista se encar-
-		#gará de que los llenen en caso de que sí)
-    	INPUT(_name='lat_grado_2',_type='integer'),
-    	INPUT(_name='lat_min_2',_type='integer'),
-    	INPUT(_name='lat_seg_2',_type='double'),
-    	INPUT(_name='lon_grado_2',_type='integer'),
-    	INPUT(_name='lon_min_2',_type='integer'),
-    	INPUT(_name='lon_seg_2',_type='double'),
-    	INPUT(_name='altitud_2',_type='double'),
-    	INPUT(_name='gps_error_2',_type='double'),
+        formaTransecto4 = {}
 
-    	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
-    	#conviene ponerlo como un string, para que no requiera que esté en la
-    	#base de datos (y por ende, no vacío).
-    	INPUT(_name='elipsoide_2',_type='string'),          
-    	INPUT(_name='hay_evidencia_2',_type='boolean'),
-    	
-     	###########Imagen############
-		INPUT(_name='imagen_2',_type='file'),
- 
-		###############################
-		#Campos del sitio 3
-		###############################
-	
-		INPUT(_name='existe_3',_type='boolean'),
+        formaTransecto4['sitio_muestra_id'] = forma.vars['sitio_muestra_id']
+        formaTransecto4['transecto_ramas_direccion'] = 'Oeste'
 
-		#Como el campo 3 puede no existir, no se pueden pedir como obligatorios
-		#los siguientes campos (sin embargo, el validador de la vista se encar-
-		#gará de que los llenen)
-    	INPUT(_name='lat_grado_3',_type='integer'),
-    	INPUT(_name='lat_min_3',_type='integer'),
-    	INPUT(_name='lat_seg_3',_type='double'),
-    	INPUT(_name='lon_grado_3',_type='integer'),
-    	INPUT(_name='lon_min_3',_type='integer'),
-    	INPUT(_name='lon_seg_3',_type='double'),
-    	INPUT(_name='altitud_3',_type='double'),
-    	INPUT(_name='gps_error_3',_type='double'),
+        formaTransecto4['pendiente'] = forma.vars['pendiente_4W']
+        formaTransecto4['abundancia_1h'] = forma.vars['abundancia_1h_4W']
+        formaTransecto4['abundancia_10h'] = forma.vars['abundancia_10h_4W']
+        formaTransecto4['abundancia_100h'] = forma.vars['abundancia_100h_4W']
 
-    	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
-    	#conviene ponerlo como un string, para que no requiera que esté en la
-    	#base de datos (y por ende, no vacío).
-    	INPUT(_name='elipsoide_3',_type='string'),
-    	INPUT(_name='hay_evidencia_3',_type='boolean'),
-    	
-     	###########Imagen############
-		INPUT(_name='imagen_3',_type='file'),
+        # Insertando en la base de datos:
+        db.Transecto_ramas.insert(**formaTransecto4)
 
-		###############################
-		#Campos del sitio 4
-		###############################
-	
-		INPUT(_name='existe_4',_type='boolean'),
-
-		#Como el campo 4 puede no existir, no se pueden pedir como obligatorios
-		#los siguientes campos (sin embargo, el validador de la vista se encar-
-		#gará de que los llenen)
-    	INPUT(_name='lat_grado_4',_type='integer'),
-    	INPUT(_name='lat_min_4',_type='integer'),
-    	INPUT(_name='lat_seg_4',_type='double'),
-    	INPUT(_name='lon_grado_4',_type='integer'),
-    	INPUT(_name='lon_min_4',_type='integer'),
-    	INPUT(_name='lon_seg_4',_type='double'),
-    	INPUT(_name='altitud_4',_type='double'),
-    	INPUT(_name='gps_error_4',_type='double'),
-
-    	#El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
-    	#conviene ponerlo como un string, para que no requiera que esté en la
-    	#base de datos (y por ende, no vacío).
-    	INPUT(_name='elipsoide_4',_type='string'),
-    	INPUT(_name='hay_evidencia_4',_type='boolean'),
-    	
-     	###########Imagen############
-		INPUT(_name='imagen_4',_type='file'),
-
-		###############################
-		#Campos del punto de control
-		###############################
-
-		# El centro del conglomerado y el punto de control siempre existen.
-		
-    	INPUT(_name='lat_grado_c',_type='integer',requires=IS_NOT_EMPTY()),
-    	INPUT(_name='lat_min_c',_type='integer',requires=IS_NOT_EMPTY()),
-    	INPUT(_name='lat_seg_c',_type='double',requires=IS_NOT_EMPTY()),
-    	INPUT(_name='lon_grado_c',_type='integer',requires=IS_NOT_EMPTY()),
-    	INPUT(_name='lon_min_c',_type='integer',requires=IS_NOT_EMPTY()),
-    	INPUT(_name='lon_seg_c',_type='double',requires=IS_NOT_EMPTY()),
-    	INPUT(_name='altitud_c',_type='double',requires=IS_NOT_EMPTY()),
-    	INPUT(_name='gps_error_c',_type='double',requires=IS_NOT_EMPTY()),
-    	SELECT(_name='elipsoide_c',
-		requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),          
-    	INPUT(_name='hay_evidencia_c',_type='boolean'),
-    	
-     	###########Imagen############
-		INPUT(_name='imagen_c',_type='file',requires=IS_NOT_EMPTY()),
-		 	
-	##Cerrando la lista de campos para el formulario
-	]
-
-	forma = FORM(*Campos_pestana_1)
-
-	if forma.accepts(request.vars,formname='formaHTML'):
-
-	##################Procesando los datos del conglomerado######################
-		
-		datosConglomerado=db.Conglomerado_muestra._filter_fields(forma.vars)
-  		
-        #Si no escogieron "uso_suelo_tipo" como "Vegetación", entonces anulamos
-        #(por consistencia en base de datos), los valores que se pudieran haber
-        #ingresado en los datos dependientes de esta opción:
-
-        #Casteando para asegurarnos que la comparación sea entre enteros.
-
-		if str(datosConglomerado['uso_suelo_tipo'])!='Vegetación':
-
-			datosConglomerado['vegetacion_tipo']=None
-			datosConglomerado['perturbado']=None
-
-		#Si escogieron "uso_suelo_tipo" como "Vegetación" y no marcaron la casilla
-        #de perturbado, entonces hay que asignarle "False" a esta, para diferen-
-        #ciarla de cuando no es requerida.
-
-		elif not(bool(datosConglomerado['perturbado'])):
-		
-			datosConglomerado['perturbado']=False
-			
-		#Insertando en la base de datos:
-		conglomeradoInsertado = db.Conglomerado_muestra.insert(**datosConglomerado)
-		
-		################Procesando los datos del sitio 1##############################
-
-		#Agregando los datos que no se pidieron al usuario:
-		
-		formaSitio1 = {}
-		
-		formaSitio1['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitio1['sitio_numero']='Centro'
-		formaSitio1['existe']=True
-		
-		#Leyendo los datos del formulario:
-		formaSitio1['lat_grado']=forma.vars['lat_grado_1']
-		formaSitio1['lat_min']=forma.vars['lat_min_1']
-		formaSitio1['lat_seg']=forma.vars['lat_seg_1']
-		formaSitio1['lon_grado']=forma.vars['lon_grado_1']
-		formaSitio1['lon_min']=forma.vars['lon_min_1']
-		formaSitio1['lon_seg']=forma.vars['lon_seg_1']
-		formaSitio1['altitud']=forma.vars['altitud_1']
-		formaSitio1['gps_error']=forma.vars['gps_error_1']
-		formaSitio1['elipsoide']=forma.vars['elipsoide_1']
-		
-		#Si hay evidencia, entonces True se guarda en la base de datos, en caso contrario,
-		#se tiene que guardar manualmente False, pues si no, Web2py guarda Null.
-		if bool(forma.vars['hay_evidencia_1']):
-			formaSitio1['hay_evidencia']=forma.vars['hay_evidencia_1']
-		else:
-			formaSitio1['hay_evidencia']=False
-			
-		#Insertando en la base de datos:
-		sitio1Insertado = db.Sitio_muestra.insert(**formaSitio1)
-
-		################Procesando la imagen 1##########################################
-		
-		#Guardando la imagen de referencia en la carpeta adecuada
-		imagen1 = db.Imagen_referencia_sitio.archivo.store(
-            forma.vars.imagen_1.file, forma.vars.imagen_1.filename)
+        response.flash = 'Éxito'
         
-		#Creando los campos de la tabla Imagen_referencia_sitio:
+    elif forma.errors:
 
-		datosImagen1 = {}
-		datosImagen1['sitio_muestra_id'] = sitio1Insertado
-		datosImagen1['archivo'] = imagen1
-		datosImagen1['archivo_nombre_original'] = forma.vars.imagen_1.filename
-		
-		#Insertando el registro en la base de datos:
-		
-		db.Imagen_referencia_sitio.insert(**datosImagen1)
-			
-		################Procesando los datos del sitio 2##############################
-
-		#Agregando los datos que no se pidieron al usuario:
-		
-		formaSitio2 = {}
-		formaSitio2['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitio2['sitio_numero']='Sitio 2'
-		
-		#Si existe el sitio 2:
-		if bool(forma.vars['existe_2']):
-
-			#Agregando los datos extraídos de la forma:
-			formaSitio2['existe']=forma.vars['existe_2']
-			formaSitio2['lat_grado']=forma.vars['lat_grado_2']
-			formaSitio2['lat_min']=forma.vars['lat_min_2']
-			formaSitio2['lat_seg']=forma.vars['lat_seg_2']
-			formaSitio2['lon_grado']=forma.vars['lon_grado_2']
-			formaSitio2['lon_min']=forma.vars['lon_min_2']
-			formaSitio2['lon_seg']=forma.vars['lon_seg_2']
-			formaSitio2['altitud']=forma.vars['altitud_2']
-			formaSitio2['gps_error']=forma.vars['gps_error_2']
-			formaSitio2['elipsoide']=forma.vars['elipsoide_2']
-			
-			if bool(forma.vars['hay_evidencia_2']):
-				formaSitio2['hay_evidencia']=forma.vars['hay_evidencia_2']
-			else:
-				formaSitio2['hay_evidencia']=False
-				
-		else:
-			formaSitio2['existe']=False
-		
-		#Insertando en la base de datos:
-		sitio2Insertado=db.Sitio_muestra.insert(**formaSitio2)		
-
-		################Procesando la imagen 2##########################################
-		
-		if bool(forma.vars['existe_2']):
-						
-			#Guardando la imagen de referencia en la carpeta adecuada
-			imagen2 = db.Imagen_referencia_sitio.archivo.store(
-            	forma.vars.imagen_2.file, forma.vars.imagen_2.filename)
-		
-			#Creando los campos de la tabla Imagen_referencia_sitio:
-
-			datosImagen2 = {}
-			datosImagen2['sitio_muestra_id'] = sitio2Insertado
-			datosImagen2['archivo'] = imagen2
-			datosImagen2['archivo_nombre_original'] = forma.vars.imagen_2.filename
-		
-			#Insertando el registro en la base de datos:
-		
-			db.Imagen_referencia_sitio.insert(**datosImagen2)
-
-		################Procesando los datos del sitio 3##############################
-
-		#Agregando los datos que no se pidieron al usuario:
-		
-		formaSitio3 = {}
-		formaSitio3['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitio3['sitio_numero']='Sitio 3'
-		
-		#Si existe el sitio 3:
-		if bool(forma.vars['existe_3']):
-
-			#Agregando los datos extraídos de la forma:
-			formaSitio3['existe']=forma.vars['existe_3']
-			formaSitio3['lat_grado']=forma.vars['lat_grado_3']
-			formaSitio3['lat_min']=forma.vars['lat_min_3']
-			formaSitio3['lat_seg']=forma.vars['lat_seg_3']
-			formaSitio3['lon_grado']=forma.vars['lon_grado_3']
-			formaSitio3['lon_min']=forma.vars['lon_min_3']
-			formaSitio3['lon_seg']=forma.vars['lon_seg_3']
-			formaSitio3['altitud']=forma.vars['altitud_3']
-			formaSitio3['gps_error']=forma.vars['gps_error_3']
-			formaSitio3['elipsoide']=forma.vars['elipsoide_3']
-			
-			if bool(forma.vars['hay_evidencia_3']):
-				formaSitio3['hay_evidencia']=forma.vars['hay_evidencia_3']
-			else:
-				formaSitio3['hay_evidencia']=False
-				
-		else:
-			formaSitio3['existe']=False
-		
-		#Insertando en la base de datos:
-		sitio3Insertado=db.Sitio_muestra.insert(**formaSitio3)
-		
-		################Procesando la imagen 3##########################################
-		
-		if bool(forma.vars['existe_3']):
-						
-			#Guardando la imagen de referencia en la carpeta adecuada
-			imagen3 = db.Imagen_referencia_sitio.archivo.store(
-            	forma.vars.imagen_3.file, forma.vars.imagen_3.filename)
-        
-			#Creando los campos de la tabla Imagen_referencia_sitio:
-		
-			datosImagen3 = {}
-			datosImagen3['sitio_muestra_id'] = sitio3Insertado
-			datosImagen3['archivo'] = imagen3
-			datosImagen3['archivo_nombre_original'] = forma.vars.imagen_3.filename
-		
-			#Insertando el registro en la base de datos:
-		
-			db.Imagen_referencia_sitio.insert(**datosImagen3)
-
-		################Procesando los datos del sitio 4##############################
-
-		#Agregando los datos que no se pidieron al usuario:
-		
-		formaSitio4 = {}
-		formaSitio4['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitio4['sitio_numero']='Sitio 4'
-		
-		#Si existe el sitio 4:
-		if bool(forma.vars['existe_4']):
-
-			#Agregando los datos extraídos de la forma:
-			formaSitio4['existe']=forma.vars['existe_4']
-			formaSitio4['lat_grado']=forma.vars['lat_grado_4']
-			formaSitio4['lat_min']=forma.vars['lat_min_4']
-			formaSitio4['lat_seg']=forma.vars['lat_seg_4']
-			formaSitio4['lon_grado']=forma.vars['lon_grado_4']
-			formaSitio4['lon_min']=forma.vars['lon_min_4']
-			formaSitio4['lon_seg']=forma.vars['lon_seg_4']
-			formaSitio4['altitud']=forma.vars['altitud_4']
-			formaSitio4['gps_error']=forma.vars['gps_error_4']
-			formaSitio4['elipsoide']=forma.vars['elipsoide_4']
-			
-			if bool(forma.vars['hay_evidencia_4']):
-				formaSitio4['hay_evidencia']=forma.vars['hay_evidencia_4']
-			else:
-				formaSitio4['hay_evidencia']=False
-				
-		else:
-			formaSitio4['existe']=False
-		
-		#Insertando en la base de datos:
-		sitio4Insertado=db.Sitio_muestra.insert(**formaSitio4)
-		
-		################Procesando la imagen 4##########################################
-		
-		if bool(forma.vars['existe_4']):
-						
-			#Guardando la imagen de referencia en la carpeta adecuada
-			imagen4 = db.Imagen_referencia_sitio.archivo.store(
-            	forma.vars.imagen_4.file, forma.vars.imagen_4.filename)
-        
-			#Creando los campos de la tabla Imagen_referencia_sitio:
-		
-			datosImagen4 = {}
-			datosImagen4['sitio_muestra_id'] = sitio4Insertado
-			datosImagen4['archivo'] = imagen4
-			datosImagen4['archivo_nombre_original'] = forma.vars.imagen_4.filename
-		
-			#Insertando el registro en la base de datos:
-		
-			db.Imagen_referencia_sitio.insert(**datosImagen4)
-
-
-		################Procesando los datos del punto de control#########################
-
-		#Agregando los datos que no se pidieron al usuario:
-		
-		formaSitioC = {}
-		formaSitioC['conglomerado_muestra_id']=conglomeradoInsertado
-		formaSitioC['sitio_numero']='Punto de control'
-		formaSitioC['existe']=True
-		
-		#Leyendo los datos del formulario:
-		formaSitioC['lat_grado']=forma.vars['lat_grado_c']
-		formaSitioC['lat_min']=forma.vars['lat_min_c']
-		formaSitioC['lat_seg']=forma.vars['lat_seg_c']
-		formaSitioC['lon_grado']=forma.vars['lon_grado_c']
-		formaSitioC['lon_min']=forma.vars['lon_min_c']
-		formaSitioC['lon_seg']=forma.vars['lon_seg_c']
-		formaSitioC['altitud']=forma.vars['altitud_c']
-		formaSitioC['gps_error']=forma.vars['gps_error_c']
-		formaSitioC['elipsoide']=forma.vars['elipsoide_c']
-		
-		if bool(forma.vars['hay_evidencia_c']):
-			formaSitioC['hay_evidencia']=forma.vars['hay_evidencia_c']
-		else:
-			formaSitioC['hay_evidencia']=False
-			
-		#Insertando en la base de datos:
-		sitioCInsertado=db.Sitio_muestra.insert(**formaSitioC)
-		
-		################Procesando la imagen del control##########################################
-		
-		#Guardando la imagen de referencia en la carpeta adecuada
-		imagenC = db.Imagen_referencia_sitio.archivo.store(
-            forma.vars.imagen_c.file, forma.vars.imagen_c.filename)
-        
-		#Creando los campos de la tabla Imagen_referencia_sitio:
-		
-		datosImagenC = {}
-		datosImagenC['sitio_muestra_id'] = sitioCInsertado
-		datosImagenC['archivo'] = imagenC
-		datosImagenC['archivo_nombre_original'] = forma.vars.imagen_c.filename
-		
-		#Insertando el registro en la base de datos:
-		
-		db.Imagen_referencia_sitio.insert(**datosImagenC)
-
-		response.flash = 'Éxito'
-        
-	elif forma.errors:
-
-		response.flash = 'Hubo un error al llenar la forma'
+        response.flash = 'Hubo un error al llenar la forma'
        
-	else:
-		response.flash ='Por favor, introduzca los datos del conglomerado y sitios'
+    else:
+        response.flash ='Por favor, introduzca los campos obligatorios'
 
-    ##########Enviando la información de las dropdowns##########################
 
-    #Llenando las combobox de tipo de conglomerado, estado, tenencia, principal
-    #uso de suelo, tipo de vegetación y datum
+    ### Información de los menus dropdown
 
-	listaTipo = db(db.Cat_tipo_conglomerado).select(db.Cat_tipo_conglomerado.nombre)
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
-	listaEstado = db(db.Cat_estado_conglomerado).select(db.Cat_estado_conglomerado.nombre)
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
-	listaTenencia = db(db.Cat_tenencia_conglomerado).select(db.Cat_tenencia_conglomerado.nombre)
+    return dict(listaConglomerado=listaConglomerado)
 
-	listaUsoSuelo = db(db.Cat_suelo_conglomerado).select(db.Cat_suelo_conglomerado.nombre)
+#La siguiente función es invocada mediante AJAX para llenar la combobox de número
+#de sitio a partir de los sitios existentes de un conglomerado seleccionado.
 
-	listaVegetacion = db(db.Cat_vegetacion_conglomerado).select(db.Cat_vegetacion_conglomerado.nombre)
+def asignarSitios():
 
-	listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
+    # Obteniendo la información del conglomerado que seleccionó el usuario:
+    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
 
-	return dict(listaTipo=listaTipo,\
-        listaEstado=listaEstado,\
-        listaTenencia=listaTenencia,\
-        listaUsoSuelo=listaUsoSuelo,\
-        listaVegetacion=listaVegetacion,\
-        listaElipsoide=listaElipsoide)
+    #Obteniendo los sitios que existen en dicho conglomerado
+    sitiosAsignados = db(
+        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&
+        (db.Sitio_muestra.existe==True)&
+        (db.Sitio_muestra.sitio_numero!='Punto de control')
+        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
 
-#La siguiente función es invocada mediante AJAX para llenar la combobox de municipio
-# a partir del estado seleccionado.
+    #Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
 
-def asignarMunicipios():
+    dropdownHTML = "<select class='generic-widget' name='sitio_muestra_id' id='tabla_sitio_muestra_id'>"
 
-	#Obteniendo la información del estado que seleccionó el usuario:
-    estadoElegidoNombre = request.vars.estado
+    for sitio in sitiosAsignados:
 
-    #Obteniendo la clave de dicho estado:
-    estadoElegidoClave = db(db.Cat_estado_conglomerado.nombre==estadoElegidoNombre
-    	).select().first().clave_ent
+        dropdownHTML += "<option value='" + str(sitio.id) + "'>" + sitio.sitio_numero + "</option>"  
 
-    #Obteniendo los municipios que existen en dicho estado a partir de la clave
-    municipiosAsignados = db(
-    	db.Cat_municipio_conglomerado.clave_ent==estadoElegidoClave
-        ).select(db.Cat_municipio_conglomerado.nombre)
-
-    #Creando la dropdown de municipios y enviándola a la vista para que sea desplegada:
-
-    dropdownHTML = "<select class='generic-widget' name='municipio' id='tabla_municipio'>"
-
-    for municipio in municipiosAsignados:
-
-		dropdownHTML += "<option value='" + str(municipio.nombre) + "'>" + municipio.nombre + "</option>"  
-    
     dropdownHTML += "</select>"
-    
+
     return XML(dropdownHTML)
 
-#AJAX para revisar que no se haya ingresado el mismo conglomerado con anterioridad.
-#El AJAX se activará cuando escriban un caracter del nombre de conglomerado.
 
-def conglomeradoExistente():
 
-    #Obteniendo la información del conglomerado que ha ingresado el usuario.
-    #Puede ser que no haya terminado de escribir, por ello, se revisa primero
-    #la longitud del caracter:
 
-    longitudNombres = 5
 
-    #El resultado en el tercer caso será el número de registros en la base de
-    #datos con el mismo nombre de conglomerado, que se regresará a JS para
-    #su interpretación:
 
-    if (len(request.vars.nombre) < longitudNombres):
-    	resultado = 0
 
-    elif (len(request.vars.nombre) > longitudNombres):
-    	resultado = -1
-
-    else:
-
-    	conglomeradoElegidoNombre = request.vars.nombre
-
-    #Haciendo un query a la tabla de Conglomerado_muestra con la
-    #información anterior:
-
-    	conglomeradoYaInsertado=db(
-    		db.Conglomerado_muestra.nombre==conglomeradoElegidoNombre).select()
-
-    #regresa la longitud de conglomeradoYaInsertado para que sea interpretada por JS
-
-    	resultado = len(conglomeradoYaInsertado)
-
-    return resultado

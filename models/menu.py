@@ -23,32 +23,32 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
-    (T('Conglomerado'), False, URL('1_conglomerado', 'index'), []),
-    (T('Cámara'), False, URL('2_camara', 'index'), []),
-    (T('Grabadora'), False, URL('3_grabadora', 'index'), []),
-    (T('Especies invasoras'), False, URL('4_especies_invasoras', 'index1'), [
-      (T('Transecto especies invasoras'), False, URL('4_especies_invasoras', 'index1')),
-      (T('Especies invasoras'), False, URL('4_especies_invasoras', 'index2'))]),
-    (T('Huellas y excretas'), False, URL('5_huellas_excretas', 'index1'), [
-      (T('Transecto huellas y excretas'), False, URL('5_huellas_excretas', 'index1')),
-      (T('Huellas y excretas'), False, URL('5_huellas_excretas', 'index2'))]),
-    (T('Registros extra'), False, URL('6_registros_extra', 'index1'), [
-      (T('Especies invasoras'), False, URL('6_registros_extra', 'index1')),
-      (T('Huellas y excretas'), False, URL('6_registros_extra', 'index2')),
-      (T('Especímenes y restos'), False, URL('6_registros_extra', 'index3'))]),
+    (T('Conglomerado'), False, URL('01_conglomerado', 'index'), []),
+    (T('Cámara'), False, URL('02_camara', 'index'), []),
+    (T('Grabadora'), False, URL('03_grabadora', 'index'), []),
+    (T('Especies invasoras'), False, URL('04_especies_invasoras', 'index1'), [
+      (T('Transecto especies invasoras'), False, URL('04_especies_invasoras', 'index1')),
+      (T('Especies invasoras'), False, URL('04_especies_invasoras', 'index2'))]),
+    (T('Huellas y excretas'), False, URL('05_huellas_excretas', 'index1'), [
+      (T('Transecto huellas y excretas'), False, URL('05_huellas_excretas', 'index1')),
+      (T('Huellas y excretas'), False, URL('05_huellas_excretas', 'index2'))]),
+    (T('Registros extra'), False, URL('06_registros_extra', 'index1'), [
+      (T('Especies invasoras'), False, URL('06_registros_extra', 'index1')),
+      (T('Huellas y excretas'), False, URL('06_registros_extra', 'index2')),
+      (T('Especímenes y restos'), False, URL('06_registros_extra', 'index3'))]),
     # Edición
-    (T('Revisar registros'), False, URL('7_edicion', 'editarConglomerado'), [
-      (T('Conglomerado'), False, URL('7_edicion', 'editarConglomerado')),
-      (T('Cámara'), False, URL('7_edicion', 'editarCamara')),
-      (T('Grabadora'), False, URL('7_edicion', 'editarGrabadora')),
-      (T('Especies Invasoras'), False, URL('7_edicion', 'editarEspeciesInvasoras')),
-      (T('Huellas y excretas'), False, URL('7_edicion', 'editarHuellasExcretas')),
-      (T('Especies Invasoras extra'), False, URL('7_edicion', 'editarEspeciesInvasorasExtra')),
-      (T('Huellas y excretas extra'), False, URL('7_edicion', 'editarHuellasExcretasExtra')),
-      (T('Especímenes extra'), False, URL('7_edicion', 'editarEspecimenExtra'))]),
-    (T('Revisar imágenes'), False, URL('8_revision', 'index'), []),
+    (T('Revisar registros'), False, URL('07_edicion', 'editarConglomerado'), [
+      (T('Conglomerado'), False, URL('07_edicion', 'editarConglomerado')),
+      (T('Cámara'), False, URL('07_edicion', 'editarCamara')),
+      (T('Grabadora'), False, URL('07_edicion', 'editarGrabadora')),
+      (T('Especies Invasoras'), False, URL('07_edicion', 'editarEspeciesInvasoras')),
+      (T('Huellas y excretas'), False, URL('07_edicion', 'editarHuellasExcretas')),
+      (T('Especies Invasoras extra'), False, URL('07_edicion', 'editarEspeciesInvasorasExtra')),
+      (T('Huellas y excretas extra'), False, URL('07_edicion', 'editarHuellasExcretasExtra')),
+      (T('Especímenes extra'), False, URL('07_edicion', 'editarEspecimenExtra'))]),
+    (T('Revisar imágenes'), False, URL('08_revision', 'index'), []),
     # Exportación
-    (T('Exportar datos'), False, URL('9_exportador', 'index'), [])
+    (T('Exportar datos'), False, URL('09_exportador', 'index'), [])
     ]
     
 DEVELOPMENT_MENU = False

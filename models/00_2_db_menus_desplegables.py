@@ -7,16 +7,6 @@
 ## Pestaña Carbono
 ########################################################################
 
-db.define_table('Cat_numero_transecto_carbono',Field('nombre','string',
-	required='TRUE'))
-
-if db(db.Cat_numero_transecto_carbono.id>0).count() == 0:
-	db.Cat_numero_transecto_carbono.insert(nombre='Transecto norte')
-	db.Cat_numero_transecto_carbono.insert(nombre='Transecto este')
-	db.Cat_numero_transecto_carbono.insert(nombre='Transecto sur')
-	db.Cat_numero_transecto_carbono.insert(nombre='Transecto oeste')
-
-
 db.define_table('Cat_material_carbono',Field('nombre','string',
 	required='TRUE'))
 
