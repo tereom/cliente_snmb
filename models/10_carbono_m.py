@@ -28,7 +28,7 @@ db.define_table('Transecto_ramas',*Campos_Transecto_ramas,
 Campos_Rama_1000h = [    
     Field('transecto_ramas_id','reference Transecto_ramas',required=True),
     Field('diametro','double',required=True),
-
+    
     #Se insertará a partir de un catálogo
     Field('grado','integer',required=True)
 ]

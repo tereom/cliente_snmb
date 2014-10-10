@@ -12,6 +12,7 @@ def index1():
 
         #Datos para localizar un sitio único y asociarle los transectos cardinales a éste.
         #Estos datos deben conformar una llave del sitio.
+        
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
         SELECT(_name='sitio_muestra_id',
@@ -136,6 +137,7 @@ def index1():
 
 #La siguiente función es invocada mediante AJAX para llenar la combobox de número
 #de sitio a partir de los sitios existentes de un conglomerado seleccionado.
+
 
 def asignarSitios():
 
@@ -414,8 +416,6 @@ def index3():
         else:
         
             response.flash ='Por favor, introduzca los campos obligatorios'
-
-
 
 
 
