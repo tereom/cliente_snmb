@@ -31,4 +31,18 @@ if db(db.Cat_grado_carbono.id>0).count() == 0:
 	db.Cat_grado_carbono.insert(nombre=3)
 	db.Cat_grado_carbono.insert(nombre=4)
 	db.Cat_grado_carbono.insert(nombre=5)
+
+##########################################################################
+## Pestaña Conteo de aves
+########################################################################
+
+db.define_table('Cat_condiciones_ambientales',Field('nombre','string',
+	required='TRUE'))
+
+if db(db.Cat_condiciones_ambientales.id>0).count() == 0:
+	db.Cat_condiciones_ambientales.insert(nombre='condición 1')
+	db.Cat_condiciones_ambientales.insert(nombre='condición 2')
+	db.Cat_condiciones_ambientales.insert(nombre='condición 3')
+
+
 #########################################################################

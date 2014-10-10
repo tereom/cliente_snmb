@@ -10,7 +10,7 @@ def index1():
     #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
     # de datos y así, evitar excepciones.
 
-        #Datos para localizar un sitio único y asociarle la cámara a éste.
+        #Datos para localizar un sitio único.
         #Estos datos deben conformar una llave del sitio.
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
@@ -137,6 +137,7 @@ def index1():
 #La siguiente función es invocada mediante AJAX para llenar la combobox de número
 #de sitio a partir de los sitios existentes de un conglomerado seleccionado.
 
+
 def asignarSitios():
 
     # Obteniendo la información del conglomerado que seleccionó el usuario:
@@ -160,8 +161,6 @@ def asignarSitios():
     dropdownHTML += "</select>"
 
     return XML(dropdownHTML)
-
-
 
 
 

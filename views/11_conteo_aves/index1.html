@@ -1,0 +1,183 @@
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .Tabla .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4.4cm;
+    }
+    .Tabla .integer, .Tabla .double, .Tabla .string, .Tabla .date, .Tabla .time
+    {
+    	margin-right: 2cm;
+        width: 4cm;
+    }
+    
+    .Centrar
+    {
+        text-align: center;
+    }
+ 
+    #enviar
+    {
+        float: left;
+    }
+</style>
+{{end}}
+
+<form action="" enctype="multipart/form-data" method="post" id="forma">
+	<fieldset>
+		<legend>
+		Transecto huellas y excretas
+		</legend>
+		<input type="hidden"  name="_formname" value="formaPuntoHTML"/>
+		<table class="Tabla">
+			<tr>
+				<td>
+					<div>
+						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+					</div>
+					<div>
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+							<option value=""/>
+							{{for conglomerado in listaConglomerado:}}
+								<option value="{{=conglomerado.id}}">
+									{{=conglomerado.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+                <td>
+                    <div>
+                        <label for="tabla_sitio_muestra_id">Sitio</label>
+                    </div>
+                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+                    <div id="shadow_clone">
+                        <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+                            <option value=""/>
+                        </select>
+                    </div>
+                </td>
+				<td>
+					<div>
+						<label for="tabla_tecnico">Técnico</label>
+					</div>
+					<div>
+						<input class="string obligatorio" name="tecnico" id="tabla_tecnico" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<label for="tabla_fecha">Fecha</label>
+					</div>
+					<div>
+						<input class="date obligatorio" name="fecha" id="tabla_fecha" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_hora_inicio">Hora inicio</label>
+					</div>
+					<div>
+						<input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_hora_termino">Hora término</label>
+					</div>
+					<div>
+						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
+					</div>
+				</td>
+				 <td>
+				 	<div>
+						<label for="tabla_condiciones_ambientales">Condiciones ambientales</label>
+					</div>
+					<div>
+                    <select class="generic-widget obligatorio" name="condiciones_ambientales" id="tabla_condiciones_ambientales">
+                        <option value=""/>
+                        {{for condicion in listaCondicionesAmbientales:}}
+                            <option value="{{=condicion.nombre}}">
+                                {{=condicion.nombre}}
+                            </option>
+                        {{pass}}
+                    </div>
+                    </select>
+                </td>
+
+			</tr>
+		</table>
+	</fieldset>
+	<fieldset>
+		<legend>
+			Observaciones
+		</legend>
+    	<div>
+		    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
+    	</div>
+    </fieldset>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
+</form>
+<script>
+
+	//AJAX para llenar sitios
+	    $('#tabla_conglomerado_muestra_id').change
+    (
+        function()
+        {
+            $('#tabla_sitio_muestra_id').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        }
+    )
+
+
+	//Validando, para ello utilizamos la clase "obligatorio":
+   	$('form').submit
+   	(
+   		function()
+   		{
+   			flag =true;
+   			campos=$('.obligatorio');
+   			campos.each(function() 
+   			{
+  				if(!$(this).val())
+  				{
+  					 flag = false;
+  				}
+			}
+			);
+
+			//Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
+            var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+            campos_fecha=$('.date');
+            flag_m = true;
+            campos_fecha.each(function() 
+            {
+            	if(!fechaReg.test($(this).val()))
+            	{
+            		flag_m = false;
+            	}
+        	}
+        	);
+        	           
+			if(!flag)
+            {
+                alert('Faltó llenar algún campo obligatorio');
+            	return false;
+			}
+            else if(!flag_m){
+                alert('El formato de fecha es aaaa-mm-dd');
+                return false;
+            }
+   		}
+
+   	)
+</script>
