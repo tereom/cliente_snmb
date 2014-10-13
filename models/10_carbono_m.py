@@ -10,7 +10,7 @@
 Campos_Transecto_ramas = [
 
     Field('sitio_muestra_id','reference Sitio_muestra',required=True),
-    Field('transecto_ramas_direccion','string',required='True'),
+    Field('transecto_ramas_direccion','string',required=True),
     Field('pendiente','integer',required=True),
     Field('abundancia_1h','integer',required=True),
     Field('abundancia_10h','integer',required=True),
@@ -33,14 +33,18 @@ Campos_Rama_1000h = [
     Field('grado','integer',required=True)
 ]
 
+db.define_table('Rama_1000h',*Campos_Rama_1000h,
+    singular='Rama 1000h',plural='Ramas 1000h')
+
+
 ##########################################################################
 ## Punto_carbono
 ##########################################################################
 
 Campos_Punto_carbono = [
 
-    Field('sitio_muestra_id','reference Sitio_muestra',required=True), 
-    Field('transecto_ramas_direccion','string',required='True'),
+    Field('sitio_muestra_id','reference Sitio_muestra',required=True),
+    Field('transecto_direccion','string',required=True),
     Field('transecto_distancia','integer',required=True),
 
     #Se insertará a partir de un catálogo
