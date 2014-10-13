@@ -7,11 +7,10 @@ def index1():
         # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
         # para incluir las dropdowns en cascada y la subida de múltiples archivos.
     
-    #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
-    # de datos y así, evitar excepciones.
+        #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
+        # de datos y así, evitar excepciones.
 
         #Datos para localizar un sitio único y asociarle los transectos cardinales a éste.
-        #Estos datos deben conformar una llave del sitio.
         
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),

@@ -16,8 +16,8 @@ Campos_Informacion_epifitas = [
     Field('liquenes_observados','boolean',required=True),
     Field('cactaceas_observadas','boolean',required=True),
     Field('bromeliaceas_observadas','boolean',required=True),
-    Field('helechos_observados','boolean',required=True),
-    Field('helechos_observados','boolean',required=True),
+    Field('otras_observadas','boolean',required=True),
+    Field('nombre_otras','string')
     ]
 
 db.define_table('Informacion_epifitas',*Campos_Informacion_epifitas,

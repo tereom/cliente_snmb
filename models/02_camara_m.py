@@ -12,8 +12,6 @@
 Campos_Camara = [
 
 	Field('sitio_muestra_id','reference Sitio_muestra',required=True), 
-	Field('transecto_numero','string', required=True),
-	Field('transecto_distancia','double', required=True),      
 
  	#Se insertará a partir de un catálogo
 	Field('nombre','string',required=True),

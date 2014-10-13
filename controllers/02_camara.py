@@ -1,69 +1,64 @@
 # coding: utf8
-def index(): 
+def index1(): 
 
-    Campos_pestana_2 = [
+    CamposCamara = [
     
-    # campos cámara
+        # campos cámara
+            
+        # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
+        # para incluir las dropdowns en cascada y la subida de múltiples archivos.
         
-    # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
-    # para incluir las dropdowns en cascada y la subida de múltiples archivos.
-    
-    #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
-    # de datos y así, evitar excepciones.
-    
-    #Datos para localizar un sitio único y asociarle la cámara a éste.
-    #Estos datos deben conformar una llave del sitio.
-
-    SELECT(_name='conglomerado_muestra_id',
-        requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
-    SELECT(_name='sitio_muestra_id',
-        requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
-    
-	#Datos de la cámara
-    SELECT(_name='nombre',
-        requires=IS_IN_DB(db,db.Cat_nombre_camara.nombre,'%(nombre)s')),  
-    INPUT(_name='fecha_inicio',_type='date',requires=IS_NOT_EMPTY()),
-    INPUT(_name='fecha_termino',_type='date',requires=IS_NOT_EMPTY()),    
-    INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
-    INPUT(_name='hora_termino',_type='time',requires=IS_NOT_EMPTY()),
+        #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
+        # de datos y así, evitar excepciones.
         
-    INPUT(_name='lat_grado',_type='integer',requires=IS_NOT_EMPTY()),
-    INPUT(_name='lat_min',_type='integer',requires=IS_NOT_EMPTY()),
-    INPUT(_name='lat_seg',_type='double',requires=IS_NOT_EMPTY()),
-    INPUT(_name='lon_grado',_type='integer',requires=IS_NOT_EMPTY()),
-    INPUT(_name='lon_min',_type='integer',requires=IS_NOT_EMPTY()),
-    INPUT(_name='lon_seg',_type='double',requires=IS_NOT_EMPTY()),
-    INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
-    INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
-    SELECT(_name='elipsoide',
-        requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),          
+        #Datos para localizar un sitio único y asociarle la cámara a éste.
 
-    INPUT(_name='distancia_centro',_type='double',requires=IS_NOT_EMPTY()),
-    SELECT(_name='resolucion',
-        requires=IS_IN_DB(db,db.Cat_resolucion_camara.nombre,'%(nombre)s')),
-    SELECT(_name='sensibilidad',
-        requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.nombre,'%(nombre)s')),
-    INPUT(_name='llovio',_type='boolean'),
+        SELECT(_name='conglomerado_muestra_id',
+            requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='sitio_muestra_id',
+            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
+        
+    	#Datos de la cámara
+        SELECT(_name='nombre',
+            requires=IS_IN_DB(db,db.Cat_nombre_camara.nombre,'%(nombre)s')),  
+        INPUT(_name='fecha_inicio',_type='date',requires=IS_NOT_EMPTY()),
+        INPUT(_name='fecha_termino',_type='date',requires=IS_NOT_EMPTY()),    
+        INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
+        INPUT(_name='hora_termino',_type='time',requires=IS_NOT_EMPTY()),
+            
+        INPUT(_name='lat_grado',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='lat_min',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='lat_seg',_type='double',requires=IS_NOT_EMPTY()),
+        INPUT(_name='lon_grado',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='lon_min',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='lon_seg',_type='double',requires=IS_NOT_EMPTY()),
+        INPUT(_name='altitud',_type='double',requires=IS_NOT_EMPTY()),
+        INPUT(_name='gps_error',_type='double',requires=IS_NOT_EMPTY()),
+        SELECT(_name='elipsoide',
+            requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),          
 
-    TEXTAREA(_name='comentario',_type='text'),
+        INPUT(_name='distancia_centro',_type='double',requires=IS_NOT_EMPTY()),
+        SELECT(_name='resolucion',
+            requires=IS_IN_DB(db,db.Cat_resolucion_camara.nombre,'%(nombre)s')),
+        SELECT(_name='sensibilidad',
+            requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.nombre,'%(nombre)s')),
+        INPUT(_name='llovio',_type='boolean'),
 
-    ###########Imagen de referencia############
-    INPUT(_name='imagen_camara',_type='file',requires=IS_NOT_EMPTY()),
-    
-    ###########Archivos de la cámara###########
-    INPUT(_name='archivos_camara',_type='file',requires=IS_NOT_EMPTY(),
-        _multiple=True)
+        TEXTAREA(_name='comentario',_type='text'),
+
+        ###########Imagen de referencia############
+        INPUT(_name='imagen_camara',_type='file',requires=IS_NOT_EMPTY()),
 
     ]
 
-    forma = FORM(*Campos_pestana_2)
+    formaCamara = FORM(*CamposCamara)
 
-    if forma.accepts(request.vars,formname='formaHTML'):
+    if formaCamara.accepts(request.vars,formname='formaCamaraHTML'):
     
     	################Procesando la cámara#################################
     
     	#Filtrando los datos correspondientes a la tabla de la cámara:
-        datosCamara = db.Camara._filter_fields(forma.vars)
+        datosCamara = db.Camara._filter_fields(formaCamara.vars)
                 
         #Guardando el registro de la cámara en la base de datos:
         
@@ -73,43 +68,22 @@ def index():
 		
 		#Guardando la imagen de referencia en la carpeta adecuada
         imagenRef = db.Imagen_referencia_camara.archivo.store(
-            forma.vars.imagen_camara.file, forma.vars.imagen_camara.filename)
+            formaCamara.vars.imagen_camara.file, formaCamara.vars.imagen_camara.filename)
         
 		#Creando los campos de la tabla Imagen_referencia_camara:
 		
         datosImagenRef = {}
         datosImagenRef['camara_id'] = camaraInsertada
         datosImagenRef['archivo'] = imagenRef
-        datosImagenRef['archivo_nombre_original'] = forma.vars.imagen_camara.filename
+        datosImagenRef['archivo_nombre_original'] = formaCamara.vars.imagen_camara.filename
 		
 		#Insertando el registro en la base de datos:
 		
         db.Imagen_referencia_camara.insert(**datosImagenRef)
-        
-    	################Procesando los archivos múltiples#################################
-    	
-    	archivos = forma.vars['archivos_camara']
-    	if not isinstance(archivos, list):
-    	
-    		archivos = [archivos]
-    		
-    	for aux in archivos:
-
-            #Guardando el archivo en la carpeta adecuada
-    		archivoCamara = db.Archivo_camara.archivo.store(aux, aux.filename)
-    		
-    		datosArchivoCamara = {}
-    		datosArchivoCamara['camara_id'] = camaraInsertada
-    		datosArchivoCamara['archivo'] = archivoCamara
-    		datosArchivoCamara['archivo_nombre_original'] = aux.filename
-    	
-    		#Insertando el registro en la base de datos:
-
-    		db.Archivo_camara.insert(**datosArchivoCamara)
-	
+        	
         response.flash = 'Éxito'
         
-    elif forma.errors:
+    elif formaCamara.errors:
        response.flash = 'Hubo un error al llenar la forma'
        
     else:
@@ -190,5 +164,60 @@ def asignarSitios():
 # MEDIANTE AJAX, CON LO QUE SURGE LA CUESTIÓN DE VALIDARLAS, Y NECESITAMOS UNA
 # FUNCIÓN DE JQUERY DISTINTA PARA PODER PEGARLES A LOS ELEMENTOS QUE NO EXISTEN
 # DESDE UN PRINCIPIO.
+
+def index2():
+
+    CamposArchivosCamara = [
+
+        #Localización de la cámara. Por medio de estos datos debe ser posible
+        #localizar una única cámara:
+
+        SELECT(_name='conglomerado_muestra_id',
+            requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='camara_id',
+            requires=IS_IN_DB(db,db.camara.id,'%(nombre)s')),
+
+        ###########Archivos de la cámara###########
+        INPUT(_name='archivos_camara',_type='file',requires=IS_NOT_EMPTY(),
+            _multiple=True)
+
+    ]
+
+    formaArchivosCamara = FORM(*CamposArchivosCamara)
+
+    # Encontrando la cámara utilizando el campo: "sitio_muestra_id" (el campo
+    # conglomerado_muestra_id es únicamente auxiliar y se utiliza en AJAX para):
+    # 1. Buscar los sitios asociados a un conglomerado.
+    # 2. Utilizando dichos sitios, buscar en la lista de cámara,
+    # para ver en cuáles de dichos sitios existe una cámara declarada. Mostrar
+    # en la vista los sitios, pero enviar al controlador los id's de las cámaras
+    # asociadas a cada sitio.
+
+    if formaArchivosCamara.accepts(request.vars,formname='formaArchivosCamaraHTML'):
+
+    ################Procesando los archivos múltiples###########################
+        
+        archivos = formaArchivosCamara.vars['archivos_camara']
+        if not isinstance(archivos, list):
+        
+          archivos = [archivos]
+            
+        for aux in archivos:
+
+            #Guardando el archivo en la carpeta adecuada
+          archivoCamara = db.Archivo_camara.archivo.store(aux, aux.filename)
+            
+          datosArchivoCamara = {}
+          datosArchivoCamara['camara_id'] = formaArchivosCamara.vars['camara_id']
+          datosArchivoCamara['archivo'] = archivoCamara
+          datosArchivoCamara['archivo_nombre_original'] = aux.filename
+        
+          #Insertando el registro en la base de datos:
+
+          db.Archivo_camara.insert(**datosArchivoCamara)
+
+
+
+
 
 
