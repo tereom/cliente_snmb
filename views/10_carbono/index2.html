@@ -1,0 +1,194 @@
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
+    {
+        margin-right: 0.5cm;
+        width: 2cm;
+        text-align: center;
+    }
+    
+    .No_GPS .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4cm;
+    }
+    
+    .FlotaIzquierda
+    {
+        float: left;
+    }
+
+    .Centrar
+    {
+        text-align: center;
+    }
+
+</style>
+{{end}}
+{{#=response.toolbar()}}
+
+<form action="" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="_formname" value="formaTransectosHTML"/>
+    <fieldset>
+        <legend>
+            Desglose de material 1000h (0-15m)
+        </legend>
+        <table class="No_GPS">
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+                    </div>
+                    <div>
+                        <!--este campo sólo sirve para encontrar
+                        con AJAX los sitios existentes asociados al conglomerado
+                        elegido, al enviar la forma al controlador, se utilizará
+                        para guardar el registro de la cámara, únicamente el id
+                        del sitio (de la dropdown generada mediante AJAX)-->
+                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                            <option value=""/>
+                            {{for conglomerado in listaConglomerado:}}
+                                <option value="{{=conglomerado.id}}">
+                                    {{=conglomerado.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>                
+                <td>
+                    <div>
+                        <label for="tabla_sitio_muestra_id">Sitio</label>
+                    </div>
+                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+                    <div id="shadow_clone">
+                        <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+                            <option value=""/>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>Transecto</th>
+                <th>Diámetro(cm)</th>
+                <th>Grado</th>
+            </tr>
+            <tr>
+                <!-- La tabla se genera en un ciclo for -->
+            
+                {{for i in range(n_ramas):}}                
+                    <!-- Creamos los nombres de los campos y las tablas -->
+                    {{transecto_ramas_id_i = 'transecto_ramas_id_' + str(i+1)}}
+                    {{tabla_transecto_ramas_id_i = 'tabla_' + transecto_ramas_id_i}}
+
+                    {{diametro_i = 'diametro_' + str(i+1)}}
+                    {{tabla_diametro_i = 'tabla_' + diametro_i}}
+                    
+                    {{grado_i = 'grado_' + str(i+1)}}
+                    {{tabla_grado_i = 'tabla_' + grado_i}}
+
+                    {{grado_i = 'grado_' + str(i+1)}}
+                    {{tabla_grado_i = 'tabla_' + grado_i}}
+
+                <td>
+                    <select class="generic-widget obligatorio" name="elipsoide_c" id="tabla_elipsoide_c">
+                        <option value=""/>
+                        {{for transecto in listaTransecto:}}
+                            <option value="{{=transecto.nombre}}">
+                                {{=transecto.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="{{=diametro_i}}" id="{{=tabla_diametro_i}}" type="text" value=""/>
+                </td>
+            {{pass}}
+            </tr>
+        </table>
+        <!--<legend>
+            Frecuencias por grosor del material
+        </legend>-->
+        <hr/>       
+    </fieldset>
+    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+</form>
+
+
+<script>
+
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+    $('#tabla_conglomerado_muestra_id').change
+    (
+        function()
+        {
+            $('#tabla_sitio_muestra_id').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        }
+       )
+
+    //AJAX para evitar que se envíe la información de los sitios correspondientes
+    //a un sitio más de una vez:
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function (){
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('transectosExistentes')}}",
+                success: function(resultado)
+                {
+                        //alert(resultado);
+                        if(resultado>=1)
+                        {
+                            alert('Los transectos correspondientes a este sitio ya han sido declarados');
+                            $('#tabla_sitio_muestra_id').val("");
+                        }
+                    }
+                }
+                );
+        }
+        );
+
+    //Validando, para ello utilizamos la clase "obligatorio":
+    $('form').submit
+    (
+         function()
+         {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                    flag = false;
+                }
+            }
+            );
+
+            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+            //validar aparte:
+            if(!$('#shadow_clone').find('select:first').val())
+            {
+                flag = false;
+                alert('falta llenar el sitio');
+            }
+
+            if(!flag)
+            {
+                alert('Faltó llenar un campo o subir alguna imagen');
+                return false;
+            }
+
+        }
+    )
+    
+</script>
