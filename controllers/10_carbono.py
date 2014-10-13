@@ -257,8 +257,6 @@ def index2():
     #Regresando el número de ramas para crear la vista en HTML
     return dict(n_ramas=n_ramas)
 
-
-
 def index3():
 
     Campos_puntos_carbono = [
