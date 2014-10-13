@@ -185,19 +185,12 @@ def index2():
 
     formaArchivosCamara = FORM(*CamposArchivosCamara)
 
-    # Encontrando la cámara utilizando el campo: "sitio_muestra_id" (el campo
-    # conglomerado_muestra_id es únicamente auxiliar y se utiliza en AJAX para):
-    # 1. Buscar los sitios asociados a un conglomerado.
-    # 2. Utilizando dichos sitios, buscar en la lista de cámara,
-    # para ver en cuáles de dichos sitios existe una cámara declarada. Mostrar
-    # en la vista los sitios, pero enviar al controlador los id's de las cámaras
-    # asociadas a cada sitio.
-
     if formaArchivosCamara.accepts(request.vars,formname='formaArchivosCamaraHTML'):
 
     ################Procesando los archivos múltiples###########################
         
         archivos = formaArchivosCamara.vars['archivos_camara']
+
         if not isinstance(archivos, list):
         
           archivos = [archivos]
@@ -215,6 +208,105 @@ def index2():
           #Insertando el registro en la base de datos:
 
           db.Archivo_camara.insert(**datosArchivoCamara)
+
+        response.flash = 'Éxito'
+        
+    elif formaCamara.errors:
+       response.flash = 'Hubo un error al llenar la forma'
+       
+    else:
+        response.flash ='Por favor, introduzca los archivos asociados a una cámara'
+
+    ##########Enviando la información de la dropdown de conglomerado############
+
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
+
+    def asignarCamara():
+
+    # El campo conglomerado_muestra_id es únicamente auxiliar y se utiliza para:
+    # 1. Mediante AJAX, buscar los sitios asociados a un conglomerado.
+    # 2. Utilizando dichos sitios, buscar en la lista de cámara,
+    # para ver en cuáles de dichos sitios existe una cámara declarada. Mostrar
+    # en la vista los sitios, pero enviar al controlador los id's de las cámaras
+    # asociadas a cada sitio.
+
+    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+
+    #Obteniendo los sitios que existen en dicho conglomerado
+    sitiosAsignados = db(
+        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
+        (db.Sitio_muestra.existe==True)&\
+        (db.Sitio_muestra.sitio_numero!='Punto de control')
+        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
+
+
+    #Creando la dropdown de sitios/cámaras y enviándola a la vista para que sea desplegada:
+
+    dropdownHTML = "<select class='generic-widget' name='camara_id' id='tabla_camara_id'>"
+    dropdownHTML += "<option value=''/>"
+
+        #Bandera que indica si se encontró alguna cámara declarada en alguno de
+        #los sitios del conglomerado elegido:
+
+        flag = False
+
+        for sitio in sitiosAsignados:
+
+            #Buscando, de entre dichos sitios, en cuáles ha sido declarada una
+            #cámara. También se enviará a la vista la bandera, para enviar una
+            #alerta en caso de que no haya sido declarada una cámara en los mismos.
+
+            camaraSitio = db(db.Camara.sitio_muestra_id==sitio.id).select(
+                db.Camara.id).first()
+
+            if len(camaraSitio)>1:
+
+                flag = True
+
+                #Como cuidamos que exista a lo más una cámara por sitio de un conglome-
+                #rado, al elegir el conglomerado y el número de sitio, automática-
+                #mente sabemos la cámara a la que corresponde, sin embargo, para el
+                #usuario mandamos el número de sitio del conglomerado elegido,
+                #mientras que para el controlador enviamos el id de dicha cámara.
+
+                dropdownHTML += "<option value='" + str(camaraSitio.id) + "'>"+\
+                sitio.sitio_numero + "</option>"  
+    
+        dropdownHTML += "</select>"
+    
+    return response.json(dict(dropdown=XML(dropdownHTML),flag=flag))
+
+#     <?php
+# $arr = array ('response'=>'error','comment'=>'test comment here');
+# echo json_encode($arr);
+# ?>
+
+# //the script above returns this:
+# {"response":"error","comment":"test comment here"}
+
+# <script type="text/javascript">
+# $.ajax({
+#     type: "POST",
+#     url: "process.php",
+#     data: dataString,
+#     dataType: "json",
+#     success: function (data) {
+#         if (data.response == 'captcha') {
+#             alert('captcha');
+#         } else if (data.response == 'success') {
+#             alert('success');
+#         } else {
+#             alert('sorry there was an error');
+#         }
+#     }
+
+# }); 
+# </script>
+
 
 
 
