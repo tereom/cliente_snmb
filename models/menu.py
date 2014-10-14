@@ -36,6 +36,13 @@ response.menu = [
       (T('Especies invasoras'), False, URL('06_registros_extra', 'index1')),
       (T('Huellas y excretas'), False, URL('06_registros_extra', 'index2')),
       (T('Especímenes y restos'), False, URL('06_registros_extra', 'index3'))]),
+    #### CONANP
+      (T('Carbono'), False, URL('10_carbono', 'index1'), [
+      (T('Frecuencias por grosor'), False, URL('10_carbono', 'index1')),
+      (T('Desglose de material'), False, URL('10_carbono', 'index2')),
+      (T('Almacen en el mantillo'), False, URL('10_carbono', 'index3'))]),
+    ####
+
     # Edición
     (T('Revisar registros'), False, URL('07_edicion', 'editarConglomerado'), [
       (T('Conglomerado'), False, URL('07_edicion', 'editarConglomerado')),

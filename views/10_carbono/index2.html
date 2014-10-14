@@ -30,7 +30,7 @@
 {{#=response.toolbar()}}
 
 <form action="" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="_formname" value="formaTransectosHTML"/>
+    <input type="hidden" name="_formname" value="formaRamasHTML"/>
     <fieldset>
         <legend>
             Desglose de material 1000h (0-15m)
@@ -70,54 +70,71 @@
                 </td>
             </tr>
         </table>
-        <table>
+        <hr/>
+        <table class="No_GPS">
             <tr>
+                <th>Existe</th>
                 <th>Transecto</th>
                 <th>Diámetro(cm)</th>
                 <th>Grado</th>
             </tr>
-            <tr>
-                <!-- La tabla se genera en un ciclo for -->
+            <!-- La tabla se genera en un ciclo for -->
             
-                {{for i in range(n_ramas):}}                
-                    <!-- Creamos los nombres de los campos y las tablas -->
-                    {{transecto_ramas_i = 'transecto_ramas_id_' + str(i+1)}}
-                    {{tabla_transecto_ramas_id_i = 'tabla_' + transecto_ramas_id_i}}
+            {{for i in range(n_ramas):}}              
+                <!-- Creamos los nombres de los campos y las tablas -->
+                {{existe_i = 'existe_' + str(i+1)}}
+                {{tabla_existe_i = 'tabla_' + existe_i}}
 
-                    {{diametro_i = 'diametro_' + str(i+1)}}
-                    {{tabla_diametro_i = 'tabla_' + diametro_i}}
+                {{transecto_ramas_i = 'transecto_ramas_' + str(i+1)}}
+                {{tabla_transecto_ramas_i = 'tabla_' + transecto_ramas_i}}
+
+                {{diametro_i = 'diametro_' + str(i+1)}}
+                {{tabla_diametro_i = 'tabla_' + diametro_i}}
                     
-                    {{grado_i = 'grado_' + str(i+1)}}
-                    {{tabla_grado_i = 'tabla_' + grado_i}}
+                {{grado_i = 'grado_' + str(i+1)}}
+                {{tabla_grado_i = 'tabla_' + grado_i}}
 
-                    {{grado_i = 'grado_' + str(i+1)}}
-                    {{tabla_grado_i = 'tabla_' + grado_i}}
-
-                <td>
-                    <select class="generic-widget obligatorio" name="transecto_ramas" id="tabla_elipsoide_c">
-                        <option value=""/>
-                        {{for transecto in listaTransecto:}}
-                            <option value="{{=transecto.nombre}}">
-                                {{=transecto.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                </td>
-                <td>
-                    <input class="double obligatorio" name="{{=diametro_i}}" id="{{=tabla_diametro_i}}" type="text" value=""/>
-                </td>
+                <tr>
+                    <td class="Centrar">
+                        <input class="boolean" name="{{=existe_i}}" id="{{=tabla_existe_i}}" type="checkbox" value="on"/>
+                    </td>
+                    <td>
+                        <select class="generic-widget" name="{{=transecto_ramas_i}}" id="{{=tabla_transecto_ramas_i}}">
+                            <option value=""/>
+                            {{for transecto in listaTransecto:}}
+                                <option value="{{=transecto.nombre}}">
+                                    {{=transecto.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </td>
+                    <td>
+                        <input class="double" name="{{=diametro_i}}" id="{{=tabla_diametro_i}}" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input class="integer" name="{{=grado_i}}" id="{{=tabla_grado_i}}" type="text" value=""/>
+                    </td>
+                </tr>
             {{pass}}
-            </tr>
         </table>
         <!--<legend>
             Frecuencias por grosor del material
         </legend>-->
-        <hr/>       
+        <hr/>  
+        <div> 
+            <p>
+                <strong>
+                    Si faltan registros por ingresar favor de llenar una nueva forma 
+                    con la información faltante.
+                </strong>
+            </p>
+        </div>  
+        <br/>  
     </fieldset>
     <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
-
+{{#=BEAUTIFY(request.vars)}}
 <script>
 
     //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
@@ -146,9 +163,9 @@
                 success: function(resultado)
                 {
                         //alert(resultado);
-                        if(resultado>=1)
+                        if(resultado==0)
                         {
-                            alert('Los transectos correspondientes a este sitio ya han sido declarados');
+                            alert('Favor de ingresar la pestaña de frecuencias por grosor de material antes de proceder a desglose de material 1000h');
                             $('#tabla_sitio_muestra_id').val("");
                         }
                     }

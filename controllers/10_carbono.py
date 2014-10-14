@@ -57,7 +57,7 @@ def index1():
         datosTransecto1 = {}
 
         datosTransecto1['sitio_muestra_id'] = formaTransectosRamas.vars['sitio_muestra_id']
-        datosTransecto1['transecto_ramas_direccion'] = 'Norte'
+        datosTransecto1['direccion'] = 'Norte'
 
         datosTransecto1['pendiente'] = formaTransectosRamas.vars['pendiente_1N']
         datosTransecto1['abundancia_1h'] = formaTransectosRamas.vars['abundancia_1h_1N']
@@ -72,7 +72,7 @@ def index1():
         datosTransecto2 = {}
 
         datosTransecto2['sitio_muestra_id'] = formaTransectosRamas.vars['sitio_muestra_id']
-        datosTransecto2['transecto_ramas_direccion'] = 'Este'
+        datosTransecto2['direccion'] = 'Este'
 
         datosTransecto2['pendiente'] = formaTransectosRamas.vars['pendiente_2E']
         datosTransecto2['abundancia_1h'] = formaTransectosRamas.vars['abundancia_1h_2E']
@@ -88,7 +88,7 @@ def index1():
         datosTransecto3 = {}
 
         datosTransecto3['sitio_muestra_id'] = formaTransectosRamas.vars['sitio_muestra_id']
-        datosTransecto3['transecto_ramas_direccion'] = 'Sur'
+        datosTransecto3['direccion'] = 'Sur'
 
         datosTransecto3['pendiente'] = formaTransectosRamas.vars['pendiente_3S']
         datosTransecto3['abundancia_1h'] = formaTransectosRamas.vars['abundancia_1h_3S']
@@ -104,7 +104,7 @@ def index1():
         datosTransecto4 = {}
 
         datosTransecto4['sitio_muestra_id'] = formaTransectosRamas.vars['sitio_muestra_id']
-        datosTransecto4['transecto_ramas_direccion'] = 'Oeste'
+        datosTransecto4['direccion'] = 'Oeste'
 
         datosTransecto4['pendiente'] = formaTransectosRamas.vars['pendiente_4W']
         datosTransecto4['abundancia_1h'] = formaTransectosRamas.vars['abundancia_1h_4W']
@@ -186,15 +186,15 @@ def index2():
 
     n_ramas = 10
 
-    Campos_rama_1000h = [
+    camposRama1000h = [
 
-    #Datos para localizar un sitio único, del cuál posteriormente se leerán mediante
-    #AJAX los transectos cardinales declarados, para poder declarar ramas en estos
-    #transectos. Estos datos deben conformar una llave del sitio:
-    SELECT(_name='conglomerado_muestra_id',
-        requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
-    SELECT(_name='sitio_muestra_id',
-        requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
+        #Datos para localizar un sitio único, del cuál posteriormente se leerán
+        #mediante AJAX los transectos cardinales declarados, para poder declarar
+        #ramas en estos transectos. Estos datos deben conformar una llave del sitio:
+        SELECT(_name='conglomerado_muestra_id',
+            requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='sitio_muestra_id',
+            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
     ]
 
     ##########################
@@ -203,59 +203,73 @@ def index2():
     for i in range(n_ramas):
 
         #Creando de manera automatizada los nombres de los campos:
+        existe_i = 'existe_' + str(i+1)
         transecto_ramas_i = 'transecto_ramas_' + str(i+1)
         diametro_i = 'diametro_' + str(i+1)
         grado_i = 'grado_' + str(i+1)
-        existe_i = 'existe_' + str(i+1)
 
         #Extendiendo la lista anterior:
-        Campos_rama_1000h.extend([
+        camposRama1000h.extend([
             #Campo para marcar si existe o no una rama.
             INPUT(_name=existe_i,_type='boolean'),
 
-            SELECT(_name=transecto_ramas_i,
-                requires=IS_IN_DB(db,db.Cat_transecto_ramas.nombre,'%(nombre)s')),
-            INPUT(_name=diametro_i,_type='integer',requires=IS_NOT_EMPTY()),
-            INPUT(_name=grado_i,_type='integer',requires=IS_NOT_EMPTY())
-            ])
+            #El campo de transecto_ramas_i posiblemente se envíe vacío de la vista,
+            #por ello, conviene ponerlo como un string, para que no requiera que
+            #esté en la base de datos (y por ende, no vacío).
 
-        formaRamas = FORM(*Campos_rama_1000h)
+            INPUT(_name=transecto_ramas_i,_type='string'),
+            INPUT(_name=diametro_i,_type='double'),
+            INPUT(_name=grado_i,_type='integer')])
 
-        if formaRamas.accepts(request.vars,formname='formaRamasHTML'):
+    formaRamas = FORM(*camposRama1000h)
 
-            for i in range(n_ramas):
+    if formaRamas.accepts(request.vars,formname='formaRamasHTML'):
 
-                #Creando de manera automatizada los nombres de los campos:
-                transecto_ramas_i = 'transecto_ramas_' + str(i+1)
-                diametro_i = 'diametro_' + str(i+1)
-                grado_i = 'grado_' + str(i+1)
-                existe_i = 'existe_' + str(i+1)
+        # Asignando el id del sitio para localizar el transecto al cual se
+        # le asignará la rama
+        transectoRamasSitioId = formaRamas.vars['sitio_muestra_id']
 
-                #Si existe la i-ésima rama:
-                if bool(forma.vars[existe_i]):
+        for i in range(n_ramas):
 
-                    #Obtenemos el id para transecto_ramas usando un query
-                    transectoRamasId = db((
-                        db.Transecto_ramas.transecto_ramas_direccion==transecto_ramas_i)&
-                        (db.Transecto_ramas.sitio_muestra_id==sitio_muestra_id)).select().first()
+            # Creando de manera automatizada los nombres de los campos:
+            existe_i = 'existe_' + str(i+1)
+            transecto_ramas_i = 'transecto_ramas_' + str(i+1)
+            diametro_i = 'diametro_' + str(i+1)
+            grado_i = 'grado_' + str(i+1)
+
+            # Si existe la i-ésima rama:
+            if bool(formaRamas.vars[existe_i]):
+
+                datosRama_i = {}
+
+                # Leyendo la dirección del transecto que seleccionó el usuario
+
+                transectoRamasDireccion_i = formaRamas.vars[transecto_ramas_i]
+
+                # Obtenemos el id para transecto_ramas usando un query
+
+                transectoRamasId = db((
+                    db.Transecto_ramas.direccion==transectoRamasDireccion_i)&
+                    (db.Transecto_ramas.sitio_muestra_id==\
+                        transectoRamasSitioId)).select(db.Transecto_ramas.id).first()
         
-        db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
-                    #Agregando los datos extraídos de la forma:
-                    formaRama_i['transecto_ramas_id']=forma.vars[transecto_ramas_id_i]
-                    formaRama_i['diametro']=forma.vars[diametro_i]
-                    formaRama_i['grado']=forma.vars[grado_i]
+                # Agregando los datos extraídos de la forma:
+                datosRama_i['transecto_ramas_id']=transectoRamasId
+                datosRama_i['diametro']=formaRamas.vars[diametro_i]
+                datosRama_i['grado']=formaRamas.vars[grado_i]
 
-                    #Insertando los datos de la rama:
-                    db.Rama_1000h.insert(**formaRama_i)
+                # Insertando los datos de la rama:
+                db.Rama_1000h.insert(**datosRama_i)
 
-            response.flash = 'Éxito'
+        response.flash = 'Éxito'
         
-        elif formaRamas.errors:
+    elif formaRamas.errors:
 
-            response.flash = 'Hubo un error al llenar la forma'
+        response.flash = 'Hubo un error al llenar la forma'
 
-        else:        
-            response.flash ='Por favor, introduzca los campos obligatorios'
+    else:
+
+        response.flash ='Por favor, introduzca la información de una rama 1000h'
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
@@ -264,7 +278,7 @@ def index2():
     listaTransecto = db(db.Cat_transecto_ramas).select(db.Cat_transecto_ramas.nombre)
 
     #Regresando el número de ramas para crear la vista en HTML
-    return dict(n_ramas=n_ramas, formaRamas=formaRamas,
+    return dict(n_ramas=n_ramas,
         listaConglomerado=listaConglomerado,
         listaTransecto=listaTransecto)
 
@@ -273,7 +287,6 @@ def index3():
     Campos_puntos_carbono = [
 
         #Datos para localizar un sitio único y asociarle los puntos de carbono a éste.
-        #Estos datos deben conformar una llave del sitio.
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
         SELECT(_name='sitio_muestra_id',

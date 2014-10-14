@@ -10,7 +10,7 @@
 Campos_Transecto_ramas = [
 
     Field('sitio_muestra_id','reference Sitio_muestra',required=True),
-    Field('transecto_ramas_direccion','string',required=True),
+    Field('direccion','string',required=True),
     Field('pendiente','integer',required=True),
     Field('abundancia_1h','integer',required=True),
     Field('abundancia_10h','integer',required=True),
