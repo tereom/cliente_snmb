@@ -2,7 +2,7 @@
 
 def index1():
 
-    Campos_transecto_huellas_excretas = [
+    camposTransecto = [
 
     # campos transecto huellas y excretas
 
@@ -29,7 +29,7 @@ def index1():
 
     #IS_DATE(format=T('%d-%m-%Y'))),
     
-    formaTransecto = FORM(*Campos_transecto_huellas_excretas)
+    formaTransecto = FORM(*camposTransecto)
     
     if formaTransecto.accepts(request.vars,formname='formaTransectoHTML'):
         db.Transecto_huellas_excretas_muestra.insert(**formaTransecto.vars)
@@ -77,7 +77,7 @@ def transectoExistente():
 
 def index2():
 
-    Campos_huella_excreta = [
+    camposHuellaExcreta = [
 
         #Datos para localizar un transecto único y asociarle la observación a éste.
         #Estos datos deben conformar una llave del transecto.
@@ -106,7 +106,7 @@ def index2():
             requires=IS_NOT_EMPTY())
 	]
 
-    formaHuellaExcreta = FORM(*Campos_huella_excreta)
+    formaHuellaExcreta = FORM(*camposHuellaExcreta)
     
     if formaHuellaExcreta.accepts(request.vars,formname='formaHuellaExcretaHTML'):
 
@@ -159,7 +159,7 @@ def index2():
         
     elif formaHuellaExcreta.errors:
 
-       response.flash = 'Hubo un error al llenar la forma de huellas/excretas'
+       response.flash = 'Hubo un error al llenar la forma de huella/excreta'
        
     else:
 

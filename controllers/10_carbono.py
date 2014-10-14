@@ -2,7 +2,7 @@
 
 def index1():
 
-    Campos_transectos_ramas = [
+    camposTransectosRamas = [
 
         # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
         # para incluir las dropdowns en cascada y la subida de múltiples archivos.
@@ -48,80 +48,80 @@ def index1():
         #INPUT(_name='abundancia_1000h_4W',_type='integer',requires=IS_NOT_EMPTY())
     ]
     
-    formaTransectos = FORM(*Campos_transectos_ramas)  
+    formaTransectosRamas = FORM(*camposTransectosRamas)  
 
-    if formaTransectos.accepts(request.vars,formname='formaTransectosHTML'):
+    if formaTransectosRamas.accepts(request.vars,formname='formaTransectosRamasHTML'):
 
         ### Transecto Norte
 
-        formaTransecto1 = {}
+        datosTransecto1 = {}
 
-        formaTransecto1['sitio_muestra_id'] = formaTransectos.vars['sitio_muestra_id']
-        formaTransecto1['transecto_ramas_direccion'] = 'Norte'
+        datosTransecto1['sitio_muestra_id'] = formaTransectosRamas.vars['sitio_muestra_id']
+        datosTransecto1['transecto_ramas_direccion'] = 'Norte'
 
-        formaTransecto1['pendiente'] = formaTransectos.vars['pendiente_1N']
-        formaTransecto1['abundancia_1h'] = formaTransectos.vars['abundancia_1h_1N']
-        formaTransecto1['abundancia_10h'] = formaTransectos.vars['abundancia_10h_1N']
-        formaTransecto1['abundancia_100h'] = formaTransectos.vars['abundancia_100h_1N']
+        datosTransecto1['pendiente'] = formaTransectosRamas.vars['pendiente_1N']
+        datosTransecto1['abundancia_1h'] = formaTransectosRamas.vars['abundancia_1h_1N']
+        datosTransecto1['abundancia_10h'] = formaTransectosRamas.vars['abundancia_10h_1N']
+        datosTransecto1['abundancia_100h'] = formaTransectosRamas.vars['abundancia_100h_1N']
 
         # Insertando en la base de datos:
-        db.Transecto_ramas.insert(**formaTransecto1)
+        db.Transecto_ramas.insert(**datosTransecto1)
 
         ### Transecto Este
 
-        formaTransecto2 = {}
+        datosTransecto2 = {}
 
-        formaTransecto2['sitio_muestra_id'] = formaTransectos.vars['sitio_muestra_id']
-        formaTransecto2['transecto_ramas_direccion'] = 'Este'
+        datosTransecto2['sitio_muestra_id'] = formaTransectosRamas.vars['sitio_muestra_id']
+        datosTransecto2['transecto_ramas_direccion'] = 'Este'
 
-        formaTransecto2['pendiente'] = formaTransectos.vars['pendiente_2E']
-        formaTransecto2['abundancia_1h'] = formaTransectos.vars['abundancia_1h_2E']
-        formaTransecto2['abundancia_10h'] = formaTransectos.vars['abundancia_10h_2E']
-        formaTransecto2['abundancia_100h'] = formaTransectos.vars['abundancia_100h_2E']
+        datosTransecto2['pendiente'] = formaTransectosRamas.vars['pendiente_2E']
+        datosTransecto2['abundancia_1h'] = formaTransectosRamas.vars['abundancia_1h_2E']
+        datosTransecto2['abundancia_10h'] = formaTransectosRamas.vars['abundancia_10h_2E']
+        datosTransecto2['abundancia_100h'] = formaTransectosRamas.vars['abundancia_100h_2E']
 
         # Insertando en la base de datos:
-        db.Transecto_ramas.insert(**formaTransecto2)
+        db.Transecto_ramas.insert(**datosTransecto2)
 
 
         ### Transecto Sur
 
-        formaTransecto3 = {}
+        datosTransecto3 = {}
 
-        formaTransecto3['sitio_muestra_id'] = formaTransectos.vars['sitio_muestra_id']
-        formaTransecto3['transecto_ramas_direccion'] = 'Sur'
+        datosTransecto3['sitio_muestra_id'] = formaTransectosRamas.vars['sitio_muestra_id']
+        datosTransecto3['transecto_ramas_direccion'] = 'Sur'
 
-        formaTransecto3['pendiente'] = formaTransectos.vars['pendiente_3S']
-        formaTransecto3['abundancia_1h'] = formaTransectos.vars['abundancia_1h_3S']
-        formaTransecto3['abundancia_10h'] = formaTransectos.vars['abundancia_10h_3S']
-        formaTransecto3['abundancia_100h'] = formaTransectos.vars['abundancia_100h_3S']
+        datosTransecto3['pendiente'] = formaTransectosRamas.vars['pendiente_3S']
+        datosTransecto3['abundancia_1h'] = formaTransectosRamas.vars['abundancia_1h_3S']
+        datosTransecto3['abundancia_10h'] = formaTransectosRamas.vars['abundancia_10h_3S']
+        datosTransecto3['abundancia_100h'] = formaTransectosRamas.vars['abundancia_100h_3S']
     
         # Insertando en la base de datos:
-        db.Transecto_ramas.insert(**formaTransecto3)
+        db.Transecto_ramas.insert(**datosTransecto3)
 
 
         ### Transecto Oeste
 
-        formaTransecto4 = {}
+        datosTransecto4 = {}
 
-        formaTransecto4['sitio_muestra_id'] = formaTransectos.vars['sitio_muestra_id']
-        formaTransecto4['transecto_ramas_direccion'] = 'Oeste'
+        datosTransecto4['sitio_muestra_id'] = formaTransectosRamas.vars['sitio_muestra_id']
+        datosTransecto4['transecto_ramas_direccion'] = 'Oeste'
 
-        formaTransecto4['pendiente'] = formaTransectos.vars['pendiente_4W']
-        formaTransecto4['abundancia_1h'] = formaTransectos.vars['abundancia_1h_4W']
-        formaTransecto4['abundancia_10h'] = formaTransectos.vars['abundancia_10h_4W']
-        formaTransecto4['abundancia_100h'] = formaTransectos.vars['abundancia_100h_4W']
+        datosTransecto4['pendiente'] = formaTransectosRamas.vars['pendiente_4W']
+        datosTransecto4['abundancia_1h'] = formaTransectosRamas.vars['abundancia_1h_4W']
+        datosTransecto4['abundancia_10h'] = formaTransectosRamas.vars['abundancia_10h_4W']
+        datosTransecto4['abundancia_100h'] = formaTransectosRamas.vars['abundancia_100h_4W']
 
         # Insertando en la base de datos:
-        db.Transecto_ramas.insert(**formaTransecto4)
+        db.Transecto_ramas.insert(**datosTransecto4)
 
         response.flash = 'Éxito'
         
-    elif formaTransectos.errors:
+    elif formaTransectosRamas.errors:
 
         response.flash = 'Hubo un error al llenar la forma'
        
     else:
-        response.flash ='Por favor, introduzca los campos obligatorios'
+        response.flash ='Por favor, llene esta pestaña sólo una vez para cada sitio'
 
 
     ### Información de los menus dropdown
@@ -136,7 +136,6 @@ def index1():
 
 #La siguiente función es invocada mediante AJAX para llenar la combobox de número
 #de sitio a partir de los sitios existentes de un conglomerado seleccionado.
-
 
 def asignarSitios():
 

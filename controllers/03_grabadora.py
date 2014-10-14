@@ -1,6 +1,7 @@
 # coding: utf8
-def index(): 
-    Campos_pestana_3 = [
+def index1(): 
+    
+    camposGrabadora = [
 
     # campos Grabadora
 
@@ -10,8 +11,7 @@ def index():
     #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
     # de datos y así, evitar excepciones.
     
-    #Datos para localizar un sitio único y asociarle la cámara a éste.
-    #Estos datos deben conformar una llave del sitio.
+    #Datos para localizar un sitio único y asociarle la grabadora a éste.
 
     SELECT(_name='conglomerado_muestra_id',
         requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
@@ -54,22 +54,16 @@ def index():
     ###########Archivo referencia grabadora ############
     INPUT(_name='archivo_metadatos',_type='file',requires=IS_NOT_EMPTY()),
     
-    ###########Archivos de la grabadora###########
-    INPUT(_name='archivos_audibles',_type='file',_multiple=True,
-        requires=IS_NOT_EMPTY()),
-
-    INPUT(_name='archivos_ultrasonicos',_type='file',_multiple=True,
-        requires=IS_NOT_EMPTY())
     ]
 
-    forma = FORM(*Campos_pestana_3)
+    formaGrabadora = FORM(*camposGrabadora)
 
-    if forma.accepts(request.vars,formname='formaHTML'):
+    if formaGrabadora.accepts(request.vars,formname='formaGrabadoraHTML'):
     
         ################Procesando la grabadora#################################
     
         #Filtrando los datos correspondientes a la tabla de la grabadora:
-        datosGrabadora = db.Grabadora._filter_fields(forma.vars)
+        datosGrabadora = db.Grabadora._filter_fields(formaGrabadora.vars)
                 
         #Guardando el registro de la grabadora en la base de datos:
         
@@ -79,14 +73,14 @@ def index():
         
         #Guardando la imagen de referencia en la carpeta adecuada
         imagenRef = db.Imagen_referencia_grabadora.archivo.store(
-            forma.vars.imagen_grabadora.file,forma.vars.imagen_grabadora.filename)
+            formaGrabadora.vars.imagen_grabadora.file,formaGrabadora.vars.imagen_grabadora.filename)
         
         #Creando los campos de la tabla Imagen_referencia_grabadora:
         
         datosImagenRef = {}
         datosImagenRef['grabadora_id'] = grabadoraInsertada
         datosImagenRef['archivo'] = imagenRef
-        datosImagenRef['archivo_nombre_original'] = forma.vars.imagen_grabadora.filename
+        datosImagenRef['archivo_nombre_original'] = formaGrabadora.vars.imagen_grabadora.filename
         
         #Insertando el registro en la base de datos:
         
@@ -96,14 +90,14 @@ def index():
         
         #Guardando la imagen de referencia en la carpeta adecuada
         imagenRefMicro = db.Imagen_referencia_microfonos.archivo.store(
-            forma.vars.imagen_microfonos.file,forma.vars.imagen_microfonos.filename)
+            formaGrabadora.vars.imagen_microfonos.file,formaGrabadora.vars.imagen_microfonos.filename)
         
         #Creando los campos de la tabla Archivo_referencia_grabadora:
         
         datosImagenRefMicro = {}
         datosImagenRefMicro['grabadora_id'] = grabadoraInsertada
         datosImagenRefMicro['archivo'] = imagenRefMicro
-        datosImagenRefMicro['archivo_nombre_original'] = forma.vars.imagen_microfonos.filename
+        datosImagenRefMicro['archivo_nombre_original'] = formaGrabadora.vars.imagen_microfonos.filename
         
         #Insertando el registro en la base de datos:
         
@@ -113,64 +107,22 @@ def index():
         
         #Guardando el archivo de metadatos en la carpeta adecuada
         archivoMeta = db.Archivo_referencia_grabadora.archivo.store(
-            forma.vars.archivo_metadatos.file,forma.vars.archivo_metadatos.filename)
+            formaGrabadora.vars.archivo_metadatos.file,formaGrabadora.vars.archivo_metadatos.filename)
         
         #Creando los campos de la tabla Imagen_referencia_microfonos:
         
         datosArchivoRef = {}
         datosArchivoRef['grabadora_id'] = grabadoraInsertada
         datosArchivoRef['archivo'] = archivoMeta
-        datosArchivoRef['archivo_nombre_original'] = forma.vars.archivo_metadatos.filename
+        datosArchivoRef['archivo_nombre_original'] = formaGrabadora.vars.archivo_metadatos.filename
         
         #Insertando el registro en la base de datos:
         
         db.Archivo_referencia_grabadora.insert(**datosArchivoRef)
-        
-        ################Procesando los archivos audibles########################
-        
-        archivosAudibles = forma.vars['archivos_audibles']
-        if not isinstance(archivosAudibles, list):
-        
-            archivosAudibles = [archivosAudibles]
             
-        for aux in archivosAudibles:
-
-            #Guardando el archivo en la carpeta adecuada
-            ArchivoAudible = db.Archivo_grabadora.archivo.store(aux, aux.filename)
-            
-            datosArchivoAudible = {}
-            datosArchivoAudible['grabadora_id'] = grabadoraInsertada
-            datosArchivoAudible['archivo'] = ArchivoAudible
-            datosArchivoAudible['archivo_nombre_original'] = aux.filename
-            datosArchivoAudible['es_audible'] = True
-        
-            #Insertando el registro en la base de datos:
-
-            db.Archivo_grabadora.insert(**datosArchivoAudible)
-
-            ################Procesando los archivos ultrasónicos####################
-        
-        archivosUltrasonicos = forma.vars['archivos_ultrasonicos']
-        if not isinstance(archivosUltrasonicos, list):
-        
-            archivosUltrasonicos = [archivosUltrasonicos]
-            
-        for aux in archivosUltrasonicos:
-            archivoUltrasonico = db.Archivo_grabadora.archivo.store(aux, aux.filename)
-            
-            datosArchivoUltrasonico = {}
-            datosArchivoUltrasonico['grabadora_id'] = grabadoraInsertada
-            datosArchivoUltrasonico['archivo'] = archivoUltrasonico
-            datosArchivoUltrasonico['archivo_nombre_original'] = aux.filename
-            datosArchivoUltrasonico['es_audible'] = False
-        
-            #Insertando el registro en la base de datos:
-
-            db.Archivo_grabadora.insert(**datosArchivoUltrasonico)
-    
         response.flash = 'Éxito'
         
-    elif forma.errors:
+    elif formaGrabadora.errors:
        response.flash = 'Hubo un error al llenar la forma'
        
     else:
@@ -213,6 +165,8 @@ def asignarSitios():
 
     dropdownHTML = "<select class='generic-widget' name='sitio_muestra_id' id='tabla_sitio_muestra_id'>"
 
+    dropdownHTML += "<option value=''/>"
+
     for sitio in sitiosAsignados:
 
         dropdownHTML += "<option value='" + str(sitio.id) + "'>" + sitio.sitio_numero + "</option>"  
@@ -221,22 +175,164 @@ def asignarSitios():
     
     return XML(dropdownHTML)
 
-#AJAX para revisar que no se haya ingresado una grabadora en el mismo sitio con
-#anterioridad.
-#El AJAX se activará cuando seleccionen un conglomerado y un número de sitio.
+def grabadoraExistente():
 
-# def grabadoraExistente():
+    #Obteniendo la información del sitio que seleccionó el usuario:
+    sitioElegidoID = request.vars.sitio_muestra_id
 
-#     #Obteniendo la información del sitio que seleccionó el usuario:
-#     sitioElegidoID = request.vars.sitio_muestra_id
+    #Haciendo un query a la tabla de Grabadora con la información anterior:
 
-#     #Haciendo un query a la tabla de Grabadora con la información anterior:
+    grabadoraYaInsertada=db(db.Grabadora.sitio_muestra_id==sitioElegidoID).select()
 
-#     grabadoraYaInsertada=db(db.Grabadora.sitio_muestra_id==sitioElegidoID).select()
+    #regresa la longitud de grabadoraYaInsertada para que sea interpretada por JS
 
-#     #regresa la longitud de grabadoraYaInsertada para que sea interpretada por JS
+    return len(grabadoraYaInsertada)
 
-#     return len(grabadoraYaInsertada)
+# AQUÍ SURGE UNA CUESTIÓN: PARA PODER VALIDAR LA UNICIDAD DE LA CÁMARA,
+# NECESITAMOS UN TRIGGER "ON CHANGE". SIN EMBARGO, PARA PODER HACER ESTO BIEN
+# REQUERIMOS INCLUIR UN ESPACIO EN BLANCO POR DEFAULT EN LAS COMBOBOX GENERADAS
+# MEDIANTE AJAX, CON LO QUE SURGE LA CUESTIÓN DE VALIDARLAS, Y NECESITAMOS UNA
+# FUNCIÓN DE JQUERY DISTINTA PARA PODER PEGARLES A LOS ELEMENTOS QUE NO EXISTEN
+# DESDE UN PRINCIPIO.
+
+def index2():
+
+    camposArchivosGrabadora = [
+
+        #Localización de la grabadora. Por medio de estos datos debe ser posible
+        #localizar una única grabadora:
+
+        SELECT(_name='conglomerado_muestra_id',
+            requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='grabadora_id',
+            requires=IS_IN_DB(db,db.grabadora.id,'%(nombre)s')),
+
+        #Elegir si se están introduciendo archivos audiblles o ultrasónicos
+
+        INPUT(_name='es_audible_ultrasonico',_type='string',requires=IS_NOT_EMPTY()),
+
+        ###########Archivos de la grabadora###########
+        INPUT(_name='archivos_grabadora',_type='file',requires=IS_NOT_EMPTY(),
+            _multiple=True)
+
+    ]
+
+    formaArchivosGrabadora = FORM(*camposArchivosGrabadora)
+
+    if formaArchivosGrabadora.accepts(request.vars,formname='formaArchivosGrabadoraHTML'):
+
+        #Revisando si los archivos subidos son audibles/ultrasónicos, mediante la
+        #selección del usuario:
+
+        if (formaArchivosGrabadora.vars['es_audible_ultrasonico']=='audible'):
+
+            esAudible=True
+
+        else:
+
+            esAudible=False
+
+    ################Procesando los archivos múltiples###########################
+        
+        archivos = formaArchivosGrabadora.vars['archivos_grabadora']
+
+        if not isinstance(archivos, list):
+            archivos = [archivos]
+            
+        for aux in archivos:
+
+            #Guardando el archivo en la carpeta adecuada
+            archivoGrabadora = db.Archivo_grabadora.archivo.store(aux, aux.filename)
+            
+            datosArchivoGrabadora = {}
+            datosGrabadora['es_audible']= esAudible
+            datosArchivoGrabadora['grabadora_id'] = formaArchivosGrabadora.vars['grabadora_id']
+            datosArchivoGrabadora['archivo'] = archivoGrabadora
+            datosArchivoGrabadora['archivo_nombre_original'] = aux.filename
+        
+            #Insertando el registro en la base de datos:
+
+            db.Archivo_grabadora.insert(**datosArchivoGrabadora)
+
+        response.flash = 'Éxito'
+        
+    elif formaGrabadora.errors:
+
+       response.flash = 'Hubo un error al llenar la forma'
+       
+    else:
+        response.flash ='Por favor, introduzca los archivos asociados a una grabadora'
+
+    ##########Enviando la información de la dropdown de conglomerado############
+
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
+
+    return dict(listaConglomerado=listaConglomerado)
+
+def asignarGrabadora():
+
+    # El campo conglomerado_muestra_id es únicamente auxiliar y se utiliza para:
+    # 1. Mediante AJAX, buscar los sitios asociados a un conglomerado.
+    # 2. Utilizando dichos sitios, buscar en la lista de grabadora,
+    # para ver en cuáles de dichos sitios existe una grabadora declarada. Mostrar
+    # en la vista los sitios, pero enviar al controlador los id's de las grabadoras
+    # asociadas a cada sitio.
+
+    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+
+    #Obteniendo los sitios que existen en dicho conglomerado
+    sitiosAsignados = db(
+        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
+        (db.Sitio_muestra.existe==True)&\
+        (db.Sitio_muestra.sitio_numero!='Punto de control')
+        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
+
+    #Bandera que indica si se encontró alguna grabadora declarada en alguno de
+    #los sitios del conglomerado elegido:
+
+    flag = False
+
+    #Creando la dropdown de sitios/grabadoras y enviándola a la vista para que sea desplegada:
+
+    dropdownHTML = "<select class='generic-widget' name='grabadora_id' id='tabla_grabadora_id'>"
+    dropdownHTML += "<option value=''/>"
+
+    for sitio in sitiosAsignados:
+
+        #Buscando, de entre los sitios de un conglomerado, en cuáles ha sido
+        #declarada una grabadora. En caso de que no ocurra para ningún sitio,
+        #se enviará un mensaje (para ello se utiliza la bandera).
+
+        grabadoraSitio = db(db.Grabadora.sitio_muestra_id==sitio.id).select(
+            db.Grabadora.id).first()
+
+        if len(grabadoraSitio)>1:
+
+            flag = True
+
+            #Como cuidamos que exista a lo más una grabadora por sitio de un conglome-
+            #rado, al elegir el conglomerado y el número de sitio, automática-
+            #mente sabemos la grabadora a la que corresponde, sin embargo, para el
+            #usuario mandamos el número de sitio del conglomerado elegido,
+            #mientras que para el controlador enviamos el id de dicha grabadora.
+
+            dropdownHTML += "<option value='" + str(grabadoraSitio.id) + "'>"+\
+            sitio.sitio_numero + "</option>"  
+
+    dropdownHTML += "</select>"
+
+    #Finalmente, si flag=false, en lugar de enviar la dropdown, enviamos un mensaje
+    #de que no hay grabadoras declaradas en dicho conglomerado:
+
+    if not flag:
+
+        dropdownHTML = "<p id='tabla_grabadora_id'> Favor de registrar una grabadora para este conglomerado.</p>"
+    
+    return XML(dropdownHTML)
 
 
 

@@ -1,7 +1,7 @@
 # coding: utf8
 def index1():
 
-    Campos_transecto_invasoras = [
+    camposTransecto = [
 
     # campos transecto invasoras
 
@@ -28,7 +28,7 @@ def index1():
 
     #IS_DATE(format=T('%d-%m-%Y'))),
     
-    formaTransecto = FORM(*Campos_transecto_invasoras)
+    formaTransecto = FORM(*camposTransecto)
     
     if formaTransecto.accepts(request.vars,formname='formaTransectoHTML'):
         db.Transecto_especies_invasoras_muestra.insert(**formaTransecto.vars)
@@ -76,7 +76,7 @@ def transectoExistente():
 
 def index2():
 
-    Campos_especie_invasora = [
+    camposEspecie = [
 
 		#Datos para localizar un transecto único y asociarle la observación a éste.
    		#Estos datos deben conformar una llave del transecto.
@@ -110,7 +110,7 @@ def index2():
             requires=IS_NOT_EMPTY())
 	]
     
-    formaEspecie = FORM(*Campos_especie_invasora)
+    formaEspecie = FORM(*camposEspecie)
     
     if formaEspecie.accepts(request.vars,formname='formaEspecieHTML'):
 

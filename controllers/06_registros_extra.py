@@ -7,7 +7,7 @@ def index1():
     #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
     # de datos y así, evitar excepciones.
 
-    Campos_especie_invasora_extra=[
+    camposEspecie=[
     
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
@@ -54,7 +54,7 @@ def index1():
             requires=IS_NOT_EMPTY())
     ]
     
-    formaEspecie=FORM(*Campos_especie_invasora_extra)
+    formaEspecie=FORM(*camposEspecie)
 
     if formaEspecie.accepts(request.vars,formname='formaEspecieHTML'):
         
@@ -157,7 +157,7 @@ def index1():
 
 def index2():
 
-    Campos_huella_excreta_extra=[
+    camposHuellaExcreta=[
     
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
@@ -200,7 +200,7 @@ def index2():
             requires=IS_NOT_EMPTY())
     ]
 
-    formaHuellaExcreta = FORM(*Campos_huella_excreta_extra)
+    formaHuellaExcreta = FORM(*camposHuellaExcreta)
 
     if formaHuellaExcreta.accepts(request.vars,formname='formaHuellaExcretaHTML'):
         
@@ -253,7 +253,7 @@ def index2():
         
     elif formaHuellaExcreta.errors:
 
-       response.flash = 'Hubo un error al llenar la forma de huellas/excretas'
+       response.flash = 'Hubo un error al llenar la forma de huella/excreta'
        
     else:
 
@@ -276,7 +276,7 @@ def index2():
 
 def index3():
 
-    Campos_especimen_restos_extra=[
+    camposEspecimenRestos=[
     
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
@@ -319,7 +319,7 @@ def index3():
             requires=IS_NOT_EMPTY())
     ]
 
-    formaEspecimenRestos = FORM(*Campos_especimen_restos_extra)
+    formaEspecimenRestos = FORM(*camposEspecimenRestos)
 
     if formaEspecimenRestos.accepts(request.vars,formname='formaEspecimenRestosHTML'):
         
@@ -373,7 +373,7 @@ def index3():
         
     elif formaEspecimenRestos.errors:
 
-       response.flash = 'Hubo un error al llenar la forma de huellas/excretas'
+       response.flash = 'Hubo un error al llenar la forma de especímen/restos'
        
     else:
 

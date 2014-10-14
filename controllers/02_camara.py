@@ -1,7 +1,7 @@
 # coding: utf8
 def index1(): 
 
-    CamposCamara = [
+    camposCamara = [
     
         # campos cámara
             
@@ -51,7 +51,7 @@ def index1():
 
     ]
 
-    formaCamara = FORM(*CamposCamara)
+    formaCamara = FORM(*camposCamara)
 
     if formaCamara.accepts(request.vars,formname='formaCamaraHTML'):
     
@@ -133,6 +133,8 @@ def asignarSitios():
 
     dropdownHTML = "<select class='generic-widget' name='sitio_muestra_id' id='tabla_sitio_muestra_id'>"
 
+    dropdownHTML += "<option value=''/>"
+
     for sitio in sitiosAsignados:
 
         dropdownHTML += "<option value='" + str(sitio.id) + "'>" + sitio.sitio_numero + "</option>"  
@@ -145,18 +147,18 @@ def asignarSitios():
 #anterioridad.
 #El AJAX se activará cuando seleccionen un conglomerado y un número de sitio.
 
-# def camaraExistente():
+def camaraExistente():
 
-#     #Obteniendo la información del sitio que seleccionó el usuario:
-#     sitioElegidoID = request.vars.sitio_muestra_id
+    #Obteniendo la información del sitio que seleccionó el usuario:
+    sitioElegidoID = request.vars.sitio_muestra_id
 
-#     #Haciendo un query a la tabla de Camara con la información anterior:
+    #Haciendo un query a la tabla de Camara con la información anterior:
 
-#     camaraYaInsertada=db(db.Camara.sitio_muestra_id==sitioElegidoID).select()
+    camaraYaInsertada=db(db.Camara.sitio_muestra_id==sitioElegidoID).select()
 
-#     #regresa la longitud de camaraYaInsertada para que sea interpretada por JS
+    #regresa la longitud de camaraYaInsertada para que sea interpretada por JS
 
-#     return len(camaraYaInsertada)
+    return len(camaraYaInsertada)
 
 # AQUÍ SURGE UNA CUESTIÓN: PARA PODER VALIDAR LA UNICIDAD DE LA CÁMARA,
 # NECESITAMOS UN TRIGGER "ON CHANGE". SIN EMBARGO, PARA PODER HACER ESTO BIEN
@@ -167,7 +169,7 @@ def asignarSitios():
 
 def index2():
 
-    CamposArchivosCamara = [
+    camposArchivosCamara = [
 
         #Localización de la cámara. Por medio de estos datos debe ser posible
         #localizar una única cámara:
@@ -183,7 +185,7 @@ def index2():
 
     ]
 
-    formaArchivosCamara = FORM(*CamposArchivosCamara)
+    formaArchivosCamara = FORM(*camposArchivosCamara)
 
     if formaArchivosCamara.accepts(request.vars,formname='formaArchivosCamaraHTML'):
 
@@ -225,7 +227,9 @@ def index2():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-    def asignarCamara():
+    return dict(listaConglomerado=listaConglomerado)
+
+def asignarCamara():
 
     # El campo conglomerado_muestra_id es únicamente auxiliar y se utiliza para:
     # 1. Mediante AJAX, buscar los sitios asociados a un conglomerado.
@@ -243,73 +247,45 @@ def index2():
         (db.Sitio_muestra.sitio_numero!='Punto de control')
         ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
 
+    #Bandera que indica si se encontró alguna cámara declarada en alguno de
+    #los sitios del conglomerado elegido:
+
+    flag = False
 
     #Creando la dropdown de sitios/cámaras y enviándola a la vista para que sea desplegada:
 
     dropdownHTML = "<select class='generic-widget' name='camara_id' id='tabla_camara_id'>"
     dropdownHTML += "<option value=''/>"
 
-        #Bandera que indica si se encontró alguna cámara declarada en alguno de
-        #los sitios del conglomerado elegido:
+    for sitio in sitiosAsignados:
 
-        flag = False
+        #Buscando, de entre los sitios de un conglomerado, en cuáles ha sido
+        #declarada una cámara. En caso de que no ocurra para ningún sitio,
+        #se enviará un mensaje (para ello se utiliza la bandera).
 
-        for sitio in sitiosAsignados:
+        camaraSitio = db(db.Camara.sitio_muestra_id==sitio.id).select(
+            db.Camara.id).first()
 
-            #Buscando, de entre dichos sitios, en cuáles ha sido declarada una
-            #cámara. También se enviará a la vista la bandera, para enviar una
-            #alerta en caso de que no haya sido declarada una cámara en los mismos.
+        if len(camaraSitio)>1:
 
-            camaraSitio = db(db.Camara.sitio_muestra_id==sitio.id).select(
-                db.Camara.id).first()
+            flag = True
 
-            if len(camaraSitio)>1:
+            #Como cuidamos que exista a lo más una cámara por sitio de un conglome-
+            #rado, al elegir el conglomerado y el número de sitio, automática-
+            #mente sabemos la cámara a la que corresponde, sin embargo, para el
+            #usuario mandamos el número de sitio del conglomerado elegido,
+            #mientras que para el controlador enviamos el id de dicha cámara.
 
-                flag = True
+            dropdownHTML += "<option value='" + str(camaraSitio.id) + "'>"+\
+            sitio.sitio_numero + "</option>"  
 
-                #Como cuidamos que exista a lo más una cámara por sitio de un conglome-
-                #rado, al elegir el conglomerado y el número de sitio, automática-
-                #mente sabemos la cámara a la que corresponde, sin embargo, para el
-                #usuario mandamos el número de sitio del conglomerado elegido,
-                #mientras que para el controlador enviamos el id de dicha cámara.
+    dropdownHTML += "</select>"
 
-                dropdownHTML += "<option value='" + str(camaraSitio.id) + "'>"+\
-                sitio.sitio_numero + "</option>"  
+    #Finalmente, si flag=false, en lugar de enviar la dropdown, enviamos un mensaje
+    #de que no hay cámaras declaradas en dicho conglomerado:
+
+    if not flag:
+
+        dropdownHTML = "<p id='tabla_camara_id'> Favor de registrar una cámara para este conglomerado.</p>"
     
-        dropdownHTML += "</select>"
-    
-    return response.json(dict(dropdown=XML(dropdownHTML),flag=flag))
-
-#     <?php
-# $arr = array ('response'=>'error','comment'=>'test comment here');
-# echo json_encode($arr);
-# ?>
-
-# //the script above returns this:
-# {"response":"error","comment":"test comment here"}
-
-# <script type="text/javascript">
-# $.ajax({
-#     type: "POST",
-#     url: "process.php",
-#     data: dataString,
-#     dataType: "json",
-#     success: function (data) {
-#         if (data.response == 'captcha') {
-#             alert('captcha');
-#         } else if (data.response == 'success') {
-#             alert('success');
-#         } else {
-#             alert('sorry there was an error');
-#         }
-#     }
-
-# }); 
-# </script>
-
-
-
-
-
-
-
+    return XML(dropdownHTML)

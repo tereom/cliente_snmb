@@ -2,7 +2,7 @@
 
 def index():
 
-	Campos= [
+	campos= [
 
     # Utilizamos una FORM porque nos brinda mayor flexibilidad que una SQLFORM.
     
@@ -162,7 +162,7 @@ def index():
 	##Cerrando la lista de campos para el formulario
 	]
 
-	forma = FORM(*Campos)
+	forma = FORM(*campos)
 
 	if forma.accepts(request.vars,formname='formaHTML'):
 
