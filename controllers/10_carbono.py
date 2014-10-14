@@ -520,12 +520,17 @@ def index3():
     
         response.flash ='Por favor, ingrese los datos de los puntos de carbono'
 
+    ### Información de los menus dropdown
 
-    # Menus desplegables
-    listaTipo = db(db.Cat_material_carbono).select(db.Cat_material_carbono.nombre)
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
+
+    #Asimismo, llenando el catálogo de tipo de material
+
+    listaTipo = db(db.Cat_material_carbono).select(db.Cat_material_carbono.nombre)
 
     return dict(listaTipo=listaTipo, 
         listaConglomerado=listaConglomerado)

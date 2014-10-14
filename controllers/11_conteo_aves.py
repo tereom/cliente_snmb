@@ -102,7 +102,7 @@ def puntoConteoExistente():
 
 def index2():
 
-    camposAve = [
+    camposConteoAve = [
 
         #Localización de un punto de conteo de aves. Por medio de estos datos debe
         #ser posible localizar un único punto de conteo de aves:
@@ -122,77 +122,52 @@ def index2():
         INPUT(_name='es_visual',_type='boolean'),
         INPUT(_name='es_sonora',_type='boolean'),
 
-        INPUT(_name='numero_individuos',_type='integer',requires=IS_NOT_EMPTY),
+        INPUT(_name='numero_individuos',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='distancia_aproximada',_type='double',requires=IS_NOT_EMPTY())
 
+        ###########Imágenes############
+        INPUT(_name='archivos_conteo_ave',_type='file',_multiple=True,
+            requires=IS_NOT_EMPTY())
 
     ]
 
-    formaArchivosCamara = FORM(*camposArchivosCamara)
+    formaConteoAve = FORM(*camposConteoAve)
 
-    if formaArchivosCamara.accepts(request.vars,formname='formaArchivosCamaraHTML'):
-
-        INPUT(_name='largo',_type='double',requires=IS_NOT_EMPTY()),
-        INPUT(_name='ancho',_type='double',requires=IS_NOT_EMPTY()),
-        
-        ###########Imágenes############
-        INPUT(_name='archivos_huella_excreta',_type='file',_multiple=True,
-            requires=IS_NOT_EMPTY())
-	]
-
-    formaHuellaExcreta = FORM(*Campos_huella_excreta)
-    
-    if formaHuellaExcreta.accepts(request.vars,formname='formaHuellaExcretaHTML'):
-
+    if formaConteoAve.accepts(request.vars,formname='formaConteoAveHTML'):    
         #Filtrando los datos correspondientes a la tabla de huellas:
 
-        datosHuellaExcreta = db.Huella_excreta._filter_fields(formaHuellaExcreta.vars)
-                
-        #Por medio de AJAX, estamos garantizando que cuando registran los
-        #transectos sólo se registre uno de cada número para cada muestreo del
-        #conglomerado.
-
-        #También garantizamos que los transectos en la dropdown de especie
-        #invasora sí estén registrados con anterioridad en el conglomerado.
+        datosConteoAve = db.Conteo_ave._filter_fields(formaConteoAve.vars)        
         
+        #Guardando el registro de la observación en la base de datos:
         
-        #Asociando el valor de la variable es_huella a partir del valor del control
-        #es_huella_excreta
-        
-        if (formaHuellaExcreta.vars['es_huella_excreta'])=='huella':
-            datosHuellaExcreta['es_huella']=True
-        else:
-            datosHuellaExcreta['es_huella']=False
-
-        #Guardando el registro de la especie invasora en la base de datos:
-        
-        huellaExcretaInsertada = db.Huella_excreta.insert(**datosHuellaExcreta)
+        conteoAveInsertado = db.Conteo_ave.insert(**datosConteoAve)
 
         ################Procesando los archivos múltiples#################################
         
-        archivos = formaHuellaExcreta.vars['archivos_huella_excreta']
+        archivos = formaConteoAve.vars['archivos_conteo_ave']
         
         if not isinstance(archivos, list):
             archivos = [archivos]
             
         for aux in archivos:
 
-             #Guardando el archivo en la carpeta adecuada
-            archivoHuellaExcreta = db.Archivo_huella_excreta.archivo.store(aux,aux.filename)
+            #Guardando el archivo en la carpeta adecuada
+            archivoConteoAve = db.Archivo_conteo_ave.archivo.store(aux,aux.filename)
             
-            datosArchivoHuellaExcreta = {}
-            datosArchivoHuellaExcreta['huella_excreta_id'] = huellaExcretaInsertada
-            datosArchivoHuellaExcreta['archivo'] = archivoHuellaExcreta
-            datosArchivoHuellaExcreta['archivo_nombre_original'] = aux.filename
+            datosArchivoConteoAve = {}
+            datosArchivoConteoAve['conteo_ave_id'] = conteoAveInsertado
+            datosArchivoConteoAve['archivo'] = archivoConteoAve
+            datosArchivoConteoAve['archivo_nombre_original'] = aux.filename
         
             #Insertando el registro en la base de datos:
 
-            db.Archivo_huella_excreta.insert(**datosArchivoHuellaExcreta)
+            db.Archivo_conteo_ave.insert(**datosArchivoConteoAve)
         
         response.flash = 'Éxito'
         
     elif formaHuellaExcreta.errors:
 
-       response.flash = 'Hubo un error al llenar la forma de huellas/excretas'
+       response.flash = 'Hubo un error al llenar la forma de conteo de aves'
        
     else:
 
@@ -207,36 +182,72 @@ def index2():
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
     # Tabla de revisión de registros ingresados
-    db.Huella_excreta.transecto_huellas_excretas_id.writable = False
-    db.Archivo_huella_excreta.huella_excreta_id.writable =False
-    grid = SQLFORM.smartgrid(db.Huella_excreta,csv=False,user_signature=False,
+    db.Conteo_ave.punto_conteo_aves_id.writable = False
+    db.Archivo_conteo_ave.conteo_ave_id.writable =False
+    grid = SQLFORM.smartgrid(db.Conteo_ave,csv=False,user_signature=False,
         create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,
         grid=grid)
 
-#La siguiente función es invocada mediante AJAX para llenar la combobox de número
-#de transecto a partir de los transectos declarados en un conglomerado seleccionado.
+def asignarPuntoConteo():
 
-def asignarTransectos():
+    # El campo conglomerado_muestra_id es únicamente auxiliar y se utiliza para:
+    # 1. Mediante AJAX, buscar los sitios asociados a un conglomerado.
+    # 2. Utilizando dichos sitios, buscar en la tabla de Punto_conteo_aves,
+    # para ver en cuáles de dichos sitios existe una punto declarado. Mostrar
+    # en la vista los sitios, pero enviar al controlador los id's de los puntos
+    # de conteo asociados a cada sitio.
 
-    #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
 
-    #Obteniendo los transectos declarados en dicho conglomerado
-    transectosDeclarados = db(
-        db.Transecto_huellas_excretas_muestra.conglomerado_muestra_id==conglomeradoElegidoID
-        ).select(db.Transecto_huellas_excretas_muestra.transecto_numero,\
-        db.Transecto_huellas_excretas_muestra.id)
+    #Obteniendo los sitios que existen en dicho conglomerado
+    sitiosAsignados = db(
+        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
+        (db.Sitio_muestra.existe==True)&\
+        (db.Sitio_muestra.sitio_numero!='Punto de control')
+        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
 
-    #Creando la dropdown de transectos y enviándola a la vista para que sea desplegada:
+    #Bandera que indica si se encontró algún punto de conteo declarado en alguno
+    #de los sitios del conglomerado elegido:
 
-    dropdownHTML = "<select class='generic-widget' name='transecto_huellas_excretas_id' id='tabla_transecto_huellas_excretas_id'>"
+    flag = False
 
-    for transecto in transectosDeclarados:
+    #Creando la dropdown de sitios/puntos y enviándola a la vista para que sea desplegada:
 
-        dropdownHTML += "<option value='" + str(transecto.id) + "'>" + transecto.transecto_numero + "</option>"  
-    
+    dropdownHTML = "<select class='generic-widget' name='Punto_conteo_aves_id'"+\
+        " id='tabla_punto_conteo_aves_id'>"
+    dropdownHTML += "<option value=''/>"
+
+    for sitio in sitiosAsignados:
+
+        #Buscando, de entre los sitios de un conglomerado, en cuáles ha sido
+        #declarado un punto de conteo. En caso de que no ocurra para ningún sitio,
+        #se enviará un mensaje (para ello se utiliza la bandera).
+
+        puntoConteoSitio = db(db.Punto_conteo_aves.sitio_muestra_id==sitio.id).select(
+            db.Punto_conteo_aves.id).first()
+
+        if len(puntoConteoSitio)>1:
+
+            flag = True
+
+            #Como cuidamos que exista a lo más un punto por sitio de un conglome-
+            #rado, al elegir el conglomerado y el número de sitio, automática-
+            #mente sabemos el punto al que corresponde, sin embargo, para el
+            #usuario mandamos el número de sitio del conglomerado elegido,
+            #mientras que para el controlador enviamos el id de dicho punto.
+
+            dropdownHTML += "<option value='" + str(puntoConteoSitio.id) + "'>"+\
+            sitio.sitio_numero + "</option>"  
+
     dropdownHTML += "</select>"
+
+    #Finalmente, si flag=false, en lugar de enviar la dropdown, enviamos un mensaje
+    #de que no hay cámaras declaradas en dicho conglomerado:
+
+    if not flag:
+
+        dropdownHTML = "<p id='tabla_camara_id'> Favor de registrar un punto de conteo de aves para este conglomerado.</p>"
     
     return XML(dropdownHTML)

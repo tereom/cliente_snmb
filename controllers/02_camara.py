@@ -233,7 +233,7 @@ def asignarCamara():
 
     # El campo conglomerado_muestra_id es únicamente auxiliar y se utiliza para:
     # 1. Mediante AJAX, buscar los sitios asociados a un conglomerado.
-    # 2. Utilizando dichos sitios, buscar en la lista de cámara,
+    # 2. Utilizando dichos sitios, buscar en la tabla de Camara,
     # para ver en cuáles de dichos sitios existe una cámara declarada. Mostrar
     # en la vista los sitios, pero enviar al controlador los id's de las cámaras
     # asociadas a cada sitio.
