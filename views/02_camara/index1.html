@@ -38,7 +38,7 @@
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="_formname" value="formaHTML"/>
+    <input type="hidden" name="_formname" value="formaCamaraHTML"/>
     <fieldset>
         <legend>
         Datos de la cámara
@@ -278,14 +278,6 @@
             </tr>
         </table>
     </fieldset>
-    <fieldset>
-        <legend>
-            Subir imágenes y videos
-        </legend>
-        <div>
-            <input class="obligatorio" type="file" id="tabla_archivos_camara" name="archivos_camara" multiple/>
-        </div>
-    </fieldset>
     <br/>
     <fieldset>
         <legend>
@@ -297,33 +289,6 @@
 </form>
 
 <script>
-
-
-	// //AJAX para advertir al usuario que una cámara ya ha sido asignada
-	// //con anterioridad
-	// $('#tabla_sitio_muestra_id').change
-	// (
- //    	function()
- //    	{
- //    		$.ajax
- //    		(
- //    			{
-	// 				type: "POST",
- //        			data: $('#tabla_sitio_muestra_id').serialize(),
- //        			url: "{{=URL('camaraExistente')}}",
- //        			success: function(resultado)
- //        			{
- //        				//alert(resultado);
- //        				if(resultado>=1)
- //    					{
- //    						alert('Esta cámara ya ha sido declarada');
- //    						$('#tabla_sitio_muestra_id').val("");
- //    					}
- //        			}
- //    			}
- //    		);
-	// 	}
- //   	);
 
     //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
     $('#tabla_conglomerado_muestra_id').change
@@ -337,47 +302,83 @@
             // del elemento donde se insertará la respuesta
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
         }
-       )
+    );
+
+    //AJAX para evitar que se envíe la información de la cámara correspondiente
+    //a un sitio más de una vez:
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+    {
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('camaraExistente')}}",
+            success: function(resultado)
+                {
+                    //alert(resultado);
+                    if(resultado>=1)
+                    {
+                        alert('La cámara correspondiente a este sitio ya ha sido declarada');
+                        $('#tabla_sitio_muestra_id').val("");
+                    }
+                }
+        }
+        );
+    }
+    );
+
 
     //Validando, para ello utilizamos la clase "obligatorio":
-       $('form').submit
-       (
-           function()
-           {
-                flag =true;
-                campos=$('.obligatorio');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        flag = false;
-                    }
-                }
-                );
+    $('form').submit
+    (
+     function()
+     {
+        flag =true;
+        campos=$('.obligatorio');
+        campos.each(function() 
+        {
+            if(!$(this).val())
+            {
+                flag = false;
+            }
+        }
+        );
 
-                //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-                var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
-                campos_fecha=$('.date');
-                flag_m = true;
-                campos_fecha.each(function() 
-                {
-                    if(!fechaReg.test($(this).val()))
-                    {
-                       flag_m = false;
-                    }
-                }
-                );
-
-                if(!flag)
-                {
-                    alert('Faltó llenar un campo o subir alguna imagen');
-                    return false;
-                }
-                else if(!flag_m){
-                    alert('El formato de fecha es aaaa-mm-dd');
-                    return false;
-                }
+        //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
+        var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+        campos_fecha=$('.date');
+        flag_m = true;
+        campos_fecha.each(function() 
+        {
+            if(!fechaReg.test($(this).val()))
+            {
+               flag_m = false;
            }
-       )
+       }
+       );
+
+        //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+        //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+        //validar aparte:
+        if(!$('#shadow_clone').find('select:first').val())
+        {
+            flag = false;
+            alert('Falta llenar el sitio');
+        }
+
+
+        if(!flag)
+        {
+            alert('Faltó llenar un campo o subir alguna imagen');
+            return false;
+        }
+        else if(!flag_m)
+        {
+            alert('El formato de fecha es aaaa-mm-dd');
+            return false;
+        }
+    }
+    );
 
 </script>

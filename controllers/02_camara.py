@@ -59,6 +59,16 @@ def index1():
     
     	#Filtrando los datos correspondientes a la tabla de la cámara:
         datosCamara = db.Camara._filter_fields(formaCamara.vars)
+
+        #Si llovió durante el muestreo, entonces True se guarda en la base de datos,
+        #en caso contrario, se tiene que guardar manualmente False, pues si no,
+        #Web2py guarda Null.
+
+        if bool(formaCamara.vars['llovio']):
+            datosCamara['llovio']=formaCamara.vars['llovio']
+        else:
+            datosCamara['llovio']=False
+
                 
         #Guardando el registro de la cámara en la base de datos:
         

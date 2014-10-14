@@ -123,7 +123,7 @@ def index2():
         INPUT(_name='es_sonora',_type='boolean'),
 
         INPUT(_name='numero_individuos',_type='integer',requires=IS_NOT_EMPTY()),
-        INPUT(_name='distancia_aproximada',_type='double',requires=IS_NOT_EMPTY())
+        INPUT(_name='distancia_aproximada',_type='double',requires=IS_NOT_EMPTY()),
 
         ###########Imágenes############
         INPUT(_name='archivos_conteo_ave',_type='file',_multiple=True,
