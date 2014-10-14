@@ -164,7 +164,7 @@
             // del elemento donde se insertará la respuesta
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
         }
-       )
+    )
 
     //AJAX para evitar que se envíe la información de los transectos correspondientes
     //a un sitio más de una vez:
@@ -183,11 +183,11 @@
                             alert('Los transectos correspondientes a este sitio ya han sido declarados');
                             $('#tabla_sitio_muestra_id').val("");
                         }
-                    }
                 }
-                );
         }
         );
+    }
+    );
 
     //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit

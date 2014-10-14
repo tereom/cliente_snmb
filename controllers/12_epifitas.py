@@ -1,16 +1,16 @@
 # coding: utf8
 
-def index1():
+def index():
 
     camposForma = [
 
-    	# Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
-    	# para incluir las dropdowns en cascada.
+        # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
+        # para incluir las dropdowns en cascada.
     
-    	#Ésta forma únicamente se utilizará para validar antes de ingresar a la base
-    	#de datos y así, evitar excepciones.
+        #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
+        #de datos y así, evitar excepciones.
 
-      	#Datos para localizar un sitio único y la información de epífitas a éste.
+        #Datos para localizar un sitio único y la información de epífitas a éste.
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
@@ -32,56 +32,56 @@ def index1():
 
     forma = FORM(*camposForma)
 
-    if forma.accepts(request.vars,formname='formaHTML'):
+    if forma.accepts(request.vars,formname='formaEpifitaHTML'):
 
-    	datosEpifitas = {}
+        datosEpifitas = {}
 
-    	datosEpifitas['sitio_muestra_id']=forma.vars['sitio_muestra_id']
+        datosEpifitas['sitio_muestra_id']=forma.vars['sitio_muestra_id']
 
-    	#Insertando "False" cuando se recibe "None" del HTML:
+        #Insertando "False" cuando se recibe "None" del HTML:
 
-    	if bool(forma.vars['helechos_observados']):
-			datosEpifitas['helechos_observados']=forma.vars['helechos_observados']
-		else:
-			datosEpifitas['helechos_observados']=False
+        if bool(forma.vars['helechos_observados']):
+            datosEpifitas['helechos_observados']=forma.vars['helechos_observados']
+        else:
+            datosEpifitas['helechos_observados']=False
 
-		if bool(forma.vars['orquideas_observadas']):
-			datosEpifitas['orquideas_observadas']=forma.vars['orquideas_observadas']
-		else:
-			datosEpifitas['orquideas_observadas']=False
+        if bool(forma.vars['orquideas_observadas']):
+            datosEpifitas['orquideas_observadas']=forma.vars['orquideas_observadas']
+        else:
+            datosEpifitas['orquideas_observadas']=False
 
-		if bool(forma.vars['musgos_observados']):
-			datosEpifitas['musgos_observados']=forma.vars['musgos_observados']
-		else:
-			datosEpifitas['musgos_observados']=False
+        if bool(forma.vars['musgos_observados']):
+            datosEpifitas['musgos_observados']=forma.vars['musgos_observados']
+        else:
+            datosEpifitas['musgos_observados']=False
 
-    	if bool(forma.vars['liquenes_observados']):
-			datosEpifitas['liquenes_observados']=forma.vars['liquenes_observados']
-		else:
-			datosEpifitas['liquenes_observados']=False
+        if bool(forma.vars['liquenes_observados']):
+            datosEpifitas['liquenes_observados']=forma.vars['liquenes_observados']
+        else:
+            datosEpifitas['liquenes_observados']=False
 
-    	if bool(forma.vars['cactaceas_observadas']):
-			datosEpifitas['cactaceas_observadas']=forma.vars['cactaceas_observadas']
-		else:
-			datosEpifitas['cactaceas_observadas']=False
+        if bool(forma.vars['cactaceas_observadas']):
+            datosEpifitas['cactaceas_observadas']=forma.vars['cactaceas_observadas']
+        else:
+            datosEpifitas['cactaceas_observadas']=False
 
-    	if bool(forma.vars['bromeliaceas_observadas']):
-			datosEpifitas['bromeliaceas_observadas']=forma.vars['bromeliaceas_observadas']
-		else:
-			datosEpifitas['bromeliaceas_observadas']=False
+        if bool(forma.vars['bromeliaceas_observadas']):
+            datosEpifitas['bromeliaceas_observadas']=forma.vars['bromeliaceas_observadas']
+        else:
+            datosEpifitas['bromeliaceas_observadas']=False
 
-    	if bool(forma.vars['otras_observadas']):
-			datosEpifitas['otras_observadas']=forma.vars['otras_observadas']
-			datosEpifitas['nombre_otras']forma.vars['nombre_otras']
-		else:
-			datosEpifitas['otras_observadas']=False
+        if bool(forma.vars['otras_observadas']):
+            datosEpifitas['otras_observadas']=forma.vars['otras_observadas']
+            datosEpifitas['nombre_otras']=forma.vars['nombre_otras']
+        else:
+            datosEpifitas['otras_observadas']=False
 
-		#insertando en la base de datos:
-		db.Informacion_epifitas.insert(**datosEpifitas)
+        #insertando en la base de datos:
+        db.Informacion_epifitas.insert(**datosEpifitas)
 
-		response.flash = 'Éxito'
+        response.flash = 'Éxito'
         
-    elif formaPuntos.errors:
+    elif forma.errors:
 
         response.flash = 'Hubo un error al llenar la forma'
 
