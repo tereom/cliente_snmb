@@ -203,7 +203,7 @@ def index2():
     for i in range(n_ramas):
 
         #Creando de manera automatizada los nombres de los campos:
-        transecto_ramas_id_i = 'transecto_ramas_id_' + str(i+1)
+        transecto_ramas_i = 'transecto_ramas_' + str(i+1)
         diametro_i = 'diametro_' + str(i+1)
         grado_i = 'grado_' + str(i+1)
         existe_i = 'existe_' + str(i+1)
@@ -213,8 +213,8 @@ def index2():
             #Campo para marcar si existe o no una rama.
             INPUT(_name=existe_i,_type='boolean'),
 
-            SELECT(_name=transecto_ramas_id_i,
-                requires=IS_IN_DB(db,db.Transecto_ramas.id,'%(nombre)s')),
+            SELECT(_name=transecto_ramas_i,
+                requires=IS_IN_DB(db,db.Cat_transecto_ramas.nombre,'%(nombre)s')),
             INPUT(_name=diametro_i,_type='integer',requires=IS_NOT_EMPTY()),
             INPUT(_name=grado_i,_type='integer',requires=IS_NOT_EMPTY())
             ])
@@ -226,14 +226,20 @@ def index2():
             for i in range(n_ramas):
 
                 #Creando de manera automatizada los nombres de los campos:
-                transecto_ramas_id_i = 'transecto_ramas_id_' + str(i+1)
+                transecto_ramas_i = 'transecto_ramas_' + str(i+1)
                 diametro_i = 'diametro_' + str(i+1)
                 grado_i = 'grado_' + str(i+1)
                 existe_i = 'existe_' + str(i+1)
 
                 #Si existe la i-ésima rama:
                 if bool(forma.vars[existe_i]):
-           
+
+                    #Obtenemos el id para transecto_ramas usando un query
+                    transectoRamasId = db((
+                        db.Transecto_ramas.transecto_ramas_direccion==transecto_ramas_i)&
+                        (db.Transecto_ramas.sitio_muestra_id==sitio_muestra_id)).select().first()
+        
+        db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
                     #Agregando los datos extraídos de la forma:
                     formaRama_i['transecto_ramas_id']=forma.vars[transecto_ramas_id_i]
                     formaRama_i['diametro']=forma.vars[diametro_i]
@@ -254,9 +260,13 @@ def index2():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
+    # opciones para el dropdown de transectos
+    listaTransecto = db(db.Cat_transecto_ramas).select(db.Cat_transecto_ramas.nombre)
+
     #Regresando el número de ramas para crear la vista en HTML
     return dict(n_ramas=n_ramas, formaRamas=formaRamas,
-        listaConglomerado=listaConglomerado)
+        listaConglomerado=listaConglomerado,
+        listaTransecto=listaTransecto)
 
 def index3():
 

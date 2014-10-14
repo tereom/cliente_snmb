@@ -81,7 +81,7 @@
             
                 {{for i in range(n_ramas):}}                
                     <!-- Creamos los nombres de los campos y las tablas -->
-                    {{transecto_ramas_id_i = 'transecto_ramas_id_' + str(i+1)}}
+                    {{transecto_ramas_i = 'transecto_ramas_id_' + str(i+1)}}
                     {{tabla_transecto_ramas_id_i = 'tabla_' + transecto_ramas_id_i}}
 
                     {{diametro_i = 'diametro_' + str(i+1)}}
@@ -94,7 +94,7 @@
                     {{tabla_grado_i = 'tabla_' + grado_i}}
 
                 <td>
-                    <select class="generic-widget obligatorio" name="elipsoide_c" id="tabla_elipsoide_c">
+                    <select class="generic-widget obligatorio" name="transecto_ramas" id="tabla_elipsoide_c">
                         <option value=""/>
                         {{for transecto in listaTransecto:}}
                             <option value="{{=transecto.nombre}}">
