@@ -520,6 +520,17 @@ def index3():
     
         response.flash ='Por favor, ingrese los datos de los puntos de carbono'
 
+    ### Información de los menus dropdown
+
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
+
+    return dict(listaConglomerado=listaConglomerado)
+
+
 def puntosExistentes():
 
     #Obteniendo la información del sitio que seleccionó el usuario:

@@ -277,7 +277,7 @@ def asignarGrabadora():
 
     # El campo conglomerado_muestra_id es únicamente auxiliar y se utiliza para:
     # 1. Mediante AJAX, buscar los sitios asociados a un conglomerado.
-    # 2. Utilizando dichos sitios, buscar en la lista de grabadora,
+    # 2. Utilizando dichos sitios, buscar en la tabla de Grabadora,
     # para ver en cuáles de dichos sitios existe una grabadora declarada. Mostrar
     # en la vista los sitios, pero enviar al controlador los id's de las grabadoras
     # asociadas a cada sitio.
