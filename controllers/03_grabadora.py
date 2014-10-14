@@ -199,8 +199,8 @@ def index2():
 
     camposArchivosGrabadora = [
 
-        #Localización de la grabadora. Por medio de estos datos debe ser posible
-        #localizar una única grabadora:
+        #Localización de la grabadora. Por medio del conglomerado y sitio debe ser
+        #posible localizar a lo más una grabadora.
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),

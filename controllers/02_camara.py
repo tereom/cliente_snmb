@@ -171,8 +171,8 @@ def index2():
 
     camposArchivosCamara = [
 
-        #Localización de la cámara. Por medio de estos datos debe ser posible
-        #localizar una única cámara:
+        #Localización de la cámara. Por medio del conglomerado y sitio debe ser
+        #posible localizar a lo más una cámara.
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),

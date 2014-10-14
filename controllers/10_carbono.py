@@ -166,6 +166,10 @@ def asignarSitios():
 #La siguiente función se utiliza para evitar la declaración de transectos cardinales
 #en sitio, si ya fueron declarados éstos ahí con anterioridad.
 
+#La siguiente función se utiliza tanto en index1() (para evitar declarar transectos
+#duplicados en un mismo sitio), como en index2() (para evitar declarar ramas en
+#sitios donde no se hayan declarado transectos.)
+
 def transectosExistentes():
 
     #Obteniendo la información del sitio que seleccionó el usuario:
@@ -284,7 +288,7 @@ def index2():
 
 def index3():
 
-    Campos_puntos_carbono = [
+    CamposPuntosCarbono = [
 
         #Datos para localizar un sitio único y asociarle los puntos de carbono a éste.
         SELECT(_name='conglomerado_muestra_id',
@@ -366,155 +370,169 @@ def index3():
         INPUT(_name='peso_seco_muestra_8',_type='double',requires=IS_NOT_EMPTY())
         ]
 
-    formaPuntos = FORM(*Campos_transectos_ramas)  
+    formaPuntosCarbono = FORM(*CamposPuntosCarbono)  
 
-    if formaPuntos.accepts(request.vars,formname='formaPuntosHTML'):
+    if formaPuntosCarbono.accepts(request.vars,formname='formaPuntosCarbonoHTML'):
 
         ### Punto 1
 
-        formaPunto1 = {}
+        datosPunto1 = {}
 
-        formaPunto1['sitio_muestra_id'] = formaPuntos.vars['sitio_muestra_id']
-        formaPunto1['transecto_direccion'] = 'Norte'
-        formaPunto1['transecto_distancia'] = 5
+        datosPunto1['sitio_muestra_id'] = formaPuntosCarbono.vars['sitio_muestra_id']
+        datosPunto1['transecto_direccion'] = 'Norte'
+        datosPunto1['transecto_distancia'] = 5
 
-        formaPunto1['material_tipo'] = formaPuntos.vars['material_tipo_1']
-        formaPunto1['grosor'] = formaPuntos.vars['grosor_1']
-        formaPunto1['peso_humedo'] = formaPuntos.vars['peso_humedo_1']
-        formaPunto1['peso_humedo_muestra'] = formaPuntos.vars['peso_humedo_muestra_1']
-        formaPunto1['peso_seco_muestra'] = formaPuntos.vars['peso_seco_muestra_1']
+        datosPunto1['material_tipo'] = formaPuntosCarbono.vars['material_tipo_1']
+        datosPunto1['grosor'] = formaPuntosCarbono.vars['grosor_1']
+        datosPunto1['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_1']
+        datosPunto1['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_1']
+        datosPunto1['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_1']
 
         # Insertando en la base de datos:
-        db.Punto_carbono.insert(**formaPunto1)
+        db.Punto_carbono.insert(**datosPunto1)
 
         ### Punto 2
 
-        formaPunto2 = {}
+        datosPunto2 = {}
 
-        formaPunto2['sitio_muestra_id'] = formaPuntos.vars['sitio_muestra_id']
-        formaPunto2['transecto_direccion'] = 'Norte'
-        formaPunto2['transecto_distancia'] = 10
+        datosPunto2['sitio_muestra_id'] = formaPuntosCarbono.vars['sitio_muestra_id']
+        datosPunto2['transecto_direccion'] = 'Norte'
+        datosPunto2['transecto_distancia'] = 10
 
-        formaPunto2['material_tipo'] = formaPuntos.vars['material_tipo_2']
-        formaPunto2['grosor'] = formaPuntos.vars['grosor_2']
-        formaPunto2['peso_humedo'] = formaPuntos.vars['peso_humedo_2']
-        formaPunto2['peso_humedo_muestra'] = formaPuntos.vars['peso_humedo_muestra_2']
-        formaPunto2['peso_seco_muestra'] = formaPuntos.vars['peso_seco_muestra_2']
+        datosPunto2['material_tipo'] = formaPuntosCarbono.vars['material_tipo_2']
+        datosPunto2['grosor'] = formaPuntosCarbono.vars['grosor_2']
+        datosPunto2['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_2']
+        datosPunto2['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_2']
+        datosPunto2['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_2']
 
         # Insertando en la base de datos:
-        db.Punto_carbono.insert(**formaPunto2)
+        db.Punto_carbono.insert(**datosPunto2)
 
         ### Punto 3
 
-        formaPunto3 = {}
+        datosPunto3 = {}
 
-        formaPunto3['sitio_muestra_id'] = formaPuntos.vars['sitio_muestra_id']
-        formaPunto3['transecto_direccion'] = 'Este'
-        formaPunto3['transecto_distancia'] = 5
+        datosPunto3['sitio_muestra_id'] = formaPuntosCarbono.vars['sitio_muestra_id']
+        datosPunto3['transecto_direccion'] = 'Este'
+        datosPunto3['transecto_distancia'] = 5
 
-        formaPunto3['material_tipo'] = formaPuntos.vars['material_tipo_3']
-        formaPunto3['grosor'] = formaPuntos.vars['grosor_3']
-        formaPunto3['peso_humedo'] = formaPuntos.vars['peso_humedo_3']
-        formaPunto3['peso_humedo_muestra'] = formaPuntos.vars['peso_humedo_muestra_3']
-        formaPunto3['peso_seco_muestra'] = formaPuntos.vars['peso_seco_muestra_3']
+        datosPunto3['material_tipo'] = formaPuntosCarbono.vars['material_tipo_3']
+        datosPunto3['grosor'] = formaPuntosCarbono.vars['grosor_3']
+        datosPunto3['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_3']
+        datosPunto3['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_3']
+        datosPunto3['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_3']
 
         # Insertando en la base de datos:
-        db.Punto_carbono.insert(**formaPunto3)
+        db.Punto_carbono.insert(**datosPunto3)
 
         ### Punto 4
 
-        formaPunto4 = {}
+        datosPunto4 = {}
 
-        formaPunto4['sitio_muestra_id'] = formaPuntos.vars['sitio_muestra_id']
-        formaPunto4['transecto_direccion'] = 'Este'
-        formaPunto4['transecto_distancia'] = 10
+        datosPunto4['sitio_muestra_id'] = formaPuntosCarbono.vars['sitio_muestra_id']
+        datosPunto4['transecto_direccion'] = 'Este'
+        datosPunto4['transecto_distancia'] = 10
 
-        formaPunto4['material_tipo'] = formaPuntos.vars['material_tipo_4']
-        formaPunto4['grosor'] = formaPuntos.vars['grosor_4']
-        formaPunto4['peso_humedo'] = formaPuntos.vars['peso_humedo_4']
-        formaPunto4['peso_humedo_muestra'] = formaPuntos.vars['peso_humedo_muestra_4']
-        formaPunto4['peso_seco_muestra'] = formaPuntos.vars['peso_seco_muestra_4']
+        datosPunto4['material_tipo'] = formaPuntosCarbono.vars['material_tipo_4']
+        datosPunto4['grosor'] = formaPuntosCarbono.vars['grosor_4']
+        datosPunto4['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_4']
+        datosPunto4['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_4']
+        datosPunto4['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_4']
 
         # Insertando en la base de datos:
-        db.Punto_carbono.insert(**formaPunto4)
+        db.Punto_carbono.insert(**datosPunto4)
 
         ### Punto 5
 
-        formaPunto5 = {}
+        datosPunto5 = {}
 
-        formaPunto5['sitio_muestra_id'] = formaPuntos.vars['sitio_muestra_id']
-        formaPunto5['transecto_direccion'] = 'Sur'
-        formaPunto5['transecto_distancia'] = 5
+        datosPunto5['sitio_muestra_id'] = formaPuntosCarbono.vars['sitio_muestra_id']
+        datosPunto5['transecto_direccion'] = 'Sur'
+        datosPunto5['transecto_distancia'] = 5
 
-        formaPunto5['material_tipo'] = formaPuntos.vars['material_tipo_5']
-        formaPunto5['grosor'] = formaPuntos.vars['grosor_5']
-        formaPunto5['peso_humedo'] = formaPuntos.vars['peso_humedo_5']
-        formaPunto5['peso_humedo_muestra'] = formaPuntos.vars['peso_humedo_muestra_5']
-        formaPunto5['peso_seco_muestra'] = formaPuntos.vars['peso_seco_muestra_5']
+        datosPunto5['material_tipo'] = formaPuntosCarbono.vars['material_tipo_5']
+        datosPunto5['grosor'] = formaPuntosCarbono.vars['grosor_5']
+        datosPunto5['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_5']
+        datosPunto5['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_5']
+        datosPunto5['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_5']
 
         # Insertando en la base de datos:
-        db.Punto_carbono.insert(**formaPunto5)
+        db.Punto_carbono.insert(**datosPunto5)
 
         ### Punto 6
 
-        formaPunto6 = {}
+        datosPunto6 = {}
 
-        formaPunto6['sitio_muestra_id'] = formaPuntos.vars['sitio_muestra_id']
-        formaPunto6['transecto_direccion'] = 'Sur'
-        formaPunto6['transecto_distancia'] = 10
+        datosPunto6['sitio_muestra_id'] = formaPuntosCarbono.vars['sitio_muestra_id']
+        datosPunto6['transecto_direccion'] = 'Sur'
+        datosPunto6['transecto_distancia'] = 10
 
-        formaPunto6['material_tipo'] = formaPuntos.vars['material_tipo_6']
-        formaPunto6['grosor'] = formaPuntos.vars['grosor_6']
-        formaPunto6['peso_humedo'] = formaPuntos.vars['peso_humedo_6']
-        formaPunto6['peso_humedo_muestra'] = formaPuntos.vars['peso_humedo_muestra_6']
-        formaPunto6['peso_seco_muestra'] = formaPuntos.vars['peso_seco_muestra_6']
+        datosPunto6['material_tipo'] = formaPuntosCarbono.vars['material_tipo_6']
+        datosPunto6['grosor'] = formaPuntosCarbono.vars['grosor_6']
+        datosPunto6['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_6']
+        datosPunto6['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_6']
+        datosPunto6['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_6']
 
         # Insertando en la base de datos:
-        db.Punto_carbono.insert(**formaPunto6)
+        db.Punto_carbono.insert(**datosPunto6)
 
         ### Punto 7
 
-        formaPunto7 = {}
+        datosPunto7 = {}
 
-        formaPunto7['sitio_muestra_id'] = formaPuntos.vars['sitio_muestra_id']
-        formaPunto7['transecto_direccion'] = 'Oeste'
-        formaPunto7['transecto_distancia'] = 5
+        datosPunto7['sitio_muestra_id'] = formaPuntosCarbono.vars['sitio_muestra_id']
+        datosPunto7['transecto_direccion'] = 'Oeste'
+        datosPunto7['transecto_distancia'] = 5
 
-        formaPunto7['material_tipo'] = formaPuntos.vars['material_tipo_7']
-        formaPunto7['grosor'] = formaPuntos.vars['grosor_7']
-        formaPunto7['peso_humedo'] = formaPuntos.vars['peso_humedo_7']
-        formaPunto7['peso_humedo_muestra'] = formaPuntos.vars['peso_humedo_muestra_7']
-        formaPunto7['peso_seco_muestra'] = formaPuntos.vars['peso_seco_muestra_7']
+        datosPunto7['material_tipo'] = formaPuntosCarbono.vars['material_tipo_7']
+        datosPunto7['grosor'] = formaPuntosCarbono.vars['grosor_7']
+        datosPunto7['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_7']
+        datosPunto7['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_7']
+        datosPunto7['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_7']
 
         # Insertando en la base de datos:
-        db.Punto_carbono.insert(**formaPunto7)
+        db.Punto_carbono.insert(**datosPunto7)
 
         ### Punto 8
 
-        formaPunto8 = {}
+        datosPunto8 = {}
 
-        formaPunto8['sitio_muestra_id'] = formaPuntos.vars['sitio_muestra_id']
-        formaPunto8['transecto_direccion'] = 'Oeste'
-        formaPunto8['transecto_distancia'] = 10
+        datosPunto8['sitio_muestra_id'] = formaPuntosCarbono.vars['sitio_muestra_id']
+        datosPunto8['transecto_direccion'] = 'Oeste'
+        datosPunto8['transecto_distancia'] = 10
 
-        formaPunto8['material_tipo'] = formaPuntos.vars['material_tipo_8']
-        formaPunto8['grosor'] = formaPuntos.vars['grosor_8']
-        formaPunto8['peso_humedo'] = formaPuntos.vars['peso_humedo_8']
-        formaPunto8['peso_humedo_muestra'] = formaPuntos.vars['peso_humedo_muestra_8']
-        formaPunto8['peso_seco_muestra'] = formaPuntos.vars['peso_seco_muestra_8']
+        datosPunto8['material_tipo'] = formaPuntosCarbono.vars['material_tipo_8']
+        datosPunto8['grosor'] = formaPuntosCarbono.vars['grosor_8']
+        datosPunto8['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_8']
+        datosPunto8['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_8']
+        datosPunto8['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_8']
 
         # Insertando en la base de datos:
-        db.Punto_carbono.insert(**formaPunto8)
+        db.Punto_carbono.insert(**datosPunto8)
 
         response.flash = 'Éxito'
     
-    elif formaPuntos.errors:
+    elif formaPuntosCarbono.errors:
 
         response.flash = 'Hubo un error al llenar la forma'
 
     else:
     
-        response.flash ='Por favor, introduzca los campos obligatorios'
+        response.flash ='Por favor, ingrese los datos de los puntos de carbono'
+
+def puntosExistentes():
+
+    #Obteniendo la información del sitio que seleccionó el usuario:
+    sitioElegidoID = request.vars.sitio_muestra_id
+
+    #Haciendo un query a la tabla de Punto_carbono con la información anterior:
+
+    puntoYaInsertado=db(db.Punto_carbono.sitio_muestra_id==sitioElegidoID).select()
+
+    #Regresa la longitud de trasectoYaInsertado para que sea interpretada por JS
+
+    return len(puntoYaInsertado)
+
 
 
 
