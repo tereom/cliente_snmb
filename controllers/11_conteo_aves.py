@@ -122,9 +122,8 @@ def index2():
         INPUT(_name='es_visual',_type='boolean'),
         INPUT(_name='es_sonora',_type='boolean'),
 
-        INPUT(_name='numero_individuos',_type='integer',requires=IS_NOT_EMPTY),
-
-
+        INPUT(_name='numero_individuos',_type='integer',requires=IS_NOT_EMPTY()),
+        INPUT(_name='distancia_aproximada',_type='double',requires=IS_NOT_EMPTY())
     ]
 
     formaArchivosCamara = FORM(*camposArchivosCamara)
