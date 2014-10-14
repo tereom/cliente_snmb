@@ -1,0 +1,368 @@
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
+    {
+        margin-right: 0.5cm;
+        width: 2.5cm;
+        text-align: center;
+    }
+    
+    .No_GPS .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4cm;
+    }
+    
+    .FlotaIzquierda
+    {
+        float: left;
+    }
+
+    .Centrar
+    {
+        text-align: center;
+    }
+
+</style>
+{{end}}
+{{#=response.toolbar()}}
+
+<form action="" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="_formname" value="formaPuntosCarbonoHTML"/>
+    <fieldset>
+        <legend>
+            Almacén de carbono en el mantillo
+        </legend>
+        <table class="No_GPS">
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+                    </div>
+                    <div>
+                        <!--este campo sólo sirve para encontrar
+                        con AJAX los sitios existentes asociados al conglomerado
+                        elegido, al enviar la forma al controlador, se utilizará
+                        para guardar el registro de la cámara, únicamente el id
+                        del sitio (de la dropdown generada mediante AJAX)-->
+                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                            <option value=""/>
+                            {{for conglomerado in listaConglomerado:}}
+                                <option value="{{=conglomerado.id}}">
+                                    {{=conglomerado.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>                
+                <td>
+                    <div>
+                        <label for="tabla_sitio_muestra_id">Sitio</label>
+                    </div>
+                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+                    <div id="shadow_clone">
+                        <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+                            <option value=""/>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!--<legend>
+            Frecuencias por grosor del material
+        </legend>-->
+        <hr/>
+
+        <table class="No_GPS">
+            <tr>
+                <th>Punto</th>
+                <th>Tipo</th>
+                <th>Espesor(mm)</th>
+                <th>Peso húmedo(g)</th>
+                <th>Peso húmedo <br/> submuestra(g)</th>
+                <th>Peso seco <br/> submuestra(g)</th>
+            </tr>
+            <tr>
+                <td>1. Norte 5m</td>
+                <td>
+                    <select class="generic-widget" name="material_tipo_1" id="tabla_material_tipo_1">
+                        <option value=""/>
+                        {{for tipo in listaTipo:}}
+                            <option value="{{=tipo.nombre}}">
+                                {{=tipo.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="grosor_1" id="tabla_grosor_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_1" id="tabla_peso_humedo_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_muestra_1" id="tabla_peso_humedo_muestra_1" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_seco_muestra_1" id="tabla_peso_seco_muestra_1" type="text" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td>2. Norte 10m</td>
+                <td>
+                    <select class="generic-widget" name="material_tipo_2" id="tabla_material_tipo_2">
+                        <option value=""/>
+                        {{for tipo in listaTipo:}}
+                            <option value="{{=tipo.nombre}}">
+                                {{=tipo.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="grosor_2" id="tabla_grosor_2" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_2" id="tabla_peso_humedo_2" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_muestra_2" id="tabla_peso_humedo_muestra_2" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_seco_muestra_2" id="tabla_peso_seco_muestra_2" type="text" value=""/>
+                </td>
+            </tr>            
+            <tr>
+                <td>3. Este 5m</td>
+                <td>
+                    <select class="generic-widget" name="material_tipo_3" id="tabla_material_tipo_3">
+                        <option value=""/>
+                        {{for tipo in listaTipo:}}
+                            <option value="{{=tipo.nombre}}">
+                                {{=tipo.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="grosor_3" id="tabla_grosor_3" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_3" id="tabla_peso_humedo_3" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_muestra_3" id="tabla_peso_humedo_muestra_3" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_seco_muestra_3" id="tabla_peso_seco_muestra_3" type="text" value=""/>
+                </td>
+            </tr>            
+            <tr>
+                <td>4. Este 10m</td>
+                <td>
+                    <select class="generic-widget" name="material_tipo_4" id="tabla_material_tipo_4">
+                        <option value=""/>
+                        {{for tipo in listaTipo:}}
+                            <option value="{{=tipo.nombre}}">
+                                {{=tipo.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="grosor_4" id="tabla_grosor_4" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_4" id="tabla_peso_humedo_4" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_muestra_4" id="tabla_peso_humedo_muestra_4" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_seco_muestra_4" id="tabla_peso_seco_muestra_4" type="text" value=""/>
+                </td>
+            </tr>            
+            <tr>
+                <td>5. Sur 5m</td>
+                <td>
+                    <select class="generic-widget" name="material_tipo_5" id="tabla_material_tipo_5">
+                        <option value=""/>
+                        {{for tipo in listaTipo:}}
+                            <option value="{{=tipo.nombre}}">
+                                {{=tipo.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="grosor_5" id="tabla_grosor_5" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_5" id="tabla_peso_humedo_5" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_muestra_5" id="tabla_peso_humedo_muestra_5" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_seco_muestra_5" id="tabla_peso_seco_muestra_5" type="text" value=""/>
+                </td>
+            </tr>            
+            <tr>
+                <td>6. Sur 10m</td>
+                <td>
+                    <select class="generic-widget" name="material_tipo_6" id="tabla_material_tipo_6">
+                        <option value=""/>
+                        {{for tipo in listaTipo:}}
+                            <option value="{{=tipo.nombre}}">
+                                {{=tipo.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="grosor_6" id="tabla_grosor_6" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_6" id="tabla_peso_humedo_6" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_muestra_6" id="tabla_peso_humedo_muestra_6" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_seco_muestra_6" id="tabla_peso_seco_muestra_6" type="text" value=""/>
+                </td>
+            </tr>            
+            <tr>
+                <td>7. Oeste 5m</td>
+                <td>
+                    <select class="generic-widget" name="material_tipo_7" id="tabla_material_tipo_7">
+                        <option value=""/>
+                        {{for tipo in listaTipo:}}
+                            <option value="{{=tipo.nombre}}">
+                                {{=tipo.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="grosor_7" id="tabla_grosor_7" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_7" id="tabla_peso_humedo_7" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_muestra_7" id="tabla_peso_humedo_muestra_7" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_seco_muestra_7" id="tabla_peso_seco_muestra_7" type="text" value=""/>
+                </td>
+            </tr>
+            <tr>
+                <td>8. Oeste 10m</td>
+                <td>
+                    <select class="generic-widget" name="material_tipo_8" id="tabla_material_tipo_8">
+                        <option value=""/>
+                        {{for tipo in listaTipo:}}
+                            <option value="{{=tipo.nombre}}">
+                                {{=tipo.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <input class="integer obligatorio" name="grosor_8" id="tabla_grosor_8" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_8" id="tabla_peso_humedo_8" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_humedo_muestra_8" id="tabla_peso_humedo_muestra_8" type="text" value=""/>
+                </td>
+                <td>
+                    <input class="double obligatorio" name="peso_seco_muestra_8" id="tabla_peso_seco_muestra_8" type="text" value=""/>
+                </td>
+            </tr>    
+        </table>
+    </fieldset>
+    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+</form>
+
+{{=BEAUTIFY(request.vars)}}
+
+<script>
+
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+    $('#tabla_conglomerado_muestra_id').change
+    (
+        function()
+        {
+            $('#tabla_sitio_muestra_id').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        }
+       )
+
+    //AJAX para evitar que se envíe la información de los transectos correspondientes
+    //a un sitio más de una vez:
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function (){
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('puntosExistentes')}}",
+                success: function(resultado)
+                {
+                        //alert(resultado);
+                        if(resultado>=1)
+                        {
+                            alert('Los datos correspondientes a este sitio ya han sido declarados');
+                            $('#tabla_sitio_muestra_id').val("");
+                        }
+                    }
+                }
+                );
+        }
+        );
+
+    //Validando, para ello utilizamos la clase "obligatorio":
+    $('form').submit
+    (
+         function()
+         {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                    flag = false;
+                }
+            }
+            );
+
+            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+            //validar aparte:
+            if(!$('#shadow_clone').find('select:first').val())
+            {
+                flag = false;
+                alert('falta llenar el sitio');
+            }
+
+            if(!flag)
+            {
+                alert('Faltó llenar un campo o subir alguna imagen');
+                return false;
+            }
+
+        }
+    )
+    
+</script>

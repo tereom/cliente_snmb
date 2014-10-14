@@ -520,6 +520,16 @@ def index3():
     
         response.flash ='Por favor, ingrese los datos de los puntos de carbono'
 
+
+    # Menus desplegables
+    listaTipo = db(db.Cat_material_carbono).select(db.Cat_material_carbono.nombre)
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
+
+    return dict(listaTipo=listaTipo, 
+        listaConglomerado=listaConglomerado)
+
 def puntosExistentes():
 
     #Obteniendo la información del sitio que seleccionó el usuario:
