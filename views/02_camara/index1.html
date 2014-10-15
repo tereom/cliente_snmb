@@ -328,57 +328,56 @@
     }
     );
 
-
     //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
     (
-     function()
-     {
-        flag =true;
-        campos=$('.obligatorio');
-        campos.each(function() 
-        {
-            if(!$(this).val())
+       function()
+       {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                    flag = false;
+                }
+            }
+            );
+
+            //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
+            var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+            campos_fecha=$('.date');
+            flag_m = true;
+            campos_fecha.each(function() 
+            {
+                if(!fechaReg.test($(this).val()))
+                {
+                   flag_m = false;
+                }
+             }
+            );
+
+            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+            //validar aparte:
+            if(!$('#shadow_clone').find('select:first').val())
             {
                 flag = false;
+                //alert('Falta llenar el sitio');
+            }
+
+
+            if(!flag)
+            {
+                alert('Faltó llenar un campo o subir alguna imagen');
+                return false;
+            }
+            else if(!flag_m)
+            {
+                alert('El formato de fecha es aaaa-mm-dd');
+                return false;
             }
         }
-        );
-
-        //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-        var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
-        campos_fecha=$('.date');
-        flag_m = true;
-        campos_fecha.each(function() 
-        {
-            if(!fechaReg.test($(this).val()))
-            {
-               flag_m = false;
-           }
-       }
-       );
-
-        //Sin embargo, como el campo de "sitio_muestra_id" es generado por
-        //medio de AJAX; no entra en la validación anterior. Lo tenemos que
-        //validar aparte:
-        if(!$('#shadow_clone').find('select:first').val())
-        {
-            flag = false;
-            alert('Falta llenar el sitio');
-        }
-
-
-        if(!flag)
-        {
-            alert('Faltó llenar un campo o subir alguna imagen');
-            return false;
-        }
-        else if(!flag_m)
-        {
-            alert('El formato de fecha es aaaa-mm-dd');
-            return false;
-        }
-    }
     );
 
 </script>

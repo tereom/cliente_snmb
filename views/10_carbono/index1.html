@@ -2,14 +2,14 @@
 {{block head}}
 <style type="text/css">
 
-    .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
+    .Tabla .integer, .Tabla .date, .Tabla .string, .Tabla .double
     {
         margin-right: 0.5cm;
         width: 2cm;
         text-align: center;
     }
     
-    .No_GPS .generic-widget
+    .Tabla .generic-widget
     {
     	margin-right: 2cm;
         width: 4cm;
@@ -35,7 +35,7 @@
         <legend>
             Frecuencias por grosor del material
         </legend>
-        <table class="No_GPS">
+        <table class="Tabla">
             <tr>
                 <td>
                     <div>
@@ -76,7 +76,7 @@
         </legend>-->
         <hr/>
 
-        <table class="No_GPS">
+        <table class="Tabla">
             <tr>
                 <th>Transecto</th>
                 <th>Pendiente</th>
@@ -211,7 +211,7 @@
             if(!$('#shadow_clone').find('select:first').val())
             {
                 flag = false;
-                alert('falta llenar el sitio');
+                //alert('Falta llenar el sitio');
             }
 
             if(!flag)

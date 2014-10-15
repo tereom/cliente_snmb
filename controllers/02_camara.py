@@ -186,8 +186,10 @@ def index2():
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='sitio_muestra_id',
+            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
         SELECT(_name='camara_id',
-            requires=IS_IN_DB(db,db.camara.id,'%(nombre)s')),
+            requires=IS_IN_DB(db,db.Camara.id,'%(nombre)s')),
 
         ###########Archivos de la cámara###########
         INPUT(_name='archivos_camara',_type='file',requires=IS_NOT_EMPTY(),
@@ -223,7 +225,7 @@ def index2():
 
         response.flash = 'Éxito'
         
-    elif formaCamara.errors:
+    elif formaArchivosCamara.errors:
        response.flash = 'Hubo un error al llenar la forma'
        
     else:
@@ -239,63 +241,28 @@ def index2():
 
     return dict(listaConglomerado=listaConglomerado)
 
-def asignarCamara():
+def asignarCamaras():
 
-    # El campo conglomerado_muestra_id es únicamente auxiliar y se utiliza para:
-    # 1. Mediante AJAX, buscar los sitios asociados a un conglomerado.
-    # 2. Utilizando dichos sitios, buscar en la tabla de Camara,
-    # para ver en cuáles de dichos sitios existe una cámara declarada. Mostrar
-    # en la vista los sitios, pero enviar al controlador los id's de las cámaras
-    # asociadas a cada sitio.
+    # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
+    # la cámara asociada a un sitio (mediante AJAX).
 
-    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+    sitioElegidoID = request.vars.sitio_muestra_id
 
-    #Obteniendo los sitios que existen en dicho conglomerado
-    sitiosAsignados = db(
-        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
-        (db.Sitio_muestra.existe==True)&\
-        (db.Sitio_muestra.sitio_numero!='Punto de control')
-        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
+    #Obteniendo las cámaras que han sido declaradas en dicho sitio
 
-    #Bandera que indica si se encontró alguna cámara declarada en alguno de
-    #los sitios del conglomerado elegido:
+    camarasAsignadas = db(db.Camara.sitio_muestra_id==sitioElegidoID).select(
+        db.Camara.id, db.Camara.nombre)
 
-    flag = False
-
-    #Creando la dropdown de sitios/cámaras y enviándola a la vista para que sea desplegada:
+    #Creando la dropdown de cámaras y enviándola a la vista para que sea desplegada:
 
     dropdownHTML = "<select class='generic-widget' name='camara_id' id='tabla_camara_id'>"
+
     dropdownHTML += "<option value=''/>"
 
-    for sitio in sitiosAsignados:
+    for camara in camarasAsignadas:
 
-        #Buscando, de entre los sitios de un conglomerado, en cuáles ha sido
-        #declarada una cámara. En caso de que no ocurra para ningún sitio,
-        #se enviará un mensaje (para ello se utiliza la bandera).
-
-        camaraSitio = db(db.Camara.sitio_muestra_id==sitio.id).select(
-            db.Camara.id).first()
-
-        if len(camaraSitio)>1:
-
-            flag = True
-
-            #Como cuidamos que exista a lo más una cámara por sitio de un conglome-
-            #rado, al elegir el conglomerado y el número de sitio, automática-
-            #mente sabemos la cámara a la que corresponde, sin embargo, para el
-            #usuario mandamos el número de sitio del conglomerado elegido,
-            #mientras que para el controlador enviamos el id de dicha cámara.
-
-            dropdownHTML += "<option value='" + str(camaraSitio.id) + "'>"+\
-            sitio.sitio_numero + "</option>"  
-
+        dropdownHTML += "<option value='" + str(camara.id) + "'>" + camara.nombre + "</option>"  
+    
     dropdownHTML += "</select>"
-
-    #Finalmente, si flag=false, en lugar de enviar la dropdown, enviamos un mensaje
-    #de que no hay cámaras declaradas en dicho conglomerado:
-
-    if not flag:
-
-        dropdownHTML = "<p id='tabla_camara_id'> Favor de registrar una cámara para este conglomerado.</p>"
     
     return XML(dropdownHTML)

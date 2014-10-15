@@ -2,12 +2,6 @@
 {{block head}}
 <style type="text/css">
 
-	.TablaMicrofonos
-	{
-		table-layout: fixed;
-        width: 100%;
-	}
-
     .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
     {
         margin-right: 2cm;
@@ -35,7 +29,7 @@
         text-align: center;
     }
     
-    #enviar
+    #enviarformaGrabadoraHTML
     {
         float: left;
     }
@@ -43,7 +37,7 @@
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post">
-	<input type="hidden" name="_formname" value="formaHTML"/>
+	<input type="hidden" name="_formname" value="formaGrabadoraHTML"/>
 	<fieldset>
 		<legend>
 		Datos de la grabadora y los micrófonos
@@ -269,32 +263,6 @@
 				</td>
 		</table>
 	</fieldset>
-	<fieldset>
-		<legend>
-			Subir archivos de audio
-		</legend>
-		<table class="TablaMicrofonos">
-    		</tr>
-    		<tr>
-    			<td colspan="2">
-    				<div>
-						<label for="tabla_archivos_audibles">Micrófono audible</label>
-					</div>
-					<div>
-						<input type="file" class="obligatorio" id="tabla_archivos_audibles" name="archivos_audibles" multiple/>
-					</div>
-				</td>
-				<td colspan="2">
-    				<div>
-						<label for="tabla_archivos_ultrasonicos">Micrófono ultrasónico</label>
-					</div>
-					<div>
-						<input type="file" class="obligatorio" id="tabla_archivos_ultrasonicos" name="archivos_ultrasonicos" multiple/>
-					</div>
-				</td> 
-			</tr>
-		</table>
-	</fieldset>
 	<br/>
 	<fieldset>
 		<legend>
@@ -310,87 +278,92 @@
 
 <script>
 
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
     $('#tabla_conglomerado_muestra_id').change
     (
         function()
         {
             $('#tabla_sitio_muestra_id').remove();
-            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-        }
-       )
-
-    	// //AJAX para advertir al usuario que una grabadora ya ha sido asignada
-	// //con anterioridad
-	// $('#tabla_sitio_muestra_id').change
-	// (
- //    	function()
- //    	{
- //    		$.ajax
- //    		(
- //    			{
-	// 				type: "POST",
- //        			data: $('#tabla_sitio_muestra_id').serialize(),
- //        			url: "{{=URL('grabadoraExistente')}}",
- //        			success: function(resultado)
- //        			{
- //        				//alert(resultado);
- //        				if(resultado>=1)
- //    					{
- //    						alert('Esta grabadora ya ha sido declarada');
- //    						$('#tabla_sitio_muestra_id').val("");
- //    					}
- //        			}
- //    			}
- //    		);
-	// 	}
- //   	);
-
-    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        }
+    );
 
-
-    //Validando, para ello utilizamos la clase "obligatorio":
-       $('form').submit
-       (
-           function()
-           {
-                flag =true;
-                campos=$('.obligatorio');
-                campos.each(function() 
+    //AJAX para evitar que se envíe la información de la grabadora correspondiente
+    //a un sitio más de una vez:
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+    {
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('grabadoraExistente')}}",
+            success: function(resultado)
                 {
-                    if(!$(this).val())
+                    //alert(resultado);
+                    if(resultado>=1)
                     {
-                        flag = false;
+                        alert('La grabadora correspondiente a este sitio ya ha sido declarada');
+                        $('#tabla_sitio_muestra_id').val("");
                     }
                 }
-                );
+        }
+        );
+    }
+    );
 
-
-            	//Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-                var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
-                campos_fecha=$('.date');
-                flag_m = true;
-                campos_fecha.each(function() 
+	//Validando, para ello utilizamos la clase "obligatorio":
+   $('form').submit
+   (
+       function()
+       {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
                 {
-                    if(!fechaReg.test($(this).val()))
-                    {
-                       flag_m = false;
-                    }
+                    flag = false;
                 }
-                );
+            }
+            );
 
-                if(!flag)
+
+        	//Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
+            var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+            campos_fecha=$('.date');
+            flag_m = true;
+            campos_fecha.each(function() 
+            {
+                if(!fechaReg.test($(this).val()))
                 {
-                    alert('Faltó llenar un campo o subir alguna imagen');
-                    return false;
+                   flag_m = false;
                 }
-                else if(!flag_m){
-                    alert('El formato de fecha es aaaa-mm-dd');
-                    return false;
-                }
-           }
-        )
+            }
+            );
+
+            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+        	//medio de AJAX; no entra en la validación anterior. Lo tenemos que
+        	//validar aparte:
+        	if(!$('#shadow_clone').find('select:first').val())
+        	{
+            	flag = false;
+            	//alert('Falta llenar el sitio');
+        	}
+
+            if(!flag)
+            {
+                alert('Faltó llenar un campo o subir alguna imagen');
+                return false;
+            }
+            else if(!flag_m){
+                alert('El formato de fecha es aaaa-mm-dd');
+                return false;
+            }
+       }
+    )
 </script>

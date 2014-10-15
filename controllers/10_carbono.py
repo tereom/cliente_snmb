@@ -252,13 +252,13 @@ def index2():
 
                 # Obtenemos el id para transecto_ramas usando un query
 
-                transectoRamasId = db((
-                    db.Transecto_ramas.direccion==transectoRamasDireccion_i)&
-                    (db.Transecto_ramas.sitio_muestra_id==\
-                        transectoRamasSitioId)).select(db.Transecto_ramas.id).first()
+                transectoRamasID = db(
+                    (db.Transecto_ramas.direccion==transectoRamasDireccion_i)&
+                    (db.Transecto_ramas.sitio_muestra_id==transectoRamasSitioId)
+                    ).select(db.Transecto_ramas.id).first()
         
                 # Agregando los datos extraídos de la forma:
-                datosRama_i['transecto_ramas_id']=transectoRamasId
+                datosRama_i['transecto_ramas_id']=transectoRamasID
                 datosRama_i['diametro']=formaRamas.vars[diametro_i]
                 datosRama_i['grado']=formaRamas.vars[grado_i]
 

@@ -273,64 +273,29 @@ def index2():
 
     return dict(listaConglomerado=listaConglomerado)
 
-def asignarGrabadora():
+def asignarGrabadoras():
 
-    # El campo conglomerado_muestra_id es únicamente auxiliar y se utiliza para:
-    # 1. Mediante AJAX, buscar los sitios asociados a un conglomerado.
-    # 2. Utilizando dichos sitios, buscar en la tabla de Grabadora,
-    # para ver en cuáles de dichos sitios existe una grabadora declarada. Mostrar
-    # en la vista los sitios, pero enviar al controlador los id's de las grabadoras
-    # asociadas a cada sitio.
+    # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
+    # la grabadora asociada a un sitio (mediante AJAX).
 
-    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+    sitioElegidoID = request.vars.sitio_muestra_id
 
-    #Obteniendo los sitios que existen en dicho conglomerado
-    sitiosAsignados = db(
-        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
-        (db.Sitio_muestra.existe==True)&\
-        (db.Sitio_muestra.sitio_numero!='Punto de control')
-        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
+    #Obteniendo las grabadoras que han sido declaradas en dicho sitio
 
-    #Bandera que indica si se encontró alguna grabadora declarada en alguno de
-    #los sitios del conglomerado elegido:
+    grabadorasAsignadas = db(db.Grabadora.sitio_muestra_id==sitioElegidoID).select(
+        db.Grabadora.id, db.Grabadora.nombre)
 
-    flag = False
-
-    #Creando la dropdown de sitios/grabadoras y enviándola a la vista para que sea desplegada:
+    #Creando la dropdown de grabadoras y enviándola a la vista para que sea desplegada:
 
     dropdownHTML = "<select class='generic-widget' name='grabadora_id' id='tabla_grabadora_id'>"
+
     dropdownHTML += "<option value=''/>"
 
-    for sitio in sitiosAsignados:
+    for grabadora in grabadorasAsignadas:
 
-        #Buscando, de entre los sitios de un conglomerado, en cuáles ha sido
-        #declarada una grabadora. En caso de que no ocurra para ningún sitio,
-        #se enviará un mensaje (para ello se utiliza la bandera).
-
-        grabadoraSitio = db(db.Grabadora.sitio_muestra_id==sitio.id).select(
-            db.Grabadora.id).first()
-
-        if len(grabadoraSitio)>1:
-
-            flag = True
-
-            #Como cuidamos que exista a lo más una grabadora por sitio de un conglome-
-            #rado, al elegir el conglomerado y el número de sitio, automática-
-            #mente sabemos la grabadora a la que corresponde, sin embargo, para el
-            #usuario mandamos el número de sitio del conglomerado elegido,
-            #mientras que para el controlador enviamos el id de dicha grabadora.
-
-            dropdownHTML += "<option value='" + str(grabadoraSitio.id) + "'>"+\
-            sitio.sitio_numero + "</option>"  
-
+        dropdownHTML += "<option value='" + str(grabadora.id) + "'>" + grabadora.nombre + "</option>"  
+    
     dropdownHTML += "</select>"
-
-    #Finalmente, si flag=false, en lugar de enviar la dropdown, enviamos un mensaje
-    #de que no hay grabadoras declaradas en dicho conglomerado:
-
-    if not flag:
-
-        dropdownHTML = "<p id='tabla_grabadora_id'> Favor de registrar una grabadora para este conglomerado.</p>"
     
     return XML(dropdownHTML)
 

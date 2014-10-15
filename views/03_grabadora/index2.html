@@ -1,8 +1,40 @@
-    <fieldset>
-        <legend>
-            Subir imágenes y videos
-        </legend>
-        <div>
-            <input class="obligatorio" type="file" id="tabla_archivos_camara" name="archivos_camara" multiple/>
-        </div>
-    </fieldset>
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+	.TablaMicrofonos
+	{
+		table-layout: fixed;
+        width: 100%;
+	}
+
+	
+</style>
+{{end}}
+
+<fieldset>
+		<legend>
+			Subir archivos de audio
+		</legend>
+		<table class="TablaMicrofonos">
+    		</tr>
+    		<tr>
+    			<td colspan="2">
+    				<div>
+						<label for="tabla_archivos_audibles">Micrófono audible</label>
+					</div>
+					<div>
+						<input type="file" class="obligatorio" id="tabla_archivos_audibles" name="archivos_audibles" multiple/>
+					</div>
+				</td>
+				<td colspan="2">
+    				<div>
+						<label for="tabla_archivos_ultrasonicos">Micrófono ultrasónico</label>
+					</div>
+					<div>
+						<input type="file" class="obligatorio" id="tabla_archivos_ultrasonicos" name="archivos_ultrasonicos" multiple/>
+					</div>
+				</td> 
+			</tr>
+		</table>
+	</fieldset>
