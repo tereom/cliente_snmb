@@ -82,6 +82,8 @@
             <input class="obligatorio" type="file" id="tabla_archivos_camara" name="archivos_camara" multiple/>
         </div>
     </fieldset>
+    <br/>
+    <input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 
 <script>
@@ -90,9 +92,10 @@
     (
         function()
         {
-           /*Cuando el documento se carga, tanto el campo de sitio como el de cámara están escondidos*/
-           $('#conglomerado_muestra_id').val("");
-           $('.InfoCamara, .InfoSitio').hide();
+        	/*Cuando el documento se carga, tanto el campo de sitio como el de cámara están escondidos*/
+        	$('#conglomerado_muestra_id').val("");
+        	$('.InfoCamara, .InfoSitio').hide();
+        	alert('Si no se cargan todos los archivos al mismo tiempo, por favor, súbalos por partes, asignándolos siempre a la misma cámara.');
         }
     )
 
@@ -119,7 +122,7 @@
             {
             	/* Si se apaga la casilla de sitio, también se debe apagar la de cámara
             	y, además, se deben resetear los valores de esta úlima*/
-            	$('.InfoCamara, .InfoSitio').fadeOut();
+            	$('.InfoCamara, .InfoSitio').hide();
             	ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
             }
         }

@@ -204,8 +204,10 @@ def index2():
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='sitio_muestra_id',
+            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
         SELECT(_name='grabadora_id',
-            requires=IS_IN_DB(db,db.grabadora.id,'%(nombre)s')),
+            requires=IS_IN_DB(db,db.Grabadora.id,'%(nombre)s')),
 
         #Elegir si se están introduciendo archivos audiblles o ultrasónicos
 
@@ -256,7 +258,7 @@ def index2():
 
         response.flash = 'Éxito'
         
-    elif formaGrabadora.errors:
+    elif formaArchivosGrabadora.errors:
 
        response.flash = 'Hubo un error al llenar la forma'
        
