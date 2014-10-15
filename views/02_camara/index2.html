@@ -119,8 +119,8 @@
             {
             	/* Si se apaga la casilla de sitio, también se debe apagar la de cámara
             	y, además, se deben resetear los valores de esta úlima*/
-            	ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
             	$('.InfoCamara, .InfoSitio').fadeOut();
+            	ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
             }
         }
     );
