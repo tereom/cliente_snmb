@@ -59,3 +59,25 @@ Campos_Punto_carbono = [
 
 db.define_table('Punto_carbono',*Campos_Punto_carbono,
     singular='Carbono en el mantillo',plural='Carbono en el mantillo')
+
+##########################################################################
+## Cuadrante_arbolado
+##########################################################################
+
+Campos_Arbol_cuadrante = [
+
+    Field('sitio_muestra_id','reference Sitio_muestra',required=True),
+    #Se insertará a partir de un catálogo
+    # Field('cuadrante','string',required=True),
+    Field('individuo_numero','integer',required=True),
+    Field('distancia','double',required=True),
+    Field('azimut','double',required=True),
+    Field('nombre_comun','string',required=True),
+    Field('nombre_cientifico','string',required=True),
+    Field('altura','double',required=True),
+    Field('diametro_normal','double',required=True),
+    Field('diametro_copa','double',required=True)
+    ]
+
+db.define_table('Arbol_cuadrante',*Campos_Arbol_cuadrante,
+    singular='Árbol cuadrante',plural='Árboles cuadrantes')

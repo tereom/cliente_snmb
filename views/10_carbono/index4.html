@@ -1,0 +1,376 @@
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
+    {
+        margin-right: 0.5cm;
+        width: 2.5cm;
+        text-align: center;
+    }
+    
+    .No_GPS .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4cm;
+    }
+    
+    .FlotaIzquierda
+    {
+        float: left;
+    }
+
+    .Centrar
+    {
+        text-align: center;
+    }
+
+    .CentrarV
+    {
+        vertical-align: middle;
+    }
+
+</style>
+{{end}}
+{{#=response.toolbar()}}
+
+<form action="" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="_formname" value="formaArbolHTML"/>
+    <fieldset>
+        <legend>
+            Información de arbolado
+        </legend>
+        <table class="No_GPS">
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+                    </div>
+                    <div>
+                        <!--este campo sólo sirve para encontrar
+                        con AJAX los sitios existentes asociados al conglomerado
+                        elegido, al enviar la forma al controlador, se utilizará
+                        para guardar el registro de la cámara, únicamente el id
+                        del sitio (de la dropdown generada mediante AJAX)-->
+                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                            <option value=""/>
+                            {{for conglomerado in listaConglomerado:}}
+                                <option value="{{=conglomerado.id}}">
+                                    {{=conglomerado.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>                
+                <td>
+                    <div>
+                        <label for="tabla_sitio_muestra_id">Sitio</label>
+                    </div>
+                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+                    <div id="shadow_clone">
+                        <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+                            <option value=""/>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!--<legend>
+            Frecuencias por grosor del material
+        </legend>-->
+        <hr/>
+
+        <table class="No_GPS">
+            <tr>
+                <th></th>
+                <th colspan="2" class="Centrar"># Individuo</th>
+                <th class="Centrar">Distancia(m)</th>
+                <th class="Centrar">Azimut(º)</th>
+                <th class="Centrar">Nombre común</th>
+                <th class="Centrar">Nombre científico</th>
+                <th class="Centrar">Altura(m)</th>
+                <th class="Centrar">Diámetro <br/> normal (cm)</th>
+                <th class="Centrar">Diámetro <br/> copa (m)</th>
+            </tr>
+        
+
+            {{for i in range(8):}}              
+                <!-- Nombres auxiliares para la vista -->
+                {{individuo_i = str(i+1)}}
+                {{Arbol_i = 'Arbol_' + str(i+1)}}
+                {{cuadrante_i = ['Cuadrante 1','Cuadrante 1','Cuadrante 2','Cuadrante 2','Cuadrante 3','Cuadrante 3','Cuadrante 4','Cuadrante 4'][i]}}
+
+                <!-- Creamos los nombres de los campos y las tablas -->
+                {{existe_i = 'existe_' + str(i+1)}}
+                {{tabla_existe_i = 'tabla_' + existe_i}}
+
+                {{distancia_i = 'distancia_' + str(i+1)}}
+                {{tabla_distancia_i = 'tabla_' + distancia_i}}
+                
+                {{azimut_i = 'azimut_' + str(i+1)}}
+                {{tabla_azimut_i = 'tabla_' + azimut_i}}
+
+                {{nombre_comun_i = 'nombre_comun_' + str(i+1)}}
+                {{tabla_nombre_comun_i = 'tabla_' + nombre_comun_i}}
+
+                {{nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)}}
+                {{tabla_nombre_cientifico_i = 'tabla_' + nombre_cientifico_i}}
+
+                {{altura_i = 'altura_' + str(i+1)}}
+                {{tabla_altura_i = 'tabla_' + altura_i}}
+
+                {{diametro_normal_i = 'diametro_normal_' + str(i+1)}}
+                {{tabla_diametro_normal_i = 'tabla_' + diametro_normal_i}}
+
+
+                {{diametro_copa_i = 'diametro_copa_' + str(i+1)}}
+                {{tabla_diametro_copa_i = 'tabla_' + diametro_copa_i}}
+
+                <tr>
+                    <!-- Campo cuadrante solo se escribe una vez -->
+                    {{if i % 2 == 0: }}
+                        <td rowspan="2" class="CentrarV">
+                            <b>{{=cuadrante_i}}</b>
+                        </td>
+                    {{pass}}
+                    <td class="Centrar">
+                            <input class="boolean" name="{{=existe_i}}" id="{{=tabla_existe_i}}" type="checkbox" value="on"/>
+                    </td>
+                    <td>
+                        {{=individuo_i}}
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="double" name="{{=distancia_i}}" id="{{=tabla_distancia_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="double" name="{{=azimut_i}}" id="{{=tabla_azimut_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="string" name="{{=nombre_comun_i}}" id="{{=tabla_nombre_comun_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="string" name="{{=nombre_cientifico_i}}" id="{{=tabla_nombre_cientifico_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="double" name="{{=altura_i}}" id="{{=tabla_altura_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="double" name="{{=diametro_normal_i}}" id="{{=tabla_diametro_normal_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="double" name="{{=diametro_copa_i}}" id="{{=tabla_diametro_copa_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                </tr>
+            {{pass}}
+        </table>
+        <hr/>
+    </fieldset>
+    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+</form>
+
+{{=BEAUTIFY(request.vars)}}
+
+<script>
+
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+    $('#tabla_conglomerado_muestra_id').change
+    (
+        function()
+        {
+            $('#tabla_sitio_muestra_id').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        }
+       )
+
+    //AJAX para evitar que se envíe la información de los transectos correspondientes
+    //a un sitio más de una vez:
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function (){
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('sitiosArboladoExistentes')}}",
+                success: function(resultado)
+                {
+                        //alert(resultado);
+                        if(resultado>=1)
+                        {
+                            alert('Los datos correspondientes a este sitio ya han sido declarados');
+                            $('#tabla_sitio_muestra_id').val("");
+                        }
+                    }
+                }
+                );
+        }
+        );
+
+    //Validando, para ello utilizamos la clase "obligatorio":
+    $('form').submit
+    (
+         function()
+         {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                    flag = false;
+                }
+            }
+            );
+
+            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+            //validar aparte:
+            if(!$('#shadow_clone').find('select:first').val())
+            {
+                flag = false;
+                alert('falta llenar el sitio');
+            }
+
+            if(!flag)
+            {
+                alert('Faltó llenar un campo o subir alguna imagen');
+                return false;
+            }
+
+        }
+    )
+
+    $(document).ready
+    (
+        function()
+        {
+           /*Cuando el documento se carga, los campos de los árboles están activos*/
+           $('#tabla_existe_1').prop('checked', true);
+           $('.Arbol_1').show();
+           
+           $('#tabla_existe_2').prop('checked', true);
+           $('.Arbol_2').show();
+
+           $('#tabla_existe_3').prop('checked', true);
+           $('.Arbol_3').show();
+           
+           $('#tabla_existe_4').prop('checked', true);
+           $('.Arbol_4').show();
+
+           $('#tabla_existe_5').prop('checked', true);
+           $('.Arbol_5').show();
+           
+           $('#tabla_existe_6').prop('checked', true);
+           $('.Arbol_6').show();
+
+           $('#tabla_existe_7').prop('checked', true);
+           $('.Arbol_7').show();
+           
+           $('#tabla_existe_8').prop('checked', true);
+           $('.Arbol_8').show();
+        }
+    )
+    
+    /*Cuando se cambia el valor de la casilla "existe" asociada a un cuadrante, se sombrean
+    o reaparecen los campos correspondientes, dependiendo si el árbol existe o no.*/
+    
+    $('#tabla_existe_1').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_1').fadeIn();
+            else
+                $('.Arbol_1').fadeOut();
+        }
+    )
+    $('#tabla_existe_2').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_2').fadeIn();
+            else
+                $('.Arbol_2').fadeOut();
+        }
+    )
+    $('#tabla_existe_3').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_3').fadeIn();
+            else
+                $('.Arbol_3').fadeOut();
+        }
+    )
+    $('#tabla_existe_4').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_4').fadeIn();
+            else
+                $('.Arbol_4').fadeOut();
+        }
+    )
+    $('#tabla_existe_5').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_5').fadeIn();
+            else
+                $('.Arbol_5').fadeOut();
+        }
+    )
+    $('#tabla_existe_6').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_6').fadeIn();
+            else
+                $('.Arbol_6').fadeOut();
+        }
+    )
+    $('#tabla_existe_7').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_7').fadeIn();
+            else
+                $('.Arbol_7').fadeOut();
+        }
+    )
+    $('#tabla_existe_8').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_8').fadeIn();
+            else
+                $('.Arbol_8').fadeOut();
+        }
+    )
+    
+</script>

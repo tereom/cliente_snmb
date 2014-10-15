@@ -551,22 +551,118 @@ def puntosExistentes():
 
 
 
+## Pestaña correspondiente a Cuadrante_arbolado
+def index4():
+
+    camposArbolCuadrante = [
+
+        #Datos para localizar un sitio único y asociarle los puntos de carbono a éste.
+        SELECT(_name='conglomerado_muestra_id',
+            requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='sitio_muestra_id',
+            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s'))
+        ]
 
 
+    ##########################
+    #Generando los otros campos con un for:
+
+    for i in range(8):
+
+        #Creando de manera automatizada los nombres de los campos:
+        existe_i = 'existe_' + str(i+1)
+        #individuo_numero se asigna en el controlador
+        individuo_numero_i = 'individuo_numero' + str(i+1)
+        distancia_i = 'distancia_' + str(i+1)
+        azimut_i = 'azimut_' + str(i+1)
+        nombre_comun_i = 'nombre_comun_' + str(i+1)
+        nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
+        altura_i = 'altura_' + str(i+1)
+        diametro_normal_i = 'diametro_normal_' + str(i+1)
+        diametro_copa_i = 'diametro_copa_' + str(i+1)
+
+        #Extendiendo la lista anterior:
+        camposArbolCuadrante.extend([
+            #Campo para marcar si existe o no una rama.
+            INPUT(_name=existe_i,_type='boolean'),
+
+            INPUT(_name=distancia_i,_type='double'),
+            INPUT(_name=azimut_i,_type='double'),
+            INPUT(_name=nombre_comun_i,_type='string'),
+            INPUT(_name=nombre_cientifico_i,_type='string'),
+            INPUT(_name=altura_i,_type='double'),
+            INPUT(_name=diametro_normal_i,_type='double'),
+            INPUT(_name=diametro_copa_i,_type='double')
+            ])
+
+    formaArbol = FORM(*camposArbolCuadrante)
+
+    if formaArbol.accepts(request.vars,formname='formaArbolHTML'):
+
+        # Asignando el id del sitio para localizar el transecto al cual se
+        # le asignará la rama
+        arbolSitioId = formaArbol.vars['sitio_muestra_id']
+
+        for i in range(8):
+
+            #Creando de manera automatizada los nombres de los campos:
+            existe_i = 'existe_' + str(i+1)
+            distancia_i = 'distancia_' + str(i+1)
+            azimut_i = 'azimut_' + str(i+1)
+            nombre_comun_i = 'nombre_comun_' + str(i+1)
+            nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
+            altura_i = 'altura_' + str(i+1)
+            diametro_normal = 'diametro_normal_' + str(i+1)
+            diametro_copa = 'diametro_copa_' + str(i+1)
+            
+            # Si existe el i-ésimo árbol:
+            if bool(formaArbol.vars[existe_i]):
+
+                datosArbol_i = {}
+
+                # Escribiendo el número de individuo
+                datosArbol_i['individuo_numero']=(i+1)
+        
+                # Agregando los datos extraídos de la forma:
+                datosArbol_i['distancia']=formaArbol.vars[distancia_i]
+                datosArbol_i['azimut']=formaArbol.vars[azimut_i]
+                datosArbol_i['nombre_comun']=formaArbol.vars[nombre_comun_i]
+                datosArbol_i['nombre_cientifico']=formaArbol.vars[nombre_cientifico_i]
+                datosArbol_i['altura']=formaArbol.vars[altura_i]
+                datosArbol_i['diametro_normal']=formaArbol.vars[diametro_normal_i]
+                datosArbol_i['diametro_copa']=formaArbol.vars[diametro_copa_i]
+                datosArbol_i['sitio_muestra_id']=arbolSitioId
+
+                # Insertando los datos de la rama:
+                db.Arbol_cuadrante.insert(**datosArbol_i)
+
+        response.flash = 'Éxito'
+        
+    elif formaArbol.errors:
+
+        response.flash = 'Hubo un error al llenar la forma'
+
+    else:
+
+        response.flash ='Por favor, introduzca la información de un árbol'
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
 
+    #Regresando el número de ramas para crear la vista en HTML
+    return dict(listaConglomerado=listaConglomerado)
 
+def sitiosArboladoExistentes():
 
+    #Obteniendo la información del sitio que seleccionó el usuario:
+    sitioElegidoID = request.vars.sitio_muestra_id
 
+    #Haciendo un query a la tabla de Punto_carbono con la información anterior:
 
+    sitioYaInsertado=db(db.Arbol_cuadrante.sitio_muestra_id==sitioElegidoID).select()
 
+    #Regresa la longitud de trasectoYaInsertado para que sea interpretada por JS
 
-
-
-
-
-
-
-
-
+    return len(sitioYaInsertado)
 
