@@ -188,7 +188,7 @@
     <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
-{{=BEAUTIFY(request.vars)}}
+{{#=BEAUTIFY(request.vars)}}
 
 <script>
 
@@ -222,6 +222,139 @@
             }
             );
 
+            /*Validando que los campos correspondientes a un árbol estén 
+            llenos si estos existen*/
+
+            if($('#tabla_existe_1').prop('checked'))
+            {
+                campos=$('.Arbol_1 input, .Arbol_1 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_2').prop('checked'))
+            {
+                campos=$('.Arbol_2 input, .Arbol_2 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_3').prop('checked'))
+            {
+                campos=$('.Arbol_3 input, .Arbol_3 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_4').prop('checked'))
+            {
+                campos=$('.Arbol_4 input, .Arbol_4 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_5').prop('checked'))
+            {
+                campos=$('.Arbol_5 input, .Arbol_5 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_6').prop('checked'))
+            {
+                campos=$('.Arbol_6 input, .Arbol_6 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_7').prop('checked'))
+            {
+                campos=$('.Arbol_7 input, .Arbol_7 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_8').prop('checked'))
+            {
+                campos=$('.Arbol_8 input, .Arbol_8 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_9').prop('checked'))
+            {
+                campos=$('.Arbol_9 input, .Arbol_9 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_10').prop('checked'))
+            {
+                campos=$('.Arbol_10 input, .Arbol_10 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
             //Sin embargo, como el campo de "sitio_muestra_id" es generado por
             //medio de AJAX; no entra en la validación anterior. Lo tenemos que
             //validar aparte:
@@ -238,13 +371,14 @@
             }
 
         }
+
     )
 
     $(document).ready
     (
         function()
         {
-           /*Cuando el documento se carga, los campos de los árboles están activos*/
+           /*Cuando el documento se carga, los campos de los árboles están activos
            $('#tabla_existe_1').prop('checked', true);
            $('.Arbol_1').show();
            
@@ -273,9 +407,17 @@
            $('.Arbol_9').show();
 
            $('#tabla_existe_10').prop('checked', true);
-           $('.Arbol_10').show();
-        }
-    )
+           $('.Arbol_10').show();*/
+
+           for(i=1; i<=10; i++)
+           {
+             tabla_existe_i = '#tabla_existe_'.concat(i);
+             Arbol_i = '.Arbol_'.concat(i);
+             $(tabla_existe_i).prop('checked', true);
+             $(Arbol_i).show();
+            }
+     }
+     )
     
     /*Cuando se cambia el valor de la casilla "existe" asociada a un cuadrante, se sombrean
     o reaparecen los campos correspondientes, dependiendo si el árbol existe o no.*/
