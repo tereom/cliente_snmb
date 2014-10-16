@@ -181,23 +181,56 @@
         }
     )
 
-    /*Fade in/out de los campos de ingreso de nombre común/científico, de acuerdo
-    a si se marcó o no la casilla correspondiente*/
-
-
-    //AJAX para llenar la combobox con los sitios declarados al elegir el conglomerado
-	$('#tabla_conglomerado_muestra_id').change
-	(
-    	function()
-    	{
-    		$('#tabla_sitio_muestra_id').remove();
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+    $('#tabla_conglomerado_muestra_id').change
+    (
+        function()
+        {
+            $('#tabla_sitio_muestra_id, #tabla_punto_conteo_aves_id').remove();
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
-    		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-    	}
-   	)
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+
+            ajax("{{=URL('asignarPuntoConteo')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+
+            /* Finalmente, si se selecciona un conglomerado (no ""), aparece el campo de sitio.*/
+
+            /*if($(this).val())
+            {
+                $('.InfoSitio').fadeIn();
+
+            }
+            else
+            {
+            	 Si se apaga la casilla de sitio, también se debe apagar la de grabadora
+            	y, además, se deben resetear los valores de esta úlima
+            	$('.InfoGrabadora, .InfoSitio').hide();
+            	ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+            }*/
+        }
+    );
+
+    //AJAX para llenar la combobox con las grabadoras declaradas al elegir un sitio
+ 	$('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+    {
+        $('#tabla_grabadora_id').remove();
+
+        //ajax es una función de Web2py que simplifica la función homónima de JQuery
+        //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+        // del elemento donde se insertará la respuesta
+        ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+        /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de grabadora.*/
+
+        /*if($(this).val())
+        {
+            $('.InfoGrabadora').fadeIn();
+        }
+        else
+            $('.InfoGrabadora').fadeOut();*/
+    }
+    );
 
     $('#tabla_hay_nombre_comun').change
     (

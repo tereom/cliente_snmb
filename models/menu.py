@@ -39,8 +39,10 @@ response.menu = [
     #### CONANP
       (T('Carbono'), False, URL('10_carbono', 'index1'), [
       (T('Frecuencias por grosor'), False, URL('10_carbono', 'index1')),
-      (T('Desglose de material'), False, URL('10_carbono', 'index2')),
-      (T('Almacen en el mantillo'), False, URL('10_carbono', 'index3'))]),
+      (T('Material 1000h'), False, URL('10_carbono', 'index2')),
+      (T('Almacen en el mantillo'), False, URL('10_carbono', 'index3')),
+      (T('Información de arbolado'), False, URL('10_carbono', 'index4')),
+      (T('Árboles pequeños y arbustos'), False, URL('10_carbono', 'index5'))]),
     ####
 
     # Edición

@@ -53,8 +53,7 @@
                     </div>
                 </td>                
                 <td>
-                	<!-- Las clases InfoSitio e InfoGrabadora sirven para esconder los campos (ver JS abajo)-->
-                	<div class="InfoSitio Estatica">
+                	<div class="Estatica">
                     	<div>
                         	<label for="tabla_sitio_muestra_id">Sitio</label>
                     	</div>
@@ -67,7 +66,7 @@
                 	</div>
                 </td>
                 <td>
-                	<div class="InfoGrabadora Estatica">
+                	<div class="Estatica">
                 		<div>
                         	<label for="tabla_grabadora_id">Grabadora</label>
                     	</div>
@@ -127,34 +126,36 @@
     (
         function()
         {
-            $('#tabla_sitio_muestra_id').remove();
+            $('#tabla_sitio_muestra_id, #tabla_grabadora_id').remove();
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 
+            ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+
             /* Finalmente, si se selecciona un conglomerado (no ""), aparece el campo de sitio.*/
 
-            if($(this).val())
+            /*if($(this).val())
             {
                 $('.InfoSitio').fadeIn();
 
             }
             else
             {
-            	/* Si se apaga la casilla de sitio, también se debe apagar la de grabadora
-            	y, además, se deben resetear los valores de esta úlima*/
+            	 Si se apaga la casilla de sitio, también se debe apagar la de grabadora
+            	y, además, se deben resetear los valores de esta úlima
             	$('.InfoGrabadora, .InfoSitio').hide();
             	ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-            }
+            }*/
         }
     );
 
     //AJAX para llenar la combobox con las grabadoras declaradas al elegir un sitio
  	$('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
     {
-        $('#grabadora_id').remove();
+        $('#tabla_grabadora_id').remove();
 
         //ajax es una función de Web2py que simplifica la función homónima de JQuery
         //recibe el URL destino, los nombres de los campos que se enviarán y el ID
@@ -162,12 +163,12 @@
         ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
         /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de grabadora.*/
 
-        if($(this).val())
+        /*if($(this).val())
         {
             $('.InfoGrabadora').fadeIn();
         }
         else
-            $('.InfoGrabadora').fadeOut();
+            $('.InfoGrabadora').fadeOut();*/
     }
     );
 
@@ -227,7 +228,6 @@
 				flag = false;
 				//alert('falta presionar un radio-botón');
 			}
-
 
             if(!flag)
             {

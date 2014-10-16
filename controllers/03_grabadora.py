@@ -247,7 +247,7 @@ def index2():
             archivoGrabadora = db.Archivo_grabadora.archivo.store(aux, aux.filename)
             
             datosArchivoGrabadora = {}
-            datosGrabadora['es_audible']= esAudible
+            datosArchivoGrabadora['es_audible']= esAudible
             datosArchivoGrabadora['grabadora_id'] = formaArchivosGrabadora.vars['grabadora_id']
             datosArchivoGrabadora['archivo'] = archivoGrabadora
             datosArchivoGrabadora['archivo_nombre_original'] = aux.filename
