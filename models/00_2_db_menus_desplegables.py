@@ -42,6 +42,15 @@ if db(db.Cat_transecto_ramas.id>0).count() == 0:
 	db.Cat_transecto_ramas.insert(nombre='Sur')
 	db.Cat_transecto_ramas.insert(nombre='Oeste')
 
+
+db.define_table('Cat_forma_vida',Field('nombre','string',
+	required='TRUE'))
+
+if db(db.Cat_forma_vida.id>0).count() == 0:
+	db.Cat_forma_vida.insert(nombre='Arbustiva')
+	db.Cat_forma_vida.insert(nombre='Arbórea')
+
+
 ##########################################################################
 ## Pestaña Conteo de aves
 ########################################################################

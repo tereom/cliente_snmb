@@ -9,10 +9,10 @@
         text-align: center;
     }
     
-    .No_GPS .generic-widget, .No_GPS .Fijo
+    .No_GPS .generic-widget
     {
-    	margin-right: 1cm;
-        width: 3.5cm;
+    	margin-right: 2cm;
+        width: 4cm;
     }
     
     .FlotaIzquierda
@@ -35,7 +35,7 @@
 {{#=response.toolbar()}}
 
 <form action="" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="_formname" value="formaArbolTransectoHTML"/>
+    <input type="hidden" name="_formname" value="formaArbolHTML"/>
     <fieldset>
         <legend>
             Información de arbolado
@@ -63,7 +63,7 @@
                     </div>
                 </td>                
                 <td>
-                    <div class="Fijo">
+                    <div>
                         <label for="tabla_sitio_muestra_id">Sitio</label>
                     </div>
                     <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
@@ -73,47 +73,43 @@
                         </select>
                     </div>
                 </td>
-                <td>
-                    <div>
-                        <label for="tabla_transecto">Transecto</label>
-                    </div>
-                    <div>
-                        <select class="generic-widget obligatorio" name="transecto" id="tabla_transecto">
-                            <option value=""/>
-                            {{for transecto in listaTransecto:}}
-                                <option value="{{=transecto.nombre}}">
-                                    {{=transecto.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
             </tr>
         </table>
+
+        <!--<legend>
+            Frecuencias por grosor del material
+        </legend>-->
         <hr/>
 
         <table class="No_GPS">
             <tr>
+                <th></th>
                 <th colspan="2" class="Centrar"># Individuo</th>
-                <th class="Centrar">Nombre<br/>común</th>
-                <th class="Centrar">Nombre<br/>científico</th>
-                <th class="Centrar">Forma de vida</th>
-                <th class="Centrar">Distancia<br/>de copa (cm)</th>
-                <th class="Centrar">Altura (cm)</th>
+                <th class="Centrar">Distancia(m)</th>
+                <th class="Centrar">Azimut(º)</th>
+                <th class="Centrar">Nombre común</th>
+                <th class="Centrar">Nombre científico</th>
+                <th class="Centrar">Altura(m)</th>
+                <th class="Centrar">Diámetro <br/> normal (cm)</th>
+                <th class="Centrar">Diámetro <br/> copa (m)</th>
             </tr>
         
 
-            {{for i in range(10):}}              
+            {{for i in range(8):}}              
                 <!-- Nombres auxiliares para la vista -->
-                <!-- la variable Arbol_i se utiliza para administrar el fade-in fade-out -->
+                {{individuo_i = str(i+1)}}
                 {{Arbol_i = 'Arbol_' + str(i+1)}}
+                {{cuadrante_i = ['Cuadrante 1','Cuadrante 1','Cuadrante 2','Cuadrante 2','Cuadrante 3','Cuadrante 3','Cuadrante 4','Cuadrante 4'][i]}}
 
                 <!-- Creamos los nombres de los campos y las tablas -->
                 {{existe_i = 'existe_' + str(i+1)}}
                 {{tabla_existe_i = 'tabla_' + existe_i}}
 
-                {{individuo_numero_i = 'individuo_numero' + str(i+1)}}
-                {{tabla_individuo_numero_i = 'tabla_' + individuo_numero_i}}
+                {{distancia_i = 'distancia_' + str(i+1)}}
+                {{tabla_distancia_i = 'tabla_' + distancia_i}}
+                
+                {{azimut_i = 'azimut_' + str(i+1)}}
+                {{tabla_azimut_i = 'tabla_' + azimut_i}}
 
                 {{nombre_comun_i = 'nombre_comun_' + str(i+1)}}
                 {{tabla_nombre_comun_i = 'tabla_' + nombre_comun_i}}
@@ -121,22 +117,37 @@
                 {{nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)}}
                 {{tabla_nombre_cientifico_i = 'tabla_' + nombre_cientifico_i}}
 
-                {{forma_vida_i = 'forma_vida_' + str(i+1)}}
-                {{tabla_forma_vida_i = 'tabla_' + forma_vida_i}}
-
-                {{distancia_copa_i = 'distancia_copa_' + str(i+1)}}
-                {{tabla_distancia_copa_i = 'tabla_' + distancia_copa_i}}
-
                 {{altura_i = 'altura_' + str(i+1)}}
                 {{tabla_altura_i = 'tabla_' + altura_i}}
 
+                {{diametro_normal_i = 'diametro_normal_' + str(i+1)}}
+                {{tabla_diametro_normal_i = 'tabla_' + diametro_normal_i}}
+
+
+                {{diametro_copa_i = 'diametro_copa_' + str(i+1)}}
+                {{tabla_diametro_copa_i = 'tabla_' + diametro_copa_i}}
+
                 <tr>
+                    <!-- Campo cuadrante solo se escribe una vez -->
+                    {{if i % 2 == 0: }}
+                        <td rowspan="2">
+                            <b>{{=cuadrante_i}}</b>
+                        </td>
+                    {{pass}}
                     <td class="Centrar">
                             <input class="boolean" name="{{=existe_i}}" id="{{=tabla_existe_i}}" type="checkbox" value="on"/>
                     </td>
                     <td>
+                        {{=individuo_i}}
+                    </td>
+                    <td>
                         <div class="{{=Arbol_i}}">
-                            <input class="integer" name="{{=individuo_numero_i}}" id="{{=tabla_individuo_numero_i}}" type="text" value=""/>
+                            <input class="double" name="{{=distancia_i}}" id="{{=tabla_distancia_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="double" name="{{=azimut_i}}" id="{{=tabla_azimut_i}}" type="text" value=""/>
                         </div>
                     </td>
                     <td>
@@ -151,39 +162,23 @@
                     </td>
                     <td>
                         <div class="{{=Arbol_i}}">
-                            <select class="generic-widget" name="{{=forma_vida_i}}" id="{{=tabla_forma_vida_i}}">
-                                <option value=""/>
-                                {{for forma_vida in listaFormaVida:}}
-                                    <option value="{{=forma_vida.nombre}}">
-                                        {{=forma_vida.nombre}}
-                                    </option>
-                                {{pass}}
-                            </select>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="{{=Arbol_i}}">
-                            <input class="double" name="{{=distancia_copa_i}}" id="{{=tabla_distancia_copa_i}}" type="text" value=""/>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="{{=Arbol_i}}">
                             <input class="double" name="{{=altura_i}}" id="{{=tabla_altura_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="double" name="{{=diametro_normal_i}}" id="{{=tabla_diametro_normal_i}}" type="text" value=""/>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="{{=Arbol_i}}">
+                            <input class="double" name="{{=diametro_copa_i}}" id="{{=tabla_diametro_copa_i}}" type="text" value=""/>
                         </div>
                     </td>
                 </tr>
             {{pass}}
         </table>
-        <hr/>  
-        <div> 
-            <p>
-                <strong>
-                    Si faltan registros por ingresar favor de llenar una nueva forma 
-                    con la información restante.
-                </strong>
-            </p>
-        </div>  
-        <br/> 
+        <hr/>
     </fieldset>
     <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
@@ -205,6 +200,29 @@
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
         }
        )
+
+    //AJAX para evitar que se envíe la información de los transectos correspondientes
+    //a un sitio más de una vez:
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function (){
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('sitiosArboladoExistentes')}}",
+                success: function(resultado)
+                {
+                        //alert(resultado);
+                        if(resultado>=1)
+                        {
+                            alert('Los datos correspondientes a este sitio ya han sido declarados');
+                            $('#tabla_sitio_muestra_id').val("");
+                        }
+                    }
+                }
+                );
+        }
+        );
 
     //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
@@ -228,12 +246,12 @@
             if(!$('#shadow_clone').find('select:first').val())
             {
                 flag = false;
-                alert('Faltó llenar el sitio');
+                alert('falta llenar el sitio');
             }
 
             if(!flag)
             {
-                alert('Faltó llenar un campo');
+                alert('Faltó llenar un campo o subir alguna imagen');
                 return false;
             }
 
@@ -268,12 +286,6 @@
            
            $('#tabla_existe_8').prop('checked', true);
            $('.Arbol_8').show();
-
-           $('#tabla_existe_9').prop('checked', true);
-           $('.Arbol_9').show();
-
-           $('#tabla_existe_10').prop('checked', true);
-           $('.Arbol_10').show();
         }
     )
     
@@ -360,24 +372,5 @@
                 $('.Arbol_8').fadeOut();
         }
     )
-    $('#tabla_existe_9').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_9').fadeIn();
-            else
-                $('.Arbol_9').fadeOut();
-        }
-    )
-    $('#tabla_existe_10').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_10').fadeIn();
-            else
-                $('.Arbol_10').fadeOut();
-        }
-    )
+    
 </script>

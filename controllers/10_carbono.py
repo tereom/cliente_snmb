@@ -549,10 +549,117 @@ def puntosExistentes():
     return len(puntoYaInsertado)
 
 
+#############################
 
+## Pestaña correspondiente a Arbolado_transecto
+def index4():
+
+    camposArbolTransecto = [
+
+        #Datos para localizar un sitio único y asociarle los puntos de carbono a éste.
+        SELECT(_name='conglomerado_muestra_id',
+            requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='sitio_muestra_id',
+            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
+        SELECT(_name='transecto',
+            requires=IS_IN_DB(db,db.Cat_transecto_ramas.nombre,'%(nombre)s'))
+        ]
+
+    #Generando los otros campos con un for:
+
+    for i in range(10):
+
+        #Creando de manera automatizada los nombres de los campos:
+        existe_i = 'existe_' + str(i+1)
+        #individuo_numero se asigna en el controlador
+        individuo_numero_i = 'individuo_numero' + str(i+1)
+        nombre_comun_i = 'nombre_comun_' + str(i+1)
+        nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
+        forma_vida_i = 'forma_vida_' + str(i+1)
+        distancia_copa_i = 'distancia_copa_' + str(i+1)
+        altura_i = 'altura_' + str(i+1)
+
+        #Extendiendo la lista anterior:
+        camposArbolTransecto.extend([
+            #Campo para marcar si existe o no una rama.
+            INPUT(_name=existe_i,_type='boolean'),
+
+            INPUT(_name=individuo_numero_i,_type='integer'),
+            INPUT(_name=nombre_comun_i,_type='string'),
+            INPUT(_name=nombre_cientifico_i,_type='string'),
+            INPUT(_name=forma_vida_i,_type='string'),
+            INPUT(_name=distancia_copa_i,_type='double'),
+            INPUT(_name=altura_i,_type='double')
+        ])
+
+    formaArbolTransecto = FORM(*camposArbolTransecto)
+
+    if formaArbolTransecto.accepts(request.vars,formname='formaArbolTransectoHTML'):
+
+        # Asignando el id del sitio para localizar el transecto al cual se
+        # le asignará la rama
+        arbolSitioId = formaArbolTransecto.vars['sitio_muestra_id']
+        arbolTransectoId = formaArbolTransecto.vars['transecto']
+
+        for i in range(10):
+
+            #Creando de manera automatizada los nombres de los campos:
+            existe_i = 'existe_' + str(i+1)
+            #individuo_numero se asigna en el controlador
+            individuo_numero_i = 'individuo_numero' + str(i+1)
+            nombre_comun_i = 'nombre_comun_' + str(i+1)
+            nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
+            forma_vida_i = 'forma_vida_' + str(i+1)
+            distancia_copa_i = 'distancia_copa_' + str(i+1)
+            altura_i = 'altura_' + str(i+1)
+
+
+            # Si existe el i-ésimo árbol:
+            if bool(formaArbolTransecto.vars[existe_i]):
+
+                datosArbolTransecto_i = {}
+        
+                # Agregando los datos extraídos de la forma:
+                datosArbolTransecto_i['individuo_numero']=formaArbolTransecto.vars[individuo_numero_i]
+                datosArbolTransecto_i['nombre_comun']=formaArbolTransecto.vars[nombre_comun_i]
+                datosArbolTransecto_i['nombre_cientifico']=formaArbolTransecto.vars[nombre_cientifico_i]
+                datosArbolTransecto_i['forma_vida']=formaArbolTransecto.vars[forma_vida_i]
+                datosArbolTransecto_i['distancia_copa']=formaArbolTransecto.vars[distancia_copa_i]
+                datosArbolTransecto_i['altura']=formaArbolTransecto.vars[altura_i]
+
+                datosArbolTransecto_i['sitio_muestra_id']=arbolSitioId
+                datosArbolTransecto_i['transecto']=arbolTransectoId
+
+                # Insertando los datos de la rama:
+                db.Arbol_transecto.insert(**datosArbolTransecto_i)
+
+        response.flash = 'Éxito'
+        
+    elif formaArbolTransecto.errors:
+
+        response.flash = 'Hubo un error al llenar la forma'
+
+    else:
+
+        response.flash ='Por favor, introduzca la información de un árbol'
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
+
+    listaTransecto = db(db.Cat_transecto_ramas).select(db.Cat_transecto_ramas.nombre)
+
+    listaFormaVida = db(db.Cat_forma_vida).select(db.Cat_forma_vida.nombre)
+
+    #Regresando el número de ramas para crear la vista en HTML
+    return dict(listaConglomerado=listaConglomerado,
+        listaTransecto=listaTransecto,
+        listaFormaVida=listaFormaVida)
+
+
+############################
 
 ## Pestaña correspondiente a Cuadrante_arbolado
-def index4():
+def index5():
 
     camposArbolCuadrante = [
 

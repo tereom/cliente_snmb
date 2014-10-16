@@ -60,8 +60,31 @@ Campos_Punto_carbono = [
 db.define_table('Punto_carbono',*Campos_Punto_carbono,
     singular='Carbono en el mantillo',plural='Carbono en el mantillo')
 
+
 ##########################################################################
-## Cuadrante_arbolado
+## Arbol_transecto: arboles pequeños y arbustos
+##########################################################################
+
+Campos_Arbol_transecto = [
+
+    Field('sitio_muestra_id','reference Sitio_muestra',required=True),
+    #Se insertará a partir de un catálogo
+    Field('transecto','string',required=True),
+    Field('individuo_numero','integer',required=True),
+    Field('nombre_comun','string',required=True),
+    Field('nombre_cientifico','string',required=True),
+    Field('forma_vida','string',required=True),
+    Field('distancia_copa','double',required=True),
+    Field('altura','double',required=True),
+    
+    ]
+
+db.define_table('Arbol_transecto',*Campos_Arbol_transecto,
+    singular='Árbol transecto',plural='Árboles transectos')
+
+
+##########################################################################
+## Arbol_cuadrante
 ##########################################################################
 
 Campos_Arbol_cuadrante = [
