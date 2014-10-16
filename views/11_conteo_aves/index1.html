@@ -67,6 +67,8 @@
 						<input class="string obligatorio" name="tecnico" id="tabla_tecnico" type="text" value=""/>
 					</div>
 				</td>
+                <td>
+                </td>
 			</tr>
 			<tr>
 				<td>
@@ -93,7 +95,7 @@
 						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
 					</div>
 				</td>
-				 <td>
+				<td>
 				 	<div>
 						<label for="tabla_condiciones_ambientales">Condiciones ambientales</label>
 					</div>
@@ -108,7 +110,6 @@
                     </div>
                     </select>
                 </td>
-
 			</tr>
 		</table>
 	</fieldset>
@@ -138,6 +139,29 @@
         }
     )
 
+    //AJAX para evitar que se envíe la información del punto de conteo
+    //correspondiente a un sitio más de una vez:
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+    {
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('puntoConteoExistente')}}",
+            success: function(resultado)
+                {
+                    //alert(resultado);
+                    if(resultado>=1)
+                    {
+                        alert('Ya ha sido declarado un punto de conteo de aves en este sitio');
+                        $('#tabla_sitio_muestra_id').val("");
+                    }
+                }
+        }
+        );
+    }
+    );
 
 	//Validando, para ello utilizamos la clase "obligatorio":
    	$('form').submit
@@ -167,6 +191,15 @@
             	}
         	}
         	);
+
+            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+            //validar aparte:
+            if(!$('#shadow_clone').find('select:first').val())
+            {
+                flag = false;
+                //alert('Falta llenar el sitio');
+            }
         	           
 			if(!flag)
             {

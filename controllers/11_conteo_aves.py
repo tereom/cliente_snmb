@@ -24,11 +24,23 @@ def index1():
     formaPuntoConteo = FORM(*camposPuntoConteo)
     
     if formaPuntoConteo.accepts(request.vars,formname='formaPuntoConteoHTML'):
-        db.Punto_conteo_aves.insert(**formaPuntoConteo.vars)
+
+        #Filtrando los datos correspondientes a la tabla de Punto_conteo_aves:
+
+        datosPuntoConteo = db.Punto_conteo_aves._filter_fields(formaPuntoConteo.vars)
+
+        #Insertando el registro en la base de datos
+
+        db.Punto_conteo_aves.insert(**datosPuntoConteo)
+
         response.flash = 'Éxito'
+
     elif formaPuntoConteo.errors:
+
         response.flash = 'Hubo un error al llenar la forma'
+
     else:
+        
         response.flash ='Por favor, asegúrese de registrar cada punto de conteo sólo una vez'
 
     ##########Enviando la información de las dropdowns##########################
