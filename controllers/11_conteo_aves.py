@@ -121,8 +121,10 @@ def index2():
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
+        SELECT(_name='sitio_muestra_id',
+            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
         SELECT(_name='punto_conteo_aves_id',
-            requires=IS_IN_DB(db,db.punto_conteo_aves.id,'%(nombre)s')),
+            requires=IS_IN_DB(db,db.Punto_conteo_aves.id,'%(nombre)s')),
 
         #Campos de una observación de aves:
 
@@ -148,7 +150,21 @@ def index2():
     if formaConteoAve.accepts(request.vars,formname='formaConteoAveHTML'):    
         #Filtrando los datos correspondientes a la tabla de huellas:
 
-        datosConteoAve = db.Conteo_ave._filter_fields(formaConteoAve.vars)        
+        datosConteoAve = db.Conteo_ave._filter_fields(formaConteoAve.vars)
+
+        #La observación es visual/sonora, entonces True se guarda en la base de datos,
+        #en caso contrario, se tiene que guardar manualmente False, pues si no,
+        #Web2py guarda Null.
+
+        if bool(formaConteoAve.vars['es_visual']):
+            datosConteoAve['es_visual']=formaConteoAve.vars['es_visual']
+        else:
+            datosConteoAve['es_visual']=False
+
+        if bool(formaConteoAve.vars['es_sonora']):
+            datosConteoAve['es_sonora']=formaConteoAve.vars['es_sonora']
+        else:
+            datosConteoAve['es_sonora']=False
         
         #Guardando el registro de la observación en la base de datos:
         
@@ -177,7 +193,7 @@ def index2():
         
         response.flash = 'Éxito'
         
-    elif formaHuellaExcreta.errors:
+    elif formaConteoAve.errors:
 
        response.flash = 'Hubo un error al llenar la forma de conteo de aves'
        
@@ -204,62 +220,47 @@ def index2():
 
 def asignarPuntoConteo():
 
-    # El campo conglomerado_muestra_id es únicamente auxiliar y se utiliza para:
-    # 1. Mediante AJAX, buscar los sitios asociados a un conglomerado.
-    # 2. Utilizando dichos sitios, buscar en la tabla de Punto_conteo_aves,
-    # para ver en cuáles de dichos sitios existe una punto declarado. Mostrar
-    # en la vista los sitios, pero enviar al controlador los id's de los puntos
-    # de conteo asociados a cada sitio.
+    # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
+    # el punto de conteo asociado a un sitio (mediante AJAX).
 
-    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+    sitioElegidoID = request.vars.sitio_muestra_id
 
-    #Obteniendo los sitios que existen en dicho conglomerado
-    sitiosAsignados = db(
-        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
-        (db.Sitio_muestra.existe==True)&\
-        (db.Sitio_muestra.sitio_numero!='Punto de control')
-        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
+    #Obteniendo los puntos de conteo que han sido declarados en dicho sitio
 
-    #Bandera que indica si se encontró algún punto de conteo declarado en alguno
-    #de los sitios del conglomerado elegido:
+    puntosConteoAsignados = db(db.Punto_conteo_aves.sitio_muestra_id==\
+        sitioElegidoID).select(db.Punto_conteo_aves.id, db.Punto_conteo_aves.fecha)
 
-    flag = False
+    puntoConteo = puntosConteoAsignados.first()
 
-    #Creando la dropdown de sitios/puntos y enviándola a la vista para que sea desplegada:
+    #Bajo el supuesto que sólo existe un punto de conteo de aves por fecha para
+    # determinado sitio, no se requiere hacer dropdowns:
 
-    dropdownHTML = "<select class='generic-widget' name='Punto_conteo_aves_id'"+\
-        " id='tabla_punto_conteo_aves_id'>"
-    dropdownHTML += "<option value=''/>"
+    if len(puntosConteoAsignados)==0:
 
-    for sitio in sitiosAsignados:
+        respuestaHTML = "<p>No se encontró un punto de conteo de aves en el sitio elegido</p>"
 
-        #Buscando, de entre los sitios de un conglomerado, en cuáles ha sido
-        #declarado un punto de conteo. En caso de que no ocurra para ningún sitio,
-        #se enviará un mensaje (para ello se utiliza la bandera).
+        respuestaHTML += "<input type='hidden' name='punto_conteo_aves_id' "+\
+            "id='tabla_punto_conteo_aves_id' value=''/>"
 
-        puntoConteoSitio = db(db.Punto_conteo_aves.sitio_muestra_id==sitio.id).select(
-            db.Punto_conteo_aves.id).first()
+    else:
 
-        if len(puntoConteoSitio)>1:
+        respuestaHTML = "<p>Fecha de conteo de aves: " + str(puntoConteo.fecha) +"</p>"
 
-            flag = True
+        respuestaHTML += "<input type='hidden' name='punto_conteo_aves_id' "+\
+            "id='tabla_punto_conteo_aves_id' value='" + str(puntoConteo.id)+ "'/>"
 
-            #Como cuidamos que exista a lo más un punto por sitio de un conglome-
-            #rado, al elegir el conglomerado y el número de sitio, automática-
-            #mente sabemos el punto al que corresponde, sin embargo, para el
-            #usuario mandamos el número de sitio del conglomerado elegido,
-            #mientras que para el controlador enviamos el id de dicho punto.
+    return XML(respuestaHTML)
 
-            dropdownHTML += "<option value='" + str(puntoConteoSitio.id) + "'>"+\
-            sitio.sitio_numero + "</option>"  
+    # dropdownHTML = "<select class='generic-widget' name='punto_conteo_aves_id'"+\
+    # " id='tabla_punto_conteo_aves_id'>"
 
-    dropdownHTML += "</select>"
+    # dropdownHTML += "<option value=''/>"
 
-    #Finalmente, si flag=false, en lugar de enviar la dropdown, enviamos un mensaje
-    #de que no hay cámaras declaradas en dicho conglomerado:
+    # for puntoConteo in puntosConteoAsignados:
 
-    if not flag:
-
-        dropdownHTML = "<p id='tabla_camara_id'> Favor de registrar un punto de conteo de aves para este conglomerado.</p>"
+    #     dropdownHTML += "<option value='" + str(puntoConteo.id) + "'>" +\
+    #     puntoConteo.fecha + "</option>"  
     
-    return XML(dropdownHTML)
+    # dropdownHTML += "</select>"
+    
+    # return XML(dropdownHTML)

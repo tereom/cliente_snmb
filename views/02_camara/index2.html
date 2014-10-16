@@ -45,8 +45,7 @@
                     </div>
                 </td>                
                 <td>
-                	<!-- Las clases InfoSitio e InfoCamara sirven para esconder los campos (ver JS abajo)-->
-                	<div class="InfoSitio Estatica">
+                	<div class="Estatica">
                     	<div>
                         	<label for="tabla_sitio_muestra_id">Sitio</label>
                     	</div>
@@ -59,7 +58,7 @@
                 	</div>
                 </td>
                 <td>
-                	<div class="InfoCamara Estatica">
+                	<div class="Estatica">
                 		<div>
                         	<label for="tabla_camara_id">Cámara</label>
                     	</div>
@@ -92,9 +91,9 @@
     (
         function()
         {
-        	/*Cuando el documento se carga, tanto el campo de sitio como el de cámara están escondidos*/
+        	/*Cuando el documento se carga, el campo de cámara está escondido
         	$('#conglomerado_muestra_id').val("");
-        	$('.InfoCamara, .InfoSitio').hide();
+        	$('.InfoCamara').hide();*/
         	alert('Si no se cargan todos los archivos al mismo tiempo, por favor, súbalos por partes, asignándolos siempre a la misma cámara.');
         }
     )
@@ -104,54 +103,47 @@
     (
         function()
         {
-            $('#tabla_sitio_muestra_id').remove();
+            $('#tabla_sitio_muestra_id, #tabla_camara_id').remove();
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
+            
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 
-            /* Finalmente, si se selecciona un conglomerado (no ""), aparece el campo de sitio.*/
+            ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
 
-            if($(this).val())
-            {
-                $('.InfoSitio').fadeIn();
+            /* Finalmente, si no se selecciona un conglomerado (""), desaparece
+            el campo de cámara, y además, se deben resetear los valores de esta úlima
 
-            }
-            else
+            if(!$(this).val())
             {
-            	/* Si se apaga la casilla de sitio, también se debe apagar la de cámara
-            	y, además, se deben resetear los valores de esta úlima*/
-            	$('.InfoCamara, .InfoSitio').hide();
+            	$('.InfoCamara').fadeOut();
             	ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-            }
+            }*/
         }
     );
 
     //AJAX para llenar la combobox con las cámaras declaradas al elegir un sitio
  	$('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
     {
-        $('#camara_id').remove();
+        $('#tabla_camara_id').remove();
 
         //ajax es una función de Web2py que simplifica la función homónima de JQuery
         //recibe el URL destino, los nombres de los campos que se enviarán y el ID
         // del elemento donde se insertará la respuesta
         ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-        /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de cámara.*/
+
+        /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de cámara.
 
         if($(this).val())
         {
             $('.InfoCamara').fadeIn();
         }
         else
-            $('.InfoCamara').fadeOut();
+            $('.InfoCamara').fadeOut();*/
     }
     );
-
-    //Para terminar, hay que activar el AJAX anterior en caso de que se cambie el
-    //conglomerado:
-
-
 
     //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
