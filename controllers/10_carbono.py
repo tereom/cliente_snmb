@@ -199,6 +199,8 @@ def index2():
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
         SELECT(_name='sitio_muestra_id',
             requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
+        SELECT(_name='transecto_ramas_id',
+            requires=IS_IN_DB(db,db.Transecto_ramas.id,'%(nombre)s'))
     ]
 
     ##########################
@@ -232,12 +234,13 @@ def index2():
         # Asignando el id del sitio para localizar el transecto al cual se
         # le asignará la rama
         transectoRamasSitioId = formaRamas.vars['sitio_muestra_id']
+        transectoRamasId = formaRamas.vars['transecto_ramas_id']
 
         for i in range(n_ramas):
 
             # Creando de manera automatizada los nombres de los campos:
             existe_i = 'existe_' + str(i+1)
-            transecto_ramas_i = 'transecto_ramas_' + str(i+1)
+            #transecto_ramas_i = 'transecto_ramas_' + str(i+1)
             diametro_i = 'diametro_' + str(i+1)
             grado_i = 'grado_' + str(i+1)
 
@@ -248,17 +251,17 @@ def index2():
 
                 # Leyendo la dirección del transecto que seleccionó el usuario
 
-                transectoRamasDireccion_i = formaRamas.vars[transecto_ramas_i]
+                # transectoRamasDireccion_i = formaRamas.vars[transecto_ramas_i]
 
                 # Obtenemos el id para transecto_ramas usando un query
 
-                transectoRamasID = db(
-                    (db.Transecto_ramas.direccion==transectoRamasDireccion_i)&
-                    (db.Transecto_ramas.sitio_muestra_id==transectoRamasSitioId)
-                    ).select(db.Transecto_ramas.id).first()
+                # transectoRamasID = db(
+                #     (db.Transecto_ramas.direccion==transectoRamasDireccion_i)&
+                #     (db.Transecto_ramas.sitio_muestra_id==transectoRamasSitioId)
+                #     ).select(db.Transecto_ramas.id).first()
         
                 # Agregando los datos extraídos de la forma:
-                datosRama_i['transecto_ramas_id']=transectoRamasID
+                datosRama_i['transecto_ramas_id']=transectoRamasId
                 datosRama_i['diametro']=formaRamas.vars[diametro_i]
                 datosRama_i['grado']=formaRamas.vars[grado_i]
 
@@ -285,6 +288,34 @@ def index2():
     return dict(n_ramas=n_ramas,
         listaConglomerado=listaConglomerado,
         listaTransecto=listaTransecto)
+
+def asignarTransectosRamas():
+
+    # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
+    # la cámara asociada a un sitio (mediante AJAX).
+
+    sitioElegidoID = request.vars.sitio_muestra_id
+
+    #Obteniendo los transectos que han sido declaradas en dicho sitio
+
+    transectosAsignados = db(db.Transecto_ramas.sitio_muestra_id==sitioElegidoID).select(
+        db.Transecto_ramas.id, db.Transecto_ramas.direccion)
+
+    #Creando la dropdown de cámaras y enviándola a la vista para que sea desplegada:
+
+    dropdownHTML = "<select class='generic-widget' name='transecto_ramas_id' id='tabla_transecto_ramas_id'>"
+
+    dropdownHTML += "<option value=''/>"
+
+    for transecto in transectosAsignados:
+
+        dropdownHTML += "<option value='" + str(transecto.id) + "'>" + transecto.direccion + "</option>"  
+    
+    dropdownHTML += "</select>"
+    
+    return XML(dropdownHTML)
+
+
 
 def index3():
 

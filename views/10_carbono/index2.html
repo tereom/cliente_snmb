@@ -9,7 +9,7 @@
         text-align: center;
     }
     
-    .No_GPS .generic-widget
+    .No_GPS .generic-widget, .No_GPS .Fijo
     {
     	margin-right: 2cm;
         width: 4cm;
@@ -58,12 +58,22 @@
                     </div>
                 </td>                
                 <td>
-                    <div>
+                    <div class="Fijo">
                         <label for="tabla_sitio_muestra_id">Sitio</label>
                     </div>
                     <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
                     <div id="shadow_clone">
                         <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+                            <option value=""/>
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_transecto_ramas_id">Transecto</label>
+                    </div>
+                    <div id="shadow_clone_2">
+                        <select class="generic-widget" name="transecto_ramas_id" id="tabla_transecto_ramas_id">
                             <option value=""/>
                         </select>
                     </div>
@@ -74,19 +84,22 @@
         <table class="No_GPS">
             <tr>
                 <th>Existe</th>
-                <th>Transecto</th>
                 <th>Diámetro(cm)</th>
                 <th>Grado</th>
             </tr>
             <!-- La tabla se genera en un ciclo for -->
             
-            {{for i in range(n_ramas):}}              
+            {{for i in range(n_ramas):}}    
+                <!-- Nombres auxiliares para la vista -->
+                <!-- la variable Rama_i se utiliza para administrar el fade-in fade-out -->
+                {{Rama_i = 'Rama_' + str(i+1)}}
+
                 <!-- Creamos los nombres de los campos y las tablas -->
                 {{existe_i = 'existe_' + str(i+1)}}
                 {{tabla_existe_i = 'tabla_' + existe_i}}
 
-                {{transecto_ramas_i = 'transecto_ramas_' + str(i+1)}}
-                {{tabla_transecto_ramas_i = 'tabla_' + transecto_ramas_i}}
+                {{#transecto_ramas_i = 'transecto_ramas_' + str(i+1)}}
+                {{#tabla_transecto_ramas_i = 'tabla_' + transecto_ramas_i}}
 
                 {{diametro_i = 'diametro_' + str(i+1)}}
                 {{tabla_diametro_i = 'tabla_' + diametro_i}}
@@ -99,20 +112,14 @@
                         <input class="boolean" name="{{=existe_i}}" id="{{=tabla_existe_i}}" type="checkbox" value="on"/>
                     </td>
                     <td>
-                        <select class="generic-widget" name="{{=transecto_ramas_i}}" id="{{=tabla_transecto_ramas_i}}">
-                            <option value=""/>
-                            {{for transecto in listaTransecto:}}
-                                <option value="{{=transecto.nombre}}">
-                                    {{=transecto.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
+                        <div class="{{=Rama_i}}">
+                            <input class="double" name="{{=diametro_i}}" id="{{=tabla_diametro_i}}" type="text" value=""/>
+                        </div>
                     </td>
                     <td>
-                        <input class="double" name="{{=diametro_i}}" id="{{=tabla_diametro_i}}" type="text" value=""/>
-                    </td>
-                    <td>
-                        <input class="integer" name="{{=grado_i}}" id="{{=tabla_grado_i}}" type="text" value=""/>
+                        <div class="{{=Rama_i}}">
+                            <input class="integer" name="{{=grado_i}}" id="{{=tabla_grado_i}}" type="text" value=""/>
+                        </div>
                     </td>
                 </tr>
             {{pass}}
@@ -148,12 +155,14 @@
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+
+            // ajax para asignar transectos
+            ajax("{{=URL('asignarTransectosRamas')}}", ['sitio_muestra_id'], 'shadow_clone_2');
         }
        )
 
-    //AJAX para evitar que se envíe la información de los sitios correspondientes
-    //a un sitio más de una vez:
-    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function (){
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+    {
         $.ajax
         (
         {
@@ -171,6 +180,21 @@
                 }
         }
         );
+        $('#tabla_transecto_ramas_id').remove();
+
+        //ajax es una función de Web2py que simplifica la función homónima de JQuery
+        //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+        // del elemento donde se insertará la respuesta
+        ajax("{{=URL('asignarTransectosRamas')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+
+        /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de cámara.
+
+        if($(this).val())
+        {
+            $('.InfoCamara').fadeIn();
+        }
+        else
+            $('.InfoCamara').fadeOut();*/
     }
     );
 
@@ -190,6 +214,140 @@
             }
             );
 
+            /*Validando que los campos correspondientes a una rama estén 
+            llenos si estos existen*/
+
+            if($('#tabla_existe_1').prop('checked'))
+            {
+                campos=$('.Rama_1 input, .Rama_1 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_2').prop('checked'))
+            {
+                campos=$('.Rama_2 input, .Rama_2 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_3').prop('checked'))
+            {
+                campos=$('.Rama_3 input, .Rama_3 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_4').prop('checked'))
+            {
+                campos=$('.Rama_4 input, .Rama_4 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_5').prop('checked'))
+            {
+                campos=$('.Rama_5 input, .Rama_5 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_6').prop('checked'))
+            {
+                campos=$('.Rama_6 input, .Rama_6 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_7').prop('checked'))
+            {
+                campos=$('.Rama_7 input, .Rama_7 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_8').prop('checked'))
+            {
+                campos=$('.Rama_8 input, .Rama_8 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_9').prop('checked'))
+            {
+                campos=$('.Rama_9 input, .Rama_9 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+            if($('#tabla_existe_10').prop('checked'))
+            {
+                campos=$('.Rama_10 input, .Rama_10 select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                );
+            }
+
             //Sin embargo, como el campo de "sitio_muestra_id" es generado por
             //medio de AJAX; no entra en la validación anterior. Lo tenemos que
             //validar aparte:
@@ -198,13 +356,130 @@
                 flag = false;
                 alert('falta llenar el sitio');
             }
-
+            if(!$('#shadow_clone_2').find('select:first').val())
+            {
+                flag = false;
+                alert('falta llenar el transecto');
+            }
             if(!flag)
             {
-                alert('Faltó llenar un campo o subir alguna imagen');
+                alert('Faltó llenar un campo');
                 return false;
             }
 
+        }
+    )
+    $(document).ready
+    (
+        function()
+        {
+           for(i=1; i<=10; i++)
+           {
+             tabla_existe_i = '#tabla_existe_'.concat(i);
+             Rama_i = '.Rama_'.concat(i);
+             $(tabla_existe_i).prop('checked', true);
+             $(Rama_i).show();
+            }
+     }
+     )
+    $('#tabla_existe_1').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_1').fadeIn();
+            else
+                $('.Rama_1').fadeOut();
+        }
+    )
+    $('#tabla_existe_2').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_2').fadeIn();
+            else
+                $('.Rama_2').fadeOut();
+        }
+    )
+    $('#tabla_existe_3').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_3').fadeIn();
+            else
+                $('.Rama_3').fadeOut();
+        }
+    )
+    $('#tabla_existe_4').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_4').fadeIn();
+            else
+                $('.Rama_4').fadeOut();
+        }
+    )
+    $('#tabla_existe_5').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_5').fadeIn();
+            else
+                $('.Rama_5').fadeOut();
+        }
+    )
+    $('#tabla_existe_6').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_6').fadeIn();
+            else
+                $('.Rama_6').fadeOut();
+        }
+    )
+    $('#tabla_existe_7').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_7').fadeIn();
+            else
+                $('.Rama_7').fadeOut();
+        }
+    )
+    $('#tabla_existe_8').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_8').fadeIn();
+            else
+                $('.Rama_8').fadeOut();
+        }
+    )
+    $('#tabla_existe_9').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_9').fadeIn();
+            else
+                $('.Rama_9').fadeOut();
+        }
+    )
+    $('#tabla_existe_10').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_10').fadeIn();
+            else
+                $('.Rama_10').fadeOut();
         }
     )
     
