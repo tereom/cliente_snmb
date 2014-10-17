@@ -19,7 +19,7 @@ def obtenerFotografia():
     try:
 
         revisionHTML = "<form id='forma_shadow'><input type='hidden' name='id_foto' value='" +\
-            str(datosFoto.id) + "'/><center><img src='/cliente_web2py/8_revision/download/"+datosFoto.archivo+\
+            str(datosFoto.id) + "'/><center><img src='/init/8_revision/download/"+datosFoto.archivo+\
             "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/></center>"+\
             "<hr/><div><div style='float:left;padding-right:60px;'><label for='tabla_fauna_evidente' "+\
             "style='float:left;padding-right:20px;'>Fauna evidente</label><input type='radio' "+\

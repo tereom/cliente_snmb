@@ -499,6 +499,8 @@ def asignarMunicipios():
 
     dropdownHTML = "<select class='generic-widget' name='municipio' id='tabla_municipio'>"
 
+    dropdownHTML += "<option value=''/>"
+
     for municipio in municipiosAsignados:
 
 		dropdownHTML += "<option value='" + str(municipio.nombre) + "'>" + municipio.nombre + "</option>"  

@@ -258,17 +258,3 @@ def asignarPuntoConteo():
             "id='tabla_punto_conteo_aves_id' value='" + str(puntoConteo.id)+ "'/>"
 
     return XML(respuestaHTML)
-
-    # dropdownHTML = "<select class='generic-widget' name='punto_conteo_aves_id'"+\
-    # " id='tabla_punto_conteo_aves_id'>"
-
-    # dropdownHTML += "<option value=''/>"
-
-    # for puntoConteo in puntosConteoAsignados:
-
-    #     dropdownHTML += "<option value='" + str(puntoConteo.id) + "'>" +\
-    #     puntoConteo.fecha + "</option>"  
-    
-    # dropdownHTML += "</select>"
-    
-    # return XML(dropdownHTML)

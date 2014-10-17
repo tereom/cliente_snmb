@@ -241,7 +241,36 @@ def index2():
 
     return dict(listaConglomerado=listaConglomerado)
 
-def asignarCamaras():
+#La siguiente función es para generar una combobox de cámaras por sitio, es decir,
+#sirve mejor para cuando hay más de una cámara declarada en un sitio.
+
+# def asignarCamaras():
+
+#     # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
+#     # la cámara asociada a un sitio (mediante AJAX).
+
+#     sitioElegidoID = request.vars.sitio_muestra_id
+
+#     #Obteniendo las cámaras que han sido declaradas en dicho sitio
+
+#     camarasAsignadas = db(db.Camara.sitio_muestra_id==sitioElegidoID).select(
+#         db.Camara.id, db.Camara.nombre)
+
+#     #Creando la dropdown de cámaras y enviándola a la vista para que sea desplegada:
+
+#     dropdownHTML = "<select class='generic-widget' name='camara_id' id='tabla_camara_id'>"
+
+#     dropdownHTML += "<option value=''/>"
+
+#     for camara in camarasAsignadas:
+
+#         dropdownHTML += "<option value='" + str(camara.id) + "'>" + camara.nombre + "</option>"  
+    
+#     dropdownHTML += "</select>"
+    
+#     return XML(dropdownHTML)
+
+def asignarCamara():
 
     # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
     # la cámara asociada a un sitio (mediante AJAX).
@@ -250,19 +279,26 @@ def asignarCamaras():
 
     #Obteniendo las cámaras que han sido declaradas en dicho sitio
 
-    camarasAsignadas = db(db.Camara.sitio_muestra_id==sitioElegidoID).select(
-        db.Camara.id, db.Camara.nombre)
+    camarasAsignadas = db(db.Camara.sitio_muestra_id==\
+        sitioElegidoID).select(db.Camara.id, db.Camara.nombre)
 
-    #Creando la dropdown de cámaras y enviándola a la vista para que sea desplegada:
+    camara = camarasAsignadas.first()
 
-    dropdownHTML = "<select class='generic-widget' name='camara_id' id='tabla_camara_id'>"
+    #Bajo el supuesto que sólo existe una cámara por sitio, no se requiere hacer dropdowns:
 
-    dropdownHTML += "<option value=''/>"
+    if len(camarasAsignadas)==0:
 
-    for camara in camarasAsignadas:
+        respuestaHTML = "<p>No se encontró ninguna cámara declarada en el sitio elegido</p>"
 
-        dropdownHTML += "<option value='" + str(camara.id) + "'>" + camara.nombre + "</option>"  
-    
-    dropdownHTML += "</select>"
-    
-    return XML(dropdownHTML)
+        respuestaHTML += "<input type='hidden' name='camara_id' "+\
+            "id='tabla_camara_id' value=''/>"
+
+    else:
+
+        respuestaHTML = "<p>Cámara localizada: " + str(camara.nombre) +"</p>"
+
+        respuestaHTML += "<input type='hidden' name='camara_id' "+\
+            "id='tabla_camara_id' value='" + str(camara.id)+ "'/>"
+
+    return XML(respuestaHTML)
+

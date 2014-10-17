@@ -2,12 +2,6 @@
 {{block head}}
 <style type="text/css">
 
-	/*.Campos_sitio, .Campos_conglomerado
-    {
-        table-layout: fixed;
-        width: 120%;
-    }*/
-
     .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
     {
         margin-right: 2cm;
@@ -679,6 +673,16 @@
             }
             );
 
+            //Sin embargo, como el campo de "municipio" es generado por
+            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+            //validar aparte:
+            if(!$('#shadow_clone').find('select:first').val())
+            {
+                flag = false;
+                //alert('Falta llenar el municipio');
+            }
+
+
             /*Validando que esté lleno el campo de "vegetacion_tipo" cuando el
             tipo de uso de suelo es vegetación"*/
 
@@ -756,7 +760,7 @@
             ); 
             if(!flag)
             {
-                alert('Faltó llenar un campo o subir alguna imagen');
+                alert('Faltó llenar algún campo o subir alguna imagen');
                 return false;
             }
             else if(!flag_m){

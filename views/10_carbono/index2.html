@@ -2,14 +2,14 @@
 {{block head}}
 <style type="text/css">
 
-    .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
+    .Tabla .integer, .Tabla .double
     {
         margin-right: 0.5cm;
         width: 2cm;
         text-align: center;
     }
     
-    .No_GPS .generic-widget, .No_GPS .Fijo
+    .Tabla .generic-widget, .Tabla .Estatico
     {
     	margin-right: 2cm;
         width: 4cm;
@@ -33,9 +33,9 @@
     <input type="hidden" name="_formname" value="formaRamasHTML"/>
     <fieldset>
         <legend>
-            Desglose de material 1000h (0-15m)
+            Desglose de ramas 1000h (0-15m)
         </legend>
-        <table class="No_GPS">
+        <table class="Tabla">
             <tr>
                 <td>
                     <div>
@@ -58,7 +58,7 @@
                     </div>
                 </td>                
                 <td>
-                    <div class="Fijo">
+                    <div class="Estatico">
                         <label for="tabla_sitio_muestra_id">Sitio</label>
                     </div>
                     <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
@@ -81,7 +81,7 @@
             </tr>
         </table>
         <hr/>
-        <table class="No_GPS">
+        <table class="Tabla">
             <tr>
                 <th>Existe</th>
                 <th>Diámetro(cm)</th>
@@ -159,7 +159,7 @@
     (
         function()
         {
-            $('#tabla_sitio_muestra_id').remove();
+            $('#tabla_sitio_muestra_id, #tabla_transecto_ramas_id').remove();
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
@@ -167,10 +167,11 @@
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 
             // ajax para asignar transectos
-            ajax("{{=URL('asignarTransectosRamas')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+            ajax("{{=URL('asignarTransectos')}}", ['sitio_muestra_id'], 'shadow_clone_2');
         }
        )
 
+    // ajax para asignar transectos
     $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
     {
         $.ajax
@@ -195,7 +196,7 @@
         //ajax es una función de Web2py que simplifica la función homónima de JQuery
         //recibe el URL destino, los nombres de los campos que se enviarán y el ID
         // del elemento donde se insertará la respuesta
-        ajax("{{=URL('asignarTransectosRamas')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+        ajax("{{=URL('asignarTransectos')}}", ['sitio_muestra_id'], 'shadow_clone_2');
 
         /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de cámara.
 

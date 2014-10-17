@@ -275,7 +275,33 @@ def index2():
 
     return dict(listaConglomerado=listaConglomerado)
 
-def asignarGrabadoras():
+# def asignarGrabadoras():
+
+#     # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
+#     # la grabadora asociada a un sitio (mediante AJAX).
+
+#     sitioElegidoID = request.vars.sitio_muestra_id
+
+#     #Obteniendo las grabadoras que han sido declaradas en dicho sitio
+
+#     grabadorasAsignadas = db(db.Grabadora.sitio_muestra_id==sitioElegidoID).select(
+#         db.Grabadora.id, db.Grabadora.nombre)
+
+#     #Creando la dropdown de grabadoras y enviándola a la vista para que sea desplegada:
+
+#     dropdownHTML = "<select class='generic-widget' name='grabadora_id' id='tabla_grabadora_id'>"
+
+#     dropdownHTML += "<option value=''/>"
+
+#     for grabadora in grabadorasAsignadas:
+
+#         dropdownHTML += "<option value='" + str(grabadora.id) + "'>" + grabadora.nombre + "</option>"  
+    
+#     dropdownHTML += "</select>"
+    
+#     return XML(dropdownHTML)
+
+def asignarGrabadora():
 
     # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
     # la grabadora asociada a un sitio (mediante AJAX).
@@ -284,22 +310,27 @@ def asignarGrabadoras():
 
     #Obteniendo las grabadoras que han sido declaradas en dicho sitio
 
-    grabadorasAsignadas = db(db.Grabadora.sitio_muestra_id==sitioElegidoID).select(
-        db.Grabadora.id, db.Grabadora.nombre)
+    grabadorasAsignadas = db(db.Grabadora.sitio_muestra_id==\
+        sitioElegidoID).select(db.Grabadora.id, db.Grabadora.nombre)
 
-    #Creando la dropdown de grabadoras y enviándola a la vista para que sea desplegada:
+    grabadora = grabadorasAsignadas.first()
 
-    dropdownHTML = "<select class='generic-widget' name='grabadora_id' id='tabla_grabadora_id'>"
+    #Bajo el supuesto que sólo existe una grabadora por sitio, no se requiere hacer dropdowns:
 
-    dropdownHTML += "<option value=''/>"
+    if len(grabadorasAsignadas)==0:
 
-    for grabadora in grabadorasAsignadas:
+        respuestaHTML = "<p>No se encontró ninguna grabadora declarada en el sitio elegido</p>"
 
-        dropdownHTML += "<option value='" + str(grabadora.id) + "'>" + grabadora.nombre + "</option>"  
-    
-    dropdownHTML += "</select>"
-    
-    return XML(dropdownHTML)
+        respuestaHTML += "<input type='hidden' name='grabadora_id' "+\
+            "id='tabla_grabadora_id' value=''/>"
 
+    else:
+
+        respuestaHTML = "<p>Grabadora localizada: " + str(grabadora.nombre) +"</p>"
+
+        respuestaHTML += "<input type='hidden' name='grabadora_id' "+\
+            "id='tabla_grabadora_id' value='" + str(grabadora.id)+ "'/>"
+
+    return XML(respuestaHTML)
 
 

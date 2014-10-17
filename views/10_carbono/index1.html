@@ -2,7 +2,7 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .integer, .Tabla .date, .Tabla .string, .Tabla .double
+    .Tabla .integer
     {
         margin-right: 0.5cm;
         width: 2cm;
@@ -18,11 +18,6 @@
     .FlotaIzquierda
     {
         float: left;
-    }
-
-    .Centrar
-    {
-        text-align: center;
     }
 
 </style>
@@ -216,7 +211,7 @@
 
             if(!flag)
             {
-                alert('Faltó llenar un campo o subir alguna imagen');
+                alert('Faltó llenar algún campo');
                 return false;
             }
 

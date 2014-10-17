@@ -58,17 +58,25 @@
                 	</div>
                 </td>
                 <td>
-                	<div class="Estatica">
+                	<!--<div class="Estatica">-->
+                        <!-- Para más de una cámara por sitio, descomentar esto
                 		<div>
                         	<label for="tabla_camara_id">Cámara</label>
                     	</div>
-                    	<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+                    	El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX
                     	<div id="shadow_clone_2">
                         	<select class="generic-widget" name="camara_id" id="tabla_camara_id">
                             	<option value=""/>
                         	</select>
                     	</div>
-                	</div>
+                        -->
+
+                        <!-- el siguiente div guardará la información de la cámara declarada en determinado conglomerado
+                        y sitio, si es que existe. La clase Mensaje se usa para esconder el campo-->
+                        <div id="shadow_clone_2" class="Mensaje">
+                            <input type='hidden' name='camara_id' id='tabla_camara_id' value=''/>
+                        </div>
+                	<!--</div>-->
                 </td>
         	</tr>
         </table>
@@ -98,26 +106,50 @@
     //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
     $('#tabla_conglomerado_muestra_id').change
     (
-        function()
-        {
-            $('#tabla_sitio_muestra_id, #tabla_camara_id').remove();
+    function()
+    {
 
-            //ajax es una función de Web2py que simplifica la función homónima de JQuery
-            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-            // del elemento donde se insertará la respuesta
-            
-            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        //Como a la hora de seleccionar el conglomerado, se resetea la combobox de sitio,
+        // desaparece el mensaje de tabla_camara:
 
-            ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-        }
+        $('.Mensaje').hide();
+
+        $('#tabla_sitio_muestra_id, #tabla_camara_id').remove();
+
+        //ajax es una función de Web2py que simplifica la función homónima de JQuery
+        //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+        // del elemento donde se insertará la respuesta.
+
+        ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+
+        ajax("{{=URL('asignarCamara')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+    }
     );
 
-    //AJAX para llenar la combobox con las cámaras declaradas al elegir un sitio
- 	$('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+    //AJAX para mandar la información con la cámara declarada al elegir un sitio
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
     {
-        $('#tabla_camara_id').remove();
-
-        ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('asignarCamara')}}",
+            async: false,
+            success: function(resultado)
+            {
+                $("#shadow_clone_2").html(resultado);
+            }
+        }
+        );
+        if($(this).val())
+        {
+            $('.Mensaje').show();
+        }
+        else
+        {
+            $('.Mensaje').hide();
+        }
     }
     );
 
@@ -147,7 +179,7 @@
             }
 
             //Lo mismo para el campo de "camara_id":
-            if(!$('#shadow_clone_2').find('select:first').val())
+            if(!$('#shadow_clone_2').find('#tabla_camara_id').val())
             {
                 flag = false;
                 //alert('Falta llenar la cámara');
@@ -155,7 +187,7 @@
 
             if(!flag)
             {
-                alert('Faltó llenar un campo o subir alguna imagen');
+                alert('Faltó llenar algún campo o subir alguna imagen');
                 return false;
             }
         }

@@ -194,7 +194,7 @@ def index2():
 
         #Datos para localizar un sitio único, del cuál posteriormente se leerán
         #mediante AJAX los transectos cardinales declarados, para poder declarar
-        #ramas en estos transectos. Estos datos deben conformar una llave del sitio:
+        #ramas en estos transectos.
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
         SELECT(_name='sitio_muestra_id',
@@ -292,14 +292,14 @@ def index2():
         listaConglomerado=listaConglomerado,
         grid=grid)
 
-def asignarTransectosRamas():
+def asignarTransectos():
 
     # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
     # la cámara asociada a un sitio (mediante AJAX).
 
     sitioElegidoID = request.vars.sitio_muestra_id
 
-    #Obteniendo los transectos que han sido declaradas en dicho sitio
+    #Obteniendo los transectos que han sido declarados en dicho sitio
 
     transectosAsignados = db(db.Transecto_ramas.sitio_muestra_id==sitioElegidoID).select(
         db.Transecto_ramas.id, db.Transecto_ramas.direccion)
