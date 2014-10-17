@@ -281,13 +281,16 @@ def index2():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
-    # opciones para el dropdown de transectos
-    listaTransecto = db(db.Cat_transecto_ramas).select(db.Cat_transecto_ramas.nombre)
+    # Tabla de revisión de registros ingresados
+    db.Rama_1000h.transecto_ramas_id.writable = False
+
+    grid = SQLFORM.smartgrid(db.Rama_1000h,csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
 
     #Regresando el número de ramas para crear la vista en HTML
     return dict(n_ramas=n_ramas,
         listaConglomerado=listaConglomerado,
-        listaTransecto=listaTransecto)
+        grid=grid)
 
 def asignarTransectosRamas():
 
@@ -681,10 +684,16 @@ def index4():
 
     listaFormaVida = db(db.Cat_forma_vida).select(db.Cat_forma_vida.nombre)
 
+    # Tabla de revisión de registros ingresados
+    db.Arbol_transecto.sitio_muestra_id.writable = False
+    grid = SQLFORM.smartgrid(db.Arbol_transecto,csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
+
     #Regresando el número de ramas para crear la vista en HTML
     return dict(listaConglomerado=listaConglomerado,
         listaTransecto=listaTransecto,
-        listaFormaVida=listaFormaVida)
+        listaFormaVida=listaFormaVida,
+        grid=grid)
 
 
 ############################
