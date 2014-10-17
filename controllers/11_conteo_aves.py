@@ -140,8 +140,7 @@ def index2():
         INPUT(_name='distancia_aproximada',_type='double',requires=IS_NOT_EMPTY()),
 
         ###########Imágenes############
-        INPUT(_name='archivos_conteo_ave',_type='file',_multiple=True,
-            requires=IS_NOT_EMPTY())
+        INPUT(_name='archivos_conteo_ave',_type='file',_multiple=True)
 
     ]
 
@@ -171,25 +170,34 @@ def index2():
         conteoAveInsertado = db.Conteo_ave.insert(**datosConteoAve)
 
         ################Procesando los archivos múltiples#################################
-        
-        archivos = formaConteoAve.vars['archivos_conteo_ave']
-        
-        if not isinstance(archivos, list):
-            archivos = [archivos]
-            
-        for aux in archivos:
 
-            #Guardando el archivo en la carpeta adecuada
-            archivoConteoAve = db.Archivo_conteo_ave.archivo.store(aux,aux.filename)
-            
-            datosArchivoConteoAve = {}
-            datosArchivoConteoAve['conteo_ave_id'] = conteoAveInsertado
-            datosArchivoConteoAve['archivo'] = archivoConteoAve
-            datosArchivoConteoAve['archivo_nombre_original'] = aux.filename
-        
-            #Insertando el registro en la base de datos:
+        #Como los archivos de conteo de aves no son obligatorios, hay que poner
+        #un try, except:
 
-            db.Archivo_conteo_ave.insert(**datosArchivoConteoAve)
+        try:
+        
+            archivos = formaConteoAve.vars['archivos_conteo_ave']
+        
+            if not isinstance(archivos, list):
+                archivos = [archivos]
+            
+            for aux in archivos:
+
+                #Guardando el archivo en la carpeta adecuada
+                archivoConteoAve = db.Archivo_conteo_ave.archivo.store(aux,aux.filename)
+            
+                datosArchivoConteoAve = {}
+                datosArchivoConteoAve['conteo_ave_id'] = conteoAveInsertado
+                datosArchivoConteoAve['archivo'] = archivoConteoAve
+                datosArchivoConteoAve['archivo_nombre_original'] = aux.filename
+        
+                #Insertando el registro en la base de datos:
+
+                db.Archivo_conteo_ave.insert(**datosArchivoConteoAve)
+
+        except:
+
+            pass
         
         response.flash = 'Éxito'
         

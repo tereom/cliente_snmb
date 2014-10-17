@@ -91,9 +91,6 @@
     (
         function()
         {
-        	/*Cuando el documento se carga, el campo de cámara está escondido
-        	$('#conglomerado_muestra_id').val("");
-        	$('.InfoCamara').hide();*/
         	alert('Si no se cargan todos los archivos al mismo tiempo, por favor, súbalos por partes, asignándolos siempre a la misma cámara.');
         }
     )
@@ -112,15 +109,6 @@
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 
             ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-
-            /* Finalmente, si no se selecciona un conglomerado (""), desaparece
-            el campo de cámara, y además, se deben resetear los valores de esta úlima
-
-            if(!$(this).val())
-            {
-            	$('.InfoCamara').fadeOut();
-            	ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-            }*/
         }
     );
 
@@ -129,19 +117,7 @@
     {
         $('#tabla_camara_id').remove();
 
-        //ajax es una función de Web2py que simplifica la función homónima de JQuery
-        //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-        // del elemento donde se insertará la respuesta
         ajax("{{=URL('asignarCamaras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-
-        /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de cámara.
-
-        if($(this).val())
-        {
-            $('.InfoCamara').fadeIn();
-        }
-        else
-            $('.InfoCamara').fadeOut();*/
     }
     );
 
@@ -159,19 +135,6 @@
                     flag = false;
                 }
             }
-            );
-
-            //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-            var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
-            campos_fecha=$('.date');
-            flag_m = true;
-            campos_fecha.each(function() 
-            {
-                if(!fechaReg.test($(this).val()))
-                {
-                   flag_m = false;
-                }
-             }
             );
 
             //Sin embargo, como el campo de "sitio_muestra_id" es generado por
@@ -193,11 +156,6 @@
             if(!flag)
             {
                 alert('Faltó llenar un campo o subir alguna imagen');
-                return false;
-            }
-            else if(!flag_m)
-            {
-                alert('El formato de fecha es aaaa-mm-dd');
                 return false;
             }
         }

@@ -114,9 +114,6 @@
     (
         function()
         {
-           /*Cuando el documento se carga, tanto el campo de sitio como el de grabadora están escondidos*/
-           //$('#conglomerado_muestra_id').val("");
-           //$('.InfoGrabadora, .InfoSitio').hide();
            alert('Si no se cargan todos los archivos al mismo tiempo, por favor, súbalos por partes, asignándolos siempre a la misma grabadora');
         }
     )
@@ -134,21 +131,6 @@
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 
             ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-
-            /* Finalmente, si se selecciona un conglomerado (no ""), aparece el campo de sitio.*/
-
-            /*if($(this).val())
-            {
-                $('.InfoSitio').fadeIn();
-
-            }
-            else
-            {
-            	 Si se apaga la casilla de sitio, también se debe apagar la de grabadora
-            	y, además, se deben resetear los valores de esta úlima
-            	$('.InfoGrabadora, .InfoSitio').hide();
-            	ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-            }*/
         }
     );
 
@@ -157,25 +139,9 @@
     {
         $('#tabla_grabadora_id').remove();
 
-        //ajax es una función de Web2py que simplifica la función homónima de JQuery
-        //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-        // del elemento donde se insertará la respuesta
         ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-        /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de grabadora.*/
-
-        /*if($(this).val())
-        {
-            $('.InfoGrabadora').fadeIn();
-        }
-        else
-            $('.InfoGrabadora').fadeOut();*/
     }
     );
-
-    //Para terminar, hay que activar el AJAX anterior en caso de que se cambie el
-    //conglomerado:
-
-
 
     //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
@@ -191,19 +157,6 @@
                     flag = false;
                 }
             }
-            );
-
-            //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-            var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
-            campos_fecha=$('.date');
-            flag_m = true;
-            campos_fecha.each(function() 
-            {
-                if(!fechaReg.test($(this).val()))
-                {
-                   flag_m = false;
-                }
-             }
             );
 
             //Sin embargo, como el campo de "sitio_muestra_id" es generado por
@@ -232,11 +185,6 @@
             if(!flag)
             {
                 alert('Faltó llenar un campo o subir alguna imagen');
-                return false;
-            }
-            else if(!flag_m)
-            {
-                alert('El formato de fecha es aaaa-mm-dd');
                 return false;
             }
         }

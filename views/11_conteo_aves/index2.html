@@ -67,12 +67,12 @@
 						</select>
 					</div>
 				</td>
-				<!-- el siguiente div guardará la información del punto de conteo de aves declarado en determinado conglomerado
-				y sitio, si es que existe-->
 				<td>
-					<div id="shadow_clone_2">
+          <!-- el siguiente div guardará la información del punto de conteo de aves declarado en determinado conglomerado
+          y sitio, si es que existe. La clase Mensaje se usa para esconder el campo-->
+					<div id="shadow_clone_2" class="Mensaje">
 						<input type='hidden' name='punto_conteo_aves_id' id='tabla_punto_conteo_aves_id' value=''/>
-                    </div>
+          </div>
 				</td>
 			</tr>
 			<tr>
@@ -119,38 +119,38 @@
     				<div >
     					<input class="boolean" name="es_sonora" id="tabla_es_sonora" type="checkbox" value="on"/>
     				</div>
-    			</td>
-    			<td>
-    			</td>
-    		</tr>
-    		<tr>
-    			<td>
-    				<div>
-                        <label for="tabla_numero_individuos">Número de individuos</label>
-                    </div>
-                    <div>
-                        <input class="integer obligatorio" name="numero_individuos" id="tabla_numero_individuos" type="text" value=""/>
-                    </div>
-    			</td>
-    			<td>
-                    <div>
-                        <label for="tabla_distancia_aproximada">Distancia aproximada (m)</label>
-                    </div>
-                    <div>
-                        <input class="double obligatorio" name="distancia_aproximada" id="tabla_distancia_aproximada" type="text" value=""/>
-                    </div>
-                </td>
-    			<td>
-    			</td>
-    		</tr>
+    		</td>
+    		<td>
+    		</td>
+    	</tr>
+    	<tr>
+    		<td>
+    			<div>
+            <label for="tabla_numero_individuos">Número de individuos</label>
+          </div>
+          <div>
+            <input class="integer obligatorio" name="numero_individuos" id="tabla_numero_individuos" type="text" value=""/>
+          </div>
+        </td>
+        <td>
+          <div>
+            <label for="tabla_distancia_aproximada">Distancia aproximada (m)</label>
+          </div>
+          <div>
+            <input class="double obligatorio" name="distancia_aproximada" id="tabla_distancia_aproximada" type="text" value=""/>
+          </div>
+        </td>
+        <td>
+    		</td>
+    	</tr>
 		</table>
 	</fieldset>
 	<fieldset>
 		<legend>
-			Subir archivos
+			Subir archivos (opcional)
 		</legend>
 		<div id="campoEspecial">
-			<input type="file" class="obligatorio" id="tabla_archivos_conteo_ave" name="archivos_conteo_ave" multiple/>
+			<input type="file" class="" id="tabla_archivos_conteo_ave" name="archivos_conteo_ave" multiple/>
 		</div>	
 	</fieldset>
 	<br/>
@@ -169,153 +169,176 @@
 
 <script>
 
-   	$(document).ready
-    (
-        function()
-        {
-           /*Cuando el documento se carga, las casillas para seleccionar nombres
-           están seleccionadas y los campos de texto son visibles (default):*/
-            $('#tabla_hay_nombre_comun').prop('checked', true);
+$(document).ready
+(
+  function()
+  {
+    /*Cuando el documento se carga, las casillas para seleccionar nombres
+    están seleccionadas y los campos de texto son visibles (default):*/
 
-			$('#tabla_hay_nombre_cientifico').prop('checked', true);
-        }
-    )
+    $('#tabla_hay_nombre_comun').prop('checked', true);
 
-    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
-    $('#tabla_conglomerado_muestra_id').change
-    (
-        function()
-        {
-            $('#tabla_sitio_muestra_id, #tabla_punto_conteo_aves_id').remove();
+    $('#tabla_hay_nombre_cientifico').prop('checked', true);
+  }
+)
 
-            //ajax es una función de Web2py que simplifica la función homónima de JQuery
-            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-            // del elemento donde se insertará la respuesta
-            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+//AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+$('#tabla_conglomerado_muestra_id').change
+(
+function()
+  {
 
-            ajax("{{=URL('asignarPuntoConteo')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+    //Como a la hora de seleccionar el conglomerado, se resetea la combobox de sitio,
+    // desaparece el mensaje de tabla_punto_conteo_aves:
 
-            /* Finalmente, si se selecciona un conglomerado (no ""), aparece el campo de sitio.*/
+    $('.Mensaje').hide();
 
-            /*if($(this).val())
-            {
-                $('.InfoSitio').fadeIn();
+    $('#tabla_sitio_muestra_id, #tabla_punto_conteo_aves_id').remove();
 
-            }
-            else
-            {
-            	 Si se apaga la casilla de sitio, también se debe apagar la de grabadora
-            	y, además, se deben resetear los valores de esta úlima
-            	$('.InfoGrabadora, .InfoSitio').hide();
-            	ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-            }*/
-        }
-    );
+    //ajax es una función de Web2py que simplifica la función homónima de JQuery
+    //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+    // del elemento donde se insertará la respuesta.
 
-    //AJAX para llenar la combobox con las grabadoras declaradas al elegir un sitio
- 	$('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+    ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+
+    ajax("{{=URL('asignarPuntoConteo')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+  }
+);
+
+//AJAX para mandar la información con el punto de conteo declarado al elegir un sitio
+$('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+{
+  $.ajax
+  (
+  {
+    type: "POST",
+    data: $('#tabla_sitio_muestra_id').serialize(),
+    url: "{{=URL('asignarPuntoConteo')}}",
+    async: false,
+    success: function(resultado)
     {
-        $('#tabla_grabadora_id').remove();
+       $("#shadow_clone_2").html(resultado);
+    }
+  }
+  );
+  if($(this).val())
+  {
+    $('.Mensaje').show();
+  }
+  else
+  {
+    $('.Mensaje').hide();
+  }
+}
+);
 
-        //ajax es una función de Web2py que simplifica la función homónima de JQuery
-        //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-        // del elemento donde se insertará la respuesta
-        ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-        /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de grabadora.*/
+$('#tabla_hay_nombre_comun').change
+(
+  function()
+  {
+    if($(this).prop('checked'))
 
-        /*if($(this).val())
-        {
-            $('.InfoGrabadora').fadeIn();
-        }
-        else
-            $('.InfoGrabadora').fadeOut();*/
+      $('#tabla_nombre_comun').fadeIn();
+    
+    else
+      $('#tabla_nombre_comun').fadeOut();
+  }
+)
+
+$('#tabla_hay_nombre_cientifico').change
+(
+  function()
+  {
+    if($(this).prop('checked'))
+
+      $('#tabla_nombre_cientifico').fadeIn();
+
+    else
+
+      $('#tabla_nombre_cientifico').fadeOut();
+  }
+)
+
+//Validando, para ello utilizamos la clase "obligatorio":
+$('form').submit
+(
+	function()
+	{
+		/*flag es un indicador de que la forma está completa
+		faltanNombres es un indicador de que es necesario que se escriban
+		ya sea el nombre común o el científico de la especie, y sin embargo,
+    no se ha hecho.*/
+    flag = true;
+    campos=$('.obligatorio');
+    campos.each(function() 
+    {
+      if(!$(this).val())
+      {
+        flag = false;
+      }
     }
     );
 
-    $('#tabla_hay_nombre_comun').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('#tabla_nombre_comun').fadeIn();
-            else
-                $('#tabla_nombre_comun').fadeOut();
-        }
-    )
+    //Si no se marcó ninguna casilla para ingresar el nombre
+    faltanNombres = false;
 
-    $('#tabla_hay_nombre_cientifico').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('#tabla_nombre_cientifico').fadeIn();
-            else
-                $('#tabla_nombre_cientifico').fadeOut();
-        }
-    )
+	  if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+	  {
+		  flag = false;
+		  faltanNombres = true;
+		  //alert('caso1');
+	  }
+	  else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
+	  /*Si se marcó la casilla de nombre común pero no se escribió
+    nada en el campo subsecuente.*/
+    {
+      flag = false;
+      faltanNombres = true;
+		  //alert('caso2');
+	  }
+		//Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
+    else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
+    {
+      flag = false;
+      faltanNombres = true;
+			//alert('caso3');
+		}
 
-   	//Validando, para ello utilizamos la clase "obligatorio":
-   	$('form').submit
-   	(
-   		function()
-   		{
-   			/*flag es un indicador de que la forma está completa
-   			faltanNombres es un indicador de que es necesario que se escriban
-   			ya sea el nombre común o el científico de la especia (ésto es cuando
-   			la especie no se encuentra en la lista de invasoras), y sin embargo,
-   			no se ha hecho.*/
-   			flag = true;
-   			faltanNombres = false;
+    //Validando que al menos una casilla de observación visual/sonora esté marcada:
 
-   			campos=$('.obligatorio');
-   			campos.each(function() 
-   			{
-  				if(!$(this).val())
-  				{
-  					 flag = false;
-  				}
-			}
-			);
+    faltaTipo = false;
+    if(!$('#tabla_es_visual').prop('checked') && !$('#tabla_es_sonora').prop('checked'))
+    {
+      faltaTipo = true;
+      flag = false;
+    }
 
-			//Validando los radio-botones
-			if(!$('input:radio[name=es_huella_excreta]:checked').val())
-			{
-				flag = false;
-				//alert('falta presionar un radio-botón');
-			}
+    //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+    //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+    //validar aparte:
+    if(!$('#shadow_clone').find('select:first').val())
+    {
+        flag = false;
+        //alert('Falta llenar el sitio');
+    }
 
-   			//Si no se marcó ninguna casilla para ingresar el nombre
-   			if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
-   			{
-   				flag = false;
-   				faltanNombres = true;
-   				//alert('caso1');
-   			}
-   			else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
-   			/*Si se marcó la casilla de nombre común pero no se escribió
-   			nada en el campo subsecuente.*/
-   			{
-   				flag = false;
-   				faltanNombres = true;
-   				//alert('caso2');
-   			}
-   			 //Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
-   			else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
-   			{
-   				flag = false;
-   				faltanNombres = true;
-   				//alert('caso3');
-   			}
+    //Lo mismo para el campo de "punto_conteo_aves_id":
+    if(!$('#shadow_clone_2').find('#tabla_punto_conteo_aves_id').val())
+    {
+        flag = false;
+        //alert('No se encontró ningún punto de conteo de aves en el sitio seleccionado');
+    }
 
-   			if(!flag)
-        	{
-          		if(faltanNombres)
-            		alert('Favor de escribir al menos un nombre (ya sea común científico)');
-          		else
-            		alert('Faltó llenar un campo o subir alguna imagen.');
-
-          		return false;
-			}
-   		}
-   	)
+		if(!flag)
+    {
+      if(faltanNombres)
+        alert('Favor de escribir al menos un nombre (ya sea común o científico)');
+      else if(faltaTipo)
+        alert('Favor de indicar si la observación es visual, sonora o ambas')
+      else
+        alert('Faltó llenar algún campo.');
+      return false;
+    }
+  }
+  )
 </script>
