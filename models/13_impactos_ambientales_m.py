@@ -64,12 +64,12 @@ db.define_table('Archivo_plaga',*Campos_Archivo_plaga,
 Campos_Incendio = [
     Field('conglomerado_muestra_id','reference Conglomerado_muestra',required=True),
     Field('es_anio_actual','boolean',required=True),
-    Field('hay_evidencia','boolean',required=True)
+    Field('hay_evidencia','boolean',required=True),
     Field('tipo','string',required=True),
     Field('prop_afectacion_herbacea','string',required=True),
     Field('prop_afectacion_arbustiva','string',required=True),
     Field('prop_afectacion_arborea','string',required=True),
-    Field('prop_copa_quemada','string',required=True)
+    Field('prop_copa_quemada','string',required=True),
     Field('hay_evidencia_recuperacion','boolean',required=True)
     ]
 
