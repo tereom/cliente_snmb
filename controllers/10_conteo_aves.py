@@ -147,7 +147,7 @@ def index2():
     formaConteoAve = FORM(*camposConteoAve)
 
     if formaConteoAve.accepts(request.vars,formname='formaConteoAveHTML'):    
-        #Filtrando los datos correspondientes a la tabla de huellas:
+        #Filtrando los datos correspondientes a la tabla de observaciones:
 
         datosConteoAve = db.Conteo_ave._filter_fields(formaConteoAve.vars)
 

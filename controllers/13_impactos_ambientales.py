@@ -94,12 +94,30 @@ def index1():
 
         response.flash ='Por favor, introduzca la información de los impactos ambientales actuales'
 
+    ##########Enviando la información de las dropdowns##########################
+
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
     #Regresando el número de impactos para crear la vista en HTML
     return dict(n_impactos=n_impactos,
         listaConglomerado=listaConglomerado)
+
+def impactosExistentes():
+
+    #Obteniendo la información del conglomerado que seleccionó el usuario:
+    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+
+    #Haciendo un query a la tabla de Impacto_actual con la información anterior:
+
+    impactosYaInsertados=db(db.Impacto_actual.conglomerado_muestra_id==conglomeradoElegidoID).select()
+
+    #regresa la longitud de impactosYaInsertados para que sea interpretada por JS
+
+    return len(impactosYaInsertados)
 
 def index2():
 
@@ -126,11 +144,86 @@ def index2():
         INPUT(_name='esta_activa',_type='boolean'),
 
         # Campos Archivo_plaga
-        INPUT(_name='archivos_huella_excreta',_type='file',_multiple=True,
-            requires=IS_NOT_EMPTY())
+        INPUT(_name='archivos_plaga',_type='file',_multiple=True)
 
     ]
 
+    formaPlaga = FORM(*camposPlaga)
+
+    if formaPlaga.accepts(request.vars,formname='formaPlagaHTML'):
+
+        #Filtrando los datos correspondientes a la tabla de plagas:
+
+        datosPlaga = db.Plaga._filter_fields(formaPlaga.vars)
+
+        #Si la plaga está activa, entonces True se guarda en la base de datos,
+        #en caso contrario, se tiene que guardar manualmente False, pues si no,
+        #Web2py guarda Null.
+
+        if bool(formaPlaga.vars['esta_activa']):
+            datosPlaga['esta_activa']=formaPlaga.vars['esta_activa']
+        else:
+            datosPlaga['esta_activa']=False
+        
+        #Guardando el registro de la plaga en la base de datos:
+        
+        plagaInsertada = db.Plaga.insert(**datosPlaga)
+
+        ################Procesando los archivos múltiples#################################
+
+        #Como los archivos de plaga no son obligatorios, hay que poner
+        #un try, except:
+
+        try:
+        
+            archivos = formaPlaga.vars['archivos_plaga']
+        
+            if not isinstance(archivos, list):
+                archivos = [archivos]
+            
+            for aux in archivos:
+
+                #Guardando el archivo en la carpeta adecuada
+                archivoPlaga = db.Archivo_plaga.archivo.store(aux,aux.filename)
+            
+                datosArchivoPlaga = {}
+                datosArchivoPlaga['plaga_id'] = plagaInsertada
+                datosArchivoPlaga['archivo'] = archivoPlaga
+                datosArchivoPlaga['archivo_nombre_original'] = aux.filename
+        
+                #Insertando el registro en la base de datos:
+
+                db.Archivo_plaga.insert(**datosArchivoPlaga)
+
+        except:
+
+            pass
+        
+        response.flash = 'Éxito'
+        
+    elif formaPlaga.errors:
+
+       response.flash = 'Hubo un error al llenar los datos de la plaga'
+       
+    else:
+
+        response.flash = 'Por favor, llene los campos solicitados'
+
+    ##########Enviando la información de las dropdowns##########################
+
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
+
+    # Tabla de revisión de registros ingresados
+    db.Archivo_plaga.plaga_id.writable =False
+    grid = SQLFORM.smartgrid(db.Plaga,csv=False,user_signature=False,
+        create=False,searchable=False,editable=False)
+
+    return dict(listaConglomerado=listaConglomerado
+            grid=grid)
 
 def index3():
 
