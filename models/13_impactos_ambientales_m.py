@@ -69,7 +69,7 @@ Campos_Incendio = [
     Field('prop_afectacion_herbacea','string',required=True),
     Field('prop_afectacion_arbustiva','string',required=True),
     Field('prop_afectacion_arborea','string',required=True),
-    Field('copa_quemada','string',required=True)
+    Field('prop_copa_quemada','string',required=True)
     Field('hay_evidencia_recuperacion','boolean',required=True)
     ]
 

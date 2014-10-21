@@ -71,8 +71,18 @@ def index3():
 
         # Campos Incendio
         INPUT(_name='es_anio_actual',_type='boolean'),
-        SELECT(_name='tipo',
-            requires=IS_IN_DB(db,db.))
+        INPUT(_name='hay_evidencia',_type='boolean'),
+        SELECT(_name='tipo',requires=IS_IN_DB(db,db.Cat_incendio,'%(nombre)s')),
+        SELECT(_name='prop_afectacion_herbacea',
+            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
+        SELECT(_name='prop_afectacion_arbustiva',
+            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
+        SELECT(_name='prop_afectacion_arborea',
+            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
+        SELECT(_name='prop_copa_quemada',
+            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
+        INPUT(_name='hay_evidencia_recuperacion',_type='boolean')
+
 
 
     ]

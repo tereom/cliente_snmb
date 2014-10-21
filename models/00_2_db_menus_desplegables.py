@@ -110,4 +110,12 @@ if db(db.Cat_prop_afectacion.id>0).count() == 0:
 	db.Cat_prop_afectacion.insert(nombre='Más de 90%')
 
 
+db.define_table('Cat_incendio',Field('nombre','string',required='TRUE'))
+
+if db(db.Cat_incendio.id>0).count() == 0:
+	db.Cat_incendio.insert(nombre='Subterráneo')
+	db.Cat_incendio.insert(nombre='Superficial')
+	db.Cat_incendio.insert(nombre='Aéreo copa')
+
+
 #########################################################################
