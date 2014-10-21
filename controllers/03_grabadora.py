@@ -317,16 +317,18 @@ def asignarGrabadora():
 
     #Bajo el supuesto que sólo existe una grabadora por sitio, no se requiere hacer dropdowns:
 
+    respuestaHTML = "<p>Grabadora localizada: </p>"
+
     if len(grabadorasAsignadas)==0:
 
-        respuestaHTML = "<p>No se encontró ninguna grabadora declarada en el sitio elegido</p>"
+        respuestaHTML += "<p>No se encontró ninguna grabadora declarada en el sitio elegido</p>"
 
         respuestaHTML += "<input type='hidden' name='grabadora_id' "+\
             "id='tabla_grabadora_id' value=''/>"
 
     else:
 
-        respuestaHTML = "<p>Grabadora localizada: " + str(grabadora.nombre) +"</p>"
+        respuestaHTML += "<p>Grabadora localizada: " + str(grabadora.nombre) +"</p>"
 
         respuestaHTML += "<input type='hidden' name='grabadora_id' "+\
             "id='tabla_grabadora_id' value='" + str(grabadora.id)+ "'/>"

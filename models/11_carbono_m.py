@@ -93,14 +93,16 @@ Campos_Arbol_cuadrante = [
     #Se insertará a partir de un catálogo
     # Field('cuadrante','string',required=True),
     Field('individuo_numero','integer',required=True),
-    Field('distancia','double',required=True),
-    Field('azimut','double',required=True),
-    Field('nombre_comun','string',required=True),
-    Field('nombre_cientifico','string',required=True),
-    Field('altura','double',required=True),
-    Field('diametro_normal','double',required=True),
-    Field('diametro_copa','double',required=True)
+    Field('existe', 'boolean',required=True),
+
+    Field('distancia','double'),
+    Field('azimut','double'),
+    Field('nombre_comun','string'),
+    Field('nombre_cientifico','string'),
+    Field('altura','double'),
+    Field('diametro_normal','double'),
+    Field('diametro_copa','double')
     ]
 
 db.define_table('Arbol_cuadrante',*Campos_Arbol_cuadrante,
-    singular='Árbol cuadrante',plural='Árboles cuadrantes')
+    singular='Árbol cuadrante',plural='Árboles cuadrante')

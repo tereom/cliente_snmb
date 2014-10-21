@@ -2,14 +2,14 @@
 {{block head}}
 <style type="text/css">
 
-    .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
+    .Tabla .integer, .Tabla .double
     {
         margin-right: 0.5cm;
         width: 2.5cm;
         text-align: center;
     }
     
-    .No_GPS .generic-widget
+    .Tabla .generic-widget
     {
     	margin-right: 0.5cm;
         width: 4cm;
@@ -35,7 +35,7 @@
         <legend>
             Almacén de carbono en el mantillo
         </legend>
-        <table class="No_GPS">
+        <table class="Tabla">
             <tr>
                 <td>
                     <div>
@@ -76,7 +76,7 @@
         </legend>-->
         <hr/>
 
-        <table class="No_GPS">
+        <table class="Tabla">
             <tr>
                 <th>Punto</th>
                 <th>Tipo</th>
@@ -290,7 +290,7 @@
     <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
-{{=BEAUTIFY(request.vars)}}
+{{#=BEAUTIFY(request.vars)}}
 
 <script>
 
@@ -353,12 +353,12 @@
             if(!$('#shadow_clone').find('select:first').val())
             {
                 flag = false;
-                alert('falta llenar el sitio');
+                //alert('falta llenar el sitio');
             }
 
             if(!flag)
             {
-                alert('Faltó llenar un campo o subir alguna imagen');
+                alert('Faltó llenar algún campo');
                 return false;
             }
 

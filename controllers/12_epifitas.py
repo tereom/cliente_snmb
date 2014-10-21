@@ -32,7 +32,7 @@ def index():
 
     forma = FORM(*camposForma)
 
-    if forma.accepts(request.vars,formname='formaEpifitaHTML'):
+    if forma.accepts(request.vars,formname='formaEpifitasHTML'):
 
         datosEpifitas = {}
 

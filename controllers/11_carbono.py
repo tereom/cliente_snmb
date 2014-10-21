@@ -231,9 +231,7 @@ def index2():
 
     if formaRamas.accepts(request.vars,formname='formaRamasHTML'):
 
-        # Asignando el id del sitio para localizar el transecto al cual se
-        # le asignará la rama
-        transectoRamasSitioId = formaRamas.vars['sitio_muestra_id']
+        #Obteniendo el id del transecto en el cuál se encontraron las ramas.
         transectoRamasId = formaRamas.vars['transecto_ramas_id']
 
         for i in range(n_ramas):
@@ -254,11 +252,6 @@ def index2():
                 # transectoRamasDireccion_i = formaRamas.vars[transecto_ramas_i]
 
                 # Obtenemos el id para transecto_ramas usando un query
-
-                # transectoRamasID = db(
-                #     (db.Transecto_ramas.direccion==transectoRamasDireccion_i)&
-                #     (db.Transecto_ramas.sitio_muestra_id==transectoRamasSitioId)
-                #     ).select(db.Transecto_ramas.id).first()
         
                 # Agregando los datos extraídos de la forma:
                 datosRama_i['transecto_ramas_id']=transectoRamasId
@@ -276,7 +269,7 @@ def index2():
 
     else:
 
-        response.flash ='Por favor, introduzca la información de una rama 1000h'
+        response.flash ='Por favor, introduzca la información de las ramas 1000h'
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
@@ -730,7 +723,7 @@ def index5():
 
         #Extendiendo la lista anterior:
         camposArbolCuadrante.extend([
-            #Campo para marcar si existe o no una rama.
+            #Campo para marcar si existe o no un árbol.
             INPUT(_name=existe_i,_type='boolean'),
 
             INPUT(_name=distancia_i,_type='double'),
@@ -748,7 +741,7 @@ def index5():
 
         # Asignando el id del sitio para localizar el transecto al cual se
         # le asignará la rama
-        arbolSitioId = formaArbol.vars['sitio_muestra_id']
+        arbolSitioID = formaArbol.vars['sitio_muestra_id']
 
         for i in range(8):
 
@@ -761,16 +754,23 @@ def index5():
             altura_i = 'altura_' + str(i+1)
             diametro_normal = 'diametro_normal_' + str(i+1)
             diametro_copa = 'diametro_copa_' + str(i+1)
+
+            #Datos que se guardarán para cualquier árbol, independientemente si
+            #existe o no:
+
+            datosArbol_i = {}
+
+            datosArbol_i['sitio_muestra_id']=arbolSitioID
+
+            # Escribiendo el número de individuo
+            datosArbol_i['individuo_numero']=(i+1)
+
             
             # Si existe el i-ésimo árbol:
             if bool(formaArbol.vars[existe_i]):
-
-                datosArbol_i = {}
-
-                # Escribiendo el número de individuo
-                datosArbol_i['individuo_numero']=(i+1)
         
                 # Agregando los datos extraídos de la forma:
+                datosArbol_i['existe']=formaArbol.vars[existe_i]
                 datosArbol_i['distancia']=formaArbol.vars[distancia_i]
                 datosArbol_i['azimut']=formaArbol.vars[azimut_i]
                 datosArbol_i['nombre_comun']=formaArbol.vars[nombre_comun_i]
@@ -778,10 +778,13 @@ def index5():
                 datosArbol_i['altura']=formaArbol.vars[altura_i]
                 datosArbol_i['diametro_normal']=formaArbol.vars[diametro_normal_i]
                 datosArbol_i['diametro_copa']=formaArbol.vars[diametro_copa_i]
-                datosArbol_i['sitio_muestra_id']=arbolSitioId
 
-                # Insertando los datos de la rama:
-                db.Arbol_cuadrante.insert(**datosArbol_i)
+            else:
+
+                datosArbol_i['existe']=False                
+
+            # Insertando los datos de la rama:
+            db.Arbol_cuadrante.insert(**datosArbol_i)
 
         response.flash = 'Éxito'
         
@@ -791,7 +794,7 @@ def index5():
 
     else:
 
-        response.flash ='Por favor, introduzca la información de un árbol'
+        response.flash ='Por favor, introduzca la información de los árboles grandes'
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
@@ -805,11 +808,11 @@ def sitiosArboladoExistentes():
     #Obteniendo la información del sitio que seleccionó el usuario:
     sitioElegidoID = request.vars.sitio_muestra_id
 
-    #Haciendo un query a la tabla de Punto_carbono con la información anterior:
+    #Haciendo un query a la tabla de Arbol_cuadrante con la información anterior:
 
-    sitioYaInsertado=db(db.Arbol_cuadrante.sitio_muestra_id==sitioElegidoID).select()
+    arbolesYaInsertados=db(db.Arbol_cuadrante.sitio_muestra_id==sitioElegidoID).select()
 
-    #Regresa la longitud de trasectoYaInsertado para que sea interpretada por JS
+    #Regresa la longitud de arbolesYaInsertados para que sea interpretada por JS
 
-    return len(sitioYaInsertado)
+    return len(arbolesYaInsertados)
 

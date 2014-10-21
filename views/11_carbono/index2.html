@@ -154,6 +154,121 @@
 
 {{#=BEAUTIFY(request.vars)}}
 <script>
+
+    $(document).ready
+    (
+        function()
+        {
+           for(i=1; i<=10; i++)
+           {
+             tabla_existe_i = '#tabla_existe_'.concat(i);
+             Rama_i = '.Rama_'.concat(i);
+             $(tabla_existe_i).prop('checked', true);
+             $(Rama_i).show();
+            }
+     }
+     )
+    $('#tabla_existe_1').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_1').fadeIn();
+            else
+                $('.Rama_1').fadeOut();
+        }
+    )
+    $('#tabla_existe_2').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_2').fadeIn();
+            else
+                $('.Rama_2').fadeOut();
+        }
+    )
+    $('#tabla_existe_3').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_3').fadeIn();
+            else
+                $('.Rama_3').fadeOut();
+        }
+    )
+    $('#tabla_existe_4').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_4').fadeIn();
+            else
+                $('.Rama_4').fadeOut();
+        }
+    )
+    $('#tabla_existe_5').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_5').fadeIn();
+            else
+                $('.Rama_5').fadeOut();
+        }
+    )
+    $('#tabla_existe_6').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_6').fadeIn();
+            else
+                $('.Rama_6').fadeOut();
+        }
+    )
+    $('#tabla_existe_7').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_7').fadeIn();
+            else
+                $('.Rama_7').fadeOut();
+        }
+    )
+    $('#tabla_existe_8').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_8').fadeIn();
+            else
+                $('.Rama_8').fadeOut();
+        }
+    )
+    $('#tabla_existe_9').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_9').fadeIn();
+            else
+                $('.Rama_9').fadeOut();
+        }
+    )
+    $('#tabla_existe_10').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Rama_10').fadeIn();
+            else
+                $('.Rama_10').fadeOut();
+        }
+    )
+
     //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
     $('#tabla_conglomerado_muestra_id').change
     (
@@ -197,15 +312,6 @@
         //recibe el URL destino, los nombres de los campos que se enviarán y el ID
         // del elemento donde se insertará la respuesta
         ajax("{{=URL('asignarTransectos')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-
-        /* Finalmente, si se selecciona un sitio (no ""), aparece el campo de cámara.
-
-        if($(this).val())
-        {
-            $('.InfoCamara').fadeIn();
-        }
-        else
-            $('.InfoCamara').fadeOut();*/
     }
     );
 
@@ -226,7 +332,7 @@
             );
 
             /*Validando que los campos correspondientes a una rama estén 
-            llenos si estos existen*/
+            llenos si ésta existe*/
 
             if($('#tabla_existe_1').prop('checked'))
             {
@@ -365,133 +471,21 @@
             if(!$('#shadow_clone').find('select:first').val())
             {
                 flag = false;
-                alert('falta llenar el sitio');
+                //alert('Falta llenar el sitio');
             }
+
+            //Lo mismo para el campo de transecto.
             if(!$('#shadow_clone_2').find('select:first').val())
             {
                 flag = false;
-                alert('falta llenar el transecto');
+                //alert('Falta llenar el transecto');
             }
             if(!flag)
             {
-                alert('Faltó llenar un campo');
+                alert('Faltó llenar algún campo');
                 return false;
             }
 
         }
     )
-    $(document).ready
-    (
-        function()
-        {
-           for(i=1; i<=10; i++)
-           {
-             tabla_existe_i = '#tabla_existe_'.concat(i);
-             Rama_i = '.Rama_'.concat(i);
-             $(tabla_existe_i).prop('checked', true);
-             $(Rama_i).show();
-            }
-     }
-     )
-    $('#tabla_existe_1').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_1').fadeIn();
-            else
-                $('.Rama_1').fadeOut();
-        }
-    )
-    $('#tabla_existe_2').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_2').fadeIn();
-            else
-                $('.Rama_2').fadeOut();
-        }
-    )
-    $('#tabla_existe_3').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_3').fadeIn();
-            else
-                $('.Rama_3').fadeOut();
-        }
-    )
-    $('#tabla_existe_4').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_4').fadeIn();
-            else
-                $('.Rama_4').fadeOut();
-        }
-    )
-    $('#tabla_existe_5').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_5').fadeIn();
-            else
-                $('.Rama_5').fadeOut();
-        }
-    )
-    $('#tabla_existe_6').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_6').fadeIn();
-            else
-                $('.Rama_6').fadeOut();
-        }
-    )
-    $('#tabla_existe_7').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_7').fadeIn();
-            else
-                $('.Rama_7').fadeOut();
-        }
-    )
-    $('#tabla_existe_8').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_8').fadeIn();
-            else
-                $('.Rama_8').fadeOut();
-        }
-    )
-    $('#tabla_existe_9').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_9').fadeIn();
-            else
-                $('.Rama_9').fadeOut();
-        }
-    )
-    $('#tabla_existe_10').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_10').fadeIn();
-            else
-                $('.Rama_10').fadeOut();
-        }
-    )
-    
 </script>
