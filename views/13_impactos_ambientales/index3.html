@@ -1,0 +1,191 @@
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .Tabla .string, .Tabla .double, .Tabla .boolean
+    {
+        margin-right: 2cm;
+        width: 3cm;
+    }
+    
+    .Tabla .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4cm;
+    }
+
+    .FlotaIzquierda
+    {
+        float: left;
+    }
+
+    .Centrar
+    {
+        text-align: center;
+    }
+
+    .CentrarV
+    {
+        vertical-align:middle;
+    }
+
+</style>
+{{end}}
+{{#=response.toolbar()}}
+
+<form action="" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="_formname" value="formaIncendioHTML"/>
+    <fieldset>
+        <legend>
+            Información de incendios
+        </legend>
+        <table class="Tabla">
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+                    </div>
+                    <div>
+                        <!--este campo sólo sirve para encontrar
+                        con AJAX los sitios existentes asociados al conglomerado
+                        elegido, al enviar la forma al controlador, se utilizará
+                        para guardar el registro de la cámara, únicamente el id
+                        del sitio (de la dropdown generada mediante AJAX)-->
+                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                            <option value=""/>
+                            {{for conglomerado in listaConglomerado:}}
+                                <option value="{{=conglomerado.id}}">
+                                    {{=conglomerado.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>  
+                <td>
+                    <div>
+                        <label for="tabla_hay_evidencia">Evidencia</label>
+                    </div>
+                    <div class="Centrar">
+                        <input class="boolean" name="hay_evidencia" id="tabla_hay_evidencia" type="checkbox" value="on"/>
+                    </div>
+                </td>              
+            </tr>
+        </table>
+        <hr/>
+        <table class="Tabla">
+        <tr>
+            <td rowspan="2" class="CentrarV">
+                <div>
+                    <label for="tabla_tipo">Tipo de incendio</label>
+                </div>
+                <div>
+                    <select class="generic-widget obligatorio" name="tipo" id="tabla_tipo">
+                        <option value=""/>
+                        {{for tipo in listaTipoIncendio:}}
+                            <option value="{{=tipo.nombre}}">
+                                {{=tipo.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="FlotaIzquierda" style="padding-right:10px;">
+                    <label for="tabla_es_anio_actual">Año actual</label>
+                </div>
+                    <div>
+                        <input class="boolean" name="es_anio_actual" id="tabla_es_anio_actual" type="radio" value="actual"/>
+                    </div>
+            </td>
+            <td rowspan="2" class="CentrarV">
+                <div>
+                    <label for="tabla_hay_evidencia_recuperacion">Evidencia de regeneración</label>
+                </div>
+                <div class="Centrar">
+                    <input class="boolean" name="hay_evidencia_recuperacion" id="tabla_hay_evidencia_recuperacion" type="checkbox" value="on"/>
+                </div>
+            </td> 
+        </tr>
+            <tr>
+                <td>
+                    <div class="FlotaIzquierda" style="padding-right:10px">
+                        <label for="tabla_es_anio_anterior">Años anteriores</label>
+                    </div>
+                    <div>
+                        <input class="boolean" name="es_anio_actual" id="tabla_es_anio_anterior" type="radio" value="anterior"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+ 
+         <legend>
+            Porcentaje de afectación
+        </legend>
+        <table class="Tabla">
+            <tr>
+                <td>
+                    <label for="tabla_prop_afectacion_arborea">Arbórea</label>
+                </td>
+                <td>
+                    <select class="generic-widget obligatorio" name="prop_afectacion_arborea" id="tabla_prop_afectacion_arborea">
+                        <option value=""/>
+                            {{for prop in listaPropAfectacion:}}
+                                <option value="{{=prop.nombre}}">
+                                    {{=prop.nombre}}
+                                </option>
+                            {{pass}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="tabla_prop_afectacion_arbustiva">Arbustiva</label>
+                </td>
+                <td>
+                    <select class="generic-widget obligatorio" name="prop_afectacion_arbustiva" id="tabla_prop_afectacion_arbustiva">
+                        <option value=""/>
+                            {{for prop in listaPropAfectacion:}}
+                                <option value="{{=prop.nombre}}">
+                                    {{=prop.nombre}}
+                                </option>
+                            {{pass}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="tabla_prop_afectacion_herbacea">Herbácea</label>
+                </td>
+                <td>
+                    <select class="generic-widget obligatorio" name="prop_afectacion_herbacea" id="tabla_prop_afectacion_herbacea">
+                        <option value=""/>
+                            {{for prop in listaPropAfectacion:}}
+                                <option value="{{=prop.nombre}}">
+                                    {{=prop.nombre}}
+                                </option>
+                            {{pass}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="tabla_prop_copa_quemada">Copa quemada</label>
+                </td>
+                <td>
+                    <select class="generic-widget obligatorio" name="prop_copa_quemada" id="tabla_prop_copa_quemada">
+                        <option value=""/>
+                            {{for prop in listaPropAfectacion:}}
+                                <option value="{{=prop.nombre}}">
+                                    {{=prop.nombre}}
+                                </option>
+                            {{pass}}
+                    </select>
+                </td>
+            </tr>
+            </table>
+
+    </fieldset>
+    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+</form>
+
+{{#=BEAUTIFY(request.vars)}}

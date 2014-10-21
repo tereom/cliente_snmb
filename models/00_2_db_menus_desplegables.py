@@ -33,14 +33,14 @@ if db(db.Cat_grado_carbono.id>0).count() == 0:
 	db.Cat_grado_carbono.insert(nombre=5)
 
 
-db.define_table('Cat_transecto_ramas',Field('nombre','string',
+db.define_table('Cat_transecto_direccion',Field('nombre','string',
 	required='TRUE'))
 
-if db(db.Cat_transecto_ramas.id>0).count() == 0:
-	db.Cat_transecto_ramas.insert(nombre='Norte')
-	db.Cat_transecto_ramas.insert(nombre='Este')
-	db.Cat_transecto_ramas.insert(nombre='Sur')
-	db.Cat_transecto_ramas.insert(nombre='Oeste')
+if db(db.Cat_transecto_direccion.id>0).count() == 0:
+	db.Cat_transecto_direccion.insert(nombre='Norte')
+	db.Cat_transecto_direccion.insert(nombre='Este')
+	db.Cat_transecto_direccion.insert(nombre='Sur')
+	db.Cat_transecto_direccion.insert(nombre='Oeste')
 
 
 db.define_table('Cat_forma_vida',Field('nombre','string',

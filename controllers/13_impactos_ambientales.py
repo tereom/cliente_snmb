@@ -1,4 +1,4 @@
-# coding: utf8
+#coding: utf8
 
 def index1():
 
@@ -104,7 +104,7 @@ def index1():
 
     #Regresando el número de impactos para crear la vista en HTML
     return dict(n_impactos=n_impactos,
-        listaConglomerado=listaConglomerado)
+         listaConglomerado=listaConglomerado)
 
 def impactosExistentes():
 
@@ -134,18 +134,17 @@ def index2():
 
         # Campos Plaga
         SELECT(_name='agente',
-            requires=IS_IN_DB(db,db.Cat_agente_impactos),'%(nombre)s'),
+            requires=IS_IN_DB(db,db.Cat_agente_impactos,'%(nombre)s')),
         INPUT(_name='nombre_comun',_type='string'),
         INPUT(_name='nombre_cientifico',_type='string'),
         SELECT(_name='prop_afectacion_arborea',
-            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
+            requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')),
         SELECT(_name='prop_afectacion_repoblado',
-            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
+            requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')),
         INPUT(_name='esta_activa',_type='boolean'),
 
         # Campos Archivo_plaga
         INPUT(_name='archivos_plaga',_type='file',_multiple=True)
-
     ]
 
     formaPlaga = FORM(*camposPlaga)
@@ -238,19 +237,57 @@ def index3():
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
 
         # Campos Incendio
-        INPUT(_name='es_anio_actual',_type='boolean'),
         INPUT(_name='hay_evidencia',_type='boolean'),
-        SELECT(_name='tipo',requires=IS_IN_DB(db,db.Cat_incendio,'%(nombre)s')),
-        SELECT(_name='prop_afectacion_herbacea',
-            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
-        SELECT(_name='prop_afectacion_arbustiva',
-            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
-        SELECT(_name='prop_afectacion_arborea',
-            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
-        SELECT(_name='prop_copa_quemada',
-            requires=IS_IN_DB(db,db.Cat_porp_afectacion),'%(nombre)s'),
+
+        #Sólo si hay evidencia se llenan los campos siguientes.
+        #Por eso mismo, aunque los campos de "tipo" y "prop_..." provengan de catálogo,
+        #no se exigirá: requires=IS_IN_DB(...), pues pueden ser vacíos...
+
+        INPUT(_name='es_anio_actual',_type='boolean'),
+        INPUT(_name='tipo', _type='string'),
+        INPUT(_name='prop_afectacion_herbacea', _type='string'),
+        INPUT(_name='prop_afectacion_arbustiva', _type='string'),
+        INPUT(_name='prop_afectacion_arborea', _type='string'),
+        INPUT(_name='prop_copa_quemada', _type='string'),
         INPUT(_name='hay_evidencia_recuperacion',_type='boolean')
 
-
-
     ]
+
+    formaIncendio = FORM(*camposIncendio)
+
+    if formaIncendio.accepts(request.vars,formname='formaIncendioHTML'):
+
+        datosIncendio =db.Incendio._filter_fields(formaIncendioHTML.vars)
+
+        #Si los campos booleanos son verdaderos, entonces True se guarda en la base de datos,
+        #en caso contrario, se tiene que guardar manualmente False, pues si no,
+        #Web2py guarda Null.
+
+
+    elif formaIncendio.errors:
+
+       response.flash = 'Hubo un error al llenar la forma'
+       
+    else:
+
+        response.flash = 'Por favor, llene los campos solicitados'
+
+    ##########Enviando la información de las dropdowns##########################
+
+    #Regresando los nombres de todos los conglomerados insertados en la tabla de
+    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+
+    listaConglomerado = db(db.Conglomerado_muestra).select(
+        db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
+
+    # Listas para llenar los catálogos dropdown
+    listaTipoIncendio = db(db.Cat_incendio).select(db.Cat_incendio.nombre)
+    listaPropAfectacion = db(db.Cat_prop_afectacion).select(db.Cat_prop_afectacion.nombre)
+
+    return dict(listaConglomerado=listaConglomerado,
+        listaTipoIncendio=listaTipoIncendio,
+        listaPropAfectacion=listaPropAfectacion)
+
+
+
+
