@@ -23,26 +23,45 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
+
     (T('Conglomerado'), False, URL('01_conglomerado', 'index'), []),
-    (T('Cámara'), False, URL('02_camara', 'index'), []),
-    (T('Grabadora'), False, URL('03_grabadora', 'index'), []),
+
+    (T('Cámara'), False, URL('02_camara', 'index1'), [
+      (T('Información de cámara'), False, URL('02_camara', 'index1')),
+      (T('Subir archivos'), False, URL('02_camara', 'index2'))]),
+
+    (T('Grabadora'), False, URL('03_grabadora', 'index1'), [
+      (T('Información de grabadora'), False, URL('03_grabadora', 'index1')),
+      (T('Subir archivos'), False, URL('03_grabadora', 'index2'))]),
+
     (T('Especies invasoras'), False, URL('04_especies_invasoras', 'index1'), [
       (T('Transecto especies invasoras'), False, URL('04_especies_invasoras', 'index1')),
       (T('Especies invasoras'), False, URL('04_especies_invasoras', 'index2'))]),
+
     (T('Huellas y excretas'), False, URL('05_huellas_excretas', 'index1'), [
       (T('Transecto huellas y excretas'), False, URL('05_huellas_excretas', 'index1')),
       (T('Huellas y excretas'), False, URL('05_huellas_excretas', 'index2'))]),
+
     (T('Registros extra'), False, URL('06_registros_extra', 'index1'), [
       (T('Especies invasoras'), False, URL('06_registros_extra', 'index1')),
       (T('Huellas y excretas'), False, URL('06_registros_extra', 'index2')),
       (T('Especímenes y restos'), False, URL('06_registros_extra', 'index3'))]),
+
     #### CONANP
-      (T('Carbono'), False, URL('10_carbono', 'index1'), [
+
+    (T('Carbono'), False, URL('10_carbono', 'index1'), [
       (T('Frecuencias por grosor'), False, URL('10_carbono', 'index1')),
       (T('Material 1000h'), False, URL('10_carbono', 'index2')),
-      (T('Almacen en el mantillo'), False, URL('10_carbono', 'index3')),
-      (T('Información de arbolado'), False, URL('10_carbono', 'index4')),
-      (T('Árboles pequeños y arbustos'), False, URL('10_carbono', 'index5'))]),
+      (T('Carbono en el mantillo'), False, URL('10_carbono', 'index3')),
+      (T('Árboles pequeños y arbustos'), False, URL('10_carbono', 'index4')),
+      (T('Árboles grandes'), False, URL('10_carbono', 'index5'))]),
+
+    (T('Conteo de aves'), False, URL('11_conteo_aves', 'index1'), [
+      (T('Punto de conteo'), False, URL('11_conteo_aves', 'index1')),
+      (T('Observaciones'), False, URL('11_conteo_aves', 'index2'))]),
+
+    (T('Epífitas'), False, URL('12_epifitas', 'index'), []),
+
     ####
 
     # Edición

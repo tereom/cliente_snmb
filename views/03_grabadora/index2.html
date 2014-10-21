@@ -13,11 +13,6 @@
         float: left;
     }
 
-    .CentrarV
-    {
-  		vertical-align:middle;
-	}
-
 </style>
 {{end}}
 
@@ -227,7 +222,7 @@
             }
 
             //Lo mismo para el campo de "grabadora_id":
-            if(!$('#shadow_clone_2').find('select:first').val())
+            if(!$('#shadow_clone_2').find('#tabla_grabadora_id').val())
             {
                 flag = false;
                 //alert('Falta llenar la grabadora');

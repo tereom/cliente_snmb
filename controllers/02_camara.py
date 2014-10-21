@@ -286,16 +286,18 @@ def asignarCamara():
 
     #Bajo el supuesto que sólo existe una cámara por sitio, no se requiere hacer dropdowns:
 
+    respuestaHTML = "<p>Cámara localizada: </p>"
+
     if len(camarasAsignadas)==0:
 
-        respuestaHTML = "<p>No se encontró ninguna cámara declarada en el sitio elegido</p>"
+        respuestaHTML += "<p>No se encontró ninguna cámara declarada en el sitio elegido</p>"
 
         respuestaHTML += "<input type='hidden' name='camara_id' "+\
             "id='tabla_camara_id' value=''/>"
 
     else:
 
-        respuestaHTML = "<p>Cámara localizada: " + str(camara.nombre) +"</p>"
+        respuestaHTML += "<p>" + str(camara.nombre) +"</p>"
 
         respuestaHTML += "<input type='hidden' name='camara_id' "+\
             "id='tabla_camara_id' value='" + str(camara.id)+ "'/>"
