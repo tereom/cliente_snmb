@@ -52,16 +52,62 @@ if db(db.Cat_forma_vida.id>0).count() == 0:
 
 
 ##########################################################################
-## Pestaña Conteo de aves
+## Pestaña Impactos ambientales
 ########################################################################
 
-db.define_table('Cat_condiciones_ambientales',Field('nombre','string',
+# db.define_table('Cat_tipo_impacto',Field('nombre','string',
+# 	required='TRUE'))
+
+# if db(db.Cat_tipo_impacto.id>0).count() == 0:
+# 	db.Cat_tipo_impacto.insert(nombre='Incendios')
+# 	db.Cat_tipo_impacto.insert(nombre='Huracanes')
+# 	db.Cat_tipo_impacto.insert(nombre='Inundaciones')
+# 	db.Cat_tipo_impacto.insert(nombre='Apertura de caminos')
+# 	db.Cat_tipo_impacto.insert(nombre='Aprovechamientos forestales')
+# 	db.Cat_tipo_impacto.insert(nombre='Uso del suelo diferente al forestal')
+# 	db.Cat_tipo_impacto.insert(nombre='Pastoreo')
+# 	db.Cat_tipo_impacto.insert(nombre='Plagas y enfermedades')
+# 	db.Cat_tipo_impacto.insert(nombre='Líneas eléctricas')
+# 	db.Cat_tipo_impacto.insert(nombre='Actividades mineras')
+# 	db.Cat_tipo_impacto.insert(nombre='Asentamientos humanos')
+
+
+db.define_table('Cat_severidad_impactos',Field('nombre','string',
 	required='TRUE'))
 
-if db(db.Cat_condiciones_ambientales.id>0).count() == 0:
-	db.Cat_condiciones_ambientales.insert(nombre='condición 1')
-	db.Cat_condiciones_ambientales.insert(nombre='condición 2')
-	db.Cat_condiciones_ambientales.insert(nombre='condición 3')
+if db(db.Cat_severidad_impactos.id>0).count() == 0:
+	db.Cat_severidad_impactos.insert(nombre='1 No perceptible')
+	db.Cat_severidad_impactos.insert(nombre='2 Menor')
+	db.Cat_severidad_impactos.insert(nombre='3 Mediana')
+	db.Cat_severidad_impactos.insert(nombre='4 Mayor')
+
+
+db.define_table('Cat_agente_impactos',Field('nombre','string',
+	required='TRUE'))
+
+if db(db.Cat_agente_impactos.id>0).count() == 0:
+	db.Cat_agente_impactos.insert(nombre='1 Barrenador')
+	db.Cat_agente_impactos.insert(nombre='2 Defoliador')
+	db.Cat_agente_impactos.insert(nombre='3 Descortezador')
+	db.Cat_agente_impactos.insert(nombre='4 Muérdagos')
+
+
+db.define_table('Cat_estatus_impactos',Field('nombre','string',
+	required='TRUE'))
+
+if db(db.Cat_estatus_impactos.id>0).count() == 0:
+	db.Cat_estatus_impactos.insert(nombre='1 Activa')
+	db.Cat_estatus_impactos.insert(nombre='2 Inactiva')
+
+db.define_table('Cat_prop_afectacion',Field('nombre','string',required='TRUE'))
+
+if db(db.Cat_prop_afectacion.id>0).count() == 0:
+	db.Cat_prop_afectacion.insert(nombre='Menor a 10%')
+	db.Cat_prop_afectacion.insert(nombre='10 a 30%')
+	db.Cat_prop_afectacion.insert(nombre='30 a 50%')
+	db.Cat_prop_afectacion.insert(nombre='50 a 70%')
+	db.Cat_prop_afectacion.insert(nombre='70 a 90%')
+	db.Cat_prop_afectacion.insert(nombre='Más de 90%')
 
 
 #########################################################################

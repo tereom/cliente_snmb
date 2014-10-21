@@ -24,7 +24,7 @@ def index1():
         INPUT(_name='fecha',_type='date',requires=IS_NOT_EMPTY()),
         INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
         INPUT(_name='hora_termino',_type='time',requires=IS_NOT_EMPTY()),
-        TEXTAREA(_name='comentario'),
+        TEXTAREA(_name='comentario')
     ]
 
     #IS_DATE(format=T('%d-%m-%Y'))),
