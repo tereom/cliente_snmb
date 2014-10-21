@@ -711,8 +711,6 @@ def index5():
 
         #Creando de manera automatizada los nombres de los campos:
         existe_i = 'existe_' + str(i+1)
-        #individuo_numero se asigna en el controlador
-        individuo_numero_i = 'individuo_numero' + str(i+1)
         distancia_i = 'distancia_' + str(i+1)
         azimut_i = 'azimut_' + str(i+1)
         nombre_comun_i = 'nombre_comun_' + str(i+1)
