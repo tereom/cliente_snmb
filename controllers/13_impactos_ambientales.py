@@ -13,18 +13,33 @@ def index1():
         # Campos Impacto_actual
 
         SELECT(_name='conglomerado_muestra_id',
-            requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
-        SELECT(_name='tipo',
-            requires=IS_IN_DB(db,db.Cat_tipo_impacto.nombre,'%(nombre)s')),
-        INPUT(_name='hay_evidencia',_type='boolean'),
-        SELECT(_name='en_vegetacion',
-            requires=IS_IN_DB(db,db.Cat_severidad_impactos.nombre,'%(nombre)s')),
-        SELECT(_name='en_suelo',
-            requires=IS_IN_DB(db,db.Cat_severidad_impactos.nombre,'%(nombre)s')),
-        TEXTAREA(_name='comentario')
+            requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s'))
 
-    ]
+        ]
 
+        for i in range(11):
+
+            #Creando de manera automatizada los nombres de los campos:
+            hay_evidencia_i = 'hay_evidencia_' + str(i+1)
+            en_vegetacion_i = 'en_vegetacion_' + str(i+1)
+            en_suelo_i = 'en_suelo_' + str(i+1)
+            comentario_i = 'comentario_' + str(i+1)
+
+            #Extendiendo la lista anterior:
+            camposImpactoActual.extend([
+                #Campo para marcar si existe o no un árbol.
+                INPUT(_name=hay_evidencia_i,_type='boolean'),
+
+                #Los siguientes campos sólo se lleban en el caso que haya evidencia
+
+                SELECT(_name=en_vegetacion_i,
+                    requires=IS_IN_DB(db,db.Cat_severidad_impactos.nombre,'%(nombre)s')),
+                SELECT(_name=en_suelo_i,
+                    requires=IS_IN_DB(db,db.Cat_severidad_impactos.nombre,'%(nombre)s')),
+                TEXTAREA(_name=comentario_i)
+            ])
+
+        
 
 def index2():
 
