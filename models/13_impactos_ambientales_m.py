@@ -12,7 +12,8 @@ Campos_Impacto_actual = [
     Field('conglomerado_muestra_id','reference Conglomerado_muestra',required=True),
     Field('tipo','string',required=True),
     Field('hay_evidencia','boolean',required=True),
-    # los campos en_begetacion y en_suelo se insertarán de un catálogo
+    
+    # los campos en_vegetacion y en_suelo se insertarán de un catálogo
     Field('en_vegetacion','string'),
     Field('en_suelo','string'),
     Field('comentario','text')
