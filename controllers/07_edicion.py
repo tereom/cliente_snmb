@@ -203,6 +203,13 @@ def editarEpifitas():
         user_signature=False)
     return dict(form=form)
 
+def editarImpacto():
+    db.Impacto_actual.conglomerado_muestra_id.writable = False
+    form = SQLFORM.smartgrid(db.Impacto_actual,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
 def editarIncendio():
     db.Incendio.conglomerado_muestra_id.writable = False
     db.Archivo_incendio.incendio_id.writable = False
