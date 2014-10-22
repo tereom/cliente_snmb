@@ -65,7 +65,7 @@ def index1():
         #Asociando el valor de la variable esta_dentro_conglomerado a partir del
         #valor del control dentro_fuera_conglomerado:
         
-        if (formaEspecie.vars['dentro_fuera_conglomerado'])=='dentro':
+        if formaEspecie.vars['dentro_fuera_conglomerado']=='dentro':
             datosEspecie['esta_dentro_conglomerado']=True
         else:
             datosEspecie['esta_dentro_conglomerado']=False
@@ -211,7 +211,7 @@ def index2():
         #Asociando el valor de la variable esta_dentro_conglomerado a partir del
         #valor del control dentro_fuera_conglomerado:
         
-        if (formaHuellaExcreta.vars['dentro_fuera_conglomerado'])=='dentro':
+        if formaHuellaExcreta.vars['dentro_fuera_conglomerado']=='dentro':
             datosHuellaExcreta['esta_dentro_conglomerado']=True
         else:
             datosHuellaExcreta['esta_dentro_conglomerado']=False
@@ -219,7 +219,7 @@ def index2():
         #Asociando el valor de la variable es_huella a partir del valor del control
         #es_huella_excreta
         
-        if (formaHuellaExcreta.vars['es_huella_excreta'])=='huella':
+        if formaHuellaExcreta.vars['es_huella_excreta']=='huella':
             datosHuellaExcreta['es_huella']=True
         else:
             datosHuellaExcreta['es_huella']=False
@@ -330,7 +330,7 @@ def index3():
         #Asociando el valor de la variable esta_dentro_conglomerado a partir del
         #valor del control dentro_fuera_conglomerado:
         
-        if (formaEspecimenRestos.vars['dentro_fuera_conglomerado'])=='dentro':
+        if formaEspecimenRestos.vars['dentro_fuera_conglomerado']=='dentro':
             datosEspecimenRestos['esta_dentro_conglomerado']=True
         else:
             datosEspecimenRestos['esta_dentro_conglomerado']=False
@@ -338,7 +338,7 @@ def index3():
         #Asociando el valor de la variable es_especimen a partir del valor del
         #control es_especimen_restos
         
-        if (formaEspecimenRestos.vars['es_especimen_restos'])=='especimen':
+        if formaEspecimenRestos.vars['es_especimen_restos']=='especimen':
             datosEspecimenRestos['es_especimen']=True
         else:
             datosEspecimenRestos['es_especimen']=False

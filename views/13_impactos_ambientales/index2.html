@@ -2,7 +2,7 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .string, .Tabla .double
+    .Tabla .string
     {
         margin-right: 2cm;
         width: 3cm;
@@ -19,16 +19,6 @@
         float: left;
     }
 
-    .FlotaDerecha
-    {
-        float: right;
-    }
-
-    .Centrar
-    {
-        text-align: center;
-    }
-
     .CentrarV
     {
         vertical-align: top;
@@ -39,10 +29,10 @@
 {{#=response.toolbar()}}
 
 <form action="" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="_formname" value="formaIncendioHTML"/>
+    <input type="hidden" name="_formname" value="formaPlagaHTML"/>
     <fieldset>
         <legend>
-            Plagas
+            Información de plagas
         </legend>
         <table class="Tabla">
             <tr>
@@ -67,21 +57,21 @@
                     </div>
                 </td>  
                 <td rowspan="2" class="CentrarV">
-                <div>
-                    <label for="tabla_agente">Agente</label>
-                </div>
-                <div>
-                    <select class="generic-widget obligatorio" name="tipo" id="tabla_agente">
-                        <option value=""/>
-                        {{for agente in listaAgente:}}
-                            <option value="{{=agente.nombre}}">
-                                {{=agente.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                </div>
-            </td>
-            <td colspan="2">
+                    <div>
+                        <label for="tabla_agente">Agente</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="tipo" id="tabla_agente">
+                            <option value=""/>
+                            {{for agente in listaAgente:}}
+                                <option value="{{=agente.nombre}}">
+                                    {{=agente.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td colspan="2">
                     <div class="FlotaIzquierda" style="padding-right:10px;">
                         <input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
                     </div>
@@ -104,9 +94,11 @@
                     <div class="FlotaIzquierda">
                         <input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
                     </div>
-                </td>        
-            </table>
- 
+                </td>
+            </tr>        
+        </table>
+    </fieldset>
+    <fieldset>
         <legend>
             Porcentaje de afectación
         </legend>
@@ -148,7 +140,7 @@
             Imágenes (opcional)
         </legend>
         <div>
-            <input class="obligatorio" type="file" id="tabla_archivos_plaga" name="archivos_plaga" multiple/>
+            <input type="file" id="tabla_archivos_plaga" name="archivos_plaga" multiple/>
         </div>
     </fieldset>
     <br/>
@@ -156,3 +148,111 @@
 </form>
 
 {{#=BEAUTIFY(request.vars)}}
+
+<br/>
+<br/>
+
+<fieldset>
+<legend>
+  Revisión de archivos
+</legend>
+</fieldset>
+{{=grid}}
+
+<script>
+
+    $(document).ready
+    (
+        function()
+        {
+           /*Cuando el documento se carga, las casillas para seleccionar nombres
+           están seleccionadas y los campos de texto son visibles (default):*/
+            $('#tabla_hay_nombre_comun').prop('checked', true);
+
+            $('#tabla_hay_nombre_cientifico').prop('checked', true);
+        }
+    )
+
+    /*Fade in/out de los campos de ingreso de nombre común/científico, de acuerdo
+    a si se marcó o no la casilla correspondiente*/
+
+    $('#tabla_hay_nombre_comun').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('#tabla_nombre_comun').fadeIn();
+            else
+                $('#tabla_nombre_comun').fadeOut();
+        }
+    )
+
+    $('#tabla_hay_nombre_cientifico').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('#tabla_nombre_cientifico').fadeIn();
+            else
+                $('#tabla_nombre_cientifico').fadeOut();
+        }
+    )
+
+    //Validando, para ello utilizamos la clase "obligatorio":
+    $('form').submit
+    (
+        function()
+        {
+            /*flag es un indicador de que la forma está completa
+            faltanNombres es un indicador de que es necesario que se escriban
+            ya sea el nombre común o el científico de la especia (ésto es cuando
+            la especie no se encuentra en la lista de invasoras), y sin embargo,
+            no se ha hecho.*/
+            flag = true;
+            faltanNombres = false;
+
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                     flag = false;
+                }
+            }
+            );
+
+            //Si no se marcó ninguna casilla para ingresar el nombre
+            if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+            {
+                flag = false;
+                faltanNombres = true;
+                //alert('caso1');
+            }
+            else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
+            /*Si se marcó la casilla de nombre común pero no se escribió
+            nada en el campo subsecuente.*/
+            {
+                flag = false;
+                faltanNombres = true;
+                //alert('caso2');
+            }
+             //Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
+            else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
+            {
+                flag = false;
+                faltanNombres = true;
+                //alert('caso3');
+            }
+
+            if(!flag)
+            {
+                if(faltanNombres)
+                    alert('Favor de escribir al menos un nombre (ya sea común científico)');
+                else
+                    alert('Faltó llenar algún campo');
+
+                return false;
+            }
+        }
+    )
+</script>

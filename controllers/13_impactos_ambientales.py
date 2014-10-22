@@ -262,7 +262,10 @@ def index3():
         #Por eso mismo, aunque los campos de "tipo" y "prop_..." provengan de catálogo,
         #no se exigirá: requires=IS_IN_DB(...), pues pueden ser vacíos...
 
-        INPUT(_name='es_anio_actual',_type='boolean'),
+        #El siguiente campo va a leer de radio-botones, por eso admite un string
+        #(lee el valor asociado al botón seleccionado)
+        INPUT(_name='es_anio_actual_anterior',_type='string'),
+
         INPUT(_name='tipo', _type='string'),
         INPUT(_name='prop_afectacion_herbacea', _type='string'),
         INPUT(_name='prop_afectacion_arbustiva', _type='string'),
@@ -294,13 +297,13 @@ def index3():
             datosIncendio['prop_afectacion_arborea']=formaIncendio.vars['prop_afectacion_arborea']
             datosIncendio['prop_copa_quemada']=formaIncendio.vars['prop_copa_quemada']
 
-            if bool(formaIncendio.vars['es_anio_actual']):
-                datosIncendio['es_anio_actual']=formaIncendio.vars['es_anio_actual']
+            if formaIncendio.vars['es_anio_actual_anterior']=='actual':
+                datosIncendio['es_anio_actual']=True
             else:
                 datosIncendio['es_anio_actual']=False
 
             if bool(formaIncendio.vars['hay_evidencia_recuperacion']):
-                datosIncendio['hay_evidencia_recuperacion']=formaIncendio.vars['hay_evidencia_recuperacion']
+                datosIncendio['hay_evidencia_recuperacion']=True
             else:
                 datosIncendio['hay_evidencia_recuperacion']=False
 
@@ -374,7 +377,7 @@ def incendioExistente():
 
     #Haciendo un query a la tabla de Incendios con la información anterior:
 
-    incendioYaInsertado=db(db.Incendios.conglomerado_muestra_id==conglomeradoElegidoID).select()
+    incendioYaInsertado=db(db.Incendio.conglomerado_muestra_id==conglomeradoElegidoID).select()
 
     #regresa la longitud de incendiosYaInsertados para que sea interpretada por JS
 
