@@ -56,7 +56,7 @@ response.menu = [
     (T('Impactos ambientales'),False,URL('13_impactos_ambientales','index3'), [
       (T('Incendios'),False,URL('13_impactos_ambientales','index3')),
       (T('Plagas'),False,URL('13_impactos_ambientales','index2')),
-      (T('Impactos actuales'),False,URL('13_incendios','index1'))
+      (T('Impactos actuales'),False,URL('13_impactos_ambientales','index1'))
       ]),
 
     ### Camara

@@ -2,12 +2,18 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .string, .Tabla .double, .Tabla .boolean
+    .Tabla .string, .Tabla .double
     {
         margin-right: 2cm;
         width: 3cm;
     }
     
+    .Tabla .boolean
+    {
+        margin-right: .3cm;
+        width: 1cm;
+    }
+
     .Tabla .generic-widget
     {
     	margin-right: 2cm;
@@ -16,7 +22,7 @@
 
     .FlotaIzquierda
     {
-        float: left;
+        float: right;
     }
 
     .Centrar
@@ -67,9 +73,10 @@
         <table class="Tabla">
             <tr>
                 <th></th>
-                <th colspan="2" class="Centrar">Evidencia</th>
+                <th class="Centrar">Evidencia</th>
                 <th class="Centrar">Vegetación</th>
                 <th class="Centrar">Suelo</th>
+                <th class="Centrar">Observaciones</th>
             </tr>
         
 
@@ -126,6 +133,9 @@
                                 {{pass}}
                             </select>
                         </div>
+                    </td>
+                    <td>
+                        <textarea class="text" cols="40" id="{{=tabla_comentario_i}}" name="{{=comentario_i}}" rows="1"></textarea>
                     </td>
                 </tr>
             {{pass}}
