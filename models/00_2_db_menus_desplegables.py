@@ -65,21 +65,21 @@ if db(db.Cat_condiciones_ambientales.id>0).count() == 0:
 ## Pestaña Impactos ambientales
 ########################################################################
 
-# db.define_table('Cat_tipo_impacto',Field('nombre','string',
-# 	required='TRUE'))
+db.define_table('Cat_tipo_impacto',Field('nombre','string',
+	required='TRUE'))
 
-# if db(db.Cat_tipo_impacto.id>0).count() == 0:
-# 	db.Cat_tipo_impacto.insert(nombre='Incendios')
-# 	db.Cat_tipo_impacto.insert(nombre='Huracanes')
-# 	db.Cat_tipo_impacto.insert(nombre='Inundaciones')
-# 	db.Cat_tipo_impacto.insert(nombre='Apertura de caminos')
-# 	db.Cat_tipo_impacto.insert(nombre='Aprovechamientos forestales')
-# 	db.Cat_tipo_impacto.insert(nombre='Uso del suelo diferente al forestal')
-# 	db.Cat_tipo_impacto.insert(nombre='Pastoreo')
-# 	db.Cat_tipo_impacto.insert(nombre='Plagas y enfermedades')
-# 	db.Cat_tipo_impacto.insert(nombre='Líneas eléctricas')
-# 	db.Cat_tipo_impacto.insert(nombre='Actividades mineras')
-# 	db.Cat_tipo_impacto.insert(nombre='Asentamientos humanos')
+if db(db.Cat_tipo_impacto.id>0).count() == 0:
+	db.Cat_tipo_impacto.insert(nombre='Incendios')
+	db.Cat_tipo_impacto.insert(nombre='Huracanes')
+	db.Cat_tipo_impacto.insert(nombre='Inundaciones')
+	db.Cat_tipo_impacto.insert(nombre='Apertura de caminos')
+	db.Cat_tipo_impacto.insert(nombre='Aprovechamientos forestales')
+	db.Cat_tipo_impacto.insert(nombre='Uso del suelo diferente al forestal')
+	db.Cat_tipo_impacto.insert(nombre='Pastoreo')
+	db.Cat_tipo_impacto.insert(nombre='Plagas y enfermedades')
+	db.Cat_tipo_impacto.insert(nombre='Líneas eléctricas')
+	db.Cat_tipo_impacto.insert(nombre='Actividades mineras')
+	db.Cat_tipo_impacto.insert(nombre='Asentamientos humanos')
 
 
 db.define_table('Cat_severidad_impactos',Field('nombre','string',

@@ -4,12 +4,9 @@ def index1():
 
     #Creando una lista con los tipos de impactos ambientales:
 
-    tipos = ['incendios','huracanes','inundaciones','apertura de caminos',\
-            'aprovechamientos forestales','uso de suelo diferente al forestal',\
-            'pastoreo','plagas y enfermedades','lineas eléctricas',\
-            'actividades mineras','asentamientos humanos']
-
-    n_impactos = len(tipos)
+    listaTiposImpacto = db(db.Cat_tipo_impacto).select(db.Cat_tipo_impacto.nombre)
+ 
+    n_impactos = len(listaTiposImpacto)
 
     camposImpactos = [
 
@@ -29,6 +26,12 @@ def index1():
     for i in range(n_impactos):
 
         #Creando de manera automatizada los nombres de los campos:
+
+        #Por la forma en como se diseñó la vista de esta pestaña, el tipo vendrá
+        #de un input hidden (se mostrará en pantalla el contenido del mismo)
+
+        tipo_i = 'tipo_' + str(i+1)
+
         hay_evidencia_i = 'hay_evidencia_' + str(i+1)
         en_vegetacion_i = 'en_vegetacion_' + str(i+1)
         en_suelo_i = 'en_suelo_' + str(i+1)
@@ -36,7 +39,10 @@ def index1():
 
         #Extendiendo la lista anterior:
         camposImpactoActual.extend([
-            #Campo para marcar si existe o no un árbol.
+
+            INPUT(_name=tipo_i,_type='string')
+
+            #Campo para marcar si existe o no un evidencia de un impacto.
             INPUT(_name=hay_evidencia_i,_type='boolean'),
 
             #Los siguientes campos sólo se llenan en el caso que haya evidencia
@@ -58,6 +64,7 @@ def index1():
         for i in range(n_impactos):
 
             #Creando de manera automatizada los nombres de los campos:
+            tipo_i = 'tipo_' + str(i+1)
             hay_evidencia_i = 'hay_evidencia_' + str(i+1)
             en_vegetacion_i = 'en_vegetacion_' + str(i+1)
             en_suelo_i = 'en_suelo_' + str(i+1)
@@ -65,7 +72,7 @@ def index1():
 
             datosImpacto_i = {}
             datosImpacto_i['conglomerado_muestra_id'] = conglomeradoID
-            datosImpacto_i['tipo'] = tipos[i]
+            datosImpacto_i['tipo'] = formaImpactos.vars[tipo_i]
 
             # Si hay evidencia del i-ésimo tipo:
             if bool(formaImpactos.vars[hay_evidencia_i]):
@@ -101,8 +108,8 @@ def index1():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
-    #Regresando el número de impactos para crear la vista en HTML
-    return dict(n_impactos=n_impactos,
+    #Regresando la lista de tipos de impacto para crear la vista en HTML
+    return dict(listaTiposImpacto=listaTiposImpacto,
          listaConglomerado=listaConglomerado)
 
 def impactosExistentes():
