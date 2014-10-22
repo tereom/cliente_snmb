@@ -2,10 +2,16 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .string, .Tabla .double, .Tabla .boolean
+    .Tabla .boolean
     {
         margin-right: 2cm;
         width: 3cm;
+    }
+
+    .Tabla .radio
+    {
+
+        margin-right: 2cm;
     }
     
     .Tabla .generic-widget
@@ -13,6 +19,13 @@
     	margin-right: 2cm;
         width: 4cm;
     }
+
+    #campoEspecial
+    {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
 
     .FlotaIzquierda
     {
@@ -72,120 +85,229 @@
             </tr>
         </table>
         <hr/>
-        <table class="Tabla">
-        <tr>
-            <td rowspan="2" class="CentrarV">
-                <div>
-                    <label for="tabla_tipo">Tipo de incendio</label>
-                </div>
-                <div>
-                    <select class="generic-widget obligatorio" name="tipo" id="tabla_tipo">
-                        <option value=""/>
-                        {{for tipo in listaTipoIncendio:}}
-                            <option value="{{=tipo.nombre}}">
-                                {{=tipo.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                </div>
-            </td>
-            <td>
-                <div class="FlotaIzquierda" style="padding-right:10px;">
-                    <label for="tabla_es_anio_actual">Año actual</label>
-                </div>
-                <div>
-                    <input class="boolean" name="es_anio_actual" id="tabla_es_anio_actual" type="radio" value="actual"/>
-                </div>
-            </td>
-            <td rowspan="2" class="CentrarV">
-                <div>
-                    <label for="tabla_hay_evidencia_recuperacion">Evidencia de regeneración</label>
-                </div>
-                <div class="Centrar">
-                    <input class="boolean" name="hay_evidencia_recuperacion" id="tabla_hay_evidencia_recuperacion" type="checkbox" value="on"/>
-                </div>
-            </td> 
-        </tr>
-            <tr>
-                <td>
-                    <div class="FlotaIzquierda" style="padding-right:10px">
-                        <label for="tabla_es_anio_anterior">Años anteriores</label>
-                    </div>
-                    <div>
-                        <input class="boolean" name="es_anio_actual" id="tabla_es_anio_anterior" type="radio" value="anterior"/>
-                    </div>
-                </td>
-            </tr>
-        </table>
- 
-         <legend>
-            Porcentaje de afectación
-        </legend>
-        <table class="Tabla">
-            <tr>
-                <td>
-                    <label for="tabla_prop_afectacion_arborea">Arbórea</label>
-                </td>
-                <td>
-                    <select class="generic-widget obligatorio" name="prop_afectacion_arborea" id="tabla_prop_afectacion_arborea">
-                        <option value=""/>
-                            {{for prop in listaPropAfectacion:}}
-                                <option value="{{=prop.nombre}}">
-                                    {{=prop.nombre}}
-                                </option>
-                            {{pass}}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="tabla_prop_afectacion_arbustiva">Arbustiva</label>
-                </td>
-                <td>
-                    <select class="generic-widget obligatorio" name="prop_afectacion_arbustiva" id="tabla_prop_afectacion_arbustiva">
-                        <option value=""/>
-                            {{for prop in listaPropAfectacion:}}
-                                <option value="{{=prop.nombre}}">
-                                    {{=prop.nombre}}
-                                </option>
-                            {{pass}}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="tabla_prop_afectacion_herbacea">Herbácea</label>
-                </td>
-                <td>
-                    <select class="generic-widget obligatorio" name="prop_afectacion_herbacea" id="tabla_prop_afectacion_herbacea">
-                        <option value=""/>
-                            {{for prop in listaPropAfectacion:}}
-                                <option value="{{=prop.nombre}}">
-                                    {{=prop.nombre}}
-                                </option>
-                            {{pass}}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="tabla_prop_copa_quemada">Copa quemada</label>
-                </td>
-                <td>
-                    <select class="generic-widget obligatorio" name="prop_copa_quemada" id="tabla_prop_copa_quemada">
-                        <option value=""/>
-                            {{for prop in listaPropAfectacion:}}
-                                <option value="{{=prop.nombre}}">
-                                    {{=prop.nombre}}
-                                </option>
-                            {{pass}}
-                    </select>
-                </td>
-            </tr>
+        <div class="Incendio_info">
+            <table class="Tabla">
+                <tr>
+                    <td rowspan="2">
+                        <div>
+                            <label for="tabla_tipo">Tipo de incendio</label>
+                        </div>
+                        <div>
+                            <select class="generic-widget" name="tipo" id="tabla_tipo">
+                                <option value=""/>
+                                {{for tipo in listaTipoIncendio:}}
+                                    <option value="{{=tipo.nombre}}">
+                                        {{=tipo.nombre}}
+                                    </option>
+                                {{pass}}
+                            </select>
+                        </div>
+                    </td>
+                    <td  class="CentrarV">
+                        <div class="FlotaIzquierda" style="padding-right:41px;">
+                            <label for="tabla_es_anio_actual">Año actual</label>
+                        </div>
+                            <input class="radio" name="es_anio_actual_anterior" id="tabla_es_anio_actual" type="radio" value="actual"/>
+                    </td>
+                    <td rowspan="2">
+                        <div>
+                            <label for="tabla_hay_evidencia_recuperacion">Evidencia de regeneración</label>
+                        </div>
+                        <div class="Centrar">
+                            <input class="boolean" name="hay_evidencia_recuperacion" id="tabla_hay_evidencia_recuperacion" type="checkbox" value="on"/>
+                        </div>
+                    </td> 
+                </tr>
+                <tr>
+                    <td class="CentrarV">
+                        <div class="FlotaIzquierda" style="padding-right:10px">
+                            <label for="tabla_es_anio_anterior">Años anteriores</label>
+                        </div>
+                            <input class="radio" name="es_anio_actual_anterior" id="tabla_es_anio_anterior" type="radio" value="anterior"/>
+                    </td>
+                </tr>
             </table>
-
+ 
+            <legend>
+                Porcentaje de afectación
+            </legend>
+            <table class="Tabla">
+                <tr>
+                    <td>
+                        <label for="tabla_prop_afectacion_arborea">Arbórea</label>
+                    </td>
+                    <td>
+                        <select class="generic-widget" name="prop_afectacion_arborea" id="tabla_prop_afectacion_arborea">
+                            <option value=""/>
+                            {{for prop in listaPropAfectacion:}}
+                                <option value="{{=prop.nombre}}">
+                                    {{=prop.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="tabla_prop_afectacion_arbustiva">Arbustiva</label>
+                    </td>
+                    <td>
+                        <select class="generic-widget" name="prop_afectacion_arbustiva" id="tabla_prop_afectacion_arbustiva">
+                            <option value=""/>
+                            {{for prop in listaPropAfectacion:}}
+                                <option value="{{=prop.nombre}}">
+                                    {{=prop.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="tabla_prop_afectacion_herbacea">Herbácea</label>
+                    </td>
+                    <td>
+                        <select class="generic-widget" name="prop_afectacion_herbacea" id="tabla_prop_afectacion_herbacea">
+                            <option value=""/>
+                            {{for prop in listaPropAfectacion:}}
+                                <option value="{{=prop.nombre}}">
+                                    {{=prop.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="tabla_prop_copa_quemada">Copa quemada</label>
+                    </td>
+                    <td>
+                        <select class="generic-widget" name="prop_copa_quemada" id="tabla_prop_copa_quemada">
+                            <option value=""/>
+                            {{for prop in listaPropAfectacion:}}
+                                <option value="{{=prop.nombre}}">
+                                    {{=prop.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </fieldset>
+    <fieldset>
+        <div class="Incendio_info">
+            <legend>
+                Subir archivos (opcional)
+            </legend>
+            <div id="campoEspecial">
+                <input type="file" class="" id="tabla_archivos_incendio" name="archivos_incendio" multiple/>
+            </div>  
+        </div>
+    </fieldset>
+    <br/>
     <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
 {{#=BEAUTIFY(request.vars)}}
+
+<script>
+
+    $(document).ready
+    (
+        function()
+        {
+           /*Cuando el documento se carga, el campo de "tabla_hay_evidencia" no
+           está marcado, y los campos asociados a él están vacíos*/
+           $('#tabla_hay_evidencia').prop('checked', false);
+           $('.Incendio_info').hide();
+        }
+    )
+
+    //AJAX para evitar que se envíe la información de incendios
+    //correspondiente a un conglomerado más de una vez:
+    $('#tabla_conglomerado_muestra_id').change
+    (
+        function ()
+        {
+            $.ajax
+            (
+            {  
+                type: "POST",
+                data: $('#tabla_conglomerado_muestra_id').serialize(),
+                url: "{{=URL('incendioExistente')}}",
+                success: function(resultado)
+                {
+                    //alert(resultado);
+                    if(resultado>=1)
+                    {
+                        alert('Ya se ha ingresado la información de incendios de este conglomerado');
+                        $('#tabla_conglomerado_muestra_id').val("");
+                    }
+                }
+            }
+            );
+        }
+    );
+
+    $('#tabla_hay_evidencia').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Incendio_info').fadeIn();
+            else
+                $('.Incendio_info').fadeOut();
+        }
+    )
+
+    //Validando, para ello utilizamos la clase "obligatorio":
+    $('form').submit
+    (
+       function()
+       {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                    flag = false;
+                }
+            }
+            );
+
+            //Si la casilla de tabla_hay_evidencia está marcada, entonces todas
+            //las combobox que aparecen son obligatorias, al igual que los radio-
+            //botones
+            if($('#tabla_hay_evidencia').prop('checked'))
+            {
+                campos=$('.Incendio_info select');
+                campos.each(function() 
+                {
+                    if(!$(this).val())
+                    {
+                        //alert(this);
+                        flag = false;
+                    }
+                }
+                );
+
+                //Validando los radio-botones
+                if(!$('input:radio[name=es_anio_actual_anterior]:checked').val())
+                {
+                    flag = false;
+                    //alert('falta presionar un radio-botón');
+                }
+            }
+
+            if(!flag)
+            {
+                alert('Faltó llenar algún campo o subir alguna imagen');
+                return false;
+            }
+        }
+
+    )
+
+</script>

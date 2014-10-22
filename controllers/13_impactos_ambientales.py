@@ -326,6 +326,8 @@ def index3():
 
             pass
 
+        response.flash = 'Exito'
+
     elif formaIncendio.errors:
 
        response.flash = 'Hubo un error al llenar la forma'
@@ -351,18 +353,18 @@ def index3():
         listaTipoIncendio=listaTipoIncendio,
         listaPropAfectacion=listaPropAfectacion)
 
-def incendiosExistentes():
+def incendioExistente():
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
 
     #Haciendo un query a la tabla de Incendios con la información anterior:
 
-    incendiosYaInsertados=db(db.Incendios.conglomerado_muestra_id==conglomeradoElegidoID).select()
+    incendioYaInsertado=db(db.Incendios.conglomerado_muestra_id==conglomeradoElegidoID).select()
 
     #regresa la longitud de incendiosYaInsertados para que sea interpretada por JS
 
-    return len(incendiosYaInsertados)
+    return len(incendioYaInsertado)
 
 
 
