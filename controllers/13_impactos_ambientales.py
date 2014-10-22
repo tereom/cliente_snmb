@@ -40,7 +40,7 @@ def index1():
         #Extendiendo la lista anterior:
         camposImpactoActual.extend([
 
-            INPUT(_name=tipo_i,_type='string')
+            INPUT(_name=tipo_i,_type='string'),
 
             #Campo para marcar si existe o no un evidencia de un impacto.
             INPUT(_name=hay_evidencia_i,_type='boolean'),
