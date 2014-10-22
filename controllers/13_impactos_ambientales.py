@@ -45,8 +45,6 @@ def index1():
             #Campo para marcar si existe o no un evidencia de un impacto.
             INPUT(_name=hay_evidencia_i,_type='boolean'),
 
-            #Los siguientes campos sólo se llenan en el caso que haya evidencia
-
             SELECT(_name=en_vegetacion_i,
                 requires=IS_IN_DB(db,db.Cat_severidad_impactos.nombre,'%(nombre)s')),
             SELECT(_name=en_suelo_i,
@@ -76,16 +74,14 @@ def index1():
 
             # Si hay evidencia del i-ésimo tipo:
             if bool(formaImpactos.vars[hay_evidencia_i]):
-        
-                # Agregando los datos extraídos de la forma:
-                datosImpacto_i['hay_evidencia']=formaImpactos.vars[hay_evidencia_i]
-                datosImpacto_i['en_vegetacion']=formaImpactos.vars[en_vegetacion_i]
-                datosImpacto_i['en_suelo']=formaImpactos.vars[en_suelo_i]
-                datosImpacto_i['comentario']=formaImpactos.vars[comentario_i]
-
+                datosImpacto_i['hay_evidencia']=True
             else:
-
                 datosImpacto_i['hay_evidencia']=False
+        
+            # Agregando los datos extraídos de la forma:
+            datosImpacto_i['en_vegetacion']=formaImpactos.vars[en_vegetacion_i]
+            datosImpacto_i['en_suelo']=formaImpactos.vars[en_suelo_i]
+            datosImpacto_i['comentario']=formaImpactos.vars[comentario_i]
 
             # Insertando los datos del impacto ambiental:
             db.Impacto_actual.insert(**datosImpacto_i)

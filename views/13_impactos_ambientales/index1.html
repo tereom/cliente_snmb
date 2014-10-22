@@ -1,12 +1,6 @@
 {{extend 'layout.html'}}
 {{block head}}
 <style type="text/css">
-
-    .Tabla .string, .Tabla .double
-    {
-        margin-right: 2cm;
-        width: 3cm;
-    }
     
     .Tabla .boolean
     {
@@ -22,53 +16,50 @@
 
     .FlotaIzquierda
     {
+        float: left;
+    }
+
+    .FlotaDerecha
+    {
         float: right;
     }
+
 
     .Centrar
     {
         text-align: center;
     }
 
-    .CentrarV
-    {
-        vertical-align:middle;
-    }
-
 </style>
 {{end}}
-{{=response.toolbar()}}
+{{#=response.toolbar()}}
 
 <form action="" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="_formname" value="formaIncendioHTML"/>
+    <input type="hidden" name="_formname" value="formaImpactosHTML"/>
     <fieldset>
         <legend>
             Impactos ambientales actuales
         </legend>
-        <table class="Tabla">
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
-                    </div>
-                    <div>
-                        <!--este campo sólo sirve para encontrar
-                        con AJAX los sitios existentes asociados al conglomerado
-                        elegido, al enviar la forma al controlador, se utilizará
-                        para guardar el registro de la cámara, únicamente el id
-                        del sitio (de la dropdown generada mediante AJAX)-->
-                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-                            <option value=""/>
-                            {{for conglomerado in listaConglomerado:}}
-                                <option value="{{=conglomerado.id}}">
-                                    {{=conglomerado.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>             
-            </tr>
-        </table>
+        <div class="Tabla">
+            <div>
+                <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+            </div>
+            <div>
+                <!--este campo sólo sirve para encontrar
+                con AJAX los sitios existentes asociados al conglomerado
+                elegido, al enviar la forma al controlador, se utilizará
+                para guardar el registro de la cámara, únicamente el id
+                del sitio (de la dropdown generada mediante AJAX)-->
+                <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                    <option value=""/>
+                    {{for conglomerado in listaConglomerado:}}
+                        <option value="{{=conglomerado.id}}">
+                            {{=conglomerado.nombre}}
+                        </option>
+                    {{pass}}
+                </select>
+            </div>
+        </div>
         <hr/>
         <table class="Tabla">
             <tr>
@@ -79,12 +70,11 @@
                 <th class="Centrar">Observaciones</th>
             </tr>
         
-
             {{for i in range(n_impactos):}}              
 
                 {{impacto_i = listaTiposImpacto[i]}}
 
-                <!-- Creamos los nombres de los campos y las tablas -->
+                <!-- Creamos los nombres de los campos y id's -->
                 {{tipo_i = 'tipo_' + str(i+1)}}
                 {{tabla_tipo_i = 'tabla_' + tipo_i}}
 
@@ -101,18 +91,16 @@
                 {{tabla_comentario_i = 'tabla' + comentario_i}}
 
                 <tr>
-                    <!-- Campo cuadrante solo se escribe una vez -->
-
                     <td>
                         {{=impacto_i.nombre}}
-                        <input type="hidden" value="{{=impacto_i}}" name="{{=tipo_i}}" id="{{=tabla_tipo_i}}">
+                        <input type="hidden" value="{{=impacto_i.nombre}}" name="{{=tipo_i}}" id="{{=tabla_tipo_i}}">
                     </td>
-                    <td class="FlotaIzquierda">
+                    <td class="FlotaDerecha">
                             <input class="boolean" name="{{=hay_evidencia_i}}" id="{{=tabla_hay_evidencia_i}}" type="checkbox" value="on"/>
                     </td>
                     <td>
                         <div>
-                            <select class="generic-widget" name="{{=en_vegetacion_i}}" id="{{=tabla_en_vegetacion_i}}">
+                            <select class="generic-widget obligatorio" name="{{=en_vegetacion_i}}" id="{{=tabla_en_vegetacion_i}}">
                                 <option value=""/>
                                 {{for severidad in listaSeveridadImpacto:}}
                                     <option value="{{=severidad.nombre}}">
@@ -124,7 +112,7 @@
                     </td>
                     <td>
                         <div>
-                            <select class="generic-widget" name="{{=en_suelo_i}}" id="{{=tabla_en_suelo_i}}">
+                            <select class="generic-widget obligatorio" name="{{=en_suelo_i}}" id="{{=tabla_en_suelo_i}}">
                                 <option value=""/>
                                 {{for severidad in listaSeveridadImpacto:}}
                                     <option value="{{=severidad.nombre}}">
@@ -143,7 +131,59 @@
         <hr/>
     </fieldset>
     <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
-
  </form>
 
-{{=BEAUTIFY(request.vars)}}
+{{#=BEAUTIFY(request.vars)}}
+
+<script>
+
+    //AJAX para evitar que se envíe la información de incendios
+    //correspondiente a un conglomerado más de una vez:
+    $('#tabla_conglomerado_muestra_id').change
+    (
+        function ()
+        {
+            $.ajax
+            (
+            {  
+                type: "POST",
+                data: $('#tabla_conglomerado_muestra_id').serialize(),
+                url: "{{=URL('impactosExistentes')}}",
+                success: function(resultado)
+                {
+                    //alert(resultado);
+                    if(resultado>=1)
+                    {
+                        alert('Ya se ha ingresado la información de impactos actuales de este conglomerado');
+                        $('#tabla_conglomerado_muestra_id').val("");
+                    }
+                }
+            }
+            );
+        }
+    );
+
+    //Validando, para ello utilizamos la clase "obligatorio":
+    $('form').submit
+    (
+        function()
+        {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                     flag = false;
+                }
+            }
+            );
+                       
+            if(!flag)
+            {
+                alert('Faltó llenar algún campo');
+                return false;
+            }
+        }
+    )
+</script>
