@@ -1,0 +1,139 @@
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .Tabla .string, .Tabla .double, .Tabla .boolean
+    {
+        margin-right: 2cm;
+        width: 3cm;
+    }
+    
+    .Tabla .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4cm;
+    }
+
+    .FlotaIzquierda
+    {
+        float: left;
+    }
+
+    .Centrar
+    {
+        text-align: center;
+    }
+
+    .CentrarV
+    {
+        vertical-align:middle;
+    }
+
+</style>
+{{end}}
+{{=response.toolbar()}}
+
+<form action="" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="_formname" value="formaIncendioHTML"/>
+    <fieldset>
+        <legend>
+            Impactos ambientales actuales
+        </legend>
+        <table class="Tabla">
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+                    </div>
+                    <div>
+                        <!--este campo sólo sirve para encontrar
+                        con AJAX los sitios existentes asociados al conglomerado
+                        elegido, al enviar la forma al controlador, se utilizará
+                        para guardar el registro de la cámara, únicamente el id
+                        del sitio (de la dropdown generada mediante AJAX)-->
+                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                            <option value=""/>
+                            {{for conglomerado in listaConglomerado:}}
+                                <option value="{{=conglomerado.id}}">
+                                    {{=conglomerado.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>             
+            </tr>
+        </table>
+        <hr/>
+        <table class="Tabla">
+            <tr>
+                <th></th>
+                <th colspan="2" class="Centrar">Evidencia</th>
+                <th class="Centrar">Vegetación</th>
+                <th class="Centrar">Suelo</th>
+            </tr>
+        
+
+            {{for i in range(n_impactos):}}              
+
+                {{impacto_i = listaTiposImpacto[i]}}
+
+                <!-- Creamos los nombres de los campos y las tablas -->
+                {{tipo_i = 'tipo_' + str(i+1)}}
+                {{tabla_tipo_i = 'tabla_' + tipo_i}}
+
+                {{hay_evidencia_i = 'hay_evidencia_' + str(i+1)}}
+                {{tabla_hay_evidencia_i = 'tabla_' + hay_evidencia_i}}
+
+                {{en_vegetacion_i = 'en_vegetacion_' + str(i+1)}}
+                {{tabla_en_vegetacion_i = 'tabla' + en_vegetacion_i}}
+
+                {{en_suelo_i = 'en_suelo_' + str(i+1)}}
+                {{tabla_en_suelo_i = 'tabla' + en_suelo_i}}
+
+                {{comentario_i = 'comentario_' + str(i+1)}}
+                {{tabla_comentario_i = 'tabla' + comentario_i}}
+
+                <tr>
+                    <!-- Campo cuadrante solo se escribe una vez -->
+
+                    <td>
+                        {{=impacto_i.nombre}}
+                        <input type="hidden" value="{{=impacto_i}}" name="{{=tipo_i}}" id="{{=tabla_tipo_i}}">
+                    </td>
+                    <td class="FlotaIzquierda">
+                            <input class="boolean" name="{{=hay_evidencia_i}}" id="{{=tabla_hay_evidencia_i}}" type="checkbox" value="on"/>
+                    </td>
+                    <td>
+                        <div>
+                            <select class="generic-widget" name="{{=en_vegetacion_i}}" id="{{=tabla_en_vegetacion_i}}">
+                                <option value=""/>
+                                {{for severidad in listaSeveridadImpacto:}}
+                                    <option value="{{=severidad.nombre}}">
+                                        {{=severidad.nombre}}
+                                    </option>
+                                {{pass}}
+                            </select>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <select class="generic-widget" name="{{=en_suelo_i}}" id="{{=tabla_en_suelo_i}}">
+                                <option value=""/>
+                                {{for severidad in listaSeveridadImpacto:}}
+                                    <option value="{{=severidad.nombre}}">
+                                        {{=severidad.nombre}}
+                                    </option>
+                                {{pass}}
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            {{pass}}
+        </table>
+        <hr/>
+    </fieldset>
+    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+
+ </form>
+
+{{=BEAUTIFY(request.vars)}}

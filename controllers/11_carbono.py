@@ -589,7 +589,7 @@ def index4():
         SELECT(_name='sitio_muestra_id',
             requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
         SELECT(_name='transecto',
-            requires=IS_IN_DB(db,db.Cat_transecto_ramas.nombre,'%(nombre)s'))
+            requires=IS_IN_DB(db,db.Cat_transecto_direccion.nombre,'%(nombre)s'))
         ]
 
     #Generando los otros campos con un for:
@@ -673,7 +673,7 @@ def index4():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
-    listaTransecto = db(db.Cat_transecto_ramas).select(db.Cat_transecto_ramas.nombre)
+    listaTransecto = db(db.Cat_transecto_direccion).select(db.Cat_transecto_direccion.nombre)
 
     listaFormaVida = db(db.Cat_forma_vida).select(db.Cat_forma_vida.nombre)
 
