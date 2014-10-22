@@ -38,7 +38,7 @@ def index1():
         comentario_i = 'comentario_' + str(i+1)
 
         #Extendiendo la lista anterior:
-        camposImpactoActual.extend([
+        camposImpactos.extend([
 
             INPUT(_name=tipo_i,_type='string'),
 
@@ -108,9 +108,14 @@ def index1():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
+    listaSeveridadImpacto = db(db.Cat_severidad_impactos).select(
+        db.Cat_severidad_impactos.nombre)
+
     #Regresando la lista de tipos de impacto para crear la vista en HTML
     return dict(listaTiposImpacto=listaTiposImpacto,
-         listaConglomerado=listaConglomerado)
+        listaConglomerado=listaConglomerado,
+        listaSeveridadImpacto=listaSeveridadImpacto,
+        n_impactos=n_impactos)
 
 def impactosExistentes():
 
@@ -222,13 +227,21 @@ def index2():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
+    listaAgente = db(db.Cat_agente_impactos).select(
+        db.Cat_agente_impactos.nombre)
+    
+    listaPropAfectacion = db(db.Cat_prop_afectacion).select(
+        db.Cat_prop_afectacion.nombre)
+
     # Tabla de revisión de registros ingresados
     db.Archivo_plaga.plaga_id.writable =False
     grid = SQLFORM.smartgrid(db.Plaga,csv=False,user_signature=False,
         create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,
-            grid=grid)
+        listaAgente=listaAgente,
+        listaPropAfectacion=listaPropAfectacion,
+        grid=grid)
 
 def index3():
 
@@ -345,7 +358,8 @@ def index3():
 
     # Listas para llenar los catálogos dropdown
     listaTipoIncendio = db(db.Cat_incendio).select(db.Cat_incendio.nombre)
-    listaPropAfectacion = db(db.Cat_prop_afectacion).select(db.Cat_prop_afectacion.nombre)
+    listaPropAfectacion = db(db.Cat_prop_afectacion).select(
+        db.Cat_prop_afectacion.nombre)
 
     return dict(listaConglomerado=listaConglomerado,
         listaTipoIncendio=listaTipoIncendio,

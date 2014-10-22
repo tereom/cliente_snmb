@@ -50,13 +50,13 @@ response.menu = [
       (T('Árboles grandes'), False, URL('11_carbono', 'index5'))]),
 
     ### Epífitas
-    (T('Epífitas'), False, URL('12_epifitas', 'index'), []),
+    (T('Epífitas'), False, URL('12_epifitas', 'index'),[]),
 
     ### Impactos ambientales
-    (T('Impactos ambientales'), False, URL('13_incendios', 'index3'), [
-      (T('Incendios'), False, URL('13_incendios', 'index3')),
-      (T('Plagas'), False, URL('13_incendios', 'index2')),
-      (T('Impactos actuales'), False, URL('13_incendios', 'index1'))
+    (T('Impactos ambientales'),False,URL('13_impactos_ambientales','index3'), [
+      (T('Incendios'),False,URL('13_impactos_ambientales','index3')),
+      (T('Plagas'),False,URL('13_impactos_ambientales','index2')),
+      (T('Impactos actuales'),False,URL('13_incendios','index1'))
       ]),
 
     ### Camara

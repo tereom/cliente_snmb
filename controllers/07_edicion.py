@@ -40,60 +40,87 @@
 #     return dict(form=form)
 
 # Conglomerado
-db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.nombre,'%(nombre)s')
-db.Conglomerado_muestra.estado.requires=IS_IN_DB(db,db.Cat_estado_conglomerado.nombre,'%(nombre)s')
-db.Conglomerado_muestra.municipio.requires=IS_IN_DB(db,db.Cat_municipio_conglomerado.nombre,'%(nombre)s')
-db.Conglomerado_muestra.tenencia.requires=IS_IN_DB(db,db.Cat_tenencia_conglomerado.nombre,'%(nombre)s')
-db.Conglomerado_muestra.uso_suelo_tipo.requires=IS_IN_DB(db,db.Cat_suelo_conglomerado.nombre,'%(nombre)s')
-db.Conglomerado_muestra.vegetacion_tipo.requires=IS_IN_DB(db,db.Cat_vegetacion_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.tipo.requires=IS_IN_DB(db,
+    db.Cat_tipo_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.estado.requires=IS_IN_DB(db,
+    db.Cat_estado_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.municipio.requires=IS_IN_DB(db,
+    db.Cat_municipio_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.tenencia.requires=IS_IN_DB(db,
+    db.Cat_tenencia_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.uso_suelo_tipo.requires=IS_IN_DB(db,
+    db.Cat_suelo_conglomerado.nombre,'%(nombre)s')
+db.Conglomerado_muestra.vegetacion_tipo.requires=IS_IN_DB(db,
+    db.Cat_vegetacion_conglomerado.nombre,'%(nombre)s')
 
 # Sitio
-db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Cat_numero_sitio.nombre,'%(nombre)s')
-db.Sitio_muestra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
+db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Cat_numero_sitio.nombre,
+    '%(nombre)s')
+db.Sitio_muestra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,
+    '%(nombre)s')
 
 # Cámara
 db.Camara.nombre.requires=IS_IN_DB(db,db.Cat_nombre_camara.nombre,'%(nombre)s')
 db.Camara.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
-db.Camara.resolucion.requires=IS_IN_DB(db,db.Cat_resolucion_camara.nombre,'%(nombre)s')
-db.Camara.sensibilidad.requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.nombre,'%(nombre)s')
+db.Camara.resolucion.requires=IS_IN_DB(db,db.Cat_resolucion_camara.nombre,
+    '%(nombre)s')
+db.Camara.sensibilidad.requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.nombre,
+    '%(nombre)s')
 
 # Grabadora
-db.Grabadora.nombre.requires=IS_IN_DB(db,db.Cat_nombre_grabadora.nombre,'%(nombre)s')
+db.Grabadora.nombre.requires=IS_IN_DB(db,db.Cat_nombre_grabadora.nombre,
+    '%(nombre)s')
 db.Grabadora.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
 
 # Especies
 db.Transecto_especies_invasoras_muestra.transecto_numero.requires=IS_IN_DB(db,
     db.Cat_numero_transecto.nombre,'%(nombre)s')
-db.Especie_invasora.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre,'%(nombre)s')
+db.Especie_invasora.numero_individuos.requires=IS_IN_DB(db,
+    db.Cat_numero_individuos.nombre,'%(nombre)s')
 
 # Huellas excreta
 db.Transecto_huellas_excretas_muestra.transecto_numero.requires=IS_IN_DB(db,
     db.Cat_numero_transecto.nombre,'%(nombre)s')
 
 # Registros extra
-db.Especie_invasora_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
-db.Especie_invasora_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre,'%(nombre)s')
+db.Especie_invasora_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,
+    '%(nombre)s')
+db.Especie_invasora_extra.numero_individuos.requires=IS_IN_DB(db,
+    db.Cat_numero_individuos.nombre,'%(nombre)s')
 
-db.Huella_excreta_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
+db.Huella_excreta_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,
+    '%(nombre)s')
 
-db.Especimen_restos_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
-db.Especimen_restos_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre,'%(nombre)s')
+db.Especimen_restos_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,
+    '%(nombre)s')
+db.Especimen_restos_extra.numero_individuos.requires=IS_IN_DB(db,
+    db.Cat_numero_individuos.nombre,'%(nombre)s')
 
 # Conteo de aves
-db.Punto_conteo_aves.condiciones_ambientales.requires=IS_IN_DB(db,db.Cat_condiciones_ambientales,'%(nombre)s')
+db.Punto_conteo_aves.condiciones_ambientales.requires=IS_IN_DB(db,
+    db.Cat_condiciones_ambientales.nombre,'%(nombre)s')
 
 # Carbono
-db.Punto_carbono.material_tipo.requires=IS_IN_DB(db,db.Cat_material_carbono.nombre,'%(nombre)s')
-db.Punto_carbono.transecto_direccion.requires=IS_IN_DB(db,db.Cat_transecto_direccion.nombre,'%(nombre)s')
+db.Punto_carbono.material_tipo.requires=IS_IN_DB(db,
+    db.Cat_material_carbono.nombre,'%(nombre)s')
+db.Punto_carbono.transecto_direccion.requires=IS_IN_DB(db,
+    db.Cat_transecto_direccion.nombre,'%(nombre)s')
 
-db.Arbol_transecto.forma_vida.requires=IS_IN_DB(db,db.Cat_forma_vida.nombre,'%(nombre)s')
+db.Arbol_transecto.forma_vida.requires=IS_IN_DB(db,db.Cat_forma_vida.nombre,
+    '%(nombre)s')
 
 # Impactos ambientales
-db.Incendio.tipo.requires=IS_IN_DB(db,db.Cat_incendio,'%(nombre)s')
-db.Incendio.prop_afectacion_herbacea.requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')
-db.Incendio.prop_afectacion_arbustiva.requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')
-db.Incendio.prop_afectacion_arborea.requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')
-db.Incendio.prop_copa_quemada.requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')
+db.Impacto_actual.tipo.requires=IS_IN_DB(db,db.Cat_tipo_impacto.nombre,
+    '%(nombre)s')
+db.Incendio.tipo.requires=IS_IN_DB(db,db.Cat_incendio.nombre,'%(nombre)s')
+db.Incendio.prop_afectacion_herbacea.requires=IS_IN_DB(db,
+    db.Cat_prop_afectacion.nombre,'%(nombre)s')
+db.Incendio.prop_afectacion_arbustiva.requires=IS_IN_DB(db,
+    db.Cat_prop_afectacion.nombre,'%(nombre)s')
+db.Incendio.prop_afectacion_arborea.requires=IS_IN_DB(db,
+    db.Cat_prop_afectacion.nombre,'%(nombre)s')
+db.Incendio.prop_copa_quemada.requires=IS_IN_DB(db,
+    db.Cat_prop_afectacion.nombre,'%(nombre)s')
 
 
 def editarConglomerado():
