@@ -8,7 +8,6 @@ def index1():
             'aprovechamientos forestales','uso de suelo diferente al forestal',\
             'pastoreo','plagas y enfermedades','lineas eléctricas',\
             'actividades mineras','asentamientos humanos']
-            ]
 
     n_impactos = len(tipos)
 
@@ -25,36 +24,36 @@ def index1():
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s'))
 
-        ]
+    ]
 
-        for i in range(n_impactos):
+    for i in range(n_impactos):
 
-            #Creando de manera automatizada los nombres de los campos:
-            hay_evidencia_i = 'hay_evidencia_' + str(i+1)
-            en_vegetacion_i = 'en_vegetacion_' + str(i+1)
-            en_suelo_i = 'en_suelo_' + str(i+1)
-            comentario_i = 'comentario_' + str(i+1)
+        #Creando de manera automatizada los nombres de los campos:
+        hay_evidencia_i = 'hay_evidencia_' + str(i+1)
+        en_vegetacion_i = 'en_vegetacion_' + str(i+1)
+        en_suelo_i = 'en_suelo_' + str(i+1)
+        comentario_i = 'comentario_' + str(i+1)
 
-            #Extendiendo la lista anterior:
-            camposImpactoActual.extend([
-                #Campo para marcar si existe o no un árbol.
-                INPUT(_name=hay_evidencia_i,_type='boolean'),
+        #Extendiendo la lista anterior:
+        camposImpactoActual.extend([
+            #Campo para marcar si existe o no un árbol.
+            INPUT(_name=hay_evidencia_i,_type='boolean'),
 
-                #Los siguientes campos sólo se llenan en el caso que haya evidencia
+            #Los siguientes campos sólo se llenan en el caso que haya evidencia
 
-                SELECT(_name=en_vegetacion_i,
-                    requires=IS_IN_DB(db,db.Cat_severidad_impactos.nombre,'%(nombre)s')),
-                SELECT(_name=en_suelo_i,
-                    requires=IS_IN_DB(db,db.Cat_severidad_impactos.nombre,'%(nombre)s')),
-                TEXTAREA(_name=comentario_i)
-            ])
+            SELECT(_name=en_vegetacion_i,
+                requires=IS_IN_DB(db,db.Cat_severidad_impactos.nombre,'%(nombre)s')),
+            SELECT(_name=en_suelo_i,
+                requires=IS_IN_DB(db,db.Cat_severidad_impactos.nombre,'%(nombre)s')),
+            TEXTAREA(_name=comentario_i)
+        ])
 
-        formaImpactos = FORM(*camposImpactos)
+    formaImpactos = FORM(*camposImpactos)
 
-        if formaImpactos.accepts(request.vars,formname='formaImpactosHTML'):
+    if formaImpactos.accepts(request.vars,formname='formaImpactosHTML'):
 
-            #Obteniendo el id del conglomerado asociado
-            conglomeradoID = formaImpactos.vars['conglomerado_muestra_id']
+        #Obteniendo el id del conglomerado asociado
+        conglomeradoID = formaImpactos.vars['conglomerado_muestra_id']
 
         for i in range(n_impactos):
 
@@ -221,7 +220,7 @@ def index2():
     grid = SQLFORM.smartgrid(db.Plaga,csv=False,user_signature=False,
         create=False,searchable=False,editable=False)
 
-    return dict(listaConglomerado=listaConglomerado
+    return dict(listaConglomerado=listaConglomerado,
             grid=grid)
 
 def index3():
@@ -249,7 +248,10 @@ def index3():
         INPUT(_name='prop_afectacion_arbustiva', _type='string'),
         INPUT(_name='prop_afectacion_arborea', _type='string'),
         INPUT(_name='prop_copa_quemada', _type='string'),
-        INPUT(_name='hay_evidencia_recuperacion',_type='boolean')
+        INPUT(_name='hay_evidencia_recuperacion',_type='boolean'),
+
+        # Campos Archivos_incendio
+        INPUT(_name='archivos_incendio',_type='file',_multiple=True)
 
     ]
 
@@ -257,12 +259,65 @@ def index3():
 
     if formaIncendio.accepts(request.vars,formname='formaIncendioHTML'):
 
-        datosIncendio =db.Incendio._filter_fields(formaIncendioHTML.vars)
+        datosIncendio = {}
+        datosIncendio['conglomerado_muestra_id']=formaIncendio.vars['conglomerado_muestra_id']
 
         #Si los campos booleanos son verdaderos, entonces True se guarda en la base de datos,
         #en caso contrario, se tiene que guardar manualmente False, pues si no,
         #Web2py guarda Null.
 
+        if bool(formaIncendio.vars['hay_evidencia']):
+            datosIncendio['hay_evidencia']=formaIncendio.vars['hay_evidencia']
+            datosIncendio['tipo']=formaIncendio.vars['tipo']
+            datosIncendio['prop_afectacion_herbacea']=formaIncendio.vars['prop_afectacion_herbacea']
+            datosIncendio['prop_afectacion_arbustiva']=formaIncendio.vars['prop_afectacion_arbustiva']
+            datosIncendio['prop_afectacion_arborea']=formaIncendio.vars['prop_afectacion_arborea']
+            datosIncendio['prop_copa_quemada']=formaIncendio.vars['prop_copa_quemada']
+
+            if bool(formaIncendio.vars['es_anio_actual']):
+                datosIncendio['es_anio_actual']=formaIncendio.vars['es_anio_actual']
+            else:
+                datosIncendio['es_anio_actual']=False
+
+            if bool(formaIncendio.vars['hay_evidencia_recuperacion']):
+                datosIncendio['hay_evidencia_recuperacion']=formaIncendio.vars['hay_evidencia_recuperacion']
+            else:
+                datosIncendio['hay_evidencia_recuperacion']=False
+
+        else:
+            datosIncendio['hay_evidencia']=False
+
+        incendioInsertado = db.Incendio.insert(**datosIncendio)
+
+        ################Procesando los archivos múltiples#################################
+
+        #Como los archivos de incendio no son obligatorios, hay que poner
+        #un try, except:
+
+        try:
+        
+            archivos = formaIncendio.vars['archivos_incendio']
+        
+            if not isinstance(archivos, list):
+                archivos = [archivos]
+            
+            for aux in archivos:
+
+                #Guardando el archivo en la carpeta adecuada
+                archivoIncendio = db.Archivo_incendio.archivo.store(aux,aux.filename)
+            
+                datosArchivoIncendio = {}
+                datosArchivoIncendio['incendio_id'] = incendioInsertado
+                datosArchivoIncendio['archivo'] = archivoIncendio
+                datosArchivoIncendio['archivo_nombre_original'] = aux.filename
+        
+                #Insertando el registro en la base de datos:
+
+                db.Archivo_incendio.insert(**datosArchivoIncendio)
+
+        except:
+
+            pass
 
     elif formaIncendio.errors:
 
@@ -271,6 +326,7 @@ def index3():
     else:
 
         response.flash = 'Por favor, llene los campos solicitados'
+
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -288,6 +344,18 @@ def index3():
         listaTipoIncendio=listaTipoIncendio,
         listaPropAfectacion=listaPropAfectacion)
 
+def incendiosExistentes():
+
+    #Obteniendo la información del conglomerado que seleccionó el usuario:
+    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+
+    #Haciendo un query a la tabla de Incendios con la información anterior:
+
+    incendiosYaInsertados=db(db.Incendios.conglomerado_muestra_id==conglomeradoElegidoID).select()
+
+    #regresa la longitud de incendiosYaInsertados para que sea interpretada por JS
+
+    return len(incendiosYaInsertados)
 
 
 

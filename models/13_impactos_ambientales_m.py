@@ -68,7 +68,7 @@ Campos_Incendio = [
     Field('conglomerado_muestra_id','reference Conglomerado_muestra',required=True),
     Field('hay_evidencia','boolean',required=True),
     Field('es_anio_actual','boolean',required=True),
-    Field('hay_evidencia_recuperacion','boolean',required=True)
+    Field('hay_evidencia_recuperacion','boolean',required=True),
 
     # Se insertarán a partir de un catálogo
     Field('tipo','string',required=True),
