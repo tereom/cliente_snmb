@@ -51,6 +51,16 @@ if db(db.Cat_forma_vida.id>0).count() == 0:
 	db.Cat_forma_vida.insert(nombre='Arbórea')
 
 
+db.define_table('Cat_condiciones_ambientales',Field('nombre','string',
+	required='TRUE'))
+
+### Falta agregar condiciones ambientales
+if db(db.Cat_condiciones_ambientales.id>0).count() == 0:
+	db.Cat_condiciones_ambientales.insert(nombre='Lluvia')
+	db.Cat_condiciones_ambientales.insert(nombre='Viento')
+	db.Cat_condiciones_ambientales.insert(nombre='Nieve')
+	db.Cat_condiciones_ambientales.insert(nombre='Neblina')
+
 ##########################################################################
 ## Pestaña Impactos ambientales
 ########################################################################

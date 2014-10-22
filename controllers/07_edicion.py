@@ -79,6 +79,23 @@ db.Huella_excreta_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'
 db.Especimen_restos_extra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
 db.Especimen_restos_extra.numero_individuos.requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre,'%(nombre)s')
 
+# Conteo de aves
+db.Punto_conteo_aves.condiciones_ambientales.requires=IS_IN_DB(db,db.Cat_condiciones_ambientales,'%(nombre)s')
+
+# Carbono
+db.Punto_carbono.material_tipo.requires=IS_IN_DB(db,db.Cat_material_carbono.nombre,'%(nombre)s')
+db.Punto_carbono.transecto_direccion.requires=IS_IN_DB(db,db.Cat_transecto_direccion.nombre,'%(nombre)s')
+
+db.Arbol_transecto.forma_vida.requires=IS_IN_DB(db,db.Cat_forma_vida.nombre,'%(nombre)s')
+
+# Impactos ambientales
+db.Incendio.tipo.requires=IS_IN_DB(db,db.Cat_incendio,'%(nombre)s')
+db.Incendio.prop_afectacion_herbacea.requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')
+db.Incendio.prop_afectacion_arbustiva.requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')
+db.Incendio.prop_afectacion_arborea.requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')
+db.Incendio.prop_copa_quemada.requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')
+
+
 def editarConglomerado():
     db.Sitio_muestra.conglomerado_muestra_id.writable = False
     db.Imagen_referencia_sitio.sitio_muestra_id.writable = False
@@ -155,6 +172,52 @@ def editarEspecimenExtra():
         user_signature=False)
     return dict(form=form)
 
+def editarConteoAves():
+    db.Punto_conteo_aves.sitio_muestra_id.writable = False
+    db.Conteo_ave.punto_conteo_aves_id.writable = False
+    db.Archivo_conteo_ave.conteo_ave_id.writable =False
+    form = SQLFORM.smartgrid(db.Punto_conteo_aves,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
+def editarCarbono():
+    db.Punto_carbono.sitio_muestra_id.writable = False
+    form = SQLFORM.smartgrid(db.Punto_carbono,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
+def editarCarbonoRamas():
+    db.Transecto_ramas.sitio_muestra_id.writable = False
+    db.Rama_1000h.transecto_ramas_id.writable = False
+    form = SQLFORM.smartgrid(db.Transecto_ramas,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
+def editarEpifitas():
+    db.Informacion_epifitas.sitio_muestra_id.writable = False
+    form = SQLFORM.smartgrid(db.Informacion_epifitas,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
+def editarIncendio():
+    db.Incendio.conglomerado_muestra_id.writable = False
+    db.Archivo_incendio.incendio_id.writable = False
+    form = SQLFORM.smartgrid(db.Incendio,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
+def editarPlaga():
+    db.Plaga.conglomerado_muestra_id.writable = False
+    db.Archivo_plaga.plaga_id.writable = False
+    form = SQLFORM.smartgrid(db.Plaga,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
 
 # def admin_huella_excreta():
 #     form = SQLFORM.grid(db.Archivo_huella_excreta,user_signature=False)
