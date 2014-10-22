@@ -41,37 +41,37 @@ def index():
         #Insertando "False" cuando se recibe "None" del HTML:
 
         if bool(forma.vars['helechos_observados']):
-            datosEpifitas['helechos_observados']=forma.vars['helechos_observados']
+            datosEpifitas['helechos_observados']=True
         else:
             datosEpifitas['helechos_observados']=False
 
         if bool(forma.vars['orquideas_observadas']):
-            datosEpifitas['orquideas_observadas']=forma.vars['orquideas_observadas']
+            datosEpifitas['orquideas_observadas']=True
         else:
             datosEpifitas['orquideas_observadas']=False
 
         if bool(forma.vars['musgos_observados']):
-            datosEpifitas['musgos_observados']=forma.vars['musgos_observados']
+            datosEpifitas['musgos_observados']=True
         else:
             datosEpifitas['musgos_observados']=False
 
         if bool(forma.vars['liquenes_observados']):
-            datosEpifitas['liquenes_observados']=forma.vars['liquenes_observados']
+            datosEpifitas['liquenes_observados']=True
         else:
             datosEpifitas['liquenes_observados']=False
 
         if bool(forma.vars['cactaceas_observadas']):
-            datosEpifitas['cactaceas_observadas']=forma.vars['cactaceas_observadas']
+            datosEpifitas['cactaceas_observadas']=True
         else:
             datosEpifitas['cactaceas_observadas']=False
 
         if bool(forma.vars['bromeliaceas_observadas']):
-            datosEpifitas['bromeliaceas_observadas']=forma.vars['bromeliaceas_observadas']
+            datosEpifitas['bromeliaceas_observadas']=True
         else:
             datosEpifitas['bromeliaceas_observadas']=False
 
         if bool(forma.vars['otras_observadas']):
-            datosEpifitas['otras_observadas']=forma.vars['otras_observadas']
+            datosEpifitas['otras_observadas']=True
             datosEpifitas['nombre_otras']=forma.vars['nombre_otras']
         else:
             datosEpifitas['otras_observadas']=False
