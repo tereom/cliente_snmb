@@ -37,7 +37,7 @@ def obtenerFotografia():
             revisionHTML += "<object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'"+\
                 " width='550' height='400' id='movie_name' align='middle'><param name='movie'"+\
                 " value='/cliente_web2py/8_revision/download/"+datosFoto.archivo+"'/><!--[if !IE]>-->"+\
-                "<object type='application/x-shockwave-flash' data='/init/8_revision/download/"+datosFoto.archivo+\
+                "<object type='application/x-shockwave-flash' data='/cliente_web2py/8_revision/download/"+datosFoto.archivo+\
                 "' width='550' height='400'><param name='movie' value='/init/8_revision/download/"+datosFoto.archivo+\
                 "'/><!--<![endif]--><a href='http://www.adobe.com/go/getflash'>"+\
                 "<img src='http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif'"+\
