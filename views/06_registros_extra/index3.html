@@ -209,7 +209,7 @@
 
     <table class="No_GPS">
       <tr>
-        <td id="campoEspecial" colspan="2">
+        <td id="campoEspecial">
           <div class="FlotaIzquierda" style="padding-right:10px;">
             <label for="tabla_es_especimen">Especimen</label>
           </div>
@@ -225,7 +225,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="2">
+        <td>
           <div class="FlotaIzquierda" style="padding-right:10px;">
             <input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
           </div>
@@ -238,7 +238,7 @@
         </td>
       </tr>
       <tr>
-        <td colspan="2">
+        <td>
           <div class="FlotaIzquierda" style="padding-right:10px;">
             <input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
           </div>
@@ -250,6 +250,9 @@
           </div>
         </td>
       </tr>
+    </table>
+    <hr/>
+    <table class="No_GPS">
       <tr>
         <td>
           <div>
@@ -269,28 +272,36 @@
         <td>
         </td>
       </tr>
+      <tr>
+        <td colspan="2">
+          <div>
+            <label for="tabla_archivos_especimen_restos_extra">Subir archivos</label>
+          </div>
+          <div>
+            <input type="file" class="obligatorio" id="tabla_archivos_especimen_restos_extra" name="archivos_especimen_restos_extra" multiple/>
+          </div>
+        </td>
+      </tr>
     </table>
-  </fieldset>
-  <fieldset>
-    <legend>
-      Subir archivos
-    </legend>
-    <div id="campoEspecial">
-      <input type="file" class="obligatorio" id="tabla_archivos_especimen_restos_extra" name="archivos_especimen_restos_extra" multiple/>
-    </div>  
   </fieldset>
 
   <br/>
   <fieldset>
-    <legend>
-      Observaciones
-    </legend>
-    <div>
-      <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
-    </div>    
+    <label for="tabla_comentario">Observaciones</label>
+    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
   </fieldset>
   <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
+
+<br/>
+<br/>
+
+<fieldset>
+  <legend>
+    Revisión de archivos
+  </legend>
+</fieldset>
+{{=grid}}
 
 <script>
 

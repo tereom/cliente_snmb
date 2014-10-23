@@ -150,10 +150,17 @@ def index1():
 
     listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
+    # Tabla de revisión de registros ingresados
+    db.Especie_invasora_extra.conglomerado_muestra_id.writable = False
+    db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable =False
+    grid = SQLFORM.smartgrid(db.Especie_invasora_extra,csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
+
     return dict(listaConglomerado=listaConglomerado,\
         listaConabio=listaConabio,\
         listaNumIndividuos=listaNumIndividuos,\
-        listaElipsoide=listaElipsoide)
+        listaElipsoide=listaElipsoide,\
+        grid=grid)
 
 def index2():
 
@@ -271,8 +278,15 @@ def index2():
 
     listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
+    # Tabla de revisión de registros ingresados
+    db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
+    db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable =False
+    grid = SQLFORM.smartgrid(db.Huella_excreta_extra,csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
+
     return dict(listaConglomerado=listaConglomerado,\
-        listaElipsoide=listaElipsoide)
+        listaElipsoide=listaElipsoide,\
+        grid=grid)
 
 def index3():
 
@@ -393,7 +407,13 @@ def index3():
 
     listaNumIndividuos = db(db.Cat_numero_individuos).select(db.Cat_numero_individuos.nombre)
 
+    # Tabla de revisión de registros ingresados
+    db.Especimen_restos_extra.conglomerado_muestra_id.writable = False
+    db.Archivo_especimen_restos_extra.especimen_restos_extra_id.writable =False
+    grid = SQLFORM.smartgrid(db.Especimen_restos_extra,csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaNumIndividuos=listaNumIndividuos,\
-        listaElipsoide=listaElipsoide)
+        listaElipsoide=listaElipsoide,\
+        grid=grid)
