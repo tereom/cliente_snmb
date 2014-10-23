@@ -2,9 +2,13 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .integer, .Tabla .double
+/* TablaCONANP se refiere a una tabla tipo formulario en papel (tomada tal cuál)
+de los formularios de trabajo de campo*/
+
+    .TablaCONANP .integer, .TablaCONANP .double
     {
         margin-right: 0.5cm;
+        margin-left: 0.5cm;
         width: 2cm;
         text-align: center;
     }
@@ -81,11 +85,11 @@
             </tr>
         </table>
         <hr/>
-        <table class="Tabla">
+        <table class="TablaCONANP">
             <tr>
-                <th>Existe</th>
-                <th>Diámetro(cm)</th>
-                <th>Grado</th>
+                <th class="Centrar">Existe</th>
+                <th class="Centrar">Diámetro(cm)</th>
+                <th class="Centrar">Grado</th>
             </tr>
             <!-- La tabla se genera en un ciclo for -->
             
