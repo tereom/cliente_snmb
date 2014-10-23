@@ -223,6 +223,20 @@ def editarCarbonoRamas():
         user_signature=False)
     return dict(form=form)
 
+def editarArbolCuadrante():
+    db.Arbol_cuadrante.sitio_muestra_id.writable = False
+    form = SQLFORM.smartgrid(db.Arbol_cuadrante,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
+def editarArbolTransecto():
+    db.Arbol_cuadrante.sitio_muestra_id.writable = False
+    form = SQLFORM.smartgrid(db.Arbol_transecto,
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
+
 def editarEpifitas():
     db.Informacion_epifitas.sitio_muestra_id.writable = False
     form = SQLFORM.smartgrid(db.Informacion_epifitas,

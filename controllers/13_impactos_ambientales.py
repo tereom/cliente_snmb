@@ -141,14 +141,14 @@ def index2():
 
         # Campos Plaga
         SELECT(_name='agente',
-            requires=IS_IN_DB(db,db.Cat_agente_impactos,'%(nombre)s')),
+            requires=IS_IN_DB(db,db.Cat_agente_impactos.nombre,'%(nombre)s')),
         INPUT(_name='nombre_comun',_type='string'),
         INPUT(_name='nombre_cientifico',_type='string'),
         SELECT(_name='prop_afectacion_arborea',
-            requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')),
+            requires=IS_IN_DB(db,db.Cat_prop_afectacion.nombre,'%(nombre)s')),
         SELECT(_name='prop_afectacion_repoblado',
-            requires=IS_IN_DB(db,db.Cat_prop_afectacion,'%(nombre)s')),
-        INPUT(_name='esta_activa',_type='boolean'),
+            requires=IS_IN_DB(db,db.Cat_prop_afectacion.nombre,'%(nombre)s')),
+        INPUT(_name='esta_activa_inactiva',_type='string'),
 
         # Campos Archivo_plaga
         INPUT(_name='archivos_plaga',_type='file',_multiple=True)
@@ -166,11 +166,11 @@ def index2():
         #en caso contrario, se tiene que guardar manualmente False, pues si no,
         #Web2py guarda Null.
 
-        if bool(formaPlaga.vars['esta_activa']):
-            datosPlaga['esta_activa']=formaPlaga.vars['esta_activa']
+        if formaPlaga.vars['esta_activa_inactiva']=='activa':
+            datosPlaga['esta_activa']=True
         else:
             datosPlaga['esta_activa']=False
-        
+
         #Guardando el registro de la plaga en la base de datos:
         
         plagaInsertada = db.Plaga.insert(**datosPlaga)
