@@ -15,7 +15,7 @@ def index1():
         INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
         INPUT(_name='hora_termino',_type='time',requires=IS_NOT_EMPTY()),
 
-        INPUT(_name='condiciones_ambientales',requires=
+        SELECT(_name='condiciones_ambientales',requires=
             IS_IN_DB(db,db.Cat_condiciones_ambientales.nombre,'%(nombre)s')),
 
         TEXTAREA(_name='comentario')

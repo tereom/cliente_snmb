@@ -77,12 +77,6 @@
                     </div>
                 </td>
                 <td>
-                    <div>
-                        <label for="tabla_distancia_centro">Distancia al centro del sitio (m)</label>
-                    </div>
-                    <div>
-                        <input class="double obligatorio" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
-                    </div>
                 </td>
             </tr>
             <tr>
@@ -104,12 +98,6 @@
                     </div>
                 </td>
                 <td>
-                    <div>
-                        <label for="tabla_llovio">Llovió durante el muestreo</label>
-                    </div>
-                    <div>
-                        <input class="boolean" name="llovio" id="tabla_llovio" type="checkbox" value="on"/>
-                    </div>
                 </td>
             </tr>
             <tr>
@@ -131,6 +119,39 @@
                     </div>
                 </td>
                 <td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_distancia_centro">Distancia al centro del sitio (m)*</label>
+                    </div>
+                    <div>
+                        <input class="double" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_azimut">Azimut*</label>
+                    </div>
+                    <div>
+                        <input class="double" name="azimut" id="tabla_azimut" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_condiciones_ambientales">Condiciones ambientales</label>
+                    </div>
+                    <div>
+                    <select class="generic-widget obligatorio" name="condiciones_ambientales" id="tabla_condiciones_ambientales">
+                        <option value=""/>
+                        {{for condicion in listaCondicionesAmbientales:}}
+                            <option value="{{=condicion.nombre}}">
+                                {{=condicion.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                    </div>
                 </td>
             </tr>
         </table>

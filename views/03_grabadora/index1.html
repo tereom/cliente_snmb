@@ -75,14 +75,6 @@
 						</select>
 					</div>
 				</td>
-				<td>
-					<div>
-						<label for="tabla_distancia_centro">Distancia al centro del sitio (m)</label>
-					</div>
-					<div>
-						<input class="double obligatorio" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
-					</div>
-				</td>
 			</tr>
 			<tr>
 				<td>
@@ -99,14 +91,6 @@
 					</div>
 					<div>
 						<input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_llovio">Llovió durante el muestreo</label>
-					</div>
-					<div>
-						<input class="boolean" name="llovio" id="tabla_llovio" type="checkbox" value="on"/>
 					</div>
 				</td>
 			</tr>
@@ -127,6 +111,23 @@
 						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
 					</div>
 				</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_condiciones_ambientales">Condiciones ambientales</label>
+                    </div>
+                    <div>
+                    <select class="generic-widget obligatorio" name="condiciones_ambientales" id="tabla_condiciones_ambientales">
+                        <option value=""/>
+                        {{for condicion in listaCondicionesAmbientales:}}
+                            <option value="{{=condicion.nombre}}">
+                                {{=condicion.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                    </div>
+                </td>
 				<td>
 					<div>
 						<label for="tabla_microfonos_mojados">Se mojaron los micrófonos</label>

@@ -37,12 +37,14 @@ def index1():
         SELECT(_name='elipsoide',
             requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),          
 
-        INPUT(_name='distancia_centro',_type='double',requires=IS_NOT_EMPTY()),
+        INPUT(_name='distancia_centro',_type='double'),
+        INPUT(_name='azimut',_type='double'),
         SELECT(_name='resolucion',
             requires=IS_IN_DB(db,db.Cat_resolucion_camara.nombre,'%(nombre)s')),
         SELECT(_name='sensibilidad',
             requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.nombre,'%(nombre)s')),
-        INPUT(_name='llovio',_type='boolean'),
+        SELECT(_name='condiciones_ambientales',requires=
+            IS_IN_DB(db,db.Cat_condiciones_ambientales.nombre,'%(nombre)s')),
 
         TEXTAREA(_name='comentario',_type='text'),
 
@@ -59,17 +61,7 @@ def index1():
     
     	#Filtrando los datos correspondientes a la tabla de la cámara:
         datosCamara = db.Camara._filter_fields(formaCamara.vars)
-
-        #Si llovió durante el muestreo, entonces True se guarda en la base de datos,
-        #en caso contrario, se tiene que guardar manualmente False, pues si no,
-        #Web2py guarda Null.
-
-        if bool(formaCamara.vars['llovio']):
-            datosCamara['llovio']=formaCamara.vars['llovio']
-        else:
-            datosCamara['llovio']=False
-
-                
+  
         #Guardando el registro de la cámara en la base de datos:
         
         camaraInsertada = db.Camara.insert(**datosCamara)
@@ -108,7 +100,7 @@ def index1():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-    #De la misma manera, llenando las combobox de nombre y elipsoide:
+    #De la misma manera, llenando las otras combobox:
 
     listaNombreCamara = db(db.Cat_nombre_camara).select(db.Cat_nombre_camara.nombre)
 
@@ -118,12 +110,17 @@ def index1():
 
     listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
+    listaCondicionesAmbientales = db(db.Cat_condiciones_ambientales).select(
+        db.Cat_condiciones_ambientales.nombre)
+
+
 
     return dict(listaConglomerado=listaConglomerado,\
         listaNombreCamara=listaNombreCamara,\
         listaResolucion=listaResolucion,\
         listaSensibilidad=listaSensibilidad,\
-        listaElipsoide=listaElipsoide)
+        listaElipsoide=listaElipsoide,\
+        listaCondicionesAmbientales=listaCondicionesAmbientales)
 
 #La siguiente función es invocada mediante AJAX para llenar la combobox de número
 #de sitio a partir de los sitios existentes de un conglomerado seleccionado.

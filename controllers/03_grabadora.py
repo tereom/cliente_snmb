@@ -38,8 +38,8 @@ def index1():
     SELECT(_name='elipsoide',
         requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),
 
-    INPUT(_name='distancia_centro',_type='double',requires=IS_NOT_EMPTY()),           
-    INPUT(_name='llovio',_type='boolean'),
+    SELECT(_name='condiciones_ambientales',requires=
+            IS_IN_DB(db,db.Cat_condiciones_ambientales.nombre,'%(nombre)s')),
     INPUT(_name='microfonos_mojados',_type='boolean'),
 
     TEXTAREA(_name='comentario',_type='text'),
@@ -63,6 +63,15 @@ def index1():
     
         #Filtrando los datos correspondientes a la tabla de la grabadora:
         datosGrabadora = db.Grabadora._filter_fields(formaGrabadora.vars)
+
+        #Si los micrófonos se mojaron, entonces True se guarda en la base de datos,
+        #en caso contrario, se tiene que guardar manualmente False, pues si no,
+        #Web2py guarda Null.
+
+        if bool(formaCamara.vars['microfonos_mojados']):
+            datosCamara['microfonos_mojados']=True
+        else:
+            datosCamara['microfonos_mojados']=False
                 
         #Guardando el registro de la grabadora en la base de datos:
         
@@ -136,15 +145,19 @@ def index1():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-    #De la misma manera, llenando las combobox de nombre y elipsoide:
+    #De la misma manera, llenando las otras combobox:
 
     listaNombreGrabadora = db(db.Cat_nombre_grabadora).select(db.Cat_nombre_grabadora.nombre)
 
     listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
+    listaCondicionesAmbientales = db(db.Cat_condiciones_ambientales).select(
+        db.Cat_condiciones_ambientales.nombre)
+
     return dict(listaConglomerado=listaConglomerado,\
         listaNombreGrabadora=listaNombreGrabadora,\
-        listaElipsoide=listaElipsoide)
+        listaElipsoide=listaElipsoide,\
+        listaCondicionesAmbientales=listaCondicionesAmbientales)
 
 #La siguiente función es invocada mediante AJAX para llenar la combobox de número
 #de sitio a partir de los sitios existentes de un conglomerado seleccionado.
