@@ -125,7 +125,8 @@ def index1():
        response.flash = 'Hubo un error al llenar la forma'
        
     else:
-        response.flash ='Por favor, introduzca los datos de la grabadora'
+        pass
+        #response.flash ='Por favor, introduzca los datos de la grabadora'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -262,7 +263,8 @@ def index2():
        response.flash = 'Hubo un error al llenar la forma'
        
     else:
-        response.flash ='Por favor, introduzca los archivos asociados a una grabadora'
+        pass
+        #response.flash ='Por favor, introduzca los archivos asociados a una grabadora'
 
     ##########Enviando la información de la dropdown de conglomerado############
 

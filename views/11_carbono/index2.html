@@ -12,7 +12,13 @@ de los formularios de trabajo de campo*/
         width: 2cm;
         text-align: center;
     }
-    
+    .TablaCONANP .generic-widget
+    {
+        margin-right: 0.5cm;
+        margin-left: 0.5cm;
+        width: 2.2cm;
+        text-align: center;
+    }
     .Tabla .generic-widget, .Tabla .Estatico
     {
     	margin-right: 2cm;
@@ -122,7 +128,14 @@ de los formularios de trabajo de campo*/
                     </td>
                     <td>
                         <div class="{{=Rama_i}}">
-                            <input class="integer" name="{{=grado_i}}" id="{{=tabla_grado_i}}" type="text" value=""/>
+                            <select class="generic-widget" name="{{=grado_i}}" id="{{=tabla_grado_i}}">
+                                <option value=""/>
+                                    {{for grado in listaGrado:}}
+                                <option value="{{=grado.nombre}}">
+                                    {{=grado.nombre}}
+                                </option>
+                                    {{pass}}
+                            </select>
                         </div>
                     </td>
                 </tr>

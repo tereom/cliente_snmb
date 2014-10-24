@@ -86,8 +86,8 @@ def index():
         response.flash = 'Hubo un error al llenar la forma'
 
     else:
-        
-        response.flash ='Por favor, ingrese la información acerca de epífitas'
+        pass
+        #response.flash ='Por favor, ingrese la información acerca de epífitas'
 
     ### Información de los menus dropdown
 

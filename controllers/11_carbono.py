@@ -121,7 +121,8 @@ def index1():
         response.flash = 'Hubo un error al llenar la forma'
        
     else:
-        response.flash ='Por favor, llene esta pestaña sólo una vez para cada sitio'
+        pass
+        #response.flash ='Por favor, llene esta pestaña sólo una vez para cada sitio'
 
 
     ### Información de los menus dropdown
@@ -268,11 +269,13 @@ def index2():
         response.flash = 'Hubo un error al llenar la forma'
 
     else:
-
-        response.flash ='Por favor, introduzca la información de las ramas 1000h'
+        pass
+        #response.flash ='Por favor, introduzca la información de las ramas 1000h'
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
+
+    listaGrado = db(db.Cat_grado_carbono).select(db.Cat_grado_carbono.nombre)
 
     # Tabla de revisión de registros ingresados
     db.Rama_1000h.transecto_ramas_id.writable = False
@@ -283,6 +286,7 @@ def index2():
     #Regresando el número de ramas para crear la vista en HTML
     return dict(n_ramas=n_ramas,
         listaConglomerado=listaConglomerado,
+        listaGrado=listaGrado,
         grid=grid)
 
 def asignarTransectos():
@@ -544,8 +548,8 @@ def index3():
         response.flash = 'Hubo un error al llenar la forma'
 
     else:
-    
-        response.flash ='Por favor, ingrese los datos de los puntos de carbono'
+        pass
+        #response.flash ='Por favor, ingrese los datos de los puntos de carbono'
 
     ### Información de los menus dropdown
 
@@ -667,8 +671,8 @@ def index4():
         response.flash = 'Hubo un error al llenar la forma'
 
     else:
-
-        response.flash ='Por favor, introduzca la información de un árbol'
+        pass
+        #response.flash ='Por favor, introduzca la información de un árbol'
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
@@ -791,8 +795,8 @@ def index5():
         response.flash = 'Hubo un error al llenar la forma'
 
     else:
-
-        response.flash ='Por favor, introduzca la información de los árboles grandes'
+        pass
+        #response.flash ='Por favor, introduzca la información de los árboles grandes'
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)

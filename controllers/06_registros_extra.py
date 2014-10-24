@@ -129,8 +129,8 @@ def index1():
        response.flash = 'Hubo un error al llenar la forma de especie invasora'
        
     else:
-    
-        response.flash = 'Por favor, llene los campos pedidos'
+        pass
+        #response.flash = 'Por favor, llene los campos pedidos'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -263,8 +263,8 @@ def index2():
        response.flash = 'Hubo un error al llenar la forma de huella/excreta'
        
     else:
-
-        response.flash = 'Por favor, llene los campos solicitados'
+        pass
+        #response.flash = 'Por favor, llene los campos solicitados'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -390,8 +390,8 @@ def index3():
        response.flash = 'Hubo un error al llenar la forma de especímen/restos'
        
     else:
-
-        response.flash = 'Por favor, llene los campos solicitados'
+        pass
+        #response.flash = 'Por favor, llene los campos solicitados'
 
     ##########Enviando la información de las dropdowns##########################
 

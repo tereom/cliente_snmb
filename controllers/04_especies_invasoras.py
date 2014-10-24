@@ -36,7 +36,8 @@ def index1():
     elif formaTransecto.errors:
         response.flash = 'Hubo un error al llenar la forma'
     else:
-    	response.flash ='Por favor, asegúrese que registra cada transecto sólo una vez'
+        pass
+    	#response.flash ='Por favor, asegúrese que registra cada transecto sólo una vez'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -183,8 +184,8 @@ def index2():
        response.flash = 'Hubo un error al llenar la forma de especie invasora'
        
     else:
-    
-    	response.flash = 'Por favor, llene los campos pedidos'
+        pass
+    	#response.flash = 'Por favor, llene los campos pedidos'
 
     ##########Enviando la información de las dropdowns##########################
 

@@ -452,7 +452,8 @@ def index():
 		response.flash = 'Hubo un error al llenar la forma'
        
 	else:
-		response.flash ='Por favor, introduzca los datos del conglomerado y sitios'
+		pass
+		#response.flash ='Por favor, introduzca los datos del conglomerado y sitios'
 
     ##########Enviando la información de las dropdowns##########################
 

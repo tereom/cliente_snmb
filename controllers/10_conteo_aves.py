@@ -40,8 +40,8 @@ def index1():
         response.flash = 'Hubo un error al llenar la forma'
 
     else:
-        
-        response.flash ='Por favor, asegúrese de registrar cada punto de conteo sólo una vez'
+        pass
+        #response.flash ='Por favor, asegúrese de registrar cada punto de conteo sólo una vez'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -206,8 +206,8 @@ def index2():
        response.flash = 'Hubo un error al llenar la forma de conteo de aves'
        
     else:
-
-        response.flash = 'Por favor, llene los campos solicitados'
+        pass
+        #response.flash = 'Por favor, llene los campos solicitados'
 
     ##########Enviando la información de las dropdowns##########################
 
