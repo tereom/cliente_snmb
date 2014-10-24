@@ -19,8 +19,7 @@ def index1():
         requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
     
     #Datos de la grabadora
-    SELECT(_name='nombre',
-        requires=IS_IN_DB(db,db.Cat_nombre_grabadora.nombre,'%(nombre)s')),
+    SELECT(_name='nombre',_type='string',requires=IS_NOT_EMPTY()),
     INPUT(_name='fecha_inicio',_type='date',requires=IS_NOT_EMPTY()),
     INPUT(_name='fecha_termino',_type='date',requires=IS_NOT_EMPTY()),    
     INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),

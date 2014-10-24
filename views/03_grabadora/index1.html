@@ -227,14 +227,16 @@
 						<label for="tabla_nombre">Código grabadora</label>
 					</div>
 					<div>
-						<select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
+                        <input class="string obligatorio" name="nombre" id="tabla_nombre" type="text"/>
+						<!-- Catálogo
+                        <select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
 							<option value=""/>
 							{{for nombreGrabadora in listaNombreGrabadora:}}
 								<option value="{{=nombreGrabadora.nombre}}">
 									{{=nombreGrabadora.nombre}}
 								</option>
 							{{pass}}
-						</select>
+						</select>  -->
 					</div>
 				</td>
 				<td>

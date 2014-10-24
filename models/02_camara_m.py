@@ -43,7 +43,8 @@ Campos_Camara = [
     Field('comentario', 'text')
     ]
 
-db.define_table('Camara',*Campos_Camara,singular='Cámara',plural='Cámaras')
+db.define_table('Camara',*Campos_Camara,singular='Trampa cámara',plural=
+	'Trampas cámara')
 
 ########################
 #Imagen_referencia_camara
