@@ -519,7 +519,7 @@ def conglomeradoExistente():
     #Puede ser que no haya terminado de escribir, por ello, se revisa primero
     #la longitud del caracter:
 
-    longitudNombres = 5
+    longitudNombres = 6
 
     #El resultado en el tercer caso será el número de registros en la base de
     #datos con el mismo nombre de conglomerado, que se regresará a JS para

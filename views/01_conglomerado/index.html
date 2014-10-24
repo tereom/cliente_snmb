@@ -570,7 +570,7 @@
                         }
                         else if(resultado==-1)
                         {
-                            alert('El número de conglomerado consta de 5 caracteres');
+                            alert('El número de conglomerado consta de 6 caracteres');
                             $('#tabla_nombre').val("");
                         }
                     }
@@ -735,9 +735,9 @@
                 );
             }
 
-            //Validando que el nombre del conglomerado conste de 5 caracteres:
+            //Validando que el nombre del conglomerado conste de 6 caracteres:
             flag_lon = true;
-            if($('#tabla_nombre').val().length<5)
+            if($('#tabla_nombre').val().length<6)
             {
                 flag_lon = false;
             }
@@ -766,7 +766,7 @@
                 return false;
             }    
             else if(!flag_lon){
-                alert('El número de conglomerado consta de 5 caracteres. Ejemplo: 00123');
+                alert('El número de conglomerado consta de 6 caracteres. Completar con ceros al principio si es necesario. Ejemplo: 000123');
                 return false;
             }        
     
