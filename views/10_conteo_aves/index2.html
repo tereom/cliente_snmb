@@ -14,12 +14,6 @@
         width: 4.4cm;
     }
     
-    #campoEspecial
-    {
-    	padding-top: 10px;
-    	padding-bottom: 10px;
-    }
-
     .FlotaIzquierda
     {
         float: left;
@@ -75,8 +69,26 @@
           </div>
 				</td>
 			</tr>
+    </table>
+    <hr/>
+      <div>
+        <div class="FlotaIzquierda" style="padding-right:10px;">
+          <label for="tabla_es_visual">Observación visual</label>
+        </div>
+        <div class="FlotaIzquierda" style="padding-right:30px;">
+          <input class="boolean" name="es_visual" id="tabla_es_visual" type="checkbox" value="on"/>
+        </div>
+        <div class="FlotaIzquierda" style="padding-right:10px;">
+          <label for="tabla_es_sonora">Observación sonora</label>
+        </div>
+        <div >
+          <input class="boolean" name="es_sonora" id="tabla_es_sonora" type="checkbox" value="on"/>
+        </div>
+      </div>
+    <hr/>
+    <table class="Tabla">
 			<tr>
-				<td colspan="2">
+				<td>
 					<div class="FlotaIzquierda" style="padding-right:10px;">
 						<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
 					</div>
@@ -87,11 +99,9 @@
 						<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
 					</div>
 				</td>
-				<td>
-				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td>
 					<div class="FlotaIzquierda" style="padding-right:10px;">
 						<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
 					</div>
@@ -102,27 +112,10 @@
 						<input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
 					</div>
 				</td>
-				<td>
-				</td>
 			</tr>
-			<tr>
-				<td colspan="2">
-    				<div class="FlotaIzquierda" style="padding-right:10px;">
-    					<label for="tabla_es_visual">Observación visual</label>
-    				</div>
-    				<div class="FlotaIzquierda" style="padding-right:30px;">
-    					<input class="boolean" name="es_visual" id="tabla_es_visual" type="checkbox" value="on"/>
-    				</div>
-    				<div class="FlotaIzquierda" style="padding-right:10px;">
-    					<label for="tabla_es_sonora">Observación sonora</label>
-    				</div>
-    				<div >
-    					<input class="boolean" name="es_sonora" id="tabla_es_sonora" type="checkbox" value="on"/>
-    				</div>
-    		</td>
-    		<td>
-    		</td>
-    	</tr>
+    </table>
+    <hr/>
+    <table class="Tabla">
     	<tr>
     		<td>
     			<div>
@@ -140,20 +133,19 @@
             <input class="double obligatorio" name="distancia_aproximada" id="tabla_distancia_aproximada" type="text" value=""/>
           </div>
         </td>
-        <td>
-    		</td>
     	</tr>
-		</table>
-	</fieldset>
-	<fieldset>
-		<legend>
-			Subir archivos (opcional)
-		</legend>
-		<div id="campoEspecial">
-			<input type="file" class="" id="tabla_archivos_conteo_ave" name="archivos_conteo_ave" multiple/>
-		</div>	
-	</fieldset>
-	<br/>
+      <tr>
+        <td colspan="2">
+          <div>
+            <label for="tabla_archivos_conteo_ave">Subir archivos*</label>
+          </div>
+          <div>
+            <input type="file" id="tabla_archivos_conteo_ave" name="archivos_conteo_ave" multiple/>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
 	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
@@ -165,7 +157,7 @@
   Revisión de archivos
 </legend>
 </fieldset>
-{{#=grid}}
+{{=grid}}
 
 <script>
 
