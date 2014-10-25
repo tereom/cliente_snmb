@@ -13,7 +13,7 @@ def index():
 		#Campos del conglomerado
 		###############################
 
-		INPUT(_name='nombre',_type='integer',requires=IS_NOT_EMPTY()),
+		INPUT(_name='nombre',_type='string',requires=IS_NOT_EMPTY()),
 		INPUT(_name='fecha_visita',_type='date',requires=IS_NOT_EMPTY()),
 		SELECT(_name='tipo',
 			requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.nombre,'%(nombre)s')),

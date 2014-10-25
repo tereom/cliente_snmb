@@ -56,6 +56,7 @@ db.define_table('Cat_condiciones_ambientales',Field('nombre','string',
 
 ### Falta agregar condiciones ambientales
 if db(db.Cat_condiciones_ambientales.id>0).count() == 0:
+	db.Cat_condiciones_ambientales.insert(nombre='Ninguna')
 	db.Cat_condiciones_ambientales.insert(nombre='Lluvia')
 	db.Cat_condiciones_ambientales.insert(nombre='Viento')
 	db.Cat_condiciones_ambientales.insert(nombre='Nieve')

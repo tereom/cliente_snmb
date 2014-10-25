@@ -54,7 +54,7 @@
                         <label for="tabla_nombre">Número de conglomerado</label>
                     </div>
                     <div>
-                        <input class="integer obligatorio" name="nombre" id="tabla_nombre" type="text" value=""/>
+                        <input class="string obligatorio" name="nombre" id="tabla_nombre" type="text" value=""/>
                     </div>
                 </td>
                 <td>
@@ -550,6 +550,7 @@
 
     //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
 
+/*
     $('#tabla_nombre').keyup
     (
         function()
@@ -577,7 +578,7 @@
                 }
             );
         }
-    );
+    );*/
 
     $(document).ready
     (
@@ -736,11 +737,13 @@
             }
 
             //Validando que el nombre del conglomerado conste de 6 caracteres:
+            /*
             flag_lon = true;
             if($('#tabla_nombre').val().length<6)
             {
                 flag_lon = false;
             }
+            */
             //alert(flag_lon);
 
             //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
@@ -765,11 +768,10 @@
                 alert('El formato de fecha es aaaa-mm-dd');
                 return false;
             }    
-            else if(!flag_lon){
+            /*else if(!flag_lon){
                 alert('El número de conglomerado consta de 6 caracteres. Completar con ceros al principio si es necesario. Ejemplo: 000123');
                 return false;
-            }        
-    
+            }*/
         }
     )
 </script>
