@@ -27,6 +27,7 @@ def index():
     	SELECT(_name='uso_suelo_tipo',
     		requires=IS_IN_DB(db,db.Cat_suelo_conglomerado.nombre,'%(nombre)s')),
 
+    	INPUT(_name='compania',_type='string',requires=IS_NOT_EMPTY()),
     	#El campo de vegetación_tipo posiblemente se envíe vacío de la vista (si
     	#vegetación no es el uso de suelo principal), por ello, conviene ponerlo
     	#como un string, para que no requiera que esté en la base de datos (y

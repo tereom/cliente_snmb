@@ -139,16 +139,18 @@ if db(db.Cat_nombre_camara.id>0).count() == 0:
 db.define_table('Cat_resolucion_camara', Field('nombre', 'string', required='TRUE'))
 
 if db(db.Cat_resolucion_camara.id>0).count() == 0:
-    db.Cat_resolucion_camara.insert(nombre='Resolución 1')
-    db.Cat_resolucion_camara.insert(nombre='Resolución 2')
+    db.Cat_resolucion_camara.insert(nombre='5MP')
+    db.Cat_resolucion_camara.insert(nombre='12MP')
+    db.Cat_resolucion_camara.insert(nombre='2MP')
 
 #########################################################################
 
 db.define_table('Cat_sensibilidad_camara', Field('nombre', 'string', required='TRUE'))
 
 if db(db.Cat_sensibilidad_camara.id>0).count() == 0:
-    db.Cat_sensibilidad_camara.insert(nombre='Sensibilidad 1')
-    db.Cat_sensibilidad_camara.insert(nombre='Sensibilidad 2')
+    db.Cat_sensibilidad_camara.insert(nombre='Normal')
+    db.Cat_sensibilidad_camara.insert(nombre='High')
+    db.Cat_sensibilidad_camara.insert(nombre='Low')
 
 
 ##########################################################################
