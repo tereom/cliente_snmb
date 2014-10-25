@@ -754,8 +754,8 @@ def index5():
             nombre_comun_i = 'nombre_comun_' + str(i+1)
             nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
             altura_i = 'altura_' + str(i+1)
-            diametro_normal = 'diametro_normal_' + str(i+1)
-            diametro_copa = 'diametro_copa_' + str(i+1)
+            diametro_normal_i = 'diametro_normal_' + str(i+1)
+            diametro_copa_i = 'diametro_copa_' + str(i+1)
 
             #Datos que se guardarán para cualquier árbol, independientemente si
             #existe o no:
