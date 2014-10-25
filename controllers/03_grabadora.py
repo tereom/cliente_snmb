@@ -68,10 +68,10 @@ def index1():
         #en caso contrario, se tiene que guardar manualmente False, pues si no,
         #Web2py guarda Null.
 
-        if bool(formaCamara.vars['microfonos_mojados']):
-            datosCamara['microfonos_mojados']=True
+        if bool(formaGrabadora.vars['microfonos_mojados']):
+            datosGrabadora['microfonos_mojados']=True
         else:
-            datosCamara['microfonos_mojados']=False
+            datosGrabadora['microfonos_mojados']=False
                 
         #Guardando el registro de la grabadora en la base de datos:
         
@@ -342,7 +342,7 @@ def asignarGrabadora():
 
     else:
 
-        respuestaHTML += "<p>Grabadora localizada: " + str(grabadora.nombre) +"</p>"
+        respuestaHTML += "<p>" + str(grabadora.nombre) +"</p>"
 
         respuestaHTML += "<input type='hidden' name='grabadora_id' "+\
             "id='tabla_grabadora_id' value='" + str(grabadora.id)+ "'/>"
