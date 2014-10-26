@@ -2,19 +2,25 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .integer
+    .Tabla .generic-widget
+    {
+        margin-right: 2cm;
+        width: 4.4cm;
+    }
+
+    .TablaCONANP .integer
     {
         margin-right: 0.5cm;
+        margin-left: 0.5cm;
         width: 2cm;
         text-align: center;
     }
-    
-    .Tabla .generic-widget
+
+    .Centrar
     {
-    	margin-right: 2cm;
-        width: 4cm;
+        text-align: center;
     }
-    
+        
     .FlotaIzquierda
     {
         float: left;
@@ -71,13 +77,13 @@
         </legend>-->
         <hr/>
 
-        <table class="Tabla">
+        <table class="TablaCONANP">
             <tr>
-                <th>Transecto</th>
-                <th>Pendiente</th>
-                <th>1h (10-15m)</th>
-                <th>10h (10-15m)</th>
-                <th>100h (0-15m)</th>
+                <th class="Centrar">Transecto</th>
+                <th class="Centrar">Pendiente</th>
+                <th class="Centrar">1h (10-15m)</th>
+                <th class="Centrar">10h (10-15m)</th>
+                <th class="Centrar">100h (0-15m)</th>
             </tr>
             <tr>
                 <td>1. Norte</td>

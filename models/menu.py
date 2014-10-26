@@ -83,6 +83,8 @@ response.menu = [
       (T('Huellas y excretas'), False, URL('07_edicion', 'editarHuellasExcretas')),
       (T('Material leñoso'), False, URL('07_edicion', 'editarCarbonoRamas')),
       (T('Carbono mantillo'), False, URL('07_edicion', 'editarCarbono')),
+      (T('Árboles pequeños'), False, URL('07_edicion', 'editarArbolTransecto')),
+      (T('Árboles grandes'), False, URL('07_edicion', 'editarArbolCuadrante')),
       (T('Epífitas'), False, URL('07_edicion', 'editarEpifitas')),
       (T('Incendios'), False, URL('07_edicion', 'editarIncendio')),
       (T('Plagas'), False, URL('07_edicion', 'editarPlaga')),

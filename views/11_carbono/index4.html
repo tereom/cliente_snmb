@@ -2,17 +2,29 @@
 {{block head}}
 <style type="text/css">
 
-    .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
+/* TablaCONANP se refiere a una tabla tipo formulario en papel (tomada tal cuál)
+de los formularios de trabajo de campo*/
+
+    .Tabla .generic-widget, .Tabla .Estatico
     {
+        margin-right: 2cm;
+        width: 4.4cm;
+    }
+
+
+    .TablaCONANP .integer, .TablaCONANP .string, .TablaCONANP .double
+    {
+        margin-left: 0.5cm;
         margin-right: 0.5cm;
         width: 2.5cm;
         text-align: center;
     }
     
-    .No_GPS .generic-widget, .No_GPS .Fijo
+    .TablaCONANP .generic-widget
     {
-    	margin-right: 1cm;
-        width: 3.5cm;
+        margin-left: 0.5cm;
+        margin-right: 0.5cm;
+        width: 2.9cm;
     }
     
     .FlotaIzquierda
@@ -40,7 +52,7 @@
         <legend>
             Árboles pequeños y arbustos
         </legend>
-        <table class="No_GPS">
+        <table class="Tabla">
             <tr>
                 <td>
                     <div>
@@ -63,7 +75,7 @@
                     </div>
                 </td>                
                 <td>
-                    <div class="Fijo">
+                    <div class="Estatico">
                         <label for="tabla_sitio_muestra_id">Sitio</label>
                     </div>
                     <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
@@ -92,7 +104,7 @@
         </table>
         <hr/>
 
-        <table class="No_GPS">
+        <table class="TablaCONANP">
             <tr>
                 <th colspan="2" class="Centrar"># Individuo</th>
                 <th class="Centrar">Nombre<br/>común</th>

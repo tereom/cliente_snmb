@@ -2,19 +2,20 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .string, .Tabla .double
+    .Tabla .generic-widget
     {
+        margin-right: 2cm;
+        width: 4.4cm;
+    }
+
+    .TablaCONANP .string, .TablaCONANP .double
+    {
+        /*margin-left: 0.5cm;*/
         margin-right: 0.5cm;
         width: 2.5cm;
         text-align: center;
     }
-    
-    .Tabla .generic-widget
-    {
-    	margin-right: 2cm;
-        width: 4cm;
-    }
-    
+        
     .FlotaIzquierda
     {
         float: left;
@@ -73,7 +74,7 @@
 
         <hr/>
 
-        <table class="Tabla">
+        <table class="TablaCONANP">
             <tr>
                 <th></th>
                 <th colspan="2" class="Centrar"># Individuo</th>

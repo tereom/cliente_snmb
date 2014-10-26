@@ -8,7 +8,7 @@
         width: 4cm;
     }
     
-    .Tabla .generic-widget
+    .Tabla .generic-widget, .Tabla .Estatico
     {
     	margin-right: 2cm;
         width: 4.4cm;
@@ -21,7 +21,7 @@
 
     .CentrarV
     {
-  		vertical-align:middle;
+  		vertical-align: middle;
 	}
 
 </style>
@@ -36,7 +36,7 @@
 		<table class="Tabla">
 
 			<tr>
-				<td rowspan="2" class="CentrarV">
+				<td rowspan="2">
 					<div>
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
@@ -56,8 +56,8 @@
 						</select>
 					</div>
 				</td>
-				<td rowspan="2" class="CentrarV">
-					<div>
+				<td rowspan="2">
+					<div class="Estatico">
 						<label for="tabla_transecto_huellas_excretas_id">Transecto</label>
 					</div>
 					<!-- El ID es para cambiar la lista de transectos asociados a un conglomerado dinámicamente, utilizando AJAX-->
@@ -67,7 +67,7 @@
 						</select>
 					</div>
 				</td>
-				<td>
+				<td class="CentrarV">
 					<div class="FlotaIzquierda" style="padding-right:17px;">
 						<label for="tabla_es_huella">Huella</label>
 					</div>

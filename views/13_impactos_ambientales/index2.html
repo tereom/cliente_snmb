@@ -5,13 +5,13 @@
     .Tabla .string
     {
         margin-right: 2cm;
-        width: 3cm;
+        width: 4cm;
     }
     
     .Tabla .generic-widget
     {
     	margin-right: 2cm;
-        width: 4cm;
+        width: 4.4cm;
     }
 
     .FlotaIzquierda
@@ -109,12 +109,20 @@
                 </td>
             </tr>        
         </table>
-    </fieldset>
-    <fieldset>
-        <legend>
-            Porcentaje de afectación
-        </legend>
+        <hr/>
         <table class="Tabla">
+            <tr>
+                <td>
+                    <div>
+                        <strong>Porcentajes de afectación:</strong>
+                    </div>
+                    <div>
+                        <!-- Span para dar formato-->
+                        <span class="generic-widget"></span>
+                    </div>
+                </td>
+                <td></td>
+            </tr>
             <tr>
                 <td>
                     <label for="tabla_prop_afectacion_arborea">Estrato arbóreo</label>
@@ -146,11 +154,11 @@
                 </td>
             </tr>
         </table>
-    </fieldset>
-    <fieldset>
-        <legend>
-            Imágenes (opcional)
-        </legend>
+        <hr/>
+        <div>
+            <label for="tabla_archivos_plaga">
+                Imágenes*
+            </label>
         <div>
             <input type="file" id="tabla_archivos_plaga" name="archivos_plaga" multiple/>
         </div>

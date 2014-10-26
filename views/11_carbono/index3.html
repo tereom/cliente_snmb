@@ -2,17 +2,29 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .integer, .Tabla .double
-    {
-        margin-right: 0.5cm;
-        width: 2.5cm;
-        text-align: center;
-    }
-    
+/* TablaCONANP se refiere a una tabla tipo formulario en papel (tomada tal cuál)
+de los formularios de trabajo de campo*/
+
     .Tabla .generic-widget
     {
+        margin-right: 2cm;
+        width: 4.4cm;
+    }
+
+    .TablaCONANP .integer, .TablaCONANP .double
+    {
+        margin-left: 0.5cm;
+        margin-right: 0.5cm;
+        width: 2cm;
+        text-align: center;
+    }
+
+    
+    .TablaCONANP .generic-widget
+    {
+        margin-left: 0.5cm;
     	margin-right: 0.5cm;
-        width: 4cm;
+        width: 2.4cm;
     }
     
     .FlotaIzquierda
@@ -76,14 +88,14 @@
         </legend>-->
         <hr/>
 
-        <table class="Tabla">
+        <table class="TablaCONANP">
             <tr>
                 <th>Punto</th>
-                <th>Tipo</th>
-                <th>Espesor(mm)</th>
-                <th>Peso húmedo(g)</th>
-                <th>Peso húmedo <br/> submuestra(g)</th>
-                <th>Peso seco <br/> submuestra(g)</th>
+                <th class="Centrar">Tipo</th>
+                <th class="Centrar">Espesor(mm)</th>
+                <th class="Centrar">Peso húmedo(g)</th>
+                <th class="Centrar">Peso húmedo <br/> submuestra(g)</th>
+                <th class="Centrar">Peso seco <br/> submuestra(g)</th>
             </tr>
             <tr>
                 <td>1. Norte 5m</td>

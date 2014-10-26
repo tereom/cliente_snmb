@@ -1,29 +1,31 @@
 {{extend 'layout.html'}}
 {{block head}}
 <style type="text/css">
-    
-    .Tabla .boolean
-    {
-        margin-right: .3cm;
-        width: 1cm;
-    }
 
     .Tabla .generic-widget
     {
-    	margin-right: 2cm;
-        width: 4cm;
+        margin-right: 2cm;
+        width: 4.4cm;
+    }
+
+    .TablaCONANP .generic-widget
+    {
+        margin-left: 0.5cm;
+        margin-right: 0.5cm;
+        width: 4.4cm;
+    }
+
+    .TablaCONANP textarea
+    {
+        margin-left: 0.5cm;
+        margin-right: 0.5cm;
+        width: 7cm;
     }
 
     .FlotaIzquierda
     {
         float: left;
     }
-
-    .FlotaDerecha
-    {
-        float: right;
-    }
-
 
     .Centrar
     {
@@ -61,7 +63,7 @@
             </div>
         </div>
         <hr/>
-        <table class="Tabla">
+        <table class="TablaCONANP">
             <tr>
                 <th></th>
                 <th class="Centrar">Evidencia</th>
@@ -95,7 +97,7 @@
                         {{=impacto_i.nombre}}
                         <input type="hidden" value="{{=impacto_i.nombre}}" name="{{=tipo_i}}" id="{{=tabla_tipo_i}}">
                     </td>
-                    <td class="FlotaDerecha">
+                    <td class="Centrar">
                             <input class="boolean" name="{{=hay_evidencia_i}}" id="{{=tabla_hay_evidencia_i}}" type="checkbox" value="on"/>
                     </td>
                     <td>

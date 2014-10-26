@@ -2,12 +2,6 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .boolean
-    {
-        margin-right: 2cm;
-        width: 3cm;
-    }
-
     .Tabla .radio
     {
 
@@ -17,7 +11,7 @@
     .Tabla .generic-widget
     {
     	margin-right: 2cm;
-        width: 4cm;
+        width: 4.4cm;
     }
 
     .FlotaIzquierda
@@ -67,11 +61,11 @@
                         </select>
                     </div>
                 </td>  
-                <td>
+                <td class="Centrar">
                     <div>
                         <label for="tabla_hay_evidencia">Evidencia</label>
                     </div>
-                    <div class="Centrar">
+                    <div>
                         <input class="boolean" name="hay_evidencia" id="tabla_hay_evidencia" type="checkbox" value="on"/>
                     </div>
                 </td>              
@@ -120,11 +114,20 @@
                     </td>
                 </tr>
             </table>
- 
-            <legend>
-                Porcentaje de afectación
-            </legend>
+            <hr/>
             <table class="Tabla">
+                <tr>
+                    <td>
+                        <div>
+                            <strong>Porcentajes de afectación:</strong>
+                        </div>
+                        <div>
+                            <!-- Span para dar formato-->
+                            <span class="generic-widget"></span>
+                        </div>
+                    </td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td>
                         <label for="tabla_prop_afectacion_arborea">Arbórea</label>
@@ -186,13 +189,10 @@
                     </td>
                 </tr>
             </table>
-        </div>
-    </fieldset>
-    <fieldset>
-        <div class="Incendio_info">
-            <legend>
-                Subir archivos (opcional)
-            </legend>
+            <hr/>
+            <div>
+                <label for="tabla_archivos_incendio">Imágenes*</label>
+            </div>
             <div>
                 <input type="file" class="" id="tabla_archivos_incendio" name="archivos_incendio" multiple/>
             </div>  
