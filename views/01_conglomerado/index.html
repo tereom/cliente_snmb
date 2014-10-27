@@ -608,7 +608,7 @@
                         }
                         else if(resultado==-1)
                         {
-                            alert('El número de conglomerado lleva el formato: ccccc-ppp-mmaa-eee (sin espacios). Donde los primeros 5 dígitos (ccccc) se refieren número único asociado a cada conglomerado con base en la malla proporcionada por la CONAFOR, los siguientes 3 dígitos (ppp) se refieren al número de área natural protegida,  los siguientes 4 dígitos (mmaa) a la fecha y las últimas 3 letras a la clave de la entidad (INEGI)');
+                            alert('El número de conglomerado lleva el formato: ccccc-ppp-mmaa-eee (sin espacios). Donde los primeros 5 dígitos (ccccc) se refieren número único asociado a cada conglomerado con base en la malla proporcionada por la CONAFOR, los siguientes 3 dígitos (ppp) se refieren al número de área natural protegida,  los siguientes 4 dígitos (mmaa) a la fecha y las últimas 3 letras a la clave de la entidad EN MAYÚSCULAS (INEGI)');
                             $('#tabla_nombre').val("");
                         }
                     }
@@ -797,7 +797,7 @@
             );
 
             //Validando que el conglomerado esté en formato pedido:
-            var conglomeradoReg = /^\d{5}\-\d{3}\-\d{4}\-[a-zA-Z]{3}$/;
+            var conglomeradoReg = /^\d{5}\-\d{3}\-\d{4}\-[A-Z]{3}$/;
             flag_c = true;
             if(!conglomeradoReg.test($('#tabla_nombre').val()))
             {
@@ -816,7 +816,7 @@
                 return false;
             }
             else if(!flag_c){
-                alert('El número de conglomerado lleva el formato: ccccc-ppp-mmaa-eee (sin espacios). Donde los primeros 5 dígitos (ccccc) se refieren número único asociado a cada conglomerado con base en la malla proporcionada por la CONAFOR, los siguientes 3 dígitos (ppp) se refieren al número de área natural protegida,  los siguientes 4 dígitos (mmaa) a la fecha y las últimas 3 letras a la clave de la entidad (INEGI)');
+                alert('El número de conglomerado lleva el formato: ccccc-ppp-mmaa-EEE (sin espacios). Donde los primeros 5 dígitos (ccccc) se refieren número único asociado a cada conglomerado con base en la malla proporcionada por la CONAFOR, los siguientes 3 dígitos (ppp) se refieren al número de área natural protegida,  los siguientes 4 dígitos (mmaa) a la fecha y las últimas 3 letras a la clave de la entidad EN MAYÚSCULAS (INEGI)');
                 return false;
             }   
 
