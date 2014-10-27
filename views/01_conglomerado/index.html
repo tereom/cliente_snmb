@@ -586,6 +586,37 @@
         }
     );*/
 
+    //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
+
+    $('#tabla_nombre').keyup
+    (
+        function()
+        {
+            $.ajax
+            (
+                {
+                    type: "POST",
+                    data: $('#tabla_nombre').serialize(),
+                    url: "{{=URL('conglomeradoExistente')}}",
+                    success: function(resultado)
+                    {
+                        //alert(resultado);
+                        if(resultado>=1)
+                        {
+                            alert('Este conglomerado ya ha sido declarado');
+                            $('#tabla_nombre').val("");
+                        }
+                        else if(resultado==-1)
+                        {
+                            alert('El número de conglomerado lleva el formato: ccccc-ppp-mmaa-eee (sin espacios). Donde los primeros 5 dígitos (ccccc) se refieren número único asociado a cada conglomerado con base en la malla proporcionada por la CONAFOR, los siguientes 3 dígitos (ppp) se refieren al número de área natural protegida,  los siguientes 4 dígitos (mmaa) a la fecha y las últimas 3 letras a la clave de la entidad (INEGI)');
+                            $('#tabla_nombre').val("");
+                        }
+                    }
+                }
+            );
+        }
+    );
+
     $(document).ready
     (
         function()
@@ -763,8 +794,18 @@
                     flag_m = false;
                 }
             }
+            );
 
-            ); 
+            //Validando que el conglomerado esté en formato pedido:
+            var conglomeradoReg = /^\d{5}\-\d{3}\-\d{4}\-[a-zA-Z]{3}$/;
+            flag_c = true;
+            if(!conglomeradoReg.test($('#tabla_nombre').val()))
+            {
+                flag_c = false;
+                alert('error en conglomerado');
+            }
+
+
             if(!flag)
             {
                 alert('Faltó llenar algún campo o subir alguna imagen');
@@ -773,7 +814,12 @@
             else if(!flag_m){
                 alert('El formato de fecha es aaaa-mm-dd');
                 return false;
-            }    
+            }
+            else if(!flag_c){
+                alert('El número de conglomerado lleva el formato: ccccc-ppp-mmaa-eee (sin espacios). Donde los primeros 5 dígitos (ccccc) se refieren número único asociado a cada conglomerado con base en la malla proporcionada por la CONAFOR, los siguientes 3 dígitos (ppp) se refieren al número de área natural protegida,  los siguientes 4 dígitos (mmaa) a la fecha y las últimas 3 letras a la clave de la entidad (INEGI)');
+                return false;
+            }   
+
             /*else if(!flag_lon){
                 alert('El número de conglomerado consta de 6 caracteres. Completar con ceros al principio si es necesario. Ejemplo: 000123');
                 return false;
