@@ -1,13 +1,6 @@
 {{extend 'layout.html'}}
 {{block head}}
 <style type="text/css">
-
-	/*.Campos_sitio, .Campos_conglomerado
-    {
-        table-layout: fixed;
-        width: 120%;
-    }*/
-
     .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
     {
         margin-right: 2cm;
@@ -16,10 +9,9 @@
     
     .No_GPS .generic-widget
     {
-    	margin-right: 2cm;
+        margin-right: 2cm;
         width: 4.4cm;
     }
-
     .GPS .integer, .GPS .date, .GPS .string, .GPS .double
     {
         width: 2cm;
@@ -39,9 +31,9 @@
     {
         float: left;
     }
-
 </style>
 {{end}}
+
 
 {{#=response.toolbar()}}
 
@@ -88,17 +80,10 @@
                 </td>
                 <td>
                     <div>
-                        <label for="tabla_compania">Companía</label>
+                        <label for="tabla_compania">Compañía</label>
                     </div>
                     <div>
-                        <select class="generic-widget obligatorio" name="compania" id="tabla_compania">
-                            <option value=""/>
-                            {{for compania in listaCompania:}}
-                                <option value="{{=compania.nombre}}">
-                                    {{=compania.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
+                        <input class="string obligatorio" name="compania" id="tabla_compania" type="text" value=""/>
                     </div>
                 </td>
             </tr>
@@ -198,10 +183,8 @@
         </table>
     </fieldset>
     <fieldset>
-        <legend>
-            Observaciones
-        </legend>
-        <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
+        <label for="tabla_comentario">Observaciones</label>
+        <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
     </fieldset>
 
     <fieldset class="GPS">
@@ -272,7 +255,7 @@
                 <td>
                     <input class="double obligatorio" name="gps_error_c" id="tabla_gps_error_c" type="text" value=""/>
                 </td>
-                <td>
+                <td class="Centrar">
                     <input class="boolean" name="hay_evidencia_c" id="tabla_hay_evidencia_c" type="checkbox" value="on"/>
                 </td>
                 <td>
@@ -318,7 +301,7 @@
                 <td>
                     <input class="double obligatorio" name="gps_error_1" id="tabla_gps_error_1" type="text" value=""/>
                 </td>
-                <td>
+                <td class="Centrar">
                     <input class="boolean" name="hay_evidencia_1" id="tabla_hay_evidencia_1" type="checkbox" value="on"/>
                 </td>
                 <td>
@@ -384,7 +367,7 @@
                         <input class="double" name="gps_error_2" id="tabla_gps_error_2" type="text" value=""/>
                     </div>
                 </td>
-                <td>
+                <td class="Centrar">
                     <div class="Sitio_info_2">
                         <input class="boolean" name="hay_evidencia_2" id="tabla_hay_evidencia_2" type="checkbox" value="on"/>
                     </div>
@@ -454,7 +437,7 @@
                         <input class="double" name="gps_error_3" id="tabla_gps_error_3" type="text" value=""/>
                     </div>
                 </td>
-                <td>
+                <td class="Centrar">
                     <div class="Sitio_info_3">
                         <input class="boolean" name="hay_evidencia_3" id="tabla_hay_evidencia_3" type="checkbox" value="on"/>
                     </div>
@@ -524,7 +507,7 @@
                         <input class="double" name="gps_error_4" id="tabla_gps_error_4" type="text" value=""/>
                     </div>
                 </td>
-                <td>
+                <td class="Centrar">
                     <div class="Sitio_info_4">
                         <input class="boolean" name="hay_evidencia_4" id="tabla_hay_evidencia_4" type="checkbox" value="on"/>
                     </div>
@@ -692,6 +675,15 @@
             }
             );
 
+            //Sin embargo, como el campo de "municipio" es generado por
+            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+            //validar aparte:
+            if(!$('#shadow_clone').find('select:first').val())
+            {
+                flag = false;
+                //alert('Falta llenar el municipio');
+            }
+
             /*Validando que esté lleno el campo de "vegetacion_tipo" cuando el
             tipo de uso de suelo es vegetación"*/
 
@@ -764,7 +756,6 @@
                 {
                     flag_m = false;
                 }
-            }
 
             ); 
             if(!flag)

@@ -11,7 +11,7 @@
 
 Campos_Camara = [
 
-	Field('sitio_muestra_id','reference Sitio_muestra',required=True),         
+	Field('sitio_muestra_id','reference Sitio_muestra',required=True), 
 
  	#Se insertará a partir de un catálogo
 	Field('nombre','string',required=True),
@@ -30,11 +30,12 @@ Campos_Camara = [
 	Field('altitud','double',required=True),
 	Field('gps_error','double',required=True),
 
-	#Se insertará a partir de un catálogo
+	#Se insertarán a partir de un catálogo
 	Field('elipsoide','string',required=True),
+	Field('condiciones_ambientales','string',required=True),
 
-	Field('distancia_centro','double',required=True),
-	Field('llovio','boolean',required=True),
+	Field('distancia_centro','double'),
+	Field('azimut','double'),
 
 	#Se insertarán a partir de un catálogo
 	Field('resolucion','string',required=True),
@@ -43,7 +44,8 @@ Campos_Camara = [
     Field('comentario', 'text')
     ]
 
-db.define_table('Camara',*Campos_Camara,singular='Cámara',plural='Cámaras')
+db.define_table('Camara',*Campos_Camara,singular='Trampa cámara',plural=
+	'Trampas cámara')
 
 ########################
 #Imagen_referencia_camara
