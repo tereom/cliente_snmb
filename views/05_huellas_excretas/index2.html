@@ -8,22 +8,21 @@
         width: 4cm;
     }
     
-    .Tabla .generic-widget
+    .Tabla .generic-widget, .Tabla .Estatico
     {
     	margin-right: 2cm;
         width: 4.4cm;
     }
     
-    #campoEspecial
-    {
-    	padding-top: 10px;
-    	padding-bottom: 10px;
-    }
-
     .FlotaIzquierda
     {
         float: left;
     }
+
+    .CentrarV
+    {
+  		vertical-align: middle;
+	}
 
 </style>
 {{end}}
@@ -35,8 +34,9 @@
 		Huellas y excretas
 		</legend>
 		<table class="Tabla">
+
 			<tr>
-				<td>
+				<td rowspan="2">
 					<div>
 						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
 					</div>
@@ -56,8 +56,8 @@
 						</select>
 					</div>
 				</td>
-				<td>
-					<div>
+				<td rowspan="2">
+					<div class="Estatico">
 						<label for="tabla_transecto_huellas_excretas_id">Transecto</label>
 					</div>
 					<!-- El ID es para cambiar la lista de transectos asociados a un conglomerado dinámicamente, utilizando AJAX-->
@@ -67,25 +67,40 @@
 						</select>
 					</div>
 				</td>
-			</tr>
-			<tr>
-				<td id="campoEspecial" colspan="2">
-					<div class="FlotaIzquierda" style="padding-right:10px;">
+				<td class="CentrarV">
+					<div class="FlotaIzquierda" style="padding-right:17px;">
 						<label for="tabla_es_huella">Huella</label>
 					</div>
-					<div class="FlotaIzquierda" style="padding-right:30px;">
+					<div>
 						<input class="boolean" name="es_huella_excreta" id="tabla_es_huella" type="radio" value="huella"/>
 					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
 					<div class="FlotaIzquierda" style="padding-right:10px;">
 						<label for="tabla_es_excreta">Excreta</label>
 					</div>
-					<div class="FlotaIzquierda">
+					<div>
 						<input class="boolean" name="es_huella_excreta" id="tabla_es_excreta" type="radio" value="excreta"/>
 					</div>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					<!--Para dar formato a la última columna-->
+					<span class="generic-widget"></span>
+				</td>
+			</tr>
+		</table>
+		<hr/>
+		<table class="Tabla">
+			<tr>
+				<td>
 					<div class="FlotaIzquierda" style="padding-right:10px;">
 						<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
 					</div>
@@ -98,7 +113,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td>
 					<div class="FlotaIzquierda" style="padding-right:10px;">
 						<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
 					</div>
@@ -110,10 +125,13 @@
 					</div>
 				</td>
 			</tr>
+		</table>
+		<hr/>
+		<table class="Tabla">
 			<tr>
 				<td>
 					<div>
-						<label for="tabla_largo">Largo(cm)</label>
+						<label for="tabla_largo">Largo (cm)</label>
 					</div>
 					<div>
 						<input class="double obligatorio" name="largo" id="tabla_largo" type="text" value=""/>
@@ -121,24 +139,29 @@
 				</td>
 				<td>
 					<div>
-						<label for="tabla_ancho">Ancho(cm)</label>
+						<label for="tabla_ancho">Ancho (cm)</label>
 					</div>
 					<div>
 						<input class="double obligatorio" name="ancho" id="tabla_ancho" type="text" value=""/>
 					</div>
 				</td>
 			</tr>
+			<tr>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<div>
+						<label for="tabla_archivos_huella_excreta">Subir archivos</label>
+					</div>
+					<div>
+						<input type="file" class="obligatorio" id="tabla_archivos_huella_excreta" name="archivos_huella_excreta" multiple/>
+					</div>
+				</td>
+			</tr>
 		</table>
 	</fieldset>
-	<fieldset>
-		<legend>
-			Subir archivos
-		</legend>
-		<div id="campoEspecial">
-			<input type="file" class="obligatorio" id="tabla_archivos_huella_excreta" name="archivos_huella_excreta" multiple/>
-		</div>	
-	</fieldset>
-	<br/>
 	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
@@ -263,7 +286,7 @@
           		if(faltanNombres)
             		alert('Favor de escribir al menos un nombre (ya sea común científico)');
           		else
-            		alert('Faltó llenar un campo o subir alguna imagen.');
+            		alert('Faltó llenar algún campo o subir alguna imagen');
 
           		return false;
 			}

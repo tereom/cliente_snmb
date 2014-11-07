@@ -1,7 +1,7 @@
 # coding: utf8
 def index1():
 
-    Campos_transecto_invasoras = [
+    camposTransecto = [
 
     # campos transecto invasoras
 
@@ -24,11 +24,11 @@ def index1():
         INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
         INPUT(_name='hora_termino',_type='time',requires=IS_NOT_EMPTY()),
         TEXTAREA(_name='comentario'),
-	]
+    ]
 
     #IS_DATE(format=T('%d-%m-%Y'))),
     
-    formaTransecto = FORM(*Campos_transecto_invasoras)
+    formaTransecto = FORM(*camposTransecto)
     
     if formaTransecto.accepts(request.vars,formname='formaTransectoHTML'):
         db.Transecto_especies_invasoras_muestra.insert(**formaTransecto.vars)
@@ -36,7 +36,8 @@ def index1():
     elif formaTransecto.errors:
         response.flash = 'Hubo un error al llenar la forma'
     else:
-    	response.flash ='Por favor, asegúrese que registra cada transecto sólo una vez'
+        pass
+        #response.flash ='Por favor, asegúrese que registra cada transecto sólo una vez'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -76,41 +77,41 @@ def transectoExistente():
 
 def index2():
 
-    Campos_especie_invasora = [
+    camposEspecie = [
 
-		#Datos para localizar un transecto único y asociarle la observación a éste.
-   		#Estos datos deben conformar una llave del transecto.
+        #Datos para localizar un transecto único y asociarle la observación a éste.
+        #Estos datos deben conformar una llave del transecto.
 
-   		SELECT(_name='conglomerado_muestra_id',
+        SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
 
-    	SELECT(_name='transecto_especies_invasoras_id',
+        SELECT(_name='transecto_especies_invasoras_id',
             requires=IS_IN_DB(db,db.Transecto_especies_invasoras_muestra.id,'%(nombre)s')),
-    	#En estos campos se necesita AJAX (cascadas) para solucionar el problema
+        #En estos campos se necesita AJAX (cascadas) para solucionar el problema
         #de que un transecto asociado a un conglomerado existente no se haya declarado.
 
-		#Catálogo CONABIO
+        #Catálogo CONABIO
         #Debido a la forma como se maneja la inserción de datos en la base
         #(no hay ningún campo que haga referencia a la lista conabio como tal),
         #es mejor si el formulario regresa los nombres en el catálogo (en lugar
         #de los ID's):
-		INPUT(_name='conabio_lista',
+        INPUT(_name='conabio_lista',
             requires=IS_IN_DB(db,db.Cat_conabio_invasoras.nombre,'%(nombre)s')),
 
         #Campos de una especie invasora
-		INPUT(_name='hay_nombre_comun',_type='boolean'),
-		INPUT(_name='nombre_comun',_type='string'),
-		INPUT(_name='hay_nombre_cientifico',_type='boolean'),
-		INPUT(_name='nombre_cientifico',_type='string'),
-		SELECT(_name='numero_individuos',
+        INPUT(_name='hay_nombre_comun',_type='boolean'),
+        INPUT(_name='nombre_comun',_type='string'),
+        INPUT(_name='hay_nombre_cientifico',_type='boolean'),
+        INPUT(_name='nombre_cientifico',_type='string'),
+        SELECT(_name='numero_individuos',
          requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre, '%(nombre)s')),
-		
-		###########Imágenes############
-		INPUT(_name='archivos_invasora',_type='file', _multiple=True,
+        
+        ###########Imágenes############
+        INPUT(_name='archivos_invasora',_type='file', _multiple=True,
             requires=IS_NOT_EMPTY())
-	]
+    ]
     
-    formaEspecie = FORM(*Campos_especie_invasora)
+    formaEspecie = FORM(*camposEspecie)
     
     if formaEspecie.accepts(request.vars,formname='formaEspecieHTML'):
 
@@ -155,26 +156,26 @@ def index2():
 
         especieInsertada = db.Especie_invasora.insert(**datosEspecie)
 
-		################Procesando los archivos múltiples#################################
-    	
-    	archivos = formaEspecie.vars['archivos_invasora']
-    	if not isinstance(archivos, list):
-    	
-    		archivos = [archivos]
-    		
-    	for aux in archivos:
+        ################Procesando los archivos múltiples#################################
+        
+        archivos = formaEspecie.vars['archivos_invasora']
+        if not isinstance(archivos, list):
+        
+            archivos = [archivos]
+            
+        for aux in archivos:
 
             #Guardando el archivo en la carpeta adecuada
-    		archivoInvasora = db.Archivo_especie_invasora.archivo.store(aux, aux.filename)
-    		
-    		datosArchivoInvasora = {}
-    		datosArchivoInvasora['especie_invasora_id'] = especieInsertada
-    		datosArchivoInvasora['archivo'] = archivoInvasora
-    		datosArchivoInvasora['archivo_nombre_original'] = aux.filename
-    	
-    		#Insertando el registro en la base de datos:
+            archivoInvasora = db.Archivo_especie_invasora.archivo.store(aux, aux.filename)
+            
+            datosArchivoInvasora = {}
+            datosArchivoInvasora['especie_invasora_id'] = especieInsertada
+            datosArchivoInvasora['archivo'] = archivoInvasora
+            datosArchivoInvasora['archivo_nombre_original'] = aux.filename
+        
+            #Insertando el registro en la base de datos:
 
-    		db.Archivo_especie_invasora.insert(**datosArchivoInvasora)
+            db.Archivo_especie_invasora.insert(**datosArchivoInvasora)
         
         response.flash = 'Éxito'
         
@@ -183,8 +184,8 @@ def index2():
        response.flash = 'Hubo un error al llenar la forma de especie invasora'
        
     else:
-    
-    	response.flash = 'Por favor, llene los campos pedidos'
+        pass
+        #response.flash = 'Por favor, llene los campos pedidos'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -237,5 +238,4 @@ def asignarTransectos():
     dropdownHTML += "</select>"
     
     return XML(dropdownHTML)
-
 

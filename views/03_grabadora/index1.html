@@ -1,0 +1,368 @@
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
+    {
+        margin-right: 2cm;
+        width: 4cm;
+    }
+    
+    .No_GPS .generic-widget
+    {
+    	margin-right: 2cm;
+        width: 4.4cm;
+    }
+
+    .GPS .integer, .GPS .double
+    {
+        width: 2cm;
+    }
+    
+    .GPS .generic-widget
+    {
+        width: 2.5cm;
+    }
+    
+    .Centrar
+    {
+        text-align: center;
+    }
+    
+    #enviar
+    {
+        float: left;
+    }
+</style>
+{{end}}
+
+<form action="" enctype="multipart/form-data" method="post">
+	<input type="hidden" name="_formname" value="formaGrabadoraHTML"/>
+	<fieldset>
+		<legend>
+		Datos de la grabadora y los micrófonos
+		</legend>
+		<table class="No_GPS">
+			<tr>
+				<td>
+					<div>
+						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+					</div>
+					<div>
+						<!--este campo, en realidad sólo sirve para encontrar
+						con AJAX los sitios existentes asociados al conglomerado
+						elegido, al enviar la forma al controlador, se utilizará
+						para guardar el registro de la grabadora, únicamente el
+						id del sitio (de la dropdown generada mediante AJAX)-->
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+							<option value=""/>
+							{{for conglomerado in listaConglomerado:}}
+								<option value="{{=conglomerado.id}}">
+									{{=conglomerado.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_sitio_muestra_id">Sitio</label>
+					</div>
+					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
+						<select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+							<option value=""/>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<label for="tabla_fecha_inicio">Fecha de colocación</label>
+					</div>
+					<div>
+						<input class="date obligatorio" name="fecha_inicio" id="tabla_fecha_inicio" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_hora_inicio">Hora inicio</label>
+					</div>
+					<div>
+						<input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+        	<tr>
+        		<td>
+					<div>
+						<label for="tabla_fecha_termino">Fecha de levantamiento</label>
+					</div>
+					<div>
+						<input class="date obligatorio" name="fecha_termino" id="tabla_fecha_termino" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_hora_termino">Hora término</label>
+					</div>
+					<div>
+						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
+					</div>
+				</td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_condiciones_ambientales">Condiciones ambientales</label>
+                    </div>
+                    <div>
+                    <select class="generic-widget obligatorio" name="condiciones_ambientales" id="tabla_condiciones_ambientales">
+                        <option value=""/>
+                        {{for condicion in listaCondicionesAmbientales:}}
+                            <option value="{{=condicion.nombre}}">
+                                {{=condicion.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                    </div>
+                </td>
+				<td>
+					<div>
+						<label for="tabla_microfonos_mojados">Se mojaron los micrófonos</label>
+					</div>
+					<div>
+						<input class="boolean" name="microfonos_mojados" id="tabla_microfonos_mojados" type="checkbox" value="on"/>
+					</div>
+				</td>
+			</tr>
+    	</table>
+    	<hr/>
+    	<table class="GPS">
+    		<tr>
+    			<th colspan="3", class="Centrar">
+                	Latitud
+            	</th>
+            	<th colspan="3", class="Centrar">
+                	Longitud
+            	</th>
+            	<th>
+            	</th>
+            	<th>
+            	</th>
+            	<th>
+            	</th>
+            </tr>
+			<tr>
+            	<th class="Centrar">
+            		<label for="lat_grado">Grado</label>
+            	</th>
+            	<th class="Centrar">
+            		<label for="lat_min">Minuto</label>
+            	</th>
+            	<th class="Centrar">
+            		<label for="lat_seg">Segundo</label>
+            	</th>
+            	<th class="Centrar">
+            		<label for="lon_grado">Grado</label>
+            	</th>
+            	<th class="Centrar">
+        			<label for="lon_min">Minuto</label>
+            	</th>
+            	<th class="Centrar">
+            		<label for="lon_seg">Segundo</label>
+            	</th>
+            	<th class="Centrar">            	    
+            		<label for="tabla_elipsoide">Datum</label>
+            	</th>
+            	<th class="Centrar">
+            		<label for="tabla_altitud">Altitud(m)</label>
+            	</th>
+            	<th class="Centrar">
+            		<label for="tabla_gps_error">Error(m)</label>
+            	</th>
+            </tr>
+            <tr>
+            	<td>
+            		<input class="integer obligatorio" name="lat_grado" id="tabla_lat_grado" type="text"/>
+            	</td>
+            	<td>
+            		<input class="integer obligatorio" name="lat_min" id="tabla_lat_min" type="text"/>
+            	</td>
+            	<td>
+            		<input class="double obligatorio" name="lat_seg" id="tabla_lat_seg" type="text"/>
+            	</td>
+            	<td>
+            		<input class="integer obligatorio" name="lon_grado" id="tabla_lon_grado" type="text"/>
+            	</td>
+            	<td>
+        			<input class="integer obligatorio" name="lon_min" id="tabla_lon_min" type="text"/>
+            	</td>
+            	<td>
+            		<input class="double obligatorio" name="lon_seg" id="tabla_lon_seg" type="text"/>
+            	</td>
+            	<td>
+        			<select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
+						<option value=""/>
+						{{for elipsoide in listaElipsoide:}}
+							<option value="{{=elipsoide.nombre}}">
+								{{=elipsoide.nombre}}
+							</option>
+						{{pass}}
+					</select>
+            	</td>
+            	<td>
+            		<input class="double obligatorio" name="altitud" id="tabla_altitud" type="text" value=""/>
+            	</td>
+            	<td>
+            	    <input class="double obligatorio" name="gps_error" id="tabla_gps_error" type="text" value=""/>
+            	</td>
+            </tr>
+    	</table>
+    	<hr/>
+    	<table class="No_GPS">
+    		<tr>
+    			<td>
+					<div>
+						<label for="tabla_nombre">Código grabadora</label>
+					</div>
+					<div>
+                        <input class="string obligatorio" name="nombre" id="tabla_nombre" type="text"/>
+						<!-- Catálogo
+                        <select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
+							<option value=""/>
+							{{for nombreGrabadora in listaNombreGrabadora:}}
+								<option value="{{=nombreGrabadora.nombre}}">
+									{{=nombreGrabadora.nombre}}
+								</option>
+							{{pass}}
+						</select>  -->
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_archivo_metadatos">Metadatos</label>
+					</div>
+					<div>
+						<input type="file" class="obligatorio" id="tabla_archivo_metadatos" name="archivo_metadatos"/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_imagen_grabadora">Foto grabadora</label>
+					</div>
+					<div>
+						<input type="file" class="obligatorio" id="tabla_imagen_grabadora" name="imagen_grabadora"/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tabla_imagen_microfonos">Foto micrófonos</label>
+					</div>
+					<div>
+						<input type="file" class="obligatorio" id="tabla_imagen_microfonos" name="imagen_microfonos"/>
+					</div>
+				</td>
+		</table>
+	</fieldset>
+	<br/>
+	<fieldset>
+		<label for="tabla_comentario">Observaciones</label>
+    	<textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
+	</fieldset>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
+</form>
+<!-- {{=BEAUTIFY(response._vars)}} -->
+
+<script>
+
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+    $('#tabla_conglomerado_muestra_id').change
+    (
+        function()
+        {
+            $('#tabla_sitio_muestra_id').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+        }
+    );
+
+    //AJAX para evitar que se envíe la información de la grabadora correspondiente
+    //a un sitio más de una vez:
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+    {
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('grabadoraExistente')}}",
+            success: function(resultado)
+                {
+                    //alert(resultado);
+                    if(resultado>=1)
+                    {
+                        alert('La grabadora correspondiente a este sitio ya ha sido declarada');
+                        $('#tabla_sitio_muestra_id').val("");
+                    }
+                }
+        }
+        );
+    }
+    );
+
+	//Validando, para ello utilizamos la clase "obligatorio":
+   $('form').submit
+   (
+       function()
+       {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                    flag = false;
+                }
+            }
+            );
+
+
+        	//Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
+            var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+            campos_fecha=$('.date');
+            flag_m = true;
+            campos_fecha.each(function() 
+            {
+                if(!fechaReg.test($(this).val()))
+                {
+                   flag_m = false;
+                }
+            }
+            );
+
+            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+        	//medio de AJAX; no entra en la validación anterior. Lo tenemos que
+        	//validar aparte:
+        	if(!$('#shadow_clone').find('select:first').val())
+        	{
+            	flag = false;
+            	//alert('Falta llenar el sitio');
+        	}
+
+            if(!flag)
+            {
+                alert('Faltó llenar algún campo o subir alguna imagen');
+                return false;
+            }
+            else if(!flag_m){
+                alert('El formato de fecha es aaaa-mm-dd');
+                return false;
+            }
+       }
+    )
+</script>

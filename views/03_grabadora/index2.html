@@ -1,0 +1,244 @@
+{{extend 'layout.html'}}
+{{block head}}
+<style type="text/css">
+
+    .Tabla .generic-widget, .Estatica
+    {
+        margin-right: 2cm;
+        width: 4.4cm;
+    }
+    
+    .FlotaIzquierda
+    {
+        float: left;
+    }
+
+</style>
+{{end}}
+
+<form action="" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="_formname" value="formaArchivosGrabadoraHTML"/>
+    <fieldset>
+        <legend>
+            Grabadora: archivos de audio
+        </legend>
+        <table class="Tabla">
+        	<tr>
+        		<td>
+                    <div>
+                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+                    </div>
+                    <!-- La clase estática se usa para que, en tablas de un sólo
+                    renglón, no se modifique el tamaño de la misma cuando se 
+                    desaparecen algunos campos-->
+                    <div class="Estatica">
+                        <!--este campo (y el de sitio), en realidad sólo sirven 
+                        para encontrar con AJAX las grabadoras que han sido declaradas
+                        en el sitio elegido. Al enviar la forma al controlador,
+                        se utilizará para registrar los archivos, únicamente el 
+                        id de la grabadora (de la dropdown generada mediante AJAX)-->
+                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                            <option value=""/>
+                            {{for conglomerado in listaConglomerado:}}
+                                <option value="{{=conglomerado.id}}">
+                                    {{=conglomerado.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>                
+                <td>
+                	<div class="Estatica">
+                    	<div>
+                        	<label for="tabla_sitio_muestra_id">Sitio</label>
+                    	</div>
+                    	<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+                    	<div id="shadow_clone">
+                        	<select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+                            	<option value=""/>
+                        	</select>
+                    	</div>
+                	</div>
+                </td>
+                <td>
+                	<!--<div class="Estatica">-->
+                    <!-- Descomentar para poder declarar múltiples grabadoras en un sólo sitio
+                		<div>
+                        	<label for="tabla_grabadora_id">Grabadora</label>
+                    	</div>
+                    	El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX
+                    	<div id="shadow_clone_2">
+                        	<select class="generic-widget" name="grabadora_id" id="tabla_grabadora_id">
+                            	<option value=""/>
+                        	</select>
+                    	</div>
+                	</div>
+                    -->
+                    <!-- el siguiente div guardará la información de la grabaodra declarada en determinado conglomerado
+                    y sitio, si es que existe. La clase Mensaje se usa para esconder el campo-->
+                    <div id="shadow_clone_2" class="Mensaje">
+                        <input type='hidden' name='grabadora_id' id='tabla_grabadora_id' value=''/>
+                    </div>
+                    <!--</div>-->
+                </td>
+        	</tr>
+        </table>
+    </fieldset>
+    <hr/>
+    <fieldset>
+    	<div>
+    		<div class="FlotaIzquierda" style="padding-right:10px;">
+    			<label for="tabla_es_audible">Audibles</label>
+    		</div>
+    		<div class="FlotaIzquierda" style="padding-right:30px;">
+    			<input class="boolean" name="es_audible_ultrasonico" id="tabla_es_audible" type="radio" value="audible"/>
+    		</div>
+    		<div class="FlotaIzquierda" style="padding-right:10px;">
+    			<label for="tabla_es_ultrasonico">Ultrasónicos</label>
+    		</div>
+    		<div >
+    			<input class="boolean" name="es_audible_ultrasonico" id="tabla_es_ultrasonico" type="radio" value="ultrasonico"/>
+    		</div>
+    	</div>
+    	<hr/>
+    	<div>
+    		<input class="obligatorio" type="file" id="tabla_archivos_grabadora" name="archivos_grabadora" multiple/>
+    	</div>
+    </fieldset>
+    <br/>
+    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+</form>
+
+<script>
+
+    $(document).ready
+    (
+        function()
+        {
+           alert('Si no se cargan todos los archivos al mismo tiempo, por favor, súbalos por partes, asignándolos siempre a la misma grabadora');
+        }
+    )
+
+  //   //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+  //   $('#tabla_conglomerado_muestra_id').change
+  //   (
+  //       function()
+  //       {
+  //           $('#tabla_sitio_muestra_id, #tabla_grabadora_id').remove();
+
+  //           //ajax es una función de Web2py que simplifica la función homónima de JQuery
+  //           //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+  //           // del elemento donde se insertará la respuesta
+  //           ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+
+  //           ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+  //       }
+  //   );
+
+  //   //AJAX para llenar la combobox con las grabadoras declaradas al elegir un sitio
+ 	// $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+  //   {
+  //       $('#tabla_grabadora_id').remove();
+
+  //       ajax("{{=URL('asignarGrabadoras')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+  //   }
+  //   );
+
+    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+    $('#tabla_conglomerado_muestra_id').change
+    (
+    function()
+    {
+
+        //Como a la hora de seleccionar el conglomerado, se resetea la combobox de sitio,
+        // desaparece el mensaje de tabla_grabadora:
+
+        $('.Mensaje').hide();
+
+        $('#tabla_sitio_muestra_id, #tabla_grabadora_id').remove();
+
+        //ajax es una función de Web2py que simplifica la función homónima de JQuery
+        //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+        // del elemento donde se insertará la respuesta.
+
+        ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+
+        ajax("{{=URL('asignarGrabadora')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+    }
+    );
+
+    //AJAX para mandar la información con la grabadora declarada al elegir un sitio
+    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
+    {
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('asignarGrabadora')}}",
+            async: false,
+            success: function(resultado)
+            {
+                $("#shadow_clone_2").html(resultado);
+            }
+        }
+        );
+        if($(this).val())
+        {
+            $('.Mensaje').show();
+        }
+        else
+        {
+            $('.Mensaje').hide();
+        }
+    }
+    );
+
+    //Validando, para ello utilizamos la clase "obligatorio":
+    $('form').submit
+    (
+       function()
+       {
+            flag =true;
+            campos=$('.obligatorio');
+            campos.each(function() 
+            {
+                if(!$(this).val())
+                {
+                    flag = false;
+                }
+            }
+            );
+
+            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
+            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
+            //validar aparte:
+            if(!$('#shadow_clone').find('select:first').val())
+            {
+                flag = false;
+                //alert('Falta llenar el sitio');
+            }
+
+            //Lo mismo para el campo de "grabadora_id":
+            if(!$('#shadow_clone_2').find('#tabla_grabadora_id').val())
+            {
+                flag = false;
+                //alert('Falta llenar la grabadora');
+            }
+
+            //Validando los radio-botones
+			if(!$('input:radio[name=es_audible_ultrasonico]:checked').val())
+			{
+				flag = false;
+				//alert('falta presionar un radio-botón');
+			}
+
+            if(!flag)
+            {
+                alert('Faltó llenar algún campo o subir alguna imagen');
+                return false;
+            }
+        }
+    );
+
+</script>

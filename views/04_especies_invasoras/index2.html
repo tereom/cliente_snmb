@@ -70,6 +70,9 @@
 					</div>
 				</td>
 			</tr>
+    </table>
+    <hr/>
+    <table class="Tabla">
 			<tr>
 				<td rowspan="2" class="CentrarV">
 					<div>
@@ -111,6 +114,9 @@
 					</div>
 				</td>
 			</tr>
+    </table>
+    <hr/>
+    <table class="Tabla">
 			<tr>
         <td>
           <div>
@@ -129,18 +135,18 @@
         </td>
         <td>
         </td>
+      <tr>
+        <td colspan="2">
+          <div>
+            <label for="tabla_archivos_invasora">Subir archivos</label>
+          </div>
+          <div>
+            <input class="obligatorio" type="file" id="tabla_archivos_invasora" name="archivos_invasora" multiple/>
+          </div>
+        </td>
       </tr>
     </table>
   </fieldset>
-  <fieldset>
-    <legend>
-    Subir archivos
-    </legend>
-		<div>
-			<input class="obligatorio" type="file" id="tabla_archivos_invasora" name="archivos_invasora" multiple/>
-		</div>
-	</fieldset>
-  <br/>
 	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
   
@@ -296,7 +302,7 @@
           if(faltanNombres)
             alert('Favor de escribir al menos un nombre (ya sea común científico)');
           else
-            alert('Faltó llenar un campo o subir alguna imagen.');
+            alert('Faltó llenar algún campo o subir alguna imagen');
 
           return false;
 			  }

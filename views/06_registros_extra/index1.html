@@ -113,24 +113,22 @@
 				</td>
 			</tr>
 		</table>
-
-        <hr/>
-
-    	<table class="GPS">
-    		<tr>
-    			<th colspan="3", class="Centrar">
-                	Latitud
-            	</th>
-            	<th colspan="3", class="Centrar">
-                	Longitud
-            	</th>
-            	<th>
-            	</th>
-            	<th>
-            	</th>
-            	<th>
-            	</th>
-            </tr>
+    <hr/>
+    <table class="GPS">
+    	<tr>
+    		<th colspan="3", class="Centrar">
+          Latitud
+        </th>
+        <th colspan="3", class="Centrar">
+          Longitud
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+        <th>
+        </th>
+      </tr>
 			<tr>
             	<th class="Centrar">
             		<label for="lat_grado">Grado</label>
@@ -160,7 +158,6 @@
             		<label for="tabla_gps_error">Error(m)</label>
             	</th>
             </tr>
-
             <tr>
             	<td>
             		<input class="integer obligatorio" name="lat_grado" id="tabla_lat_grado" type="text"/>
@@ -181,14 +178,14 @@
             		<input class="double obligatorio" name="lon_seg" id="tabla_lon_seg" type="text"/>
             	</td>
             	<td>
-        			<select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
-						<option value=""/>
-						{{for elipsoide in listaElipsoide:}}
-							<option value="{{=elipsoide.nombre}}">
-								{{=elipsoide.nombre}}
-							</option>
-						{{pass}}
-					</select>
+        			  <select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
+						      <option value=""/>
+						      {{for elipsoide in listaElipsoide:}}
+							      <option value="{{=elipsoide.nombre}}">
+								      {{=elipsoide.nombre}}
+							      </option>
+						      {{pass}}
+					      </select>
             	</td>
             	<td>
             		<input class="double obligatorio" name="altitud" id="tabla_altitud" type="text" value=""/>
@@ -197,10 +194,8 @@
             	    <input class="double obligatorio" name="gps_error" id="tabla_gps_error" type="text" value=""/>
             	</td>
             </tr>
-    	</table>
-
-        <hr/>
-
+    	    </table>
+          <hr/>
         <table class="No_GPS">
         	<tr>
 				<td rowspan="2" class="CentrarV">
@@ -262,39 +257,39 @@
         		<td>
         		</td>
       		</tr>
+          <tr>
+            <td>
+              <div>
+                <label for="tabla_archivos_invasora_extra">Subir archivos</label>
+              </div>
+              <div>
+                <input class="obligatorio" type="file" id="tabla_archivos_invasora_extra" name="archivos_invasora_extra" multiple/>
+              </div>
+            </td>
+            <td>
+            </td>
+          </tr>
     	</table>
   	</fieldset>
-  	<fieldset>
-    	<legend>
-    	Subir archivos
-    	</legend>
-		<div>
-			<input class="obligatorio" type="file" id="tabla_archivos_invasora_extra" name="archivos_invasora_extra" multiple/>
-		</div>
-	</fieldset>
-	<br/>
 	<fieldset>
-		<legend>
-		Observaciones
-		</legend>
-    	<div>
-		    <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
-    	</div>		
+		<label for="tabla_comentario">Observaciones</label>
+		<textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
 	</fieldset>
 	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
-  
 <br/>
 <br/>
 
-<!-- Tabla de revisión de registros-->
 <fieldset>
-<legend>
-  Revisión de archivos
-</legend>
+  <legend>
+    Revisión de archivos
+  </legend>
 </fieldset>
 {{=grid}}
+
+<!--<h2>Submitted variables</h2>-->
+{{#=BEAUTIFY(request.vars)}}
 
 <script>
     $(document).ready
@@ -443,7 +438,7 @@
           if(faltanNombres)
             alert('Favor de escribir al menos un nombre (ya sea común científico)');
           else
-            alert('Faltó llenar un campo o subir alguna imagen.');
+            alert('Faltó llenar algún campo o subir alguna imagen.');
 
           	return false;
 			}

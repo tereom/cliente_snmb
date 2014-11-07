@@ -7,7 +7,7 @@ def index1():
     #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
     # de datos y así, evitar excepciones.
 
-    Campos_especie_invasora_extra=[
+    camposEspecie=[
     
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
@@ -54,7 +54,7 @@ def index1():
             requires=IS_NOT_EMPTY())
     ]
     
-    formaEspecie=FORM(*Campos_especie_invasora_extra)
+    formaEspecie=FORM(*camposEspecie)
 
     if formaEspecie.accepts(request.vars,formname='formaEspecieHTML'):
         
@@ -65,7 +65,7 @@ def index1():
         #Asociando el valor de la variable esta_dentro_conglomerado a partir del
         #valor del control dentro_fuera_conglomerado:
         
-        if (formaEspecie.vars['dentro_fuera_conglomerado'])=='dentro':
+        if formaEspecie.vars['dentro_fuera_conglomerado']=='dentro':
             datosEspecie['esta_dentro_conglomerado']=True
         else:
             datosEspecie['esta_dentro_conglomerado']=False
@@ -129,8 +129,8 @@ def index1():
        response.flash = 'Hubo un error al llenar la forma de especie invasora'
        
     else:
-    
-        response.flash = 'Por favor, llene los campos pedidos'
+        pass
+        #response.flash = 'Por favor, llene los campos pedidos'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -153,18 +153,18 @@ def index1():
     # Tabla de revisión de registros ingresados
     db.Especie_invasora_extra.conglomerado_muestra_id.writable = False
     db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable =False
-    grid = SQLFORM.smartgrid(db.Especie_invasora_extra,csv=False,
-        user_signature=False,create=False,searchable=False,editable=False)
+    grid = SQLFORM.smartgrid(db.Especie_invasora_extra,csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaConabio=listaConabio,\
         listaNumIndividuos=listaNumIndividuos,\
-        listaElipsoide=listaElipsoide, 
+        listaElipsoide=listaElipsoide,\
         grid=grid)
 
 def index2():
 
-    Campos_huella_excreta_extra=[
+    camposHuellaExcreta=[
     
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
@@ -207,7 +207,7 @@ def index2():
             requires=IS_NOT_EMPTY())
     ]
 
-    formaHuellaExcreta = FORM(*Campos_huella_excreta_extra)
+    formaHuellaExcreta = FORM(*camposHuellaExcreta)
 
     if formaHuellaExcreta.accepts(request.vars,formname='formaHuellaExcretaHTML'):
         
@@ -218,7 +218,7 @@ def index2():
         #Asociando el valor de la variable esta_dentro_conglomerado a partir del
         #valor del control dentro_fuera_conglomerado:
         
-        if (formaHuellaExcreta.vars['dentro_fuera_conglomerado'])=='dentro':
+        if formaHuellaExcreta.vars['dentro_fuera_conglomerado']=='dentro':
             datosHuellaExcreta['esta_dentro_conglomerado']=True
         else:
             datosHuellaExcreta['esta_dentro_conglomerado']=False
@@ -226,7 +226,7 @@ def index2():
         #Asociando el valor de la variable es_huella a partir del valor del control
         #es_huella_excreta
         
-        if (formaHuellaExcreta.vars['es_huella_excreta'])=='huella':
+        if formaHuellaExcreta.vars['es_huella_excreta']=='huella':
             datosHuellaExcreta['es_huella']=True
         else:
             datosHuellaExcreta['es_huella']=False
@@ -260,11 +260,11 @@ def index2():
         
     elif formaHuellaExcreta.errors:
 
-       response.flash = 'Hubo un error al llenar la forma de huellas/excretas'
+       response.flash = 'Hubo un error al llenar la forma de huella/excreta'
        
     else:
-
-        response.flash = 'Por favor, llene los campos solicitados'
+        pass
+        #response.flash = 'Por favor, llene los campos solicitados'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -281,16 +281,16 @@ def index2():
     # Tabla de revisión de registros ingresados
     db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
     db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable =False
-    grid = SQLFORM.smartgrid(db.Huella_excreta_extra,csv=False,
-        user_signature=False,create=False,searchable=False,editable=False)
+    grid = SQLFORM.smartgrid(db.Huella_excreta_extra,csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,\
-        listaElipsoide=listaElipsoide,
+        listaElipsoide=listaElipsoide,\
         grid=grid)
 
 def index3():
 
-    Campos_especimen_restos_extra=[
+    camposEspecimenRestos=[
     
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
@@ -333,7 +333,7 @@ def index3():
             requires=IS_NOT_EMPTY())
     ]
 
-    formaEspecimenRestos = FORM(*Campos_especimen_restos_extra)
+    formaEspecimenRestos = FORM(*camposEspecimenRestos)
 
     if formaEspecimenRestos.accepts(request.vars,formname='formaEspecimenRestosHTML'):
         
@@ -344,7 +344,7 @@ def index3():
         #Asociando el valor de la variable esta_dentro_conglomerado a partir del
         #valor del control dentro_fuera_conglomerado:
         
-        if (formaEspecimenRestos.vars['dentro_fuera_conglomerado'])=='dentro':
+        if formaEspecimenRestos.vars['dentro_fuera_conglomerado']=='dentro':
             datosEspecimenRestos['esta_dentro_conglomerado']=True
         else:
             datosEspecimenRestos['esta_dentro_conglomerado']=False
@@ -352,7 +352,7 @@ def index3():
         #Asociando el valor de la variable es_especimen a partir del valor del
         #control es_especimen_restos
         
-        if (formaEspecimenRestos.vars['es_especimen_restos'])=='especimen':
+        if formaEspecimenRestos.vars['es_especimen_restos']=='especimen':
             datosEspecimenRestos['es_especimen']=True
         else:
             datosEspecimenRestos['es_especimen']=False
@@ -387,11 +387,11 @@ def index3():
         
     elif formaEspecimenRestos.errors:
 
-       response.flash = 'Hubo un error al llenar la forma de huellas/excretas'
+       response.flash = 'Hubo un error al llenar la forma de especímen/restos'
        
     else:
-
-        response.flash = 'Por favor, llene los campos solicitados'
+        pass
+        #response.flash = 'Por favor, llene los campos solicitados'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -410,10 +410,10 @@ def index3():
     # Tabla de revisión de registros ingresados
     db.Especimen_restos_extra.conglomerado_muestra_id.writable = False
     db.Archivo_especimen_restos_extra.especimen_restos_extra_id.writable =False
-    grid = SQLFORM.smartgrid(db.Especimen_restos_extra,csv=False,
-        user_signature=False,create=False,searchable=False,editable=False)
+    grid = SQLFORM.smartgrid(db.Especimen_restos_extra,csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,\
         listaNumIndividuos=listaNumIndividuos,\
-        listaElipsoide=listaElipsoide,
+        listaElipsoide=listaElipsoide,\
         grid=grid)

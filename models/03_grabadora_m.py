@@ -31,11 +31,10 @@ Campos_Grabadora = [
     Field('altitud','double',required=True),
     Field('gps_error','double',required=True),
 
-    #Se insertará a partir de un catálogo
+    #Se insertarán a partir de un catálogo
     Field('elipsoide','string',required=True),
+    Field('condiciones_ambientales','string',required=True),
 
-    Field('distancia_centro','double',required=True),
-    Field('llovio','boolean',required=True),
     Field('microfonos_mojados','boolean',required=True),
     Field('comentario', 'text')
     ]

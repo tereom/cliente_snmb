@@ -2,26 +2,26 @@
 {{block head}}
 <style type="text/css">
 
-.Tabla .generic-widget
-{
-	margin-right: 2cm;
-	width: 4.4cm;
-}
-.Tabla .integer, .Tabla .double, .Tabla .string, .Tabla .date, .Tabla .time
-{
-	margin-right: 2cm;
-	width: 4cm;
-}
+	.Tabla .generic-widget
+	{
+		margin-right: 2cm;
+		width: 4.4cm;
+	}
+	.Tabla .integer, .Tabla .double, .Tabla .string, .Tabla .date, .Tabla .time
+	{
+		margin-right: 2cm;
+		width: 4cm;
+	}
 
-.Centrar
-{
-	text-align: center;
-}
+	.Centrar
+	{
+		text-align: center;
+	}
 
-#enviar
-{
-	float: left;
-}
+	#enviar
+	{
+		float: left;
+	}
 </style>
 {{end}}
 
@@ -101,12 +101,8 @@
 		</table>
 	</fieldset>
 	<fieldset>
-		<legend>
-			Observaciones
-		</legend>
-		<div>
-			<textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="10"></textarea>
-		</div>
+		<label for="tabla_comentario">Observaciones</label>
+		<textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
 	</fieldset>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
@@ -170,7 +166,7 @@
 
 			if(!flag)
 			{
-				alert('Faltó llenar algún campo obligatorio');
+				alert('Faltó llenar algún campo');
 				return false;
 			}
 			else if(!flag_m){
