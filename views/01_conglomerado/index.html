@@ -253,7 +253,7 @@
                     </select>
                 </td>
                 <td>
-                    <input class="double obligatorio" name="altitud_c" id="tabla_altitud_c" type="text" value=""/>
+                    <input class="double obligatorio altitud" name="altitud_c" id="tabla_altitud_c" type="text" value=""/>
                 </td>
                 <td>
                     <input class="double obligatorio error" name="gps_error_c" id="tabla_gps_error_c" type="text" value=""/>
@@ -299,7 +299,7 @@
                     </select>
                 </td>
                 <td>
-                    <input class="double obligatorio" name="altitud_1" id="tabla_altitud_1" type="text" value=""/>
+                    <input class="double obligatorio altitud" name="altitud_1" id="tabla_altitud_1" type="text" value=""/>
                 </td>
                 <td>
                     <input class="double obligatorio error" name="gps_error_1" id="tabla_gps_error_1" type="text" value=""/>
@@ -362,7 +362,7 @@
                 </td>
                 <td>
                     <div class="Sitio_info_2">
-                        <input class="double" name="altitud_2" id="tabla_altitud_2" type="text" value=""/>
+                        <input class="double altitud" name="altitud_2" id="tabla_altitud_2" type="text" value=""/>
                     </div>
                 </td>
                 <td>
@@ -432,7 +432,7 @@
                 </td>
                 <td>
                     <div class="Sitio_info_3">
-                        <input class="double" name="altitud_3" id="tabla_altitud_3" type="text" value=""/>
+                        <input class="double altitud" name="altitud_3" id="tabla_altitud_3" type="text" value=""/>
                     </div>
                 </td>
                 <td>
@@ -502,7 +502,7 @@
                 </td>
                 <td>
                     <div class="Sitio_info_4">
-                        <input class="double" name="altitud_4" id="tabla_altitud_4" type="text" value=""/>
+                        <input class="double altitud" name="altitud_4" id="tabla_altitud_4" type="text" value=""/>
                     </div>
                 </td>
                 <td>
@@ -729,8 +729,21 @@
             }
         }
     )
-
-    
+    // Rango del altitud
+    $('.altitud').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<0 || $(this).val()>10)
+                {
+                    alert('La altitud está en el rango -10 a 5715');
+                    $(this).val("");
+                }
+            }
+        }
+    )
     /*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, se sombrean
 	o reaparecen los campos correspondientes, dependiendo si el sitio existe o no.*/
 	
