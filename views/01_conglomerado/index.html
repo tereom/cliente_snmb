@@ -366,8 +366,8 @@
                     </div>
                 </td>
                 <td>
-                    <div class="Sitio_info_2 error">
-                        <input class="double" name="gps_error_2" id="tabla_gps_error_2" type="text" value=""/>
+                    <div class="Sitio_info_2">
+                        <input class="double error" name="gps_error_2" id="tabla_gps_error_2" type="text" value=""/>
                     </div>
                 </td>
                 <td class="Centrar">
@@ -715,7 +715,7 @@
         }
     )
     // Rango del error de precisión
-    $('.lon_grado').change
+    $('.error').change
     (
         function()
         {
@@ -723,7 +723,7 @@
             {
                 if($(this).val()<0 || $(this).val()>10)
                 {
-                    alert('Los grados correspondientes a longitud  están en el rango de -125 a -80');
+                    alert('El error de precisión está en el rango 0-10');
                     $(this).val("");
                 }
             }

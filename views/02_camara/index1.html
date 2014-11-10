@@ -203,22 +203,22 @@
 
             <tr>
                 <td>
-                    <input class="integer obligatorio" name="lat_grado" id="tabla_lat_grado" type="text"/>
+                    <input class="integer obligatorio lat_grado" name="lat_grado" id="tabla_lat_grado" type="text"/>
                 </td>
                 <td>
-                    <input class="integer obligatorio" name="lat_min" id="tabla_lat_min" type="text"/>
+                    <input class="integer obligatorio min" name="lat_min" id="tabla_lat_min" type="text"/>
                 </td>
                 <td>
-                    <input class="double obligatorio" name="lat_seg" id="tabla_lat_seg" type="text"/>
+                    <input class="double obligatorio seg" name="lat_seg" id="tabla_lat_seg" type="text"/>
                 </td>
                 <td>
-                    <input class="integer obligatorio" name="lon_grado" id="tabla_lon_grado" type="text"/>
+                    <input class="integer obligatorio lon_grado" name="lon_grado" id="tabla_lon_grado" type="text"/>
                 </td>
                 <td>
-                    <input class="integer obligatorio" name="lon_min" id="tabla_lon_min" type="text"/>
+                    <input class="integer obligatorio min" name="lon_min" id="tabla_lon_min" type="text"/>
                 </td>
                 <td>
-                    <input class="double obligatorio" name="lon_seg" id="tabla_lon_seg" type="text"/>
+                    <input class="double obligatorio seg" name="lon_seg" id="tabla_lon_seg" type="text"/>
                 </td>
                 <td>
                     <select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
@@ -324,6 +324,81 @@
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
         }
     );
+    
+    $('.min').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<0 || $(this).val()>=60)
+                {
+                    alert('Los minutos están en el rango de 0 a 59');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('.seg').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<0 || $(this).val()>=60)
+                {
+                    alert('Los segundos están en el rango de 0 a 60');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('.lat_grado').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<13 || $(this).val()>=33)
+                {
+                    alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('.lon_grado').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<-125 || $(this).val()>=-80)
+                {
+                    alert('Los grados correspondientes a longitud  están en el rango de -125 a -80');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+    // Rango del error de precisión
+    $('.error').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<0 || $(this).val()>10)
+                {
+                    alert('El error de precisión está en el rango 0-10');
+                    $(this).val("");
+                }
+            }
+        }
+    )
 
     //AJAX para evitar que se envíe la información de la cámara correspondiente
     //a un sitio más de una vez:
