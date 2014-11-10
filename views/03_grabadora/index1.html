@@ -216,7 +216,7 @@
             		<input class="double obligatorio altitud" name="altitud" id="tabla_altitud" type="text" value=""/>
             	</td>
             	<td>
-            	    <input class="double obligatorio error" name="gps_error" id="tabla_gps_error" type="text" value=""/>
+            	    <input class="double obligatorio gps_error" name="gps_error" id="tabla_gps_error" type="text" value=""/>
             	</td>
             </tr>
     	</table>
@@ -350,7 +350,7 @@
         }
     )
     // Rango del error de precisión
-    $('.error').change
+    $('.gps_error').change
     (
         function()
         {
@@ -371,7 +371,7 @@
         {
             if($(this).val())
             {
-                if($(this).val()<0 || $(this).val()>10)
+                if($(this).val()<-10 || $(this).val()>5715)
                 {
                     alert('La altitud está en el rango -10 a 5715');
                     $(this).val("");

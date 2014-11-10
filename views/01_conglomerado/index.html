@@ -256,7 +256,7 @@
                     <input class="double obligatorio altitud" name="altitud_c" id="tabla_altitud_c" type="text" value=""/>
                 </td>
                 <td>
-                    <input class="double obligatorio error" name="gps_error_c" id="tabla_gps_error_c" type="text" value=""/>
+                    <input class="double obligatorio gps_error" name="gps_error_c" id="tabla_gps_error_c" type="text" value=""/>
                 </td>
                 <td class="Centrar">
                     <input class="boolean" name="hay_evidencia_c" id="tabla_hay_evidencia_c" type="checkbox" value="on"/>
@@ -302,7 +302,7 @@
                     <input class="double obligatorio altitud" name="altitud_1" id="tabla_altitud_1" type="text" value=""/>
                 </td>
                 <td>
-                    <input class="double obligatorio error" name="gps_error_1" id="tabla_gps_error_1" type="text" value=""/>
+                    <input class="double obligatorio gps_error" name="gps_error_1" id="tabla_gps_error_1" type="text" value=""/>
                 </td>
                 <td class="Centrar">
                     <input class="boolean" name="hay_evidencia_1" id="tabla_hay_evidencia_1" type="checkbox" value="on"/>
@@ -367,7 +367,7 @@
                 </td>
                 <td>
                     <div class="Sitio_info_2">
-                        <input class="double error" name="gps_error_2" id="tabla_gps_error_2" type="text" value=""/>
+                        <input class="double gps_error" name="gps_error_2" id="tabla_gps_error_2" type="text" value=""/>
                     </div>
                 </td>
                 <td class="Centrar">
@@ -437,7 +437,7 @@
                 </td>
                 <td>
                     <div class="Sitio_info_3">
-                        <input class="double error" name="gps_error_3" id="tabla_gps_error_3" type="text" value=""/>
+                        <input class="double gps_error" name="gps_error_3" id="tabla_gps_error_3" type="text" value=""/>
                     </div>
                 </td>
                 <td class="Centrar">
@@ -507,7 +507,7 @@
                 </td>
                 <td>
                     <div class="Sitio_info_4">
-                        <input class="double error" name="gps_error_4" id="tabla_gps_error_4" type="text" value=""/>
+                        <input class="double gps_error" name="gps_error_4" id="tabla_gps_error_4" type="text" value=""/>
                     </div>
                 </td>
                 <td class="Centrar">
@@ -715,7 +715,7 @@
         }
     )
     // Rango del error de precisión
-    $('.error').change
+    $('.gps_error').change
     (
         function()
         {

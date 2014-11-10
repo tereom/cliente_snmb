@@ -231,10 +231,10 @@
                     </select>
                 </td>
                 <td>
-                    <input class="double obligatorio" name="altitud" id="tabla_altitud" type="text" value=""/>
+                    <input class="double obligatorio altitud" name="altitud" id="tabla_altitud" type="text" value=""/>
                 </td>
                 <td>
-                    <input class="double obligatorio" name="gps_error" id="tabla_gps_error" type="text" value=""/>
+                    <input class="double obligatorio gps_error" name="gps_error" id="tabla_gps_error" type="text" value=""/>
                 </td>
             </tr>
         </table>
@@ -324,7 +324,7 @@
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
         }
     );
-    
+
     $('.min').change
     (
         function()
@@ -385,7 +385,7 @@
         }
     )
     // Rango del error de precisión
-    $('.error').change
+    $('.gps_error').change
     (
         function()
         {
@@ -394,6 +394,21 @@
                 if($(this).val()<0 || $(this).val()>10)
                 {
                     alert('El error de precisión está en el rango 0-10');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+    // Rango del altitud
+    $('.altitud').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<-10 || $(this).val()>5715)
+                {
+                    alert('La altitud está en el rango -10 a 5715');
                     $(this).val("");
                 }
             }
