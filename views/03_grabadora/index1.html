@@ -290,6 +290,9 @@
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
         }
     );
+
+    //Rangos de los campos:
+
     $('.min').change
     (
         function()
@@ -349,7 +352,7 @@
             }
         }
     )
-    // Rango del error de precisión
+
     $('.gps_error').change
     (
         function()
@@ -364,7 +367,7 @@
             }
         }
     )
-    // Rango del altitud
+
     $('.altitud').change
     (
         function()

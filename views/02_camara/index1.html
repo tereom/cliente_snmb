@@ -325,6 +325,8 @@
         }
     );
 
+    //Rangos de los campos:
+
     $('.min').change
     (
         function()
@@ -385,7 +387,6 @@
         }
     )
 
-    // Rango del error de precisión
     $('.gps_error').change
     (
         function()
@@ -400,7 +401,7 @@
             }
         }
     )
-    // Rango del altitud
+
     $('.altitud').change
     (
         function()
@@ -459,6 +460,7 @@
     (
        function()
        {
+
             flag =true;
             campos=$('.obligatorio');
             campos.each(function() 
@@ -503,42 +505,27 @@
                 alert('El formato de fecha es aaaa-mm-dd');
                 return false;
             }
+
             //Validando que la fecha de inicio sea menor que la fecha de término
+            //y que, en caso de ser necesario, la hora de inicio sea menor que la de término
             else
             {
-                var arreglo_fecha_inicio = $('#tabla_fecha_inicio').val().split('-');
-                var arreglo_fecha_termino = $('#tabla_fecha_termino').val().split('-');
 
-                //alert(arreglo_fecha_inicio);
-                //alert(arreglo_fecha_termino);
+                var fecha_inicio = $('#tabla_fecha_inicio').val();
+                var fecha_termino = $('#tabla_fecha_termino').val();
+                var hora_inicio = $('#tabla_hora_inicio').val();
+                var hora_termino = $('#tabla_hora_termino').val();
 
-                //flag_f es una bandera que, indica si la fecha de inicio es menor que la de término (true) o no (false)
-                flag_f = true;
-
-                //Recordar que los formatos de las fechas son aaaa-mm-dd:
-
-                //No se permite que el año de la fecha de inicio sea mayor que el de la fecha de término
-                if(arreglo_fecha_inicio[0]>arreglo_fecha_termino[0])
-                {
-                    flag_f=false;
-                    alert('El año de inicio debe ser menor o igual al de término');
-                }
-                //Si los años de ambas fechas coinciden, no se permite que el mes de la fecha de inicio sea mayor que el mes de la fecha término
-                else if(arreglo_fecha_inicio[0]==arreglo_fecha_termino[0] && arreglo_fecha_inicio[1]>arreglo_fecha_termino[1])
-                {
-                    flag_f=false;
-                    alert('El mes de inicio debe ser menor o igual al de término');
-                }
-                //Si los meses de ambas fechas coinciden, no se permite que el día de la fecha de inicio sea mayor que el día de la fecha término
-                else if(arreglo_fecha_inicio[1]==arreglo_fecha_termino[1] && arreglo_fecha_inicio[2]>arreglo_fecha_termino[2])
-                {
-                    flag_f=false;
-                    alert('El día de inicio debe ser menor o igual al de término');
-                }
-
-                if(!flag_f)
+                //Usando el órden lexicográfico natural de strings para comparar fechas:
+                if(fecha_inicio>fecha_termino)
                 {
                     alert('La fecha de inicio debe ser menor o igual a la fecha de término');
+                    return false;
+                }
+
+                else if(fecha_inicio==fecha_termino && hora_inicio>hora_termino)
+                {
+                    alert('La hora de inicio debe ser menor a la hora de término');
                     return false;
                 }
             }

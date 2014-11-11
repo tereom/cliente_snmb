@@ -342,6 +342,98 @@ $('#tabla_hay_nombre_cientifico').change
   }
 )
 
+//Rangos de los campos
+
+$('.min').change
+(
+    function()
+    {
+        if($(this).val())
+        {
+            if($(this).val()<0 || $(this).val()>=60)
+            {
+                alert('Los minutos están en el rango de 0 a 59');
+                $(this).val("");
+            }
+        }
+    }
+)
+
+$('.seg').change
+(
+    function()
+    {
+        if($(this).val())
+        {
+            if($(this).val()<0 || $(this).val()>=60)
+            {
+                alert('Los segundos están en el rango de 0 a 60');
+                $(this).val("");
+            }
+        }
+    }
+)
+
+$('.lat_grado').change
+(
+    function()
+    {
+        if($(this).val())
+        {
+            if($(this).val()<13 || $(this).val()>=33)
+            {
+                alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
+                $(this).val("");
+            }
+        }
+    }
+)
+
+$('.lon_grado').change
+(
+    function()
+    {
+        if($(this).val())
+        {
+            if($(this).val()<-125 || $(this).val()>=-80)
+            {
+                alert('Los grados correspondientes a longitud  están en el rango de -125 a -80');
+                $(this).val("");
+            }
+        }
+    }
+)
+
+$('.gps_error').change
+(
+    function()
+    {
+        if($(this).val())
+        {
+            if($(this).val()<0 || $(this).val()>10)
+            {
+                alert('El error de precisión está en el rango 0-10');
+                $(this).val("");
+            }
+        }
+    }
+)
+
+$('.altitud').change
+(
+    function()
+    {
+        if($(this).val())
+        {
+            if($(this).val()<-10 || $(this).val()>5715)
+            {
+                alert('La altitud está en el rango -10 a 5715');
+                $(this).val("");
+            }
+        }
+    }
+)
+
 //Validando, para ello utilizamos la clase "obligatorio":
 $('form').submit
 (
@@ -376,96 +468,8 @@ $('form').submit
               flag_m = false;
       }
     }
-    );  
-    $('.min').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>=60)
-                {
-                    alert('Los minutos están en el rango de 0 a 59');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+    );
 
-    $('.seg').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>=60)
-                {
-                    alert('Los segundos están en el rango de 0 a 60');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    $('.lat_grado').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<13 || $(this).val()>=33)
-                {
-                    alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    $('.lon_grado').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<-125 || $(this).val()>=-80)
-                {
-                    alert('Los grados correspondientes a longitud  están en el rango de -125 a -80');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-    // Rango del error de precisión
-    $('.gps_error').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>10)
-                {
-                    alert('El error de precisión está en el rango 0-10');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-    // Rango del altitud
-    $('.altitud').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<-10 || $(this).val()>5715)
-                {
-                    alert('La altitud está en el rango -10 a 5715');
-                    $(this).val("");
-                }
-            }
-        }
-    )
     //Validando los radio-botones "dentro_fuera_conglomerado"
     if(!$('input:radio[name=dentro_fuera_conglomerado]:checked').val())
     {

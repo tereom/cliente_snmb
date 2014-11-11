@@ -715,7 +715,7 @@
             }
         }
     )
-    // Rango del error de precisión
+
     $('.gps_error').change
     (
         function()
@@ -730,7 +730,7 @@
             }
         }
     )
-    // Rango del altitud
+
     $('.altitud').change
     (
         function()
@@ -745,6 +745,7 @@
             }
         }
     )
+    
     /*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, se sombrean
 	o reaparecen los campos correspondientes, dependiendo si el sitio existe o no.*/
 	
@@ -833,8 +834,6 @@
                     }
                 }
                 );
-
-
             }
 
             if($('#tabla_existe_3').prop('checked'))
@@ -894,7 +893,7 @@
             if(!conglomeradoReg.test($('#tabla_nombre').val()))
             {
                 flag_c = false;
-                alert('Error en conglomerado');
+                //alert('Error en conglomerado');
             }
 
 
