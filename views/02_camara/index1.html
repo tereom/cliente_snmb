@@ -91,7 +91,7 @@
                 </td>
                 <td>
                     <div>
-                        <label for="tabla_hora_inicio">Hora inicio</label>
+                        <label for="tabla_hora_inicio">Hora inicio (24 horas)</label>
                     </div>
                     <div>
                         <input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
@@ -112,7 +112,7 @@
                 </td>
                 <td>
                     <div>
-                        <label for="tabla_hora_termino">Hora término</label>
+                        <label for="tabla_hora_termino">Hora término (24 horas)</label>
                     </div>
                     <div>
                         <input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
@@ -415,7 +415,21 @@
             }
         }
     )
-
+    // Rango de la distancia al centro
+    $('#tabla_distancia_centro').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<0 || $(this).val()>58)
+                {
+                    alert('La distancia debe ser menor a 58');
+                    $(this).val("");
+                }
+            }
+        }
+    )
     //AJAX para evitar que se envíe la información de la cámara correspondiente
     //a un sitio más de una vez:
     $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()

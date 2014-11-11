@@ -87,7 +87,7 @@
 				</td>
 				<td>
 					<div>
-						<label for="tabla_hora_inicio">Hora inicio</label>
+						<label for="tabla_hora_inicio">Hora inicio (24 horas)</label>
 					</div>
 					<div>
 						<input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
@@ -105,7 +105,7 @@
 				</td>
 				<td>
 					<div>
-						<label for="tabla_hora_termino">Hora término</label>
+						<label for="tabla_hora_termino">Hora término (24 horas)</label>
 					</div>
 					<div>
 						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
@@ -448,10 +448,50 @@
                 alert('Faltó llenar algún campo o subir alguna imagen');
                 return false;
             }
-            else if(!flag_m){
+            else if(!flag_m)
+            {
                 alert('El formato de fecha es aaaa-mm-dd');
                 return false;
             }
-       }
-    )
+            //Validando que la fecha de inicio sea menor que la fecha de término
+            else
+            {
+                var arreglo_fecha_inicio = $('#tabla_fecha_inicio').val().split('-');
+                var arreglo_fecha_termino = $('#tabla_fecha_termino').val().split('-');
+
+                //alert(arreglo_fecha_inicio);
+                //alert(arreglo_fecha_termino);
+
+                //flag_f es una bandera que, indica si la fecha de inicio es menor que la de término (true) o no (false)
+                flag_f = true;
+
+                //Recordar que los formatos de las fechas son aaaa-mm-dd:
+
+                //No se permite que el año de la fecha de inicio sea mayor que el de la fecha de término
+                if(arreglo_fecha_inicio[0]>arreglo_fecha_termino[0])
+                {
+                    flag_f=false;
+                    alert('El año de inicio debe ser menor o igual al de término');
+                }
+                //Si los años de ambas fechas coinciden, no se permite que el mes de la fecha de inicio sea mayor que el mes de la fecha término
+                else if(arreglo_fecha_inicio[0]==arreglo_fecha_termino[0] && arreglo_fecha_inicio[1]>arreglo_fecha_termino[1])
+                {
+                    flag_f=false;
+                    alert('El mes de inicio debe ser menor o igual al de término');
+                }
+                //Si los meses de ambas fechas coinciden, no se permite que el día de la fecha de inicio sea mayor que el día de la fecha término
+                else if(arreglo_fecha_inicio[1]==arreglo_fecha_termino[1] && arreglo_fecha_inicio[2]>arreglo_fecha_termino[2])
+                {
+                    flag_f=false;
+                    alert('El día de inicio debe ser menor o igual al de término');
+                }
+
+                if(!flag_f)
+                {
+                    alert('La fecha de inicio debe ser menor o igual a la fecha de término');
+                    return false;
+                }
+            }
+        }
+    );
 </script>
