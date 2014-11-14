@@ -172,6 +172,19 @@
                 alert('El formato de fecha es aaaa-mm-dd');
                 return false;
             }
+			//Validando que la hora de inicio sea menor que la de término
+            else
+            {
+                var hora_inicio = $('#tabla_hora_inicio').val();
+                var hora_termino = $('#tabla_hora_termino').val();
+
+                //Usando el órden lexicográfico natural de strings para comparar fechas:
+				if(hora_inicio>hora_termino)
+                {
+                    alert('La hora de inicio debe ser menor a la hora de término');
+                    return false;
+                }
+            }
    		}
    	)
 </script>
