@@ -21,6 +21,7 @@ if db(db.Cat_material_carbono.id>0).count() == 0:
 	db.Cat_material_carbono.insert(nombre='OS - Otros')
 	db.Cat_material_carbono.insert(nombre='NO - No contiene')
 
+#########################################################################
 
 db.define_table('Cat_grado_carbono',Field('nombre','integer',
 	required='TRUE'))
@@ -32,6 +33,7 @@ if db(db.Cat_grado_carbono.id>0).count() == 0:
 	db.Cat_grado_carbono.insert(nombre=4)
 	db.Cat_grado_carbono.insert(nombre=5)
 
+#########################################################################
 
 db.define_table('Cat_transecto_direccion',Field('nombre','string',
 	required='TRUE'))
@@ -42,6 +44,7 @@ if db(db.Cat_transecto_direccion.id>0).count() == 0:
 	db.Cat_transecto_direccion.insert(nombre='Sur')
 	db.Cat_transecto_direccion.insert(nombre='Oeste')
 
+#########################################################################
 
 db.define_table('Cat_forma_vida',Field('nombre','string',
 	required='TRUE'))
@@ -50,11 +53,11 @@ if db(db.Cat_forma_vida.id>0).count() == 0:
 	db.Cat_forma_vida.insert(nombre='Arbustiva')
 	db.Cat_forma_vida.insert(nombre='Arbórea')
 
+#########################################################################
 
 db.define_table('Cat_condiciones_ambientales',Field('nombre','string',
 	required='TRUE'))
 
-### Falta agregar condiciones ambientales
 if db(db.Cat_condiciones_ambientales.id>0).count() == 0:
 	db.Cat_condiciones_ambientales.insert(nombre='Ninguna')
 	db.Cat_condiciones_ambientales.insert(nombre='Lluvia')
@@ -82,6 +85,7 @@ if db(db.Cat_tipo_impacto.id>0).count() == 0:
 	db.Cat_tipo_impacto.insert(nombre='Actividades mineras')
 	db.Cat_tipo_impacto.insert(nombre='Asentamientos humanos')
 
+#########################################################################
 
 db.define_table('Cat_severidad_impactos',Field('nombre','string',
 	required='TRUE'))
@@ -92,6 +96,7 @@ if db(db.Cat_severidad_impactos.id>0).count() == 0:
 	db.Cat_severidad_impactos.insert(nombre='3 Mediana')
 	db.Cat_severidad_impactos.insert(nombre='4 Mayor')
 
+#########################################################################
 
 db.define_table('Cat_agente_impactos',Field('nombre','string',
 	required='TRUE'))
@@ -102,6 +107,7 @@ if db(db.Cat_agente_impactos.id>0).count() == 0:
 	db.Cat_agente_impactos.insert(nombre='3 Descortezador')
 	db.Cat_agente_impactos.insert(nombre='4 Muérdagos')
 
+#########################################################################
 
 db.define_table('Cat_estatus_impactos',Field('nombre','string',
 	required='TRUE'))
@@ -109,6 +115,8 @@ db.define_table('Cat_estatus_impactos',Field('nombre','string',
 if db(db.Cat_estatus_impactos.id>0).count() == 0:
 	db.Cat_estatus_impactos.insert(nombre='1 Activa')
 	db.Cat_estatus_impactos.insert(nombre='2 Inactiva')
+
+#########################################################################
 
 db.define_table('Cat_prop_afectacion',Field('nombre','string',required='TRUE'))
 
@@ -120,6 +128,7 @@ if db(db.Cat_prop_afectacion.id>0).count() == 0:
 	db.Cat_prop_afectacion.insert(nombre='70 a 90%')
 	db.Cat_prop_afectacion.insert(nombre='Más de 90%')
 
+#########################################################################
 
 db.define_table('Cat_incendio',Field('nombre','string',required='TRUE'))
 
@@ -127,6 +136,5 @@ if db(db.Cat_incendio.id>0).count() == 0:
 	db.Cat_incendio.insert(nombre='Subterráneo')
 	db.Cat_incendio.insert(nombre='Superficial')
 	db.Cat_incendio.insert(nombre='Aéreo copa')
-
 
 #########################################################################

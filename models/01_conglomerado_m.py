@@ -26,7 +26,6 @@ Campos_Conglomerado_muestra = [
 
     #Se insertará a partir de un catálogo
 	Field('vegetacion_tipo','string'),
-
     Field('perturbado','boolean'),
 
 	Field('comentario','text')

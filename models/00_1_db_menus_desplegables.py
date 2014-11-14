@@ -17,6 +17,7 @@ if db(db.Cat_tipo_conglomerado.id>0).count() == 0:
     db.Cat_tipo_conglomerado.insert(nombre='Inaccesible gabinete')
     db.Cat_tipo_conglomerado.insert(nombre='Supervisión interna')
     db.Cat_tipo_conglomerado.insert(nombre='Biodiversidad')
+
 #########################################################################
 
 db.define_table('Cat_estado_conglomerado', 
@@ -56,7 +57,6 @@ if db(db.Cat_estado_conglomerado.id>0).count() == 0:
     db.Cat_estado_conglomerado.insert(clave_ent='30', nombre='Veracruz')
     db.Cat_estado_conglomerado.insert(clave_ent='31', nombre='Yucatán')
     db.Cat_estado_conglomerado.insert(clave_ent='32', nombre='Zacatecas') 
-
 
 #########################################################################
 
@@ -220,6 +220,7 @@ if db(db.Cat_conabio_invasoras.id>0).count() == 0:
     db.Cat_conabio_invasoras.insert(nombre='Tamarix sp. - Pino salado, cedro salado, tamarisco')
     db.Cat_conabio_invasoras.insert(nombre='Otros')
 
+#########################################################################
 
 db.define_table('Cat_municipio_conglomerado', 
     Field('clave_ent','integer',required='TRUE'),
