@@ -292,7 +292,7 @@ def index2():
 def asignarTransectos():
 
     # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
-    # la cámara asociada a un sitio (mediante AJAX).
+    # los transectos asociados a un sitio (mediante AJAX).
 
     sitioElegidoID = request.vars.sitio_muestra_id
 
@@ -301,7 +301,7 @@ def asignarTransectos():
     transectosAsignados = db(db.Transecto_ramas.sitio_muestra_id==sitioElegidoID).select(
         db.Transecto_ramas.id, db.Transecto_ramas.direccion)
 
-    #Creando la dropdown de cámaras y enviándola a la vista para que sea desplegada:
+    #Creando la dropdown de transectos y enviándola a la vista para que sea desplegada:
 
     dropdownHTML = "<select class='generic-widget' name='transecto_ramas_id' id='tabla_transecto_ramas_id'>"
 
