@@ -60,7 +60,7 @@ db.Sitio_muestra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,
     '%(nombre)s')
 
 # Cámara
-db.Camara.nombre.requires=IS_IN_DB(db,db.Cat_nombre_camara.nombre,'%(nombre)s')
+# db.Camara.nombre.requires=IS_IN_DB(db,db.Cat_nombre_camara.nombre,'%(nombre)s')
 db.Camara.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
 db.Camara.resolucion.requires=IS_IN_DB(db,db.Cat_resolucion_camara.nombre,
     '%(nombre)s')
