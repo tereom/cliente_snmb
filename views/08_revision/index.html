@@ -1,5 +1,21 @@
 {{extend 'layout.html'}}
 
+{{block head}}
+<style type="text/css">
+
+    #shadow_clone .integer, #shadow_clone .string
+    {
+        width: 4cm;
+    }
+    
+    /*.generic-widget
+    {
+        width: 4.4cm;
+    }*/
+
+</style>
+{{end}}
+
 <div id="shadow_clone">
     <form id='forma_shadow'>
     </form>
@@ -47,25 +63,73 @@ y hay_individuo, para poder actualizar la base de datos-->
     	}
    	)
 
-    //AJAX para editar la información de una fotografia
-    $('#shadow_clone').on('click', '#tabla_enviar', function (){
-        $.ajax
-        (
-        {
-            type: "POST",
-            data: $('#forma_shadow').serialize(),
-            url: "{{=URL('actualizarFotografia')}}",
-            success: function()
-            {
-               //alert('Registro actualizado exitosamente');
+    //A la hora de enviar la información de una fotografía, hay que validar que esté completa.
 
-               indice = $("#tabla_foto")[0].selectedIndex;
-               //alert(indice);
-               $('#tabla_foto').prop('selectedIndex', indice+1);
-               $('#tabla_foto').trigger('change');
+    $('#shadow_clone').on('click', '#tabla_enviar', function (){
+
+        /*flag es un indicador de que la forma está completa
+        faltanNombres es un indicador de que es necesario que se escriban
+        ya sea el nombre común o el científico de la especie (ésto es cuando
+        la especie no se encuentra en la lista de invasoras), y sin embargo,
+        no se ha hecho.*/
+
+        flag = true;
+        faltanNombres = false;
+
+        //Validando que alguno de los radio-botones esté presionado:
+        if(!$('input:radio[name=fauna_evidente]:checked').val())
+        {
+            flag = false;
+            //alert('falta presionar un radio-botón');
+        }
+
+        //Si el radio-botón muestra que existe fauna evidente, entonces se valida 
+        //que esté lleno al menos un campo de nombre (común/científico) y número de individuos.
+        else if($('input:radio[name=fauna_evidente]:checked').val()=='encontrada')
+        {
+            if(!$('#tabla_numero_individuos').val())
+            {
+                flag = false;
+                //alert('Falta ingresar número de individuos');
+            }
+            else if(!$('#tabla_nombre_comun').val() && !$('#tabla_nombre_cientifico').val())
+            {
+                flag = false;
+                faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
             }
         }
-        );
+
+        if(!flag)
+        {
+          if(faltanNombres)
+            alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+          else
+            alert('Faltó llenar algún campo');
+        }
+
+        //Si pasa la validación:
+        else
+        {
+            //AJAX para editar la información de una fotografia
+            $.ajax
+            (
+            {
+                type: "POST",
+                data: $('#forma_shadow').serialize(),
+                url: "{{=URL('actualizarFotografia')}}",
+                success: function()
+                {
+                    //alert('Registro actualizado exitosamente');
+
+                    indice = $("#tabla_foto")[0].selectedIndex;
+                    //alert(indice);
+                    $('#tabla_foto').prop('selectedIndex', indice+1);
+                    $('#tabla_foto').trigger('change');
+                }
+            }
+            );
+        }
     });
 
 </script>
