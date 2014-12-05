@@ -383,7 +383,7 @@
             {
                 if($(this).val()<13 || $(this).val()>33)
                 {
-                    alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
+                    alert('Los grados correspondientes a latitud están en el rango de 13 a 33');
                     $(this).val("");
                 }
             }
@@ -394,20 +394,11 @@
     (
         function()
         {
-            if($(this).val())
-            {
-                if(($(this).val()<85|| $(this).val()>119) & ($(this).val()<-119|| $(this).val()>-85))
-                {
-                    alert('Los grados correspondientes a longitud  están en el rango de 85 a 119 o en el rango -119 a -85');
-                    $(this).val("");
-                }
-                /* if($(this).val()<-119|| $(this).val()>-85)
-                {
-                    alert('Los grados correspondientes a longitud  están en el rango de -119 a -85');
-                    $(this).val("");
-                }
-                */
-            }
+          if(($(this).val()<85|| $(this).val()>119) & ($(this).val()<-119|| $(this).val()>-85))
+          {
+            alert('Los grados correspondientes a longitud están en el rango de 85 a 119 o en el rango -119 a -85');
+            $(this).val("");
+          }
         }
     )
 

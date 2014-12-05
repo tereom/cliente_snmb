@@ -73,7 +73,8 @@ Campos_Archivo_camara = [
     Field('presencia','boolean'),
     Field('nombre_comun','string'),
     Field('nombre_cientifico','string'),
+    Field('numero_individuos','integer')
     ]
 
 db.define_table('Archivo_camara',*Campos_Archivo_camara, 
-	singular='Archivo cámara',plural='Archivos cámaras')
+	singular='Archivo cámara',plural='Archivos cámara')
