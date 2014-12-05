@@ -10,13 +10,13 @@ db.define_table('Cat_tipo_conglomerado', Field('nombre', 'string', required='TRU
 
 ## El if indica que las tablas se llenarán únicamente cuando estan vacías
 if db(db.Cat_tipo_conglomerado.id>0).count() == 0:
-    db.Cat_tipo_conglomerado.insert(nombre='Inicial')
-    db.Cat_tipo_conglomerado.insert(nombre='Remplazo')
-    db.Cat_tipo_conglomerado.insert(nombre='Inaccesible terreno/clima')
-    db.Cat_tipo_conglomerado.insert(nombre='Inaccesible social')
-    db.Cat_tipo_conglomerado.insert(nombre='Inaccesible gabinete')
-    db.Cat_tipo_conglomerado.insert(nombre='Supervisión interna')
-    db.Cat_tipo_conglomerado.insert(nombre='Biodiversidad')
+    db.Cat_tipo_conglomerado.insert(nombre='1 Inicial')
+    db.Cat_tipo_conglomerado.insert(nombre='2 Remplazo')
+    db.Cat_tipo_conglomerado.insert(nombre='3 Inaccesible terreno/clima')
+    db.Cat_tipo_conglomerado.insert(nombre='4 Inaccesible social')
+    db.Cat_tipo_conglomerado.insert(nombre='5 Inaccesible gabinete')
+    db.Cat_tipo_conglomerado.insert(nombre='6 Supervisión interna')
+    db.Cat_tipo_conglomerado.insert(nombre='7 Biodiversidad')
 
 #########################################################################
 
@@ -63,10 +63,10 @@ if db(db.Cat_estado_conglomerado.id>0).count() == 0:
 db.define_table('Cat_tenencia_conglomerado', Field('nombre', 'string', required='TRUE'))
 
 if db(db.Cat_tenencia_conglomerado.id>0).count() == 0:
-    db.Cat_tenencia_conglomerado.insert(nombre='Ejidal')
-    db.Cat_tenencia_conglomerado.insert(nombre='Comunal')
-    db.Cat_tenencia_conglomerado.insert(nombre='Propiedad particular')
-    db.Cat_tenencia_conglomerado.insert(nombre='Propiedad federal')
+    db.Cat_tenencia_conglomerado.insert(nombre='1 Ejidal')
+    db.Cat_tenencia_conglomerado.insert(nombre='2 Comunal')
+    db.Cat_tenencia_conglomerado.insert(nombre='3 Propiedad particular')
+    db.Cat_tenencia_conglomerado.insert(nombre='4 Propiedad federal')
 
 
 #########################################################################

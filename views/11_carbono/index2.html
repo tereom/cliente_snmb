@@ -122,6 +122,7 @@ de los formularios de trabajo de campo*/
                     <td class="Centrar">
                         <input class="boolean" name="{{=existe_i}}" id="{{=tabla_existe_i}}" type="checkbox" value="on"/>
                     </td>
+                   
                     <td>
                         <div class="{{=Rama_i}}">
                             <input class="double" name="{{=diametro_i}}" id="{{=tabla_diametro_i}}" type="text" value=""/>
@@ -179,12 +180,19 @@ de los formularios de trabajo de campo*/
         {
            for(i=1; i<=10; i++)
            {
-             tabla_existe_i = '#tabla_existe_'.concat(i);
-             Rama_i = '.Rama_'.concat(i);
-             $(tabla_existe_i).prop('checked', true);
-             $(Rama_i).show();
+
+                tabla_existe_i = '#tabla_existe_'.concat(i);
+                Rama_i = '.Rama_'.concat(i);
+                if(i <= 5){
+                    $(tabla_existe_i).prop('checked', true);
+                    $(Rama_i).show();
+                }
+                else{
+                    $(Rama_i).hide();
+                }
+                
             }
-     }
+        }
      )
     $('#tabla_existe_1').change
     (
@@ -318,7 +326,7 @@ de los formularios de trabajo de campo*/
                         //alert(resultado);
                         if(resultado==0)
                         {
-                            alert('Favor de ingresar la pestaña de frecuencias por grosor de material antes de proceder a desglose de material 1000h');
+                            alert('Favor de ingresar la pestaña de material leñoso caído antes de proceder a desglose de material 1000h');
                             $('#tabla_sitio_muestra_id').val("");
                         }
                 }

@@ -130,6 +130,7 @@ def editarConglomerado():
         linked_tables=['Sitio_muestra', 'Imagen_referencia_sitio'],
         user_signature=False, 
         csv=False,
+        maxtextlengths={'Imagen_referencia_sitio.archivo_nombre_original' : 50}
         )
     return dict(form=form)
     
@@ -139,7 +140,9 @@ def editarCamara():
     db.Archivo_camara.camara_id.writable = False
     form = SQLFORM.smartgrid(db.Camara,        
         csv=False,
-        user_signature=False)
+        user_signature=False, 
+        maxtextlengths={'Archivo_camara.archivo_nombre_original' : 50,
+        'Imagen_referencia_camara.archivo_nombre_original' : 50})
     return dict(form=form)
 
 def editarGrabadora():
@@ -152,7 +155,12 @@ def editarGrabadora():
         #linked_tables=['Imagen_referencia_microfonos', 
         #    'Archivo_referencia_grabadora', 'Archivo_grabadora'],
         csv=False,
-        user_signature=False)
+        user_signature=False, 
+        maxtextlengths={'Archivo_grabadora.archivo_nombre_original' : 50,
+        'Imagen_referencia_grabadora.archivo_nombre_original' : 50,
+        'Imagen_referencia_microfonos.archivo_nombre_original' : 50,
+        'Archivo_referencia_grabadora.archivo_nombre_original' : 50,
+        'Imagen_referencia_microfonos.archivo_nombre_original' : 50})
     return dict(form=form)
 
 def editarEspeciesInvasoras():
@@ -170,9 +178,10 @@ def editarHuellasExcretas():
     db.Huella_excreta.transecto_huellas_excretas_id.writable = False
     db.Archivo_huella_excreta.huella_excreta_id.writable =False
     form = SQLFORM.smartgrid(db.Transecto_huellas_excretas_muestra,
-        linked_tables=['Huella_excreta'],
+        #linked_tables=['Huella_excreta'],
         csv=False,
-        user_signature=False)
+        user_signature=False,
+        headers={'Huella_excreta.es_huella' : 'Huella'})
     return dict(form=form)
 
 def editarEspeciesInvasorasExtra():
@@ -188,7 +197,8 @@ def editarHuellasExcretasExtra():
     db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable = False
     form = SQLFORM.smartgrid(db.Huella_excreta_extra,
         csv=False,
-        user_signature=False)
+        user_signature=False,
+        headers={'Huella_excreta_extra.es_huella' : 'Huella'})
     return dict(form=form)
 
 def editarEspecimenExtra():
