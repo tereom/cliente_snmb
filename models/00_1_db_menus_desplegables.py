@@ -2685,3 +2685,4 @@ if db(db.Cat_municipio_conglomerado.id>0).count() == 0:
     db.Cat_municipio_conglomerado.insert(clave_ent='32',clave_mun='54',nombre='Villa Hidalgo')
     db.Cat_municipio_conglomerado.insert(clave_ent='32',clave_mun='55',nombre='Villanueva')
     db.Cat_municipio_conglomerado.insert(clave_ent='32',clave_mun='56',nombre='Zacatecas')
+

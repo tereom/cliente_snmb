@@ -13,7 +13,7 @@ def index():
         #Campos del conglomerado
         ###############################
 
-        INPUT(_name='nombre',_type='string',requires=IS_NOT_EMPTY()),
+        INPUT(_name='nombre',_type='integer',requires=IS_NOT_EMPTY()),
         INPUT(_name='fecha_visita',_type='date',requires=IS_NOT_EMPTY()),
         SELECT(_name='tipo',
             requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.nombre,'%(nombre)s')),
@@ -172,6 +172,9 @@ def index():
         
         datosConglomerado=db.Conglomerado_muestra._filter_fields(forma.vars)
         
+        #Campo oculto SAC-MOD, SAR-MOD
+        datosConglomerado['monitoreo_tipo']='SAR-MOD'
+
         #Si no escogieron "uso_suelo_tipo" como "Vegetación", entonces anulamos
         #(por consistencia en base de datos), los valores que se pudieran haber
         #ingresado en los datos dependientes de esta opción:

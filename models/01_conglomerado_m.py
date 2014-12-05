@@ -11,7 +11,7 @@
 
 Campos_Conglomerado_muestra = [
 
-	Field('nombre','string',required=True),
+	Field('nombre','integer',required=True),
 	Field('fecha_visita','date',required=True),
 	Field('predio','string',required=True),
 	Field('compania','string',required=True),
@@ -21,6 +21,9 @@ Campos_Conglomerado_muestra = [
     Field('municipio','string',required=True),
     Field('tenencia','string',required=True),
     Field('uso_suelo_tipo', 'string',required=True),
+
+    #Campo oculto identificador SAR-MOD, SAC-MOD
+    Field('monitoreo_tipo','string',required=True),    
 
     #Los dos siguientes campos sólo se eligen si uso_suelo_tipo="Vegetación"
 

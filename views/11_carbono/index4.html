@@ -401,45 +401,20 @@ de los formularios de trabajo de campo*/
     (
         function()
         {
-           /*Cuando el documento se carga, los campos de los árboles están activos
-           $('#tabla_existe_1').prop('checked', true);
-           $('.Arbol_1').show();
-           
-           $('#tabla_existe_2').prop('checked', true);
-           $('.Arbol_2').show();
-
-           $('#tabla_existe_3').prop('checked', true);
-           $('.Arbol_3').show();
-           
-           $('#tabla_existe_4').prop('checked', true);
-           $('.Arbol_4').show();
-
-           $('#tabla_existe_5').prop('checked', true);
-           $('.Arbol_5').show();
-           
-           $('#tabla_existe_6').prop('checked', true);
-           $('.Arbol_6').show();
-
-           $('#tabla_existe_7').prop('checked', true);
-           $('.Arbol_7').show();
-           
-           $('#tabla_existe_8').prop('checked', true);
-           $('.Arbol_8').show();
-
-           $('#tabla_existe_9').prop('checked', true);
-           $('.Arbol_9').show();
-
-           $('#tabla_existe_10').prop('checked', true);
-           $('.Arbol_10').show();*/
-
            for(i=1; i<=10; i++)
            {
-             tabla_existe_i = '#tabla_existe_'.concat(i);
-             Arbol_i = '.Arbol_'.concat(i);
-             $(tabla_existe_i).prop('checked', true);
-             $(Arbol_i).show();
+                tabla_existe_i = '#tabla_existe_'.concat(i);
+                Arbol_i = '.Arbol_'.concat(i);
+                if(i <= 5){
+                    $(tabla_existe_i).prop('checked', true);
+                    $(Arbol_i).show();
+                }
+                else{
+                    $(Arbol_i).hide();
+                }
+             
             }
-     }
+        }
      )
     
     /*Cuando se cambia el valor de la casilla "existe" asociada a un cuadrante, se sombrean
