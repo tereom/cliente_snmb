@@ -60,6 +60,8 @@ y hay_individuo, para poder actualizar la base de datos-->
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
     		ajax("{{=URL('obtenerFotografia')}}", ['foto'], 'shadow_clone');
+
+            //Agregando            
     	}
    	)
 
@@ -92,13 +94,16 @@ y hay_individuo, para poder actualizar la base de datos-->
                 flag = false;
                 //alert('Falta ingresar número de individuos');
             }
-            else if(!$('#tabla_nombre_comun').val() && !$('#tabla_nombre_cientifico').val())
+
+            if(!$('#tabla_nombre_comun').val() && !$('#tabla_nombre_cientifico').val())
             {
                 flag = false;
                 faltanNombres = true;
                 //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
             }
         }
+
+        //alert(faltanNombres);
 
         if(!flag)
         {
