@@ -50,7 +50,7 @@ def obtenerFotografia():
         revisionHTML += "/>"
 
     revisionHTML += "</div></div><div style='clear:both;'></div><br/><div>"+\
-        "<label for='tabla_nombre_comun' style='float:left;padding-right:22px;'>"+\
+        "<label for='tabla_nombre_comun' style='float:left;padding-right:49px;'>"+\
         "Nombre común:</label><input type='text' name='nombre_comun' "+\
         "id='tabla_nombre_comun' value='"
 
@@ -60,7 +60,7 @@ def obtenerFotografia():
         revisionHTML += datosFoto.nombre_comun
 
     revisionHTML += "'/></div><br/><div><label for='tabla_nombre_cientifico' "+\
-        "style='float:left;padding-right:10px;'>Nombre científico:</label>"+\
+        "style='float:left;padding-right:37px;'>Nombre científico:</label>"+\
         "<input type='text' name='nombre_cientifico' id='tabla_nombre_cientifico' value='"
 
     #Si hay nombre científico, éste aparece en la casilla para ingresar el texto.
@@ -69,7 +69,7 @@ def obtenerFotografia():
         revisionHTML += datosFoto.nombre_cientifico
 
     revisionHTML += "'/></div><br/><div><label for='tabla_numero_individuos' "+\
-    ">Número de individuos:</label>"+\
+    "style='float:left;padding-right:10px;'>Número de individuos:</label>"+\
     "<input type='text' name='numero_individuos' class='integer' id='tabla_numero_individuos' value='"
 
     if datosFoto.numero_individuos:
@@ -103,21 +103,21 @@ def obtenerFotografia():
 #           <div style='clear:both;'></div>
 #           <br/>
 #           <div>
-#               <label for='tabla_nombre_comun'  style='float:left;padding-right:22px;'>
+#               <label for='tabla_nombre_comun' style='float:left;padding-right:22px;'>
 #                   Nombre común:
 #               </label>
 #               <input type='text' name='nombre_comun' id='tabla_nombre_comun' value=''/>
 #           </div>
 #           <br/>
 #           <div>
-#               <label for='tabla_nombre_cientifico'  style='float:left;padding-right:10px;'>
+#               <label for='tabla_nombre_cientifico' style='float:left;padding-right:10px;'>
 #                   Nombre científico:
 #               </label>
 #               <input type='text' name='nombre_cientifico' id='tabla_nombre_cientifico' value=''/>
 #           </div>
 #           <br/>
 #           <div>
-#               <label for='tabla_numero_individuos'>
+#               <label for='tabla_numero_individuos' style='float:left;padding-right:10px;'>
 #                   Número de individuos:
 #               </label>
 #               <input type='text' name='numero_individuos' class='integer' id='tabla_numero_individuos' value=''/>
