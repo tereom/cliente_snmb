@@ -235,6 +235,7 @@ de los formularios de trabajo de campo*/
          function()
          {
             flag =true;
+            faltanNombres = false;
             campos=$('.obligatorio');
             campos.each(function() 
             {
@@ -253,7 +254,18 @@ de los formularios de trabajo de campo*/
                 campos=$('.Arbol_1 input, .Arbol_1 select');
                 campos.each(function() 
                 {
-                    if(!$(this).val())
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_1')
+                    var c = $('#tabla_nombre_cientifico_1')
+                    if(a.equal(b) || a.equals(c)){
+                        if(!$('#tabla_nombre_comun_1').val() && !$('#tabla_nombre_cientifico_1').val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    else if(!$(this).val())
                     {
                         //alert('this');
                         flag = false;

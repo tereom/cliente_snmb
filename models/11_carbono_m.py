@@ -71,8 +71,8 @@ Campos_Arbol_transecto = [
     #Se insertará a partir de un catálogo
     Field('transecto','string',required=True),
     Field('individuo_numero','integer',required=True),
-    Field('nombre_comun','string',required=True),
-    Field('nombre_cientifico','string',required=True),
+    Field('nombre_comun','string'),
+    Field('nombre_cientifico','string'),
     Field('forma_vida','string',required=True),
     Field('distancia_copa','double',required=True),
     Field('altura','double',required=True),
