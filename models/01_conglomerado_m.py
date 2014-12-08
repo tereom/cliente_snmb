@@ -11,7 +11,7 @@
 
 Campos_Conglomerado_muestra = [
 
-	Field('nombre','string',required=True),
+	Field('nombre','integer',required=True),
 	Field('fecha_visita','date',required=True),
 	Field('predio','string',required=True),
 	Field('compania','string',required=True),

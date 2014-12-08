@@ -54,7 +54,7 @@
                         <label for="tabla_nombre">Número de conglomerado</label>
                     </div>
                     <div>
-                        <input class="string obligatorio" name="nombre" id="tabla_nombre" type="text" value=""/>
+                        <input class="integer obligatorio" name="nombre" id="tabla_nombre" type="text" value=""/>
                     </div>
                 </td>
                 <td>
@@ -557,7 +557,7 @@
 
     //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
 
-/*
+
     $('#tabla_nombre').keyup
     (
         function()
@@ -578,18 +578,18 @@
                         }
                         else if(resultado==-1)
                         {
-                            alert('El número de conglomerado consta de 6 caracteres');
+                            alert('El número de conglomerado consta de 6 dígitos. Ejemplo: 012345 (para conglomerados del INFyS) ó 123456 para conglomerados que no son del INFyS');
                             $('#tabla_nombre').val("");
                         }
                     }
                 }
             );
         }
-    );*/
+    );
 
     //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
 
-    $('#tabla_nombre').keyup
+    /*$('#tabla_nombre').keyup
     (
         function()
         {
@@ -616,7 +616,7 @@
                 }
             );
         }
-    );
+    );*/
 
     $(document).ready
     (
@@ -789,7 +789,7 @@
                 $('.Sitio_info_4').fadeOut();
         }
     )
-    
+
     //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
     (
@@ -871,28 +871,51 @@
             }
 
             //Validando que el nombre del conglomerado conste de 6 caracteres:
-            /*
+            
             flag_lon = true;
             if($('#tabla_nombre').val().length<6)
             {
                 flag_lon = false;
             }
-            */
+
             //alert(flag_lon);
 
             //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-            var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+            var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
             campos_fecha=$('.date');
             flag_m = true;
-            campos_fecha.each(function() 
-            {   
+            campos_fecha.each(function(){   
                 if(!fechaReg.test($(this).val()))
                 {
                     flag_m = false;
                 }
-            }
-            );
+                //Revisando que el mes y el día estén en un rango aceptable:
+                else
+                {
+                    //match contiene como primer elemento, el match de toda la regex, y como elementos
+                    //posteriores, el match de los elementos en paréntesis de la regex (en órden).
+                    var match = fechaReg.exec($(this).val());
+                    //alert(match);
 
+                    //Validando que el mes se encuentre en un rango aceptable:
+                    if(match[1]<1 || match[1]>12)
+                    {
+                        //alert('El mes es incorrecto');
+                        //alert(match[1]);
+                        flag_m = false;
+                    }
+
+                    //Validando que el día se encuentre en un rango aceptable:
+                    if(match[2]<1 || match[2]>31)
+                    {
+                        //alert('El día es incorrecto');
+                        //alert(match[2]);
+                        flag_m = false;
+                    }
+                }
+            });
+
+            /*
             //Validando que el conglomerado esté en formato pedido:
             var conglomeradoReg = /^\d{5}\-\d{3}$/;
             flag_c = true;
@@ -901,7 +924,7 @@
                 flag_c = false;
                 //alert('Error en conglomerado');
             }
-
+            */
 
             if(!flag)
             {
@@ -912,15 +935,14 @@
                 alert('El formato de fecha es aaaa-mm-dd');
                 return false;
             }
-            else if(!flag_c){
-                alert('El número de conglomerado lleva el formato: ccccc-ppp (sin espacios). Donde los primeros 5 dígitos (ccccc) se refieren número único asociado a cada conglomerado con base en la malla proporcionada por la CONAFOR y los siguientes 3 dígitos (ppp) se refieren al número de área natural protegida (CONANP). Ejemplo: 12345-123');
+            /*else if(!flag_c){
+                alert('El número de conglomerado consta de 6 dígitos. Ejemplo: 012345 (para conglomerados del INFyS) ó 123456 para conglomerados que no son del INFyS');
                 return false;
-            }   
-
-            /*else if(!flag_lon){
+            } */
+            else if(!flag_lon){
                 alert('El número de conglomerado consta de 6 caracteres. Completar con ceros al principio si es necesario. Ejemplo: 000123');
                 return false;
-            }*/
+            }
         }
     )
 </script>

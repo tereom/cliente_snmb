@@ -13,7 +13,7 @@ def index():
         #Campos del conglomerado
         ###############################
 
-        INPUT(_name='nombre',_type='string',requires=IS_NOT_EMPTY()),
+        INPUT(_name='nombre',_type='integer',requires=IS_NOT_EMPTY()),
         INPUT(_name='fecha_visita',_type='date',requires=IS_NOT_EMPTY()),
         SELECT(_name='tipo',
             requires=IS_IN_DB(db,db.Cat_tipo_conglomerado.nombre,'%(nombre)s')),
@@ -531,7 +531,7 @@ def conglomeradoExistente():
     #Puede ser que no haya terminado de escribir, por ello, se revisa primero
     #la longitud del caracter:
 
-    longitudNombres = 9
+    longitudNombres = 6
 
     #El resultado en el tercer caso será el número de registros en la base de
     #datos con el mismo nombre de conglomerado, que se regresará a JS para
