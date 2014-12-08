@@ -24,29 +24,34 @@ def obtenerFotografia():
         #Revisando la terminación del archivo para ver si desplegar una imagen
         #o un video:
 
-        nombre = datosFoto.archivo_nombre_original.split('.')
-        terminacion = nombre[1].lower()
+        #nombre = datosFoto.archivo_nombre_original.split('.')
+        #terminacion = nombre[1].lower()
 
         #Revisando la terminación del archivo:
 
-        if terminacion == 'avi':
+        #if terminacion == 'avi':
 
             #revisionHTML += "<video src='/init/8_revision/download/"+datosFoto.archivo+\
             #    "' controls='controls' autoplay='autoplay' style='width:800px;height:600px;'/>"
 
-            revisionHTML += "<object classid='clsid:d27cdb6e-ae6d-11cf-96b8-444553540000'"+\
-                " width='550' height='400' id='movie_name' align='middle'><param name='movie'"+\
-                " value='/init/8_revision/download/"+datosFoto.archivo+"'/><!--[if !IE]>-->"+\
-                "<object type='application/x-shockwave-flash' data='/init/8_revision/download/"+datosFoto.archivo+\
-                "' width='550' height='400'><param name='movie' value='/init/8_revision/download/"+datosFoto.archivo+\
-                "'/><!--<![endif]--><a href='http://www.adobe.com/go/getflash'>"+\
-                "<img src='http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif'"+\
-                " alt='Get Adobe Flash player'/></a><!--[if !IE]>--></object><!--<![endif]--></object>"
+            #revisionHTML += "<object id='MediaPlayer1' CLASSID='CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95' "+\
+                #"codebase='http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=5,1,52,701' "+\
+                #"standby='Loading Microsoft Windows® Media Player components...' type='application/x-oleobject' width='280' height='256'>"+\
+                #"<param name='fileName' value='/cliente_web2py/08_revision/download/"+datosFoto.archivo+"'>"+\
+                #"<param name='animationatStart' value='true'>"+\
+                #"<param name='transparentatStart' value='true'>"+\
+                #"<param name='autoStart' value='true'>"+\
+                #"<param name='showControls' value='true'>"+\
+                #"<param name='Volume' value='-450'>"+\
+                #"<embed type='application/x-mplayer2' pluginspage='http://www.microsoft.com/Windows/MediaPlayer/' "+\
+                #"src='/cliente_web2py/08_revision/download/"+\
+                #datosFoto.archivo+"' name='MediaPlayer1' width=280 height=256 autostart=1 showcontrols=1 volume=-450>"+\
+                #"</object>"
 
-        else:
+        #else:
 
-            revisionHTML += "<img src='/cliente_web2py/08_revision/download/"+datosFoto.archivo+\
-                "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"
+        revisionHTML += "<img src='/cliente_web2py/08_revision/download/"+datosFoto.archivo+\
+            "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"
 
         revisionHTML +="</center><hr/><div><div style='float:left;padding-right:60px;'><label "+\
                 "for='tabla_con_fauna_evidente' style='float:left;padding-right:20px;'>"+\
