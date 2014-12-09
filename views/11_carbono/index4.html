@@ -214,6 +214,129 @@ de los formularios de trabajo de campo*/
 {{#=BEAUTIFY(request.vars)}}
 
 <script>
+    $(document).ready
+    (
+        function()
+        {
+           for(i=1; i<=10; i++)
+           {
+                tabla_existe_i = '#tabla_existe_'.concat(i);
+                Arbol_i = '.Arbol_'.concat(i);
+                if(i <= 5){
+                    $(tabla_existe_i).prop('checked', true);
+                    $(Arbol_i).show();
+                }
+                else{
+                    $(Arbol_i).hide();
+                }
+             
+            }
+        }
+     )
+    
+    /*Cuando se cambia el valor de la casilla "existe" asociada a un cuadrante, se sombrean
+    o reaparecen los campos correspondientes, dependiendo si el árbol existe o no.*/
+    
+    $('#tabla_existe_1').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_1').fadeIn();
+            else
+                $('.Arbol_1').fadeOut();
+        }
+    )
+    $('#tabla_existe_2').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_2').fadeIn();
+            else
+                $('.Arbol_2').fadeOut();
+        }
+    )
+    $('#tabla_existe_3').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_3').fadeIn();
+            else
+                $('.Arbol_3').fadeOut();
+        }
+    )
+    $('#tabla_existe_4').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_4').fadeIn();
+            else
+                $('.Arbol_4').fadeOut();
+        }
+    )
+    $('#tabla_existe_5').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_5').fadeIn();
+            else
+                $('.Arbol_5').fadeOut();
+        }
+    )
+    $('#tabla_existe_6').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_6').fadeIn();
+            else
+                $('.Arbol_6').fadeOut();
+        }
+    )
+    $('#tabla_existe_7').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_7').fadeIn();
+            else
+                $('.Arbol_7').fadeOut();
+        }
+    )
+    $('#tabla_existe_8').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_8').fadeIn();
+            else
+                $('.Arbol_8').fadeOut();
+        }
+    )
+    $('#tabla_existe_9').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_9').fadeIn();
+            else
+                $('.Arbol_9').fadeOut();
+        }
+    )
+    $('#tabla_existe_10').change
+    (
+        function()
+        {
+            if($(this).prop('checked'))
+                $('.Arbol_10').fadeIn();
+            else
+                $('.Arbol_10').fadeOut();
+        }
+    )
 
     //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
     $('#tabla_conglomerado_muestra_id').change
@@ -515,127 +638,4 @@ de los formularios de trabajo de campo*/
 
     )
 
-    $(document).ready
-    (
-        function()
-        {
-           for(i=1; i<=10; i++)
-           {
-                tabla_existe_i = '#tabla_existe_'.concat(i);
-                Arbol_i = '.Arbol_'.concat(i);
-                if(i <= 5){
-                    $(tabla_existe_i).prop('checked', true);
-                    $(Arbol_i).show();
-                }
-                else{
-                    $(Arbol_i).hide();
-                }
-             
-            }
-        }
-     )
-    
-    /*Cuando se cambia el valor de la casilla "existe" asociada a un cuadrante, se sombrean
-    o reaparecen los campos correspondientes, dependiendo si el árbol existe o no.*/
-    
-    $('#tabla_existe_1').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_1').fadeIn();
-            else
-                $('.Arbol_1').fadeOut();
-        }
-    )
-    $('#tabla_existe_2').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_2').fadeIn();
-            else
-                $('.Arbol_2').fadeOut();
-        }
-    )
-    $('#tabla_existe_3').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_3').fadeIn();
-            else
-                $('.Arbol_3').fadeOut();
-        }
-    )
-    $('#tabla_existe_4').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_4').fadeIn();
-            else
-                $('.Arbol_4').fadeOut();
-        }
-    )
-    $('#tabla_existe_5').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_5').fadeIn();
-            else
-                $('.Arbol_5').fadeOut();
-        }
-    )
-    $('#tabla_existe_6').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_6').fadeIn();
-            else
-                $('.Arbol_6').fadeOut();
-        }
-    )
-    $('#tabla_existe_7').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_7').fadeIn();
-            else
-                $('.Arbol_7').fadeOut();
-        }
-    )
-    $('#tabla_existe_8').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_8').fadeIn();
-            else
-                $('.Arbol_8').fadeOut();
-        }
-    )
-    $('#tabla_existe_9').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_9').fadeIn();
-            else
-                $('.Arbol_9').fadeOut();
-        }
-    )
-    $('#tabla_existe_10').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Arbol_10').fadeIn();
-            else
-                $('.Arbol_10').fadeOut();
-        }
-    )
 </script>
