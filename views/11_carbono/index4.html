@@ -235,6 +235,7 @@ de los formularios de trabajo de campo*/
          function()
          {
             flag =true;
+            // flag faltanNombres se ocupa para validar que escriban nombre común y/o nombre científico
             faltanNombres = false;
             campos=$('.obligatorio');
             campos.each(function() 
@@ -248,17 +249,44 @@ de los formularios de trabajo de campo*/
 
             /*Validando que los campos correspondientes a un árbol estén 
             llenos si estos existen*/
-
             if($('#tabla_existe_1').prop('checked'))
             {
                 campos=$('.Arbol_1 input, .Arbol_1 select');
                 campos.each(function() 
                 {
+                    // validar que escriban nombre común y/o nombre científico
                     var a = $(this)
                     var b = $('#tabla_nombre_comun_1')
                     var c = $('#tabla_nombre_cientifico_1')
-                    if(a.equal(b) || a.equals(c)){
-                        if(!$('#tabla_nombre_comun_1').val() && !$('#tabla_nombre_cientifico_1').val())
+                    // si "a" es el campo es correspondiente a nombre común o a 
+                    // nombre científico se revisa que al menos uno de estos esté lleno
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    // si es algún otro campo se valida que no este vacío
+                    else if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
+                }
+                )
+            }
+            if($('#tabla_existe_2').prop('checked'))
+            {
+                campos=$('.Arbol_2 input, .Arbol_2 select');
+                campos.each(function() 
+                {
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_2')
+                    var c = $('#tabla_nombre_cientifico_2')
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
                         {
                             flag = false;
                             faltanNombres = true;
@@ -271,124 +299,199 @@ de los formularios de trabajo de campo*/
                         flag = false;
                     }
                 }
-                );
-            }
-            if($('#tabla_existe_2').prop('checked'))
-            {
-                campos=$('.Arbol_2 input, .Arbol_2 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
+                )
             }
             if($('#tabla_existe_3').prop('checked'))
             {
                 campos=$('.Arbol_3 input, .Arbol_3 select');
                 campos.each(function() 
                 {
-                    if(!$(this).val())
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_3')
+                    var c = $('#tabla_nombre_cientifico_3')
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    else if(!$(this).val())
                     {
                         //alert('this');
                         flag = false;
                     }
                 }
-                );
+                )
             }
             if($('#tabla_existe_4').prop('checked'))
             {
                 campos=$('.Arbol_4 input, .Arbol_4 select');
                 campos.each(function() 
                 {
-                    if(!$(this).val())
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_4')
+                    var c = $('#tabla_nombre_cientifico_4')
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    else if(!$(this).val())
                     {
                         //alert('this');
                         flag = false;
                     }
                 }
-                );
+                )
             }
             if($('#tabla_existe_5').prop('checked'))
             {
                 campos=$('.Arbol_5 input, .Arbol_5 select');
                 campos.each(function() 
                 {
-                    if(!$(this).val())
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_5')
+                    var c = $('#tabla_nombre_cientifico_5')
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    else if(!$(this).val())
                     {
                         //alert('this');
                         flag = false;
                     }
                 }
-                );
+                )
             }
             if($('#tabla_existe_6').prop('checked'))
             {
                 campos=$('.Arbol_6 input, .Arbol_6 select');
                 campos.each(function() 
                 {
-                    if(!$(this).val())
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_6')
+                    var c = $('#tabla_nombre_cientifico_6')
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    else if(!$(this).val())
                     {
                         //alert('this');
                         flag = false;
                     }
                 }
-                );
+                )
             }
             if($('#tabla_existe_7').prop('checked'))
             {
                 campos=$('.Arbol_7 input, .Arbol_7 select');
                 campos.each(function() 
                 {
-                    if(!$(this).val())
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_7')
+                    var c = $('#tabla_nombre_cientifico_7')
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    else if(!$(this).val())
                     {
                         //alert('this');
                         flag = false;
                     }
                 }
-                );
+                )
             }
             if($('#tabla_existe_8').prop('checked'))
             {
                 campos=$('.Arbol_8 input, .Arbol_8 select');
                 campos.each(function() 
                 {
-                    if(!$(this).val())
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_8')
+                    var c = $('#tabla_nombre_cientifico_8')
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    else if(!$(this).val())
                     {
                         //alert('this');
                         flag = false;
                     }
                 }
-                );
+                )
             }
             if($('#tabla_existe_9').prop('checked'))
             {
                 campos=$('.Arbol_9 input, .Arbol_9 select');
                 campos.each(function() 
                 {
-                    if(!$(this).val())
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_9')
+                    var c = $('#tabla_nombre_cientifico_9')
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    else if(!$(this).val())
                     {
                         //alert('this');
                         flag = false;
                     }
                 }
-                );
+                )
             }
             if($('#tabla_existe_10').prop('checked'))
             {
                 campos=$('.Arbol_10 input, .Arbol_10 select');
                 campos.each(function() 
                 {
-                    if(!$(this).val())
+                    var a = $(this)
+                    var b = $('#tabla_nombre_comun_10')
+                    var c = $('#tabla_nombre_cientifico_10')
+                    if(a.is(b) || a.is(c)){
+                        if(!b.val() && !c.val())
+                        {
+                            flag = false;
+                            faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                        }
+                    }
+                    else if(!$(this).val())
                     {
                         //alert('this');
                         flag = false;
                     }
                 }
-                );
+                )
             }
             //Sin embargo, como el campo de "sitio_muestra_id" es generado por
             //medio de AJAX; no entra en la validación anterior. Lo tenemos que
@@ -396,14 +499,17 @@ de los formularios de trabajo de campo*/
             if(!$('#shadow_clone').find('select:first').val())
             {
                 flag = false;
-                alert('Faltó llenar el sitio');
+            //    alert('Faltó llenar el sitio');
             }
-
             if(!flag)
             {
-                alert('Faltó llenar un campo');
+                if(faltanNombres)
+                    alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+                else
+                    alert('Faltó llenar algún campo');
                 return false;
             }
+
 
         }
 
