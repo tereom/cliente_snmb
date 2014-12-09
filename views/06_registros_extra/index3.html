@@ -461,17 +461,39 @@ $('form').submit
     );
 
     //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-    var fechaReg = /^\d{4}\-\d{2}-\d{2}$/;
+    var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
     campos_fecha=$('.date');
     flag_m = true;
-    campos_fecha.each(function() 
-    {
-      if(!fechaReg.test($(this).val()))
-      {
-              flag_m = false;
-      }
-    }
-    );
+    campos_fecha.each(function(){   
+        if(!fechaReg.test($(this).val()))
+        {
+            flag_m = false;
+        }
+        //Revisando que el mes y el día estén en un rango aceptable:
+        else
+        {
+            //match contiene como primer elemento, el match de toda la regex, y como elementos
+            //posteriores, el match de los elementos en paréntesis de la regex (en órden).
+            var match = fechaReg.exec($(this).val());
+            //alert(match);
+
+            //Validando que el mes se encuentre en un rango aceptable:
+            if(match[1]<1 || match[1]>12)
+            {
+                //alert('El mes es incorrecto');
+                //alert(match[1]);
+                flag_m = false;
+            }
+
+            //Validando que el día se encuentre en un rango aceptable:
+            if(match[2]<1 || match[2]>31)
+            {
+                //alert('El día es incorrecto');
+                //alert(match[2]);
+                flag_m = false;
+            }
+        }
+    });
 
     //Validando los radio-botones "dentro_fuera_conglomerado"
     if(!$('input:radio[name=dentro_fuera_conglomerado]:checked').val())
