@@ -280,7 +280,7 @@ def index2():
     # Tabla de revisión de registros ingresados
     db.Rama_1000h.transecto_ramas_id.writable = False
 
-    grid = SQLFORM.smartgrid(db.Rama_1000h,csv=False,user_signature=False, 
+    grid = SQLFORM.smartgrid(db.Rama_1000h,orderby=~db.Rama_1000h.id,csv=False,user_signature=False, 
         create=False,searchable=False,editable=False)
 
     #Regresando el número de ramas para crear la vista en HTML
