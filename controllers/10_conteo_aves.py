@@ -221,7 +221,7 @@ def index2():
     db.Conteo_ave.punto_conteo_aves_id.writable = False
     db.Archivo_conteo_ave.conteo_ave_id.writable =False
     grid = SQLFORM.smartgrid(db.Conteo_ave,csv=False,user_signature=False,
-        create=False,searchable=False,editable=False)
+        create=False,searchable=False,editable=False,orderby=~db.Conteo_ave.id)
 
     return dict(listaConglomerado=listaConglomerado,
         grid=grid)
