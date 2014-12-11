@@ -343,150 +343,159 @@
         }
     )
 
-    //Rangos de los campos:
+  //Rangos de los campos:
 
   $('.min').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>=60)
-                {
-                    alert('Los minutos están en el rango de 0 a 59');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    $('.seg').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>=60)
-                {
-                    alert('Los segundos están en el rango de 0 a 60');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-    
-    $('.lat_grado').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<13 || $(this).val()>33)
-                {
-                    alert('Los grados correspondientes a latitud están en el rango de 13 a 33');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    $('.lon_grado').change
-    (
-        function()
-        {
-          if(($(this).val()<85|| $(this).val()>119) & ($(this).val()<-119|| $(this).val()>-85))
-          {
-            alert('Los grados correspondientes a longitud están en el rango de 85 a 119 o en el rango -119 a -85');
-            $(this).val("");
-          }
-        }
-    )
-
-    $('.gps_error').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>10)
-                {
-                    alert('El error de precisión está en el rango 0-10');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    $('.altitud').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<-10 || $(this).val()>5715)
-                {
-                    alert('La altitud está en el rango -10 a 5715');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    //Validando, para ello utilizamos la clase "obligatorio":
-    $('form').submit
-    (
+  (
       function()
       {
-        /*flag es un indicador de que la forma está completa
-        faltanNombres es un indicador de que es necesario que se escriban
-        ya sea el nombre común o el científico de la especia (ésto es cuando
-        la especie no se encuentra en la lista de invasoras), y sin embargo,
-        no se ha hecho.*/
-        flag = true;
-        faltanNombres = false;
-
-        campos=$('.obligatorio');
-        campos.each(function(){
-          if(!$(this).val())
+          if($(this).val())
           {
-             flag = false;
+              if($(this).val()<0 || $(this).val()>=60)
+              {
+                  alert('Los minutos están en el rango de 0 a 59');
+                  $(this).val("");
+              }
           }
-        });
+      }
+  )
 
-        //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-        var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
-        campos_fecha=$('.date');
-        flag_m = true;
-        campos_fecha.each(function(){   
-            if(!fechaReg.test($(this).val()))
-            {
-                flag_m = false;
-            }
-            //Revisando que el mes y el día estén en un rango aceptable:
-            else
-            {
-                //match contiene como primer elemento, el match de toda la regex, y como elementos
-                //posteriores, el match de los elementos en paréntesis de la regex (en órden).
-                var match = fechaReg.exec($(this).val());
-                //alert(match);
+  $('.seg').change
+  (
+      function()
+      {
+          if($(this).val())
+          {
+              if($(this).val()<0 || $(this).val()>=60)
+              {
+                  alert('Los segundos están en el rango de 0 a 60');
+                  $(this).val("");
+              }
+          }
+      }
+  )
+    
+  $('.lat_grado').change
+  (
+      function()
+      {
+          if($(this).val())
+          {
+              if($(this).val()<13 || $(this).val()>33)
+              {
+                  alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
+                  $(this).val("");
+              }
+          }
+      }
+  )
 
-                //Validando que el mes se encuentre en un rango aceptable:
-                if(match[1]<1 || match[1]>12)
-                {
-                    //alert('El mes es incorrecto');
-                    //alert(match[1]);
-                    flag_m = false;
-                }
+  $('.lon_grado').change
+  (
+      function()
+      {
+          if($(this).val())
+          {
+              if(($(this).val()<85 || $(this).val()>119) & ($(this).val()<-119 || $(this).val()>-85))
+              {
+                  alert('Los grados correspondientes a longitud  están en el rango de 85 a 119 o en el rango -119 a -85');
+                  $(this).val("");
+              }
+              /* if($(this).val()<-119|| $(this).val()>-85)
+              {
+                  alert('Los grados correspondientes a longitud  están en el rango de -119 a -85');
+                  $(this).val("");
+              }
+              */
+          }
+      }
+  )
 
-                //Validando que el día se encuentre en un rango aceptable:
-                if(match[2]<1 || match[2]>31)
-                {
-                    //alert('El día es incorrecto');
-                    //alert(match[2]);
-                    flag_m = false;
-                }
-            }
-        });
+  $('.gps_error').change
+  (
+      function()
+      {
+          if($(this).val())
+          {
+              if($(this).val()<0 || $(this).val()>10)
+              {
+                  alert('El error de precisión está en el rango 0-10');
+                  $(this).val("");
+              }
+          }
+      }
+  )
+
+  $('.altitud').change
+  (
+      function()
+      {
+          if($(this).val())
+          {
+              if($(this).val()<-10 || $(this).val()>5715)
+              {
+                  alert('La altitud está en el rango -10 a 5715');
+                  $(this).val("");
+              }
+          }
+      }
+  )
+
+  //Validando, para ello utilizamos la clase "obligatorio":
+  $('form').submit
+  (
+    function()
+    {
+      /*flag es un indicador de que la forma está completa
+      faltanNombres es un indicador de que es necesario que se escriban
+      ya sea el nombre común o el científico de la especia (ésto es cuando
+      la especie no se encuentra en la lista de invasoras), y sin embargo,
+      no se ha hecho.*/
+      flag = true;
+      faltanNombres = false;
+
+      campos=$('.obligatorio');
+      campos.each(function(){
+        if(!$(this).val())
+        {
+           flag = false;
+        }
+      });
+
+      //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
+      var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
+      campos_fecha=$('.date');
+      flag_m = true;
+      campos_fecha.each(function(){   
+          if(!fechaReg.test($(this).val()))
+          {
+              flag_m = false;
+          }
+          //Revisando que el mes y el día estén en un rango aceptable:
+          else
+          {
+              //match contiene como primer elemento, el match de toda la regex, y como elementos
+              //posteriores, el match de los elementos en paréntesis de la regex (en órden).
+              var match = fechaReg.exec($(this).val());
+              //alert(match);
+
+              //Validando que el mes se encuentre en un rango aceptable:
+              if(match[1]<1 || match[1]>12)
+              {
+                  //alert('El mes es incorrecto');
+                  //alert(match[1]);
+                  flag_m = false;
+              }
+
+              //Validando que el día se encuentre en un rango aceptable:
+              if(match[2]<1 || match[2]>31)
+              {
+                  //alert('El día es incorrecto');
+                  //alert(match[2]);
+                  flag_m = false;
+              }
+          }
+      });
 
   
       //Validando los radio-botones "dentro_fuera_conglomerado"
@@ -504,42 +513,43 @@
         //alert('falta presionar un radio-botón');
       }
 
-        //Si no se marcó ninguna casilla para ingresar el nombre
-        if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
-        {
-          flag = false;
-          faltanNombres = true;
-          //alert('caso1');
-        }
-        else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
-        /*Si se marcó la casilla de nombre común pero no se escribió
-        nada en el campo subsecuente.*/
-        {
-          flag = false;
-          faltanNombres = true;
-          //alert('caso2');
-        }
-         //Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
-        else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
-        {
-          flag = false;
-          faltanNombres = true;
-          //alert('caso3');
-        }
-
-        if(!flag)
-          {
-              if(faltanNombres)
-                alert('Favor de escribir al menos un nombre (ya sea común científico)');
-              else
-                alert('Faltó llenar algún campo o subir alguna imagen.');
-
-              return false;
+      //Si no se marcó ninguna casilla para ingresar el nombre
+      if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+      {
+        flag = false;
+        faltanNombres = true;
+        //alert('caso1');
       }
+      else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
+      /*Si se marcó la casilla de nombre común pero no se escribió
+      nada en el campo subsecuente.*/
+      {
+        flag = false;
+        faltanNombres = true;
+        //alert('caso2');
+      }
+       //Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
+      else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
+      {
+        flag = false;
+        faltanNombres = true;
+        //alert('caso3');
+      }
+
+      if(!flag)
+        {
+            if(faltanNombres)
+              alert('Favor de escribir al menos un nombre (ya sea común científico)');
+            else
+              alert('Faltó llenar algún campo o subir alguna imagen.');
+
+            return false;
+      }
+
       else if(!flag_m){
         alert('El formato de fecha es aaaa-mm-dd');
         return false;
       }
-      }
-    )
+    }
+  )
 </script>
