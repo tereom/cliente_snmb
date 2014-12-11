@@ -205,7 +205,9 @@ def index2():
     # Tabla de revisión de registros ingresados
     db.Especie_invasora.transecto_especies_invasoras_id.writable = False
     db.Archivo_especie_invasora.especie_invasora_id.writable =False
-    grid = SQLFORM.smartgrid(db.Especie_invasora,csv=False,user_signature=False, 
+
+    grid = SQLFORM.smartgrid(db.Especie_invasora,orderby=~db.Especie_invasora.id,\
+        csv=False,user_signature=False, 
         create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,\

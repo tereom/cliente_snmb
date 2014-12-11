@@ -177,7 +177,9 @@ def index2():
     # Tabla de revisión de registros ingresados
     db.Huella_excreta.transecto_huellas_excretas_id.writable = False
     db.Archivo_huella_excreta.huella_excreta_id.writable =False
-    grid = SQLFORM.smartgrid(db.Huella_excreta,csv=False,user_signature=False,
+    
+    grid = SQLFORM.smartgrid(db.Huella_excreta,orderby=~db.Huella_excreta.id,\
+        csv=False,user_signature=False,
         create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,

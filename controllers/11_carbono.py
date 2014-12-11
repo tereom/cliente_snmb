@@ -683,7 +683,8 @@ def index4():
 
     # Tabla de revisión de registros ingresados
     db.Arbol_transecto.sitio_muestra_id.writable = False
-    grid = SQLFORM.smartgrid(db.Arbol_transecto,csv=False,user_signature=False, 
+    grid = SQLFORM.smartgrid(db.Arbol_transecto,orderby=~db.Arbol_transecto.id,\
+        csv=False,user_signature=False, 
         create=False,searchable=False,editable=False)
 
     #Regresando el número de ramas para crear la vista en HTML

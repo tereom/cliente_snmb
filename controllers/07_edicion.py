@@ -130,7 +130,8 @@ def editarConglomerado():
         linked_tables=['Sitio_muestra', 'Imagen_referencia_sitio'],
         user_signature=False, 
         csv=False,
-        maxtextlengths={'Imagen_referencia_sitio.archivo_nombre_original' : 50}
+        maxtextlengths={'Imagen_referencia_sitio.archivo_nombre_original' : 50},
+        headers={'Sitio_muestra.existe' : 'Muestreado'}
         )
     return dict(form=form)
     
