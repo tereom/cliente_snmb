@@ -287,7 +287,14 @@ def index2():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-    return dict(listaConglomerado=listaConglomerado)
+    # Tabla de revisión de registros ingresados
+    db.Archivo_grabadora.grabadora_id.writable = False
+    grid = SQLFORM.smartgrid(db.Archivo_grabadora,orderby=~db.Archivo_grabadora.id,\
+        csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
+    return dict(listaConglomerado=listaConglomerado,grid=grid)
+
+
 
 # def asignarGrabadoras():
 

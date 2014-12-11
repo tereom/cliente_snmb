@@ -236,8 +236,13 @@ def index2():
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
-
-    return dict(listaConglomerado=listaConglomerado)
+    
+    # Tabla de revisión de registros ingresados
+    db.Archivo_camara.camara_id.writable = False
+    grid = SQLFORM.smartgrid(db.Archivo_camara,orderby=~db.Archivo_camara.id,\
+        csv=False,user_signature=False, 
+        create=False,searchable=False,editable=False)
+    return dict(listaConglomerado=listaConglomerado,grid=grid)
 
 #La siguiente función es para generar una combobox de cámaras por sitio, es decir,
 #sirve mejor para cuando hay más de una cámara declarada en un sitio.

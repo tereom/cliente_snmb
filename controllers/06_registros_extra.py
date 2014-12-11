@@ -153,7 +153,9 @@ def index1():
     # Tabla de revisión de registros ingresados
     db.Especie_invasora_extra.conglomerado_muestra_id.writable = False
     db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable =False
-    grid = SQLFORM.smartgrid(db.Especie_invasora_extra,csv=False,user_signature=False, 
+
+    grid = SQLFORM.smartgrid(db.Especie_invasora_extra,orderby=~db.Especie_invasora_extra.id,\
+        csv=False,user_signature=False, \
         create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,\
@@ -281,7 +283,9 @@ def index2():
     # Tabla de revisión de registros ingresados
     db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
     db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable =False
-    grid = SQLFORM.smartgrid(db.Huella_excreta_extra,csv=False,user_signature=False, 
+
+    grid = SQLFORM.smartgrid(db.Huella_excreta_extra,orderby=~db.Huella_excreta_extra.id,\
+        csv=False,user_signature=False, \
         create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,\
@@ -410,7 +414,9 @@ def index3():
     # Tabla de revisión de registros ingresados
     db.Especimen_restos_extra.conglomerado_muestra_id.writable = False
     db.Archivo_especimen_restos_extra.especimen_restos_extra_id.writable =False
-    grid = SQLFORM.smartgrid(db.Especimen_restos_extra,csv=False,user_signature=False, 
+
+    grid = SQLFORM.smartgrid(db.Especimen_restos_extra,orderby=~db.Especimen_restos_extra.id,\
+        csv=False,user_signature=False, \
         create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,\
