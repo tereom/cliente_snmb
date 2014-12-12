@@ -50,7 +50,7 @@ def obtenerFotografia():
 
         #else:
 
-        revisionHTML += "<img src='/cliente_web2py/08_revision/download/"+datosFoto.archivo+\
+        revisionHTML += "<img src='/init/08_revision/download/"+datosFoto.archivo+\
             "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"
 
         revisionHTML +="</center><hr/><div><div style='float:left;padding-right:60px;'><label "+\
