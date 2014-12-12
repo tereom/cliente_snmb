@@ -171,6 +171,7 @@ def editarEspeciesInvasoras():
     form = SQLFORM.smartgrid(db.Transecto_especies_invasoras_muestra,
         #linked_tables=['Especie_invasora'],
         csv=False,
+        maxtextlengths={'Archivo_especie_invasora.archivo_nombre_original' : 50},
         user_signature=False)
     return dict(form=form)
 
@@ -181,6 +182,7 @@ def editarHuellasExcretas():
     form = SQLFORM.smartgrid(db.Transecto_huellas_excretas_muestra,
         #linked_tables=['Huella_excreta'],
         csv=False,
+        maxtextlengths={'Archivo_huella_excreta.archivo_nombre_original' : 50},
         user_signature=False,
         headers={'Huella_excreta.es_huella' : 'Huella'})
     return dict(form=form)
@@ -190,6 +192,7 @@ def editarEspeciesInvasorasExtra():
     db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable=False    
     form = SQLFORM.smartgrid(db.Especie_invasora_extra,
         csv=False,
+        maxtextlengths={'Archivo_especie_invasora_extra.archivo_nombre_original' : 50},
         user_signature=False)
     return dict(form=form)
 
@@ -198,6 +201,7 @@ def editarHuellasExcretasExtra():
     db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable = False
     form = SQLFORM.smartgrid(db.Huella_excreta_extra,
         csv=False,
+        maxtextlengths={'Archivo_huella_excreta_extra.archivo_nombre_original' : 50},
         user_signature=False,
         headers={'Huella_excreta_extra.es_huella' : 'Huella'})
     return dict(form=form)
@@ -207,6 +211,7 @@ def editarEspecimenExtra():
     db.Archivo_especimen_restos_extra.especimen_restos_extra_id.writable = False
     form = SQLFORM.smartgrid(db.Especimen_restos_extra,
         csv=False,
+        maxtextlengths={'Archivo_especimen_restos_extra.archivo_nombre_original' : 50},
         user_signature=False)
     return dict(form=form)
 

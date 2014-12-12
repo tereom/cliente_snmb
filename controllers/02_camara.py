@@ -241,7 +241,8 @@ def index2():
     db.Archivo_camara.camara_id.writable = False
     grid = SQLFORM.smartgrid(db.Archivo_camara,orderby=~db.Archivo_camara.id,\
         csv=False,user_signature=False, 
-        create=False,searchable=False,editable=False)
+        create=False,searchable=False,editable=False,
+        maxtextlengths={'Archivo_camara.archivo_nombre_original' : 50})
     return dict(listaConglomerado=listaConglomerado,grid=grid)
 
 #La siguiente función es para generar una combobox de cámaras por sitio, es decir,

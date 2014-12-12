@@ -291,7 +291,8 @@ def index2():
     db.Archivo_grabadora.grabadora_id.writable = False
     grid = SQLFORM.smartgrid(db.Archivo_grabadora,orderby=~db.Archivo_grabadora.id,\
         csv=False,user_signature=False, 
-        create=False,searchable=False,editable=False)
+        create=False,searchable=False,editable=False,
+        maxtextlengths={'Archivo_grabadora.archivo_nombre_original' : 50})
     return dict(listaConglomerado=listaConglomerado,grid=grid)
 
 
