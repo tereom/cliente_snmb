@@ -154,7 +154,7 @@ def index1():
     db.Especie_invasora_extra.conglomerado_muestra_id.writable = False
     db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable =False
 
-    grid = SQLFORM.smartgrid(db.Especie_invasora_extra,orderby=~db.Especie_invasora_extra.id,\
+    grid = SQLFORM.grid(db.Especie_invasora_extra,orderby=~db.Especie_invasora_extra.id,\
         csv=False,user_signature=False, \
         create=False,searchable=False,editable=False)
 
@@ -284,7 +284,7 @@ def index2():
     db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
     db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable =False
 
-    grid = SQLFORM.smartgrid(db.Huella_excreta_extra,orderby=~db.Huella_excreta_extra.id,\
+    grid = SQLFORM.grid(db.Huella_excreta_extra,orderby=~db.Huella_excreta_extra.id,\
         csv=False,user_signature=False, \
         create=False,searchable=False,editable=False)
 
@@ -415,7 +415,7 @@ def index3():
     db.Especimen_restos_extra.conglomerado_muestra_id.writable = False
     db.Archivo_especimen_restos_extra.especimen_restos_extra_id.writable =False
 
-    grid = SQLFORM.smartgrid(db.Especimen_restos_extra,orderby=~db.Especimen_restos_extra.id,\
+    grid = SQLFORM.grid(db.Especimen_restos_extra,orderby=~db.Especimen_restos_extra.id,\
         csv=False,user_signature=False, \
         create=False,searchable=False,editable=False)
 

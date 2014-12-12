@@ -206,7 +206,7 @@ def index2():
     db.Especie_invasora.transecto_especies_invasoras_id.writable = False
     db.Archivo_especie_invasora.especie_invasora_id.writable =False
 
-    grid = SQLFORM.smartgrid(db.Especie_invasora,orderby=~db.Especie_invasora.id,\
+    grid = SQLFORM.grid(db.Especie_invasora,orderby=~db.Especie_invasora.id,\
         csv=False,user_signature=False, 
         create=False,searchable=False,editable=False)
 
