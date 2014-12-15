@@ -62,8 +62,9 @@ response.menu = [
     ### Camara
     (T('Trampa cámara'), False, URL('02_camara', 'index1'), [
       (T('Información de trampa cámara'), False, URL('02_camara', 'index1')),
-      (T('Archivos trampa cámara'), False, URL('02_camara', 'index2'))]),
-
+      (T('Archivos trampa cámara'), False, URL('02_camara', 'index2')),
+      # Revisión de imágenes
+      (T('Selección de fauna'), False, URL('08_revision', 'index'))]),
     ### Grabadora
     (T('Grabadora'), False, URL('03_grabadora', 'index1'), [
       (T('Información de grabadora'), False, URL('03_grabadora', 'index1')),
@@ -96,8 +97,6 @@ response.menu = [
       (T('Especímenes extra'), False, URL('07_edicion', 'editarEspecimenExtra')),
       ]),
     
-    # Revisión de imágenes
-    (T('Selección de fauna'), False, URL('08_revision', 'index'), []),
     # Exportación
     (T('Exportar datos'), False, URL('09_exportador', 'index'), [])
     ]
