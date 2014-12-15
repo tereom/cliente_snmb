@@ -207,11 +207,7 @@ def index2():
     db.Archivo_especie_invasora.especie_invasora_id.writable =False
 
     grid = SQLFORM.grid(db.Especie_invasora,orderby=~db.Especie_invasora.id,\
-<<<<<<< Updated upstream
-        csv=False,user_signature=False, 
-=======
         csv=False,user_signature=False,
->>>>>>> Stashed changes
         create=False,searchable=False,editable=False)
 
     return dict(listaConglomerado=listaConglomerado,\
