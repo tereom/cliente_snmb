@@ -116,15 +116,6 @@ def index1():
             #Guardando la imagen de referencia en la carpeta adecuada
             db.Imagen_referencia_micrifonos.insert(**datosArchivoImagen)
 
-        response.flash = 'Éxito'
-        
-    elif forma.errors:
-
-        response.flash = 'Hubo un error al llenar la forma'
-       
-    else:
-        pass
-
 
         #Guardando la imagen de referencia en la carpeta adecuada
         imagenRefMicro = db.Imagen_referencia_microfonos.archivo.store(
