@@ -94,8 +94,38 @@ def index1():
         
         db.Imagen_referencia_grabadora.insert(**datosImagenRef)
 
-        ################Procesando la imagen de referencia micrófonos#################################
+        ################Procesando las imagenes de referencia micrófonos#################################
+
+        archivos = forma.vars['imagen_microfonos']
+
+        if not isinstance(archivos, list):
         
+            archivos = [archivos]
+
+        for aux in archivos:
+
+            #Guardando el archivo en la carpeta adecuada
+            archivoImagen = db.Imagen_referencia_microfonos.archivo.store(aux,aux.filename)
+
+            datosArchivoImagen = {}
+            datosArchivoImagen['grabadora_id'] = grabadoraInsertada
+            datosArchivoImagen['archivo'] = archivoImagen
+            datosArchivoImagen['archivo_nombre_original'] = aux.filename
+
+
+            #Guardando la imagen de referencia en la carpeta adecuada
+            db.Imagen_referencia_micrifonos.insert(**datosArchivoImagen)
+
+        response.flash = 'Éxito'
+        
+    elif forma.errors:
+
+        response.flash = 'Hubo un error al llenar la forma'
+       
+    else:
+        pass
+
+
         #Guardando la imagen de referencia en la carpeta adecuada
         imagenRefMicro = db.Imagen_referencia_microfonos.archivo.store(
             formaGrabadora.vars.imagen_microfonos.file,formaGrabadora.vars.imagen_microfonos.filename)
