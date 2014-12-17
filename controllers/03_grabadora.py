@@ -48,7 +48,7 @@ def index1():
     INPUT(_name='imagen_grabadora',_type='file',requires=IS_NOT_EMPTY()),
 
     ###########Imagen de referencia micrófonos ############
-    INPUT(_name='imagen_microfonos',_type='file',requires=IS_NOT_EMPTY()),
+    INPUT(_name='imagen_microfonos',_type='file',_multiple=True,requires=IS_NOT_EMPTY()),
     
     ###########Archivo referencia grabadora ############
     INPUT(_name='archivo_metadatos',_type='file',requires=IS_NOT_EMPTY()),
@@ -96,7 +96,7 @@ def index1():
 
         ################Procesando las imagenes de referencia micrófonos#################################
 
-        archivos = forma.vars['imagen_microfonos']
+        archivos = formaGrabadora.vars['imagen_microfonos']
 
         if not isinstance(archivos, list):
         
@@ -105,32 +105,17 @@ def index1():
         for aux in archivos:
 
             #Guardando el archivo en la carpeta adecuada
-            archivoImagen = db.Imagen_referencia_microfonos.archivo.store(aux,aux.filename)
+            imagenRefMicro = db.Imagen_referencia_microfonos.archivo.store(aux,aux.filename)
 
-            datosArchivoImagen = {}
-            datosArchivoImagen['grabadora_id'] = grabadoraInsertada
-            datosArchivoImagen['archivo'] = archivoImagen
-            datosArchivoImagen['archivo_nombre_original'] = aux.filename
+            #Creando los campos de la tabla Imagen_referencia_microfonos:
 
+            datosImagenRefMicro = {}
+            datosImagenRefMicro['grabadora_id'] = grabadoraInsertada
+            datosImagenRefMicro['archivo'] = imagenRefMicro
+            datosImagenRefMicro['archivo_nombre_original'] = aux.filename
 
-            #Guardando la imagen de referencia en la carpeta adecuada
-            db.Imagen_referencia_micrifonos.insert(**datosArchivoImagen)
-
-
-        #Guardando la imagen de referencia en la carpeta adecuada
-        imagenRefMicro = db.Imagen_referencia_microfonos.archivo.store(
-            formaGrabadora.vars.imagen_microfonos.file,formaGrabadora.vars.imagen_microfonos.filename)
-        
-        #Creando los campos de la tabla Archivo_referencia_grabadora:
-        
-        datosImagenRefMicro = {}
-        datosImagenRefMicro['grabadora_id'] = grabadoraInsertada
-        datosImagenRefMicro['archivo'] = imagenRefMicro
-        datosImagenRefMicro['archivo_nombre_original'] = formaGrabadora.vars.imagen_microfonos.filename
-        
-        #Insertando el registro en la base de datos:
-        
-        db.Imagen_referencia_microfonos.insert(**datosImagenRefMicro)
+            #Insertando el registro en la base de datos:
+            db.Imagen_referencia_microfonos.insert(**datosImagenRefMicro)
 
         ################Procesando el archivo de metadatos#################################
         
