@@ -26,10 +26,10 @@ response.menu = [
 
     (T('Conglomerado'), False, URL('01_conglomerado', 'index'), []),
 
-    ### Conteo de aves
-    (T('Conteo de aves'), False, URL('10_conteo_aves', 'index1'), [
-      (T('Punto de conteo'), False, URL('10_conteo_aves', 'index1')),
-      (T('Observaciones aves'), False, URL('10_conteo_aves', 'index2'))]),
+    # ### Conteo de aves
+    # (T('Conteo de aves'), False, URL('10_conteo_aves', 'index1'), [
+    #   (T('Punto de conteo'), False, URL('10_conteo_aves', 'index1')),
+    #   (T('Observaciones aves'), False, URL('10_conteo_aves', 'index2'))]),
 
     ### Especies invasoras
     (T('Especies invasoras'), False, URL('04_especies_invasoras', 'index1'), [
@@ -41,23 +41,23 @@ response.menu = [
       (T('Transecto huellas y excretas'), False, URL('05_huellas_excretas', 'index1')),
       (T('Huellas y excretas'), False, URL('05_huellas_excretas', 'index2'))]),
 
-    ### Carbono
-    (T('Vegetación y suelo'), False, URL('11_carbono', 'index1'), [
-      (T('Material leñoso caído'), False, URL('11_carbono', 'index1')),
-      (T('Material 1000h'), False, URL('11_carbono', 'index2')),
-      (T('Carbono en el mantillo'), False, URL('11_carbono', 'index3')),
-      (T('Árboles pequeños y arbustos'), False, URL('11_carbono', 'index4')),
-      (T('Árboles grandes'), False, URL('11_carbono', 'index5'))]),
+    # ### Carbono
+    # (T('Vegetación y suelo'), False, URL('11_carbono', 'index1'), [
+    #   (T('Material leñoso caído'), False, URL('11_carbono', 'index1')),
+    #   (T('Material 1000h'), False, URL('11_carbono', 'index2')),
+    #   (T('Carbono en el mantillo'), False, URL('11_carbono', 'index3')),
+    #   (T('Árboles pequeños y arbustos'), False, URL('11_carbono', 'index4')),
+    #   (T('Árboles grandes'), False, URL('11_carbono', 'index5'))]),
 
-    ### Epífitas
-    (T('Epífitas'), False, URL('12_epifitas', 'index'),[]),
+    # ### Epífitas
+    # (T('Epífitas'), False, URL('12_epifitas', 'index'),[]),
 
-    ### Impactos ambientales
-    (T('Impactos ambientales'),False,URL('13_impactos_ambientales','index3'), [
-      (T('Incendios'),False,URL('13_impactos_ambientales','index3')),
-      (T('Plagas'),False,URL('13_impactos_ambientales','index2')),
-      (T('Impactos actuales'),False,URL('13_impactos_ambientales','index1'))
-      ]),
+    # ### Impactos ambientales
+    # (T('Impactos ambientales'),False,URL('13_impactos_ambientales','index3'), [
+    #   (T('Incendios'),False,URL('13_impactos_ambientales','index3')),
+    #   (T('Plagas'),False,URL('13_impactos_ambientales','index2')),
+    #   (T('Impactos actuales'),False,URL('13_impactos_ambientales','index1'))
+    #   ]),
 
     ### Camara
     (T('Trampa cámara'), False, URL('02_camara', 'index1'), [
@@ -65,6 +65,7 @@ response.menu = [
       (T('Archivos trampa cámara'), False, URL('02_camara', 'index2')),
       # Revisión de imágenes
       (T('Selección de fauna'), False, URL('08_revision', 'index'))]),
+    
     ### Grabadora
     (T('Grabadora'), False, URL('03_grabadora', 'index1'), [
       (T('Información de grabadora'), False, URL('03_grabadora', 'index1')),
@@ -79,17 +80,17 @@ response.menu = [
     ### Edición
     (T('Revisar registros'), False, URL('07_edicion', 'editarConglomerado'), [
       (T('Conglomerado'), False, URL('07_edicion', 'editarConglomerado')),
-      (T('Conteo de aves'), False, URL('07_edicion', 'editarConteoAves')),
+      # (T('Conteo de aves'), False, URL('07_edicion', 'editarConteoAves')),
       (T('Especies Invasoras'), False, URL('07_edicion', 'editarEspeciesInvasoras')),
       (T('Huellas y excretas'), False, URL('07_edicion', 'editarHuellasExcretas')),
-      (T('Material leñoso'), False, URL('07_edicion', 'editarCarbonoRamas')),
-      (T('Carbono mantillo'), False, URL('07_edicion', 'editarCarbono')),
-      (T('Árboles pequeños'), False, URL('07_edicion', 'editarArbolTransecto')),
-      (T('Árboles grandes'), False, URL('07_edicion', 'editarArbolCuadrante')),
-      (T('Epífitas'), False, URL('07_edicion', 'editarEpifitas')),
-      (T('Incendios'), False, URL('07_edicion', 'editarIncendio')),
-      (T('Plagas'), False, URL('07_edicion', 'editarPlaga')),
-      (T('Impactos ambientales'), False, URL('07_edicion', 'editarImpacto')),
+      # (T('Material leñoso'), False, URL('07_edicion', 'editarCarbonoRamas')),
+      # (T('Carbono mantillo'), False, URL('07_edicion', 'editarCarbono')),
+      # (T('Árboles pequeños'), False, URL('07_edicion', 'editarArbolTransecto')),
+      # (T('Árboles grandes'), False, URL('07_edicion', 'editarArbolCuadrante')),
+      # (T('Epífitas'), False, URL('07_edicion', 'editarEpifitas')),
+      # (T('Incendios'), False, URL('07_edicion', 'editarIncendio')),
+      # (T('Plagas'), False, URL('07_edicion', 'editarPlaga')),
+      # (T('Impactos ambientales'), False, URL('07_edicion', 'editarImpacto')),
       (T('Trampa cámara'), False, URL('07_edicion', 'editarCamara')),
       (T('Grabadora'), False, URL('07_edicion', 'editarGrabadora')),
       (T('Especies Invasoras extra'), False, URL('07_edicion', 'editarEspeciesInvasorasExtra')),

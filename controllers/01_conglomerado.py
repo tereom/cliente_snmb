@@ -172,8 +172,8 @@ def index():
         
         datosConglomerado=db.Conglomerado_muestra._filter_fields(forma.vars)
         
-        #Campo oculto SAC-MOD, SAR-MOD
-        datosConglomerado['monitoreo_tipo']='SAR-MOD'
+        #Campo oculto SAC-MOD (Conafor), SAR-MOD (Conanp)
+        datosConglomerado['monitoreo_tipo']='SAC-MOD'
 
         #Si no escogieron "uso_suelo_tipo" como "Vegetación", entonces anulamos
         #(por consistencia en base de datos), los valores que se pudieran haber
