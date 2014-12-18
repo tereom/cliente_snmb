@@ -2,151 +2,166 @@
 {{block head}}
 <style type="text/css">
 
-    .Tabla .double, .Tabla .string, .Tabla .integer
-    {
-        margin-right: 2cm;
-        width: 4cm;
-    }
-    
-    .Tabla .generic-widget
-    {
-    	 margin-right: 2cm;
-        width: 4.4cm;
-    }
-    
-    .FlotaIzquierda
-    {
-        float: left;
-    }
+.Tabla .double, .Tabla .string, .Tabla .integer
+{
+    margin-right: 2cm;
+    width: 4cm;
+}
+
+.Tabla .generic-widget
+{
+     margin-right: 2cm;
+    width: 4.4cm;
+}
+
+.FlotaIzquierda
+{
+    float: left;
+}
 
 </style>
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post">
-	<input type="hidden"  name="_formname" value="formaConteoAveHTML"/>
-	<fieldset>
-		<legend>
-		Conteo de Aves
-		</legend>
-		<table class="Tabla">
-			<tr>
-				<td>
-					<div>
-						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
-					</div>
-					<div>
-					<!--este campo, en realidad sólo sirve para encontrar
-            		con AJAX los transectos declarados asociados al conglomerado
-            		elegido. Al enviar la forma al controlador, se utilizará
-            		para guardar el registro de la especie invasora únicamente el
-            		id del transecto (de la dropdown generada mediante AJAX)-->
-						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-							<option value=""/>
-							{{for conglomerado in listaConglomerado:}}
-								<option value="{{=conglomerado.id}}">
-									{{=conglomerado.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_sitio_muestra_id">Sitio</label>
-					</div>
-					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
-					<div id="shadow_clone">
-						<select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
-							<option value=""/>
-						</select>
-					</div>
-				</td>
-				<td>
+    <input type="hidden"  name="_formname" value="formaConteoAveHTML"/>
+    <fieldset>
+        <legend>
+        Conteo de Aves
+        </legend>
+        <table class="Tabla">
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+                    </div>
+                    <div>
+                    <!--este campo, en realidad sólo sirve para encontrar
+                    con AJAX los transectos declarados asociados al conglomerado
+                    elegido. Al enviar la forma al controlador, se utilizará
+                    para guardar el registro de la especie invasora únicamente el
+                    id del transecto (de la dropdown generada mediante AJAX)-->
+                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                            <option value=""/>
+                            {{for conglomerado in listaConglomerado:}}
+                                <option value="{{=conglomerado.id}}">
+                                    {{=conglomerado.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_sitio_muestra_id">Sitio</label>
+                    </div>
+                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+                    <div id="shadow_clone">
+                        <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+                            <option value=""/>
+                        </select>
+                    </div>
+                </td>
+                <td>
           <!-- el siguiente div guardará la información del punto de conteo de aves declarado en determinado conglomerado
           y sitio, si es que existe. La clase Mensaje se usa para esconder el campo-->
-					<div id="shadow_clone_2" class="Mensaje">
-						<input type='hidden' name='punto_conteo_aves_id' id='tabla_punto_conteo_aves_id' value=''/>
-          </div>
-				</td>
-			</tr>
-    </table>
-    <hr/>
-      <div>
-        <div class="FlotaIzquierda" style="padding-right:10px;">
-          <label for="tabla_es_visual">Observación visual</label>
+                <div id="shadow_clone_2" class="Mensaje">
+                        <input type='hidden' name='punto_conteo_aves_id' id='tabla_punto_conteo_aves_id' value=''/>
+                </div>
+                </td>
+            </tr>
+        </table>
+        <hr/>
+        <div>
+            <div class="FlotaIzquierda" style="padding-right:10px;">
+                <label for="tabla_es_visual">Observación visual</label>
+            </div>
+            <div class="FlotaIzquierda" style="padding-right:30px;">
+                <input class="boolean" name="es_visual" id="tabla_es_visual" type="checkbox" value="on"/>
+            </div>
+            <div class="FlotaIzquierda" style="padding-right:10px;">
+                <label for="tabla_es_sonora">Observación sonora</label>
+            </div>
+            <div>
+                <input class="boolean" name="es_sonora" id="tabla_es_sonora" type="checkbox" value="on"/>
+            </div>
         </div>
-        <div class="FlotaIzquierda" style="padding-right:30px;">
-          <input class="boolean" name="es_visual" id="tabla_es_visual" type="checkbox" value="on"/>
-        </div>
-        <div class="FlotaIzquierda" style="padding-right:10px;">
-          <label for="tabla_es_sonora">Observación sonora</label>
-        </div>
-        <div >
-          <input class="boolean" name="es_sonora" id="tabla_es_sonora" type="checkbox" value="on"/>
-        </div>
-      </div>
-    <hr/>
-    <table class="Tabla">
-			<tr>
-				<td>
-					<div class="FlotaIzquierda" style="padding-right:10px;">
-						<input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
-					</div>
-					<div class="FlotaIzquierda" style="padding-right:22px;">
-						<label for="tabla_nombre_comun">Nombre común</label>
-					</div>
-					<div class="FlotaIzquierda">
-						<input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div class="FlotaIzquierda" style="padding-right:10px;">
-						<input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
-					</div>
-					<div class="FlotaIzquierda" style="padding-right:10px;">
-						<label for="tabla_nombre_cientifico">Nombre científico</label>
-					</div>
-					<div class="FlotaIzquierda">
-						<input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
-					</div>
-				</td>
-			</tr>
-    </table>
-    <hr/>
-    <table class="Tabla">
-    	<tr>
-    		<td>
-    			<div>
-            <label for="tabla_numero_individuos">Número de individuos</label>
-          </div>
-          <div>
-            <input class="integer obligatorio" name="numero_individuos" id="tabla_numero_individuos" type="text" value=""/>
-          </div>
-        </td>
-        <td>
-          <div>
-            <label for="tabla_distancia_aproximada">Distancia aproximada (m)</label>
-          </div>
-          <div>
-            <input class="double obligatorio" name="distancia_aproximada" id="tabla_distancia_aproximada" type="text" value=""/>
-          </div>
-        </td>
-    	</tr>
-      <tr>
-        <td colspan="2">
-          <div>
-            <label for="tabla_archivos_conteo_ave">Subir archivos*</label>
-          </div>
-          <div>
-            <input type="file" id="tabla_archivos_conteo_ave" name="archivos_conteo_ave" multiple/>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </fieldset>
-	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+        <hr/>
+        <table class="Tabla">
+            <tr>
+                <td rowspan="2" class="CentrarV">
+                    <div>
+                        <label for="tabla_conabio_lista">Lista aves</label>
+                    </div>
+                    <div>
+                        <select class="generic-widget obligatorio" name="conabio_lista" id="tabla_conabio_lista">
+                            <option value=""/>
+                            {{for ave in listaConabio:}}
+                                <option value="{{=ave.nombre}}">
+                                    {{=ave.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
+                    </div>
+                </td>   
+                <td>
+                    <div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+                        <input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
+                    </div>
+                    <div class="Nombre FlotaIzquierda" style="padding-right:22px;">
+                        <label for="tabla_nombre_comun">Nombre común</label>
+                    </div>
+                    <div class="FlotaIzquierda">
+                        <input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+                        <input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
+                    </div>
+                    <div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+                        <label for="tabla_nombre_cientifico">Nombre científico</label>
+                    </div>
+                    <div class="FlotaIzquierda">
+                        <input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <hr/>
+        <table class="Tabla">
+            <tr>
+                <td>
+                    <div>
+                        <label for="tabla_numero_individuos">Número de individuos</label>
+                    </div>
+                    <div>
+                        <input class="integer obligatorio" name="numero_individuos" id="tabla_numero_individuos" type="text" value=""/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <label for="tabla_distancia_aproximada">Distancia aproximada (m)</label>
+                    </div>
+                    <div>
+                        <input class="double obligatorio" name="distancia_aproximada" id="tabla_distancia_aproximada" type="text" value=""/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div>
+                        <label for="tabla_archivos_conteo_ave">Subir archivos*</label>
+                    </div>
+                    <div>
+                        <input type="file" id="tabla_archivos_conteo_ave" name="archivos_conteo_ave" multiple/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
 <br/>
@@ -160,19 +175,6 @@
 {{=grid}}
 
 <script>
-
-$(document).ready
-(
-  function()
-  {
-    /*Cuando el documento se carga, las casillas para seleccionar nombres
-    están seleccionadas y los campos de texto son visibles (default):*/
-
-    $('#tabla_hay_nombre_comun').prop('checked', true);
-
-    $('#tabla_hay_nombre_cientifico').prop('checked', true);
-  }
-)
 
 //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
 $('#tabla_conglomerado_muestra_id').change
@@ -224,41 +226,81 @@ $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
 }
 );
 
-$('#tabla_hay_nombre_comun').change
+$(document).ready
 (
   function()
   {
-    if($(this).prop('checked'))
-
-      $('#tabla_nombre_comun').fadeIn();
-    
-    else
-      $('#tabla_nombre_comun').fadeOut();
+    /*Cuando el documento se carga, los campos para ingresar nombre están
+    escondidos*/
+    // La clase Nombre engloba las checkbox y las etiquetas.
+    $('.Nombre').hide();
+    $('#tabla_nombre_comun').hide();
+    $('#tabla_nombre_cientifico').hide();
   }
 )
+/*Fade in de los campos de ingreso de nombre del ave si no se encuentra en
+la lista.*/
 
-$('#tabla_hay_nombre_cientifico').change
+$('#tabla_conabio_lista').change
 (
-  function()
-  {
-    if($(this).prop('checked'))
+    function()
+    {
+        if($(this).val()=="Otros")
+        {
+            //Aparecen las casillas y etiquetas
+            $('.Nombre').fadeIn();
 
-      $('#tabla_nombre_cientifico').fadeIn();
+            $('#tabla_hay_nombre_comun').prop('checked', true);
+            $('#tabla_nombre_comun').fadeIn();
 
-    else
+            $('#tabla_hay_nombre_cientifico').prop('checked', true);
+            $('#tabla_nombre_cientifico').fadeIn();
+        }
+        else
+        {
+            $('#tabla_hay_nombre_comun').prop('checked', false);
+            $('#tabla_nombre_comun').fadeOut();
 
-      $('#tabla_nombre_cientifico').fadeOut();
-  }
+            $('#tabla_hay_nombre_cientifico').prop('checked', false);
+            $('#tabla_nombre_cientifico').fadeOut();
+
+            $('.Nombre').fadeOut();
+        }
+    }
+)
+/*Fade in/out de los campos de ingreso de nombre común/científico, de acuerdo
+a si se marcó o no la casilla correspondiente*/
+
+$('#tabla_hay_nombre_comun').change
+(
+    function()
+    {
+        if($(this).prop('checked'))
+            $('#tabla_nombre_comun').fadeIn();
+        else
+            $('#tabla_nombre_comun').fadeOut();
+    }
+)
+
+ $('#tabla_hay_nombre_cientifico').change
+(
+    function()
+    {
+        if($(this).prop('checked'))
+            $('#tabla_nombre_cientifico').fadeIn();
+        else
+            $('#tabla_nombre_cientifico').fadeOut();
+    }
 )
 
 //Validando, para ello utilizamos la clase "obligatorio":
 $('form').submit
 (
-	function()
-	{
-		/*flag es un indicador de que la forma está completa
-		faltanNombres es un indicador de que es necesario que se escriban
-		ya sea el nombre común o el científico de la especie, y sin embargo,
+    function()
+    {
+        /*flag es un indicador de que la forma está completa
+        faltanNombres es un indicador de que es necesario que se escriban
+        ya sea el nombre común o el científico de la especie, y sin embargo,
     no se ha hecho.*/
     flag = true;
     campos=$('.obligatorio');
@@ -274,35 +316,42 @@ $('form').submit
     //Si no se marcó ninguna casilla para ingresar el nombre
     faltanNombres = false;
 
-	  if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
-	  {
-		  flag = false;
-		  faltanNombres = true;
-		  //alert('caso1');
-	  }
-	  else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
-	  /*Si se marcó la casilla de nombre común pero no se escribió
-    nada en el campo subsecuente.*/
-    {
-      flag = false;
-      faltanNombres = true;
-		  //alert('caso2');
-	  }
-		//Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
-    else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
-    {
-      flag = false;
-      faltanNombres = true;
-			//alert('caso3');
-		}
+         /*Validando: si el nombre de la especie no se encuentra en la lista 
+        CONABIO. entonces:*/
+        if($('#tabla_conabio_lista').val()=="Otros")
+        {
+            //Si no se marcó ninguna casilla para ingresar el nombre
+            if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+            {
+                flag = false;
+                faltanNombres = true;
+                //alert('caso1');
+            }
+            else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
+            /*Si se marcó la casilla de nombre común pero no se escribió
+            nada en el campo subsecuente.*/
+            {
+                flag = false;
+                faltanNombres = true;
+                //alert('caso2');
+            }
+            //Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
+            else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
+            {
+                flag = false;
+                faltanNombres = true;
+                //alert('caso3');
+            }
+        }
+
 
     //Validando que al menos una casilla de observación visual/sonora esté marcada:
 
     faltaTipo = false;
     if(!$('#tabla_es_visual').prop('checked') && !$('#tabla_es_sonora').prop('checked'))
     {
-      faltaTipo = true;
-      flag = false;
+        faltaTipo = true;
+        flag = false;
     }
 
     //Sin embargo, como el campo de "sitio_muestra_id" es generado por
@@ -321,15 +370,15 @@ $('form').submit
         //alert('No se encontró ningún punto de conteo de aves en el sitio seleccionado');
     }
 
-		if(!flag)
+    if(!flag)
     {
-      if(faltanNombres)
-        alert('Favor de escribir al menos un nombre (ya sea común o científico)');
-      else if(faltaTipo)
-        alert('Favor de indicar si la observación es visual, sonora o ambas')
-      else
-        alert('Faltó llenar algún campo.');
-      return false;
+        if(faltanNombres)
+            alert('Favor de escribir al menos un nombre (ya sea común o científico)');
+        else if(faltaTipo)
+            alert('Favor de indicar si la observación es visual, sonora o ambas')
+        else
+            alert('Faltó llenar algún campo.');
+        return false;
     }
   }
   )

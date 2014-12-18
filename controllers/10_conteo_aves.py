@@ -128,6 +128,14 @@ def index2():
 
         #Campos de una observación de aves:
 
+        #Catálogo CONABIO
+        #Debido a la forma como se maneja la inserción de datos en la base
+        #(no hay ningún campo que haga referencia a la lista conabio como tal),
+        #es mejor si el formulario regresa los nombres en el catálogo (en lugar
+        #de los ID's):
+        INPUT(_name='conabio_lista',
+            requires=IS_IN_DB(db,db.Cat_conabio_aves.nombre,'%(nombre)s')),
+
         INPUT(_name='hay_nombre_comun',_type='boolean'),
         INPUT(_name='nombre_comun',_type='string'),
         INPUT(_name='hay_nombre_cientifico',_type='boolean'),
@@ -165,6 +173,31 @@ def index2():
         else:
             datosConteoAve['es_sonora']=False
         
+        # Revisando la selección de lista CONABIO
+
+        selListaConabio=formaConteoAve.vars['conabio_lista']
+
+        #Si se eligió una especie invasora de la lista CONABIO, entonces se marcan
+        #las casillas de:
+        #nombre_en_lista
+        #hay_nombre_común
+        #hay_nombre_científico
+        #y utilizando el valor de seleccionado se llenan los campos de:
+        #nombre_comun
+        #nombre_cientifico.
+
+        if selListaConabio!='Otros':
+
+            datosConteoAve['nombre_en_lista'] = True
+
+            #Separando el valor obtenido en mombre común y científico:
+            nombre = selListaConabio.split(' - ')
+            datosConteoAve['nombre_comun'] = nombre[0]
+            datosConteoAve['nombre_cientifico'] = nombre[1]
+
+        else:
+
+            datosConteoAve['nombre_en_lista'] = False
         #Guardando el registro de la observación en la base de datos:
         
         conteoAveInsertado = db.Conteo_ave.insert(**datosConteoAve)
@@ -217,13 +250,16 @@ def index2():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
+    listaConabio = db(db.Cat_conabio_aves).select(db.Cat_conabio_aves.nombre)
+
     # Tabla de revisión de registros ingresados
     db.Conteo_ave.punto_conteo_aves_id.writable = False
     db.Archivo_conteo_ave.conteo_ave_id.writable =False
-    grid = SQLFORM.smartgrid(db.Conteo_ave,csv=False,user_signature=False,
+    grid = SQLFORM.grid(db.Conteo_ave,csv=False,user_signature=False,
         create=False,searchable=False,editable=False,orderby=~db.Conteo_ave.id)
 
     return dict(listaConglomerado=listaConglomerado,
+        listaConabio=listaConabio,
         grid=grid)
 
 def asignarPuntoConteo():

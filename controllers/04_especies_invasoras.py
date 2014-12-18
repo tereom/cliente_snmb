@@ -103,6 +103,7 @@ def index2():
 		INPUT(_name='nombre_comun',_type='string'),
 		INPUT(_name='hay_nombre_cientifico',_type='boolean'),
 		INPUT(_name='nombre_cientifico',_type='string'),
+        
 		SELECT(_name='numero_individuos',
          requires=IS_IN_DB(db,db.Cat_numero_individuos.nombre, '%(nombre)s')),
 		

@@ -231,7 +231,7 @@ def index2():
 
     # Tabla de revisión de registros ingresados
     db.Archivo_plaga.plaga_id.writable =False
-    grid = SQLFORM.smartgrid(db.Plaga,csv=False,orderby=~db.Archivo_plaga.id,\
+    grid = SQLFORM.grid(db.Plaga,csv=False,orderby=~db.Plaga.id,\
         user_signature=False,
         create=False,searchable=False,editable=False)
 
