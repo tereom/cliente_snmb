@@ -1,5 +1,13 @@
 # coding: utf8
 def index1(): 
+    '''
+    Controlador correspondiente a la pestaña Información de grabadora.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (viewa/03_grabadora/index1.html), antes de 
+    ser agregada a la base de datos.
+
+    '''
     
     camposGrabadora = [
 
@@ -165,10 +173,12 @@ def index1():
         listaElipsoide=listaElipsoide,\
         listaCondicionesAmbientales=listaCondicionesAmbientales)
 
-#La siguiente función es invocada mediante AJAX para llenar la combobox de número
-#de sitio a partir de los sitios existentes de un conglomerado seleccionado.
 
 def asignarSitios():
+    '''
+    Función invocada mediante AJAX para llenar la combobox de número de sitio a 
+    partir de los sitios existentes de un conglomerado seleccionado.
+    '''
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
@@ -195,6 +205,11 @@ def asignarSitios():
     return XML(dropdownHTML)
 
 def grabadoraExistente():
+    '''
+    Función de AJAX para revisar que no se haya ingresado una grabadora en el 
+    mismo sitio con anterioridad. El AJAX se activará cuando seleccionen un 
+    conglomerado y un número de sitio.
+    '''
 
     #Obteniendo la información del sitio que seleccionó el usuario:
     sitioElegidoID = request.vars.sitio_muestra_id
@@ -215,7 +230,13 @@ def grabadoraExistente():
 # DESDE UN PRINCIPIO.
 
 def index2():
+    '''
+    Controlador correspondiente a la pestaña Archivos de audio.  
 
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (viewa/03_grabadora/index2.html), antes de 
+    ser agregada a la base de datos.
+    '''
     camposArchivosGrabadora = [
 
         #Localización de la grabadora. Por medio del conglomerado y sitio debe ser
@@ -283,7 +304,6 @@ def index2():
        
     else:
         pass
-        #response.flash ='Por favor, introduzca los archivos asociados a una grabadora'
 
     ##########Enviando la información de la dropdown de conglomerado############
 
@@ -330,9 +350,13 @@ def index2():
 #     return XML(dropdownHTML)
 
 def asignarGrabadora():
+    '''
+    Función invocada mediante AJAX para verficar si se ha ingresado información 
+    de grabadora para el conglomerado y sitio seleccionados. 
 
-    # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
-    # la grabadora asociada a un sitio (mediante AJAX).
+    En caso de que no se haya ingresado una grabadora no se permite enviar la 
+    forma.
+    '''
 
     sitioElegidoID = request.vars.sitio_muestra_id
 

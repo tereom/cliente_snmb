@@ -14,6 +14,7 @@ Los paths en esta sección deben ser relativos a la carpeta en la que se encuent
    :maxdepth: 2
 
    camara
+   grabadora
 
 
 
