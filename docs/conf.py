@@ -24,7 +24,8 @@ import os
 # que se deberán importar para hacer la documentación automática.
 
 sys.path.insert(0, os.path.abspath('../controllers'))
-
+sys.path.insert(0, os.path.abspath('../models'))
+sys.path.insert(0, os.path.abspath('../views'))
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.

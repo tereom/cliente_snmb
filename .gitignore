@@ -50,3 +50,5 @@ pip-log.txt
 *.png
 
 languages/es.py
+
+docs/_build
