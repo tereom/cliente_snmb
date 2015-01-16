@@ -23,6 +23,7 @@ response.google_analytics_id = None
 #########################################################################
 
 response.menu = [
+    # describe el menú de la parte superior del cliente
 
     (T('Conglomerado'), False, URL('01_conglomerado', 'index'), []),
 
