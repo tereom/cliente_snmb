@@ -13,7 +13,7 @@ Los paths en esta sección deben ser relativos a la carpeta en la que se encuent
 .. toctree::
    :maxdepth: 2
 
-   gato
+   camara
 
 
 

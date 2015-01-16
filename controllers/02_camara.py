@@ -1,7 +1,12 @@
 # coding: utf8
 def index1():
 
-    '''hola
+    '''
+    Controlador correspondiente a la pestaña Información de trampa cámara.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (viewa/02_camara/index1.html), antes de 
+    ser agregada a la base de datos.
 
     '''
 
@@ -66,7 +71,6 @@ def index1():
         datosCamara = db.Camara._filter_fields(formaCamara.vars)
   
         #Guardando el registro de la cámara en la base de datos:
-        
         camaraInsertada = db.Camara.insert(**datosCamara)
         
 		################Procesando la imagen de referencia#################################
@@ -93,8 +97,7 @@ def index1():
        
     else:
         pass
-    #	response.flash ='Por favor, introduzca los datos de la cámara'
-
+ 
     ##########Enviando la información de las dropdowns##########################
 
     #Regresando los nombres de todos los conglomerados insertados en la tabla de
@@ -125,13 +128,13 @@ def index1():
         listaElipsoide=listaElipsoide,\
         listaCondicionesAmbientales=listaCondicionesAmbientales)
 
-#La siguiente función es invocada mediante AJAX para llenar la combobox de número
-#de sitio a partir de los sitios existentes de un conglomerado seleccionado.
+
 
 def asignarSitios():
 
-    '''hola
-
+    '''
+    Función invocada mediante AJAX para llenar la combobox de número de sitio a 
+    partir de los sitios existentes de un conglomerado seleccionado.
     '''
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
@@ -158,13 +161,14 @@ def asignarSitios():
     
     return XML(dropdownHTML)
 
-#AJAX para revisar que no se haya ingresado una cámara en el mismo sitio con
-#anterioridad.
-#El AJAX se activará cuando seleccionen un conglomerado y un número de sitio.
+
 
 def camaraExistente():
 
-    '''hola
+    '''
+    Función de AJAX para revisar que no se haya ingresado una cámara en el mismo 
+    sitio con anterioridad. El AJAX se activará cuando seleccionen un 
+    conglomerado y un número de sitio.
 
     '''
 
@@ -188,8 +192,12 @@ def camaraExistente():
 
 def index2():
 
-    '''hola
+    '''
+    Controlador correspondiente a la pestaña Archivos de trampa cámara.  
 
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (viewa/02_camara/index2.html), antes de 
+    ser agregada a la base de datos.
     '''
 
 
@@ -244,7 +252,6 @@ def index2():
        
     else:
         pass
-    #    response.flash ='Por favor, introduzca los archivos asociados a una cámara'
 
     ##########Enviando la información de la dropdown de conglomerado############
 
@@ -293,8 +300,12 @@ def index2():
 
 def asignarCamara():
 
-    '''hola
+    '''
+    Función invocada mediante AJAX para verficar si se ha ingresado información 
+    de trampa cámara para el conglomerado y sitio seleccionados. 
 
+    En caso de que no se haya ingresado una trampa cámara no se permite enviar
+    la forma.
     '''
 
     # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
