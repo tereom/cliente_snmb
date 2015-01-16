@@ -1,12 +1,11 @@
 # coding: utf8
 def index1(): 
     '''
-    Controlador correspondiente a la pestaña Información de grabadora.  
+    Controlador correspondiente a la pestaña *Información de grabadora*.  
 
     Funcionamiento: Genera los campos de la forma, con el fin de validar la 
-    información ingresada en la vista (viewa/03_grabadora/index1.html), antes de 
+    información ingresada en la vista (views/03_grabadora/index1.html), antes de 
     ser agregada a la base de datos.
-
     '''
     
     camposGrabadora = [
@@ -231,10 +230,10 @@ def grabadoraExistente():
 
 def index2():
     '''
-    Controlador correspondiente a la pestaña Archivos de audio.  
+    Controlador correspondiente a la pestaña *Archivos de audio*.  
 
     Funcionamiento: Genera los campos de la forma, con el fin de validar la 
-    información ingresada en la vista (viewa/03_grabadora/index2.html), antes de 
+    información ingresada en la vista (views/03_grabadora/index2.html), antes de 
     ser agregada a la base de datos.
     '''
     camposArchivosGrabadora = [

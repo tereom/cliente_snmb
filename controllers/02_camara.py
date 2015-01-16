@@ -2,7 +2,7 @@
 def index1():
 
     '''
-    Controlador correspondiente a la pestaña Información de trampa cámara.  
+    Controlador correspondiente a la pestaña *Información de trampa cámara*.  
 
     Funcionamiento: Genera los campos de la forma, con el fin de validar la 
     información ingresada en la vista (views/02_camara/index1.html), antes de 
@@ -190,10 +190,10 @@ def camaraExistente():
 
 def index2():
     '''
-    Controlador correspondiente a la pestaña Archivos de trampa cámara.  
+    Controlador correspondiente a la pestaña *Archivos de trampa cámara*.  
 
     Funcionamiento: Genera los campos de la forma, con el fin de validar la 
-    información ingresada en la vista (viewa/02_camara/index2.html), antes de 
+    información ingresada en la vista (views/02_camara/index2.html), antes de 
     ser agregada a la base de datos.
     '''
 
