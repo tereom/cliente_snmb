@@ -2,7 +2,7 @@
 def index1():
 
     '''
-    Controlador correspondiente a la pestaña "Información de trampa cámara".  
+    Controlador correspondiente a la pestaña *Información de trampa cámara*.  
 
     Funcionamiento: Genera los campos de la forma, con el fin de validar la 
     información ingresada en la vista (views/02_camara/index1.html), antes de 
@@ -131,7 +131,6 @@ def index1():
 
 
 def asignarSitios():
-
     '''
     Función invocada mediante AJAX para llenar la combobox de "número de sitio" a 
     partir de los sitios existentes de un conglomerado seleccionado.
@@ -169,7 +168,6 @@ def camaraExistente():
     Función de AJAX para revisar que no se haya ingresado una cámara en el mismo 
     sitio con anterioridad. El AJAX se activará cuando seleccionen un 
     conglomerado y un número de sitio.
-
     '''
 
     #Obteniendo la información del sitio que seleccionó el usuario:
@@ -191,15 +189,13 @@ def camaraExistente():
 # DESDE UN PRINCIPIO.
 
 def index2():
-
     '''
-    Controlador correspondiente a la pestaña "Archivos de trampa cámara".  
+    Controlador correspondiente a la pestaña *Archivos de trampa cámara*.  
 
     Funcionamiento: Genera los campos de la forma, con el fin de validar la 
     información ingresada en la vista (views/02_camara/index2.html), antes de 
     ser agregada a la base de datos.
     '''
-
 
     camposArchivosCamara = [
 
@@ -299,7 +295,6 @@ def index2():
 #     return XML(dropdownHTML)
 
 def asignarCamara():
-
     '''
     Función invocada mediante AJAX para verificar si se ha ingresado información 
     de trampa cámara para el conglomerado y sitio seleccionados. 

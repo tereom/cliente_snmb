@@ -1,6 +1,13 @@
 # coding: utf8
 
 def index1():
+    '''
+    Controlador correspondiente a la pestaña *Punto de conteo*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/10_conteo_aves/index1.html), antes 
+    de ser agregada a la base de datos.
+    '''
 
     camposPuntoConteo = [
 
@@ -41,7 +48,6 @@ def index1():
 
     else:
         pass
-        #response.flash ='Por favor, asegúrese de registrar cada punto de conteo sólo una vez'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -59,10 +65,11 @@ def index1():
     return dict(listaConglomerado=listaConglomerado,
         listaCondicionesAmbientales=listaCondicionesAmbientales)
 
-#La siguiente función es invocada mediante AJAX para llenar la combobox de número
-#de sitio a partir de los sitios existentes de un conglomerado seleccionado.
-
 def asignarSitios():
+    '''
+    Función invocada mediante AJAX para llenar la combobox de número de sitio a 
+    partir de los sitios existentes de un conglomerado seleccionado.
+    '''
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
@@ -113,6 +120,13 @@ def puntoConteoExistente():
 # DESDE UN PRINCIPIO.
 
 def index2():
+    '''
+    Controlador correspondiente a la pestaña *Observaciones aves*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/10_conteo_aves/index2.html), antes 
+    de ser agregada a la base de datos.
+    '''
 
     camposConteoAve = [
 
@@ -263,6 +277,13 @@ def index2():
         grid=grid)
 
 def asignarPuntoConteo():
+    '''
+    Función invocada mediante AJAX para verficar si se ha ingresado información 
+    de punto de control para el conglomerado y sitio seleccionados. 
+
+    En caso de que no se haya ingresado un punto de control no se permite enviar 
+    la forma.
+    '''
 
     # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
     # el punto de conteo asociado a un sitio (mediante AJAX).

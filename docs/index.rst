@@ -15,9 +15,12 @@ Los paths en esta sección deben ser relativos a la carpeta en la que se encuent
 
    01_conglomerado
    02_camara
+   03_grabadora
    04_especies_invasoras
    05_huellas_excretas
    06_registros_extra
+   10_conteo_aves
+   11_carbono
    12_epifitas
    13_impactos_ambientales
 

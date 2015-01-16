@@ -1,6 +1,14 @@
 # coding: utf8
 
 def index1():
+    '''
+    Controlador correspondiente a la pestaña *Material leñoso caído*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/11_carbono/index1.html), antes de 
+    ser agregada a la base de datos.
+    '''
+    
 
     camposTransectosRamas = [
 
@@ -139,6 +147,10 @@ def index1():
 #de sitio a partir de los sitios existentes de un conglomerado seleccionado.
 
 def asignarSitios():
+    '''
+    Función invocada mediante AJAX para llenar la combobox de número de sitio a 
+    partir de los sitios existentes de un conglomerado seleccionado.
+    '''
 
     # Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
@@ -164,14 +176,16 @@ def asignarSitios():
 
     return XML(dropdownHTML)
 
-#La siguiente función se utiliza para evitar la declaración de transectos cardinales
-#en sitio, si ya fueron declarados éstos ahí con anterioridad.
-
-#La siguiente función se utiliza tanto en index1() (para evitar declarar transectos
-#duplicados en un mismo sitio), como en index2() (para evitar declarar ramas en
-#sitios donde no se hayan declarado transectos.)
-
 def transectosExistentes():
+    '''
+    La siguiente función se utiliza para evitar la declaración de transectos 
+    cardinales en sitio, si ya fueron declarados éstos ahí con anterioridad.
+    
+    Se utiliza en:
+        - index1() para evitar declarar transectos duplicados en un mismo sitio. 
+        - index2() para evitar declarar ramas en sitios donde no se hayan 
+            declarado transectos.
+    '''
 
     #Obteniendo la información del sitio que seleccionó el usuario:
     sitioElegidoID = request.vars.sitio_muestra_id
@@ -186,6 +200,14 @@ def transectosExistentes():
     return len(transectoYaInsertado)
 
 def index2():
+
+    '''
+    Controlador correspondiente a la pestaña *Material 1000h*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/11_carbono/index2.html), antes de 
+    ser agregada a la base de datos.
+    '''
 
     #Definiendo el número máximo de ramas que se podrán declarar al mismo tiempo:
 
@@ -290,9 +312,10 @@ def index2():
         grid=grid)
 
 def asignarTransectos():
-
-    # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
-    # los transectos asociados a un sitio (mediante AJAX).
+    '''
+    Función invocada mediante AJAX para llenar la combobox de transectos a 
+    partir de los transectos existentes de un conglomerado y sitio seleccionados.
+    '''
 
     sitioElegidoID = request.vars.sitio_muestra_id
 
@@ -318,6 +341,13 @@ def asignarTransectos():
 
 
 def index3():
+    '''
+    Controlador correspondiente a la pestaña *Carbono en el mantillo*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/11_carbono/index1.html), antes de 
+    ser agregada a la base de datos.
+    '''
 
     CamposPuntosCarbono = [
 
@@ -567,6 +597,12 @@ def index3():
         listaConglomerado=listaConglomerado)
 
 def puntosExistentes():
+    '''
+    Función de AJAX para revisar que no se haya ingresado la forma 
+    correspondiente a *Carbono en el mantillo* en el mismo sitio con 
+    anterioridad. El AJAX se activará cuando seleccionen un 
+    conglomerado y un número de sitio.
+    '''
 
     #Obteniendo la información del sitio que seleccionó el usuario:
     sitioElegidoID = request.vars.sitio_muestra_id
@@ -584,6 +620,13 @@ def puntosExistentes():
 
 ## Pestaña correspondiente a Arbolado_transecto
 def index4():
+    '''
+    Controlador correspondiente a la pestaña *Árboles pequeños y arbustos*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/11_carbono/index4.html), antes de 
+    ser agregada a la base de datos.
+    '''
 
     camposArbolTransecto = [
 
@@ -698,6 +741,13 @@ def index4():
 
 ## Pestaña correspondiente a Cuadrante_arbolado
 def index5():
+    '''
+    Controlador correspondiente a la pestaña *Árboles grandes*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/11_carbono/index5.html), antes de 
+    ser agregada a la base de datos.
+    '''
 
     camposArbolCuadrante = [
 
@@ -807,7 +857,12 @@ def index5():
     return dict(listaConglomerado=listaConglomerado)
 
 def sitiosArboladoExistentes():
-
+    '''
+    Función de AJAX para revisar que no se haya ingresado la forma 
+    correspondiente a *Árboles grandes* en el mismo sitio con 
+    anterioridad. El AJAX se activará cuando seleccionen un 
+    conglomerado y un número de sitio.
+    '''
     #Obteniendo la información del sitio que seleccionó el usuario:
     sitioElegidoID = request.vars.sitio_muestra_id
 
