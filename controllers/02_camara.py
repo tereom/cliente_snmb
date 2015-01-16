@@ -1,5 +1,9 @@
 # coding: utf8
-def index1(): 
+def index1():
+
+    '''hola
+
+    '''
 
     camposCamara = [
     
@@ -126,6 +130,10 @@ def index1():
 
 def asignarSitios():
 
+    '''hola
+
+    '''
+
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
 
@@ -156,6 +164,10 @@ def asignarSitios():
 
 def camaraExistente():
 
+    '''hola
+
+    '''
+
     #Obteniendo la información del sitio que seleccionó el usuario:
     sitioElegidoID = request.vars.sitio_muestra_id
 
@@ -175,6 +187,11 @@ def camaraExistente():
 # DESDE UN PRINCIPIO.
 
 def index2():
+
+    '''hola
+
+    '''
+
 
     camposArchivosCamara = [
 
@@ -275,6 +292,10 @@ def index2():
 #     return XML(dropdownHTML)
 
 def asignarCamara():
+
+    '''hola
+
+    '''
 
     # El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
     # la cámara asociada a un sitio (mediante AJAX).
