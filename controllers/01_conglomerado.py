@@ -2,6 +2,15 @@
 
 def index():
 
+    '''
+    Controlador correspondiente a la pestaña *Conglomerado*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/01_conglomerado/index.html), antes de 
+    ser agregada a la base de datos.
+
+    '''
+
     campos= [
 
     # Utilizamos una FORM porque nos brinda mayor flexibilidad que una SQLFORM.
@@ -465,7 +474,6 @@ def index():
        
     else:
         pass
-        #response.flash ='Por favor, introduzca los datos del conglomerado y sitios'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -491,10 +499,13 @@ def index():
         listaVegetacion=listaVegetacion,\
         listaElipsoide=listaElipsoide)
 
-#La siguiente función es invocada mediante AJAX para llenar la combobox de municipio
-# a partir del estado seleccionado.
-
 def asignarMunicipios():
+
+    '''
+    Función invocada mediante AJAX para llenar la combobox de municipio
+    a partir del estado seleccionado.
+    
+    '''
 
     #Obteniendo la información del estado que seleccionó el usuario:
     estadoElegidoNombre = request.vars.estado
@@ -522,10 +533,14 @@ def asignarMunicipios():
     
     return XML(dropdownHTML)
 
-#AJAX para revisar que no se haya ingresado el mismo conglomerado con anterioridad.
-#El AJAX se activará cuando escriban un caracter del nombre de conglomerado.
-
 def conglomeradoExistente():
+
+    '''
+    Función convocada mediante AJAX para revisar que no se haya ingresado el mismo
+    conglomerado con anterioridad. El AJAX se activará cuando escriban un caracter
+    del nombre de conglomerado.
+
+    '''
 
     #Obteniendo la información del conglomerado que ha ingresado el usuario.
     #Puede ser que no haya terminado de escribir, por ello, se revisa primero

@@ -1,6 +1,15 @@
 # coding: utf8
 def index1():
 
+    '''
+    Controlador correspondiente a la pestaña *Registros adicionales: especies invasoras*.
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/06_registros_extra/index1.html),
+    antes de ser agregada a la base de datos.
+
+    '''
+
     # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
     # para incluir las dropdowns en cascada y la subida de múltiples archivos.
     
@@ -130,7 +139,6 @@ def index1():
        
     else:
         pass
-        #response.flash = 'Por favor, llene los campos pedidos'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -165,6 +173,14 @@ def index1():
         grid=grid)
 
 def index2():
+
+    '''
+    Controlador correspondiente a la pestaña *Registros adicionales: huellas y excretas*.
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/06_registros_extra/index2.html),
+    antes de ser agregada a la base de datos.
+    '''
 
     camposHuellaExcreta=[
     
@@ -266,7 +282,6 @@ def index2():
        
     else:
         pass
-        #response.flash = 'Por favor, llene los campos solicitados'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -293,6 +308,14 @@ def index2():
         grid=grid)
 
 def index3():
+
+    '''
+    Controlador correspondiente a la pestaña *Registros adicionales: especímenes y restos*.
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/06_registros_extra/index3.html),
+    antes de ser agregada a la base de datos.
+    '''
 
     camposEspecimenRestos=[
     

@@ -13,9 +13,13 @@ Los paths en esta sección deben ser relativos a la carpeta en la que se encuent
 .. toctree::
    :maxdepth: 2
 
-   camara
-
-
+   01_conglomerado
+   02_camara
+   04_especies_invasoras
+   05_huellas_excretas
+   06_registros_extra
+   12_epifitas
+   13_impactos_ambientales
 
 Indices and tables
 ==================

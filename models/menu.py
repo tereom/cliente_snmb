@@ -39,7 +39,7 @@ response.menu = [
     ### Huellas y excretas
     (T('Huellas y excretas'), False, URL('05_huellas_excretas', 'index1'), [
       (T('Transecto huellas y excretas'), False, URL('05_huellas_excretas', 'index1')),
-      (T('Huellas y excretas'), False, URL('05_huellas_excretas', 'index2'))]),
+      (T('Registros huellas y excretas'), False, URL('05_huellas_excretas', 'index2'))]),
 
     ### Carbono
     (T('Vegetación y suelo'), False, URL('11_carbono', 'index1'), [

@@ -2,6 +2,15 @@
 
 def index1():
 
+    '''
+    Controlador correspondiente a la pestaña *Impactos actuales*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/13_impactos_ambientales/index1.html), antes de 
+    ser agregada a la base de datos.
+
+    '''
+
     #Creando una lista con los tipos de impactos ambientales:
 
     listaTiposImpacto = db(db.Cat_tipo_impacto).select(db.Cat_tipo_impacto.nombre)
@@ -94,7 +103,6 @@ def index1():
 
     else:
         pass
-        #response.flash ='Por favor, introduzca la información de los impactos ambientales actuales'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -115,6 +123,13 @@ def index1():
 
 def impactosExistentes():
 
+    '''
+    Función de AJAX para revisar que no se haya ingresado información de impactos
+    actuales en el mismo conglomerado con anterioridad.
+    El AJAX se activará cuando seleccionen un conglomerado.
+
+    '''
+
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
 
@@ -127,6 +142,15 @@ def impactosExistentes():
     return len(impactosYaInsertados)
 
 def index2():
+
+    '''
+    Controlador correspondiente a la pestaña *Información de plagas*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/13_impactos_ambientales/index2.html), antes de 
+    ser agregada a la base de datos.
+
+    '''
 
     camposPlaga = [
 
@@ -213,7 +237,6 @@ def index2():
        
     else:
         pass
-        #response.flash = 'Por favor, llene los campos solicitados'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -241,6 +264,16 @@ def index2():
         grid=grid)
 
 def index3():
+
+    '''
+    Controlador correspondiente a la pestaña *Información de incendios*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/13_impactos_ambientales/index3.html), antes de 
+    ser agregada a la base de datos.
+
+    '''
+
 
     camposIncendio = [
 
@@ -368,6 +401,14 @@ def index3():
         listaPropAfectacion=listaPropAfectacion)
 
 def incendioExistente():
+
+    '''
+    Función de AJAX para revisar que no se haya ingresado información de incendios
+    en el mismo conglomerado con anterioridad. El AJAX se activará cuando seleccionen 
+    un conglomerado.
+
+    '''
+
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id

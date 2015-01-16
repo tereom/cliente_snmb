@@ -2,6 +2,15 @@
 
 def index():
 
+    '''
+    Controlador correspondiente a la pestaña *Epífitas*.  
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/12_epifitas/index.html), antes de 
+    ser agregada a la base de datos.
+
+    '''
+
     camposForma = [
 
         # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
@@ -99,10 +108,14 @@ def index():
 
     return dict(listaConglomerado=listaConglomerado)
 
-#La siguiente función es invocada mediante AJAX para llenar la combobox de número
-#de sitio a partir de los sitios existentes de un conglomerado seleccionado.
-
 def asignarSitios():
+
+    '''
+    Función invocada mediante AJAX para llenar la combobox de "número de sitio" a 
+    partir de los sitios existentes de un conglomerado seleccionado.
+
+    '''
+
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
@@ -128,11 +141,14 @@ def asignarSitios():
     
     return XML(dropdownHTML)
 
-#AJAX para revisar que no se haya ingresado información de epífitas en el mismo
-#sitio con anterioridad.
-#El AJAX se activará cuando seleccionen un conglomerado y un número de sitio.
-
 def informacionEpifitasExistente():
+
+    '''
+    Función convocada mediante AJAX para revisar que no se haya ingresado información
+    de epífitas en el mismo sitio con anterioridad. El AJAX se activará cuando
+    seleccionen un conglomerado y un número de sitio.
+
+    '''
 
     #Obteniendo la información del sitio que seleccionó el usuario:
     sitioElegidoID = request.vars.sitio_muestra_id

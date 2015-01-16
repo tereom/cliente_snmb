@@ -1,6 +1,15 @@
 # coding: utf8
 def index1():
 
+    '''
+    Controlador correspondiente a la pestaña *Transecto especies invasoras*.
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/04_especies_invasoras/index1.html),
+    antes de ser agregada a la base de datos.
+
+    '''
+
     camposTransecto = [
 
     # campos transecto invasoras
@@ -37,7 +46,6 @@ def index1():
         response.flash = 'Hubo un error al llenar la forma'
     else:
         pass
-    	#response.flash ='Por favor, asegúrese que registra cada transecto sólo una vez'
 
     ##########Enviando la información de las dropdowns##########################
 
@@ -59,6 +67,14 @@ def index1():
 
 def transectoExistente():
 
+    '''
+    Función de AJAX para revisar que no se haya ingresado el mismo transecto con
+    anterioridad. El AJAX se activará cuando seleccionen un conglomerado y un
+    número de transecto.
+
+    '''
+
+
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
     numTransectoElegido = request.vars.transecto_numero
@@ -76,6 +92,15 @@ def transectoExistente():
     return len(transectoYaInsertado)
 
 def index2():
+
+    '''
+    Controlador correspondiente a la pestaña *Registros especies invasoras*.
+
+    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+    información ingresada en la vista (views/04_especies_invasoras/index2.html),
+    antes de ser agregada a la base de datos.
+
+    '''
 
     camposEspecie = [
 
@@ -216,10 +241,14 @@ def index2():
         listaNumIndividuos=listaNumIndividuos, 
         grid=grid)
 
-#La siguiente función es invocada mediante AJAX para llenar la combobox de número
-#de transecto a partir de los transectos declarados en un conglomerado seleccionado.
-
 def asignarTransectos():
+
+    '''
+    Función invocada mediante AJAX para llenar la combobox de número
+    de transecto a partir de los transectos declarados en un conglomerado
+    seleccionado.
+    
+    '''
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
