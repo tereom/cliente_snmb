@@ -16,6 +16,7 @@ Los paths en esta sección deben ser relativos a la carpeta en la que se encuent
    camara
    grabadora
    conteo_aves
+   11_carbono
 
 
 
