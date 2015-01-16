@@ -1,11 +1,24 @@
 # -*- coding: utf-8 -*-
 def index():
 
+    '''
+    Controlador correspondiente a la pestaña *Selección de fauna*. Éste lee la
+    información de los archivos ingresados por medio de la pestaña *Archivos 
+    trampa cámara* y crea un menú desplegable para ellos.
+
+    '''
+
     #Obteniendo los registros en la tabla de Archivo_camara
     fotosCamara = db(db.Archivo_camara).select()
     return dict(fotosCamara=fotosCamara)
 
 def obtenerFotografia():
+
+    '''
+    Ésta funcion se invoca mediante AJAX, y genera una forma para ingresar/modificar
+    la información de la fotografía que seleccionó el usuario en el menú desplegable.
+    '''
+
 
     #Obteniendo la información del conglomerado que seleccionó el usuario:
     fotoElegidaID = request.vars.foto
@@ -168,6 +181,12 @@ def obtenerFotografia():
 
 def actualizarFotografia():
 
+    '''
+    Ésta funcion se invoca mediante AJAX, y guarda la información que se introdujo/
+    modificó en la forma generada para la fotografía seleccionada.
+    '''
+
+
     #Utilizando los datos enviados de la forma_shadow, se actualiza el registro
     #de una foto en la base de datos.
 
@@ -187,4 +206,8 @@ def actualizarFotografia():
         nombre_comun=None, nombre_cientifico=None, numero_individuos=None)
 
 def download():
+
+    '''
+    Esta función es de Web2py y se utiliza para visuallizar las fotografías.
+    '''
     return response.download(request, db)
