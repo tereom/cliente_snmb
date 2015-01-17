@@ -1,5 +1,5 @@
-Controlador huellas y excretas
-==============================
+Huellas y excretas
+==================
 
 Funciones correspondientes a la secciones:
 

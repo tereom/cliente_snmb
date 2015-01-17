@@ -3,32 +3,22 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Cliente's documentation!
+Cliente de captura SAR-MOD/SAC-MOD
 ===================================
 
-Contents:
+Contenidos:
 
-Los paths en esta sección deben ser relativos a la carpeta en la que se encuentra este archivo (index.rst).
+.. Los paths en esta sección deben ser relativos a la carpeta en la que se 
+.. encuentra este archivo (index.rst).
 
 .. toctree::
    :maxdepth: 2
 
    descripcion
+   modelos
+   controladores
 
-   01_conglomerado
-   02_camara
-   03_grabadora
-   04_especies_invasoras
-   05_huellas_excretas
-   06_registros_extra
-   07_edicion
-   10_conteo_aves
-   11_carbono
-   12_epifitas
-   13_impactos_ambientales
-
-
-Indices and tables
+Indices y tablas
 ==================
 
 * :ref:`genindex`

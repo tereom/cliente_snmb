@@ -1,5 +1,5 @@
-Controlador vegetación y uso de suelo
-======================================
+Vegetación y uso de suelo
+=========================
 
 Funciones correspondientes a la secciones:
 

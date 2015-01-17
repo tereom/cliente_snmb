@@ -1,4 +1,4 @@
-Controlador conglomerado
+Conglomerado
 ========================
 
 Funciones correspondientes a la sección *Conglomerado*.

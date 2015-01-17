@@ -1,5 +1,5 @@
-Controlador registros extra
-===========================
+Registros extra
+===============
 
 Funciones correspondientes a la secciones:
 

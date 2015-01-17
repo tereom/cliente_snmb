@@ -1,5 +1,5 @@
-Controlador cámara
-==================
+Cámara
+=======
 
 Funciones correspondientes a la secciones:
 

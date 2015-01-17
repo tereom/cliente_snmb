@@ -1,5 +1,5 @@
-Controlador conteo de aves
-===========================
+Conteo de aves
+==============
 
 Funciones correspondientes a la secciones:
 

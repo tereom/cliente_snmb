@@ -6,8 +6,8 @@ El cliente de captura se desarrolló usando el marco de trabajo
 Modelo-Vista-Controlador que se refleja en la estructura de carpetas.
 
 Bajo el esquema de Web2py, el cliente de captura es una aplicación y todo el
-código desarrollado se engloba en la carpeta *cliente_web2py*. Dentro de 
-esta carpeta se trabajó en las siguientes subcarpetas:
+código desarrollado se engloba en la carpeta *cliente_web2py* con las 
+siguientes subcarpetas:
 
 1. **controllers**: contiene los controladores que unen 
 el modelo con la vista. Hay un archivo para cada sección: Conglomerado, 
@@ -53,7 +53,3 @@ ingresados al cliente.
 8. **otras**: las carpetas restantes (*cron, errors, languages, modules, private, 
 sessions*) no se modificaron.
 
-La siguiente imagen describe la estructura de la base de datos almacenada en 
-*databases*.
-
-.. image:: esquema.pdf

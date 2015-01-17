@@ -1,5 +1,5 @@
-Controlador impactos ambientales
-================================
+Impactos ambientales
+====================
 
 Funciones correspondientes a la secciones:
 

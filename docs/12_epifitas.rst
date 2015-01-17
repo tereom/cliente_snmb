@@ -1,5 +1,5 @@
-Controlador epífitas
-====================
+Epífitas
+========
 
 Funciones correspondientes a la sección *Información de epífitas*.
 

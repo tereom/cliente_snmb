@@ -1,4 +1,4 @@
-Controlador grabadora
+Grabadora
 ======================
 
 Funciones correspondientes a la secciones:
