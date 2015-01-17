@@ -18,7 +18,8 @@ Contenidos:
    modelos
    controladores
 
-Indices y tablas
+
+Índices y tablas
 ==================
 
 * :ref:`genindex`
