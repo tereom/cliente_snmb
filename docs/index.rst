@@ -18,7 +18,6 @@ Contenidos:
    modelos
    controladores
 
-
 Índices y tablas
 ==================
 
