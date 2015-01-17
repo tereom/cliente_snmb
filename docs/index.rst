@@ -14,14 +14,12 @@ Los paths en esta sección deben ser relativos a la carpeta en la que se encuent
    :maxdepth: 2
 
    descripcion
-
    01_conglomerado
    02_camara
    03_grabadora
    04_especies_invasoras
    05_huellas_excretas
    06_registros_extra
-   07_edicion
    08_revision
    10_conteo_aves
    11_carbono

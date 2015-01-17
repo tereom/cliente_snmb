@@ -131,6 +131,7 @@ def index1():
 
 
 def asignarSitios():
+
     '''
     Función invocada mediante AJAX para llenar la combobox de "número de sitio" a 
     partir de los sitios existentes de un conglomerado seleccionado.
@@ -189,6 +190,7 @@ def camaraExistente():
 # DESDE UN PRINCIPIO.
 
 def index2():
+
     '''
     Controlador correspondiente a la pestaña *Archivos de trampa cámara*.  
 
@@ -295,6 +297,7 @@ def index2():
 #     return XML(dropdownHTML)
 
 def asignarCamara():
+    
     '''
     Función invocada mediante AJAX para verificar si se ha ingresado información 
     de trampa cámara para el conglomerado y sitio seleccionados. 
