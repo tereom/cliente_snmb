@@ -1,7 +1,6 @@
 Vistas
 =======
 
-
 .. toctree::
    :maxdepth: 2
    
