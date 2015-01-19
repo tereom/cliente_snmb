@@ -24,7 +24,7 @@ db.Sitio_muestra.sitio_numero.requires=IS_IN_DB(db,db.Cat_numero_sitio.nombre,
 db.Sitio_muestra.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,
     '%(nombre)s')
 
-# Cámara
+# Camara
 # Las siguientes instrucciones se necesitan para que aparezcan los menus
 # desplegables cuando se revisa camara
 db.Camara.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
@@ -92,7 +92,7 @@ db.Incendio.prop_copa_quemada.requires=IS_IN_DB(db,
 
 
 def editarConglomerado():
-    
+
     '''
     Controlador correspondiente a la pestaña *Exportar registros-Conglomerado*.  
     Genera las tablas de revisión usando el objeto smartgrid 

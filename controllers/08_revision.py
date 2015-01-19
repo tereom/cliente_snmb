@@ -17,6 +17,7 @@ def obtenerFotografia():
     '''
     Ésta funcion se invoca mediante AJAX, y genera una forma para ingresar/modificar
     la información de la fotografía que seleccionó el usuario en el menú desplegable.
+    
     '''
 
 
@@ -184,6 +185,7 @@ def actualizarFotografia():
     '''
     Ésta funcion se invoca mediante AJAX, y guarda la información que se introdujo/
     modificó en la forma generada para la fotografía seleccionada.
+    
     '''
 
 
@@ -209,5 +211,6 @@ def download():
 
     '''
     Esta función es de Web2py y se utiliza para visuallizar las fotografías.
+    
     '''
     return response.download(request, db)
