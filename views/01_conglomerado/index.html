@@ -39,7 +39,6 @@
 
 {{#=response.toolbar()}}
 
-<!-- <body onload="preventBack();" onpageshow="if (event.persisted) preventBack();" onunload=""> -->
 
 <form action="" enctype="multipart/form-data" method="post">
     <input type="hidden" name="_formname" value="formaHTML"/>
@@ -70,8 +69,11 @@
                         <label for="tabla_tipo">Tipo de conglomerado</label>
                     </div>
                     <div>
+                        <!-- Menu desplegable -->
                         <select class="generic-widget obligatorio" name="tipo" id="tabla_tipo">
                             <option value=""/>
+                            <!-- listaTipo: lista que se envía en el controlador con las opciones
+                            para el menú desplegable -->
                             {{for tipo in listaTipo:}}
                                 <option value="{{=tipo.nombre}}">
                                     {{=tipo.nombre}}
@@ -526,20 +528,7 @@
     <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
-<!--<br/>
-<div>
-<h2>Submitted variables</h2>
-{{#=BEAUTIFY(request.vars)}}
-<h2>Accepted variables</h2>
-{{#=BEAUTIFY(forma.vars)}}
-<h2>Errors in form</h2>
-{{#=BEAUTIFY(forma.errors)}}
-</div>-->
 
-<!-- <script type="text/javascript"> 
-    Intento de bloquear botón back
-    //window.history.forward();
-    //function preventBack() { window.history.forward(); }-->
 <script>
     //AJAX para llenar la combobox con los municipios asociados al estado elegido
     $('#tabla_estado').change
@@ -935,10 +924,6 @@
                 alert('El formato de fecha es aaaa-mm-dd');
                 return false;
             }
-            /*else if(!flag_c){
-                alert('El número de conglomerado consta de 6 dígitos. Ejemplo: 012345 (para conglomerados del INFyS) ó 123456 para conglomerados que no son del INFyS');
-                return false;
-            } */
             else if(!flag_lon){
                 alert('El número de conglomerado consta de 6 caracteres. Completar con ceros al principio si es necesario. Ejemplo: 000123');
                 return false;
