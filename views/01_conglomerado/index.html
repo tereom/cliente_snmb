@@ -528,6 +528,20 @@
     <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
+<!--<br/>
+<div>
+<h2>Submitted variables</h2>
+{{#=BEAUTIFY(request.vars)}}
+<h2>Accepted variables</h2>
+{{#=BEAUTIFY(forma.vars)}}
+<h2>Errors in form</h2>
+{{#=BEAUTIFY(forma.errors)}}
+</div>-->
+
+<!-- <script type="text/javascript"> 
+    Intento de bloquear botón back
+    //window.history.forward();
+    //function preventBack() { window.history.forward(); }-->
 
 <script>
     //AJAX para llenar la combobox con los municipios asociados al estado elegido
@@ -628,9 +642,9 @@
     )
 
     /* Cuando cambia el tipo de uso de suelo seleccionado, si el uso de suelo principal es
-	'Vegetación', entonces aparecen los campos correspondientes, en caso contrario,
-	se sombrean dichos campos */
-	
+    'Vegetación', entonces aparecen los campos correspondientes, en caso contrario,
+    se sombrean dichos campos */
+    
     $('#tabla_uso_suelo_tipo').change
     (
         function()
@@ -742,8 +756,8 @@
     )
     
     /*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, se sombrean
-	o reaparecen los campos correspondientes, dependiendo si el sitio existe o no.*/
-	
+    o reaparecen los campos correspondientes, dependiendo si el sitio existe o no.*/
+    
     $('#tabla_existe_2').change
     (
         function()
