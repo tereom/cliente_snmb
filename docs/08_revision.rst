@@ -1,5 +1,5 @@
-Controlador selección de fauna
-==============================
+Selección de fauna
+===================
 
 La pestaña de selección de fauna tiene su propio controlador debido a la complejidad
 de la misma. Las funciones que ésta utiliza son las siguientes:

@@ -17,6 +17,7 @@ Contenidos:
    descripcion
    modelos
    controladores
+   vistas
 
 Índices y tablas
 ==================

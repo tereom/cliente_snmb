@@ -1,3 +1,5 @@
+# coding: utf8
+
 # Conglomerado
 # Las siguientes instrucciones se necesitan para que aparezcan los menus
 # desplegables cuando se revisa conglomerado
@@ -90,12 +92,12 @@ db.Incendio.prop_copa_quemada.requires=IS_IN_DB(db,
 
 
 def editarConglomerado():
+    
     '''
     Controlador correspondiente a la pestaña *Exportar registros-Conglomerado*.  
     Genera las tablas de revisión usando el objeto smartgrid 
     incluido en Web2py.
     '''
-
     # writeble=False implica que no se puede editar el id
     db.Sitio_muestra.conglomerado_muestra_id.writable = False
     db.Imagen_referencia_sitio.sitio_muestra_id.writable = False

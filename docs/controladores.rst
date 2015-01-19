@@ -16,6 +16,7 @@ Exportar datos.
    05_huellas_excretas
    06_registros_extra
    07_edicion
+   08_revision
    10_conteo_aves
    11_carbono
    12_epifitas

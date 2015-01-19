@@ -25,7 +25,7 @@ import os
 
 sys.path.insert(0, os.path.abspath('../controllers'))
 #sys.path.insert(0, os.path.abspath('../models'))
-#sys.path.insert(0, os.path.abspath('../views'))
+sys.path.insert(0, os.path.abspath('../views/01_conglomerado'))
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
