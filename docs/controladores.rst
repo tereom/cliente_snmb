@@ -9,15 +9,15 @@ Exportar datos.
 .. toctree::
    :maxdepth: 2
    
-   01_conglomerado
-   02_camara
-   03_grabadora
-   04_especies_invasoras
-   05_huellas_excretas
-   06_registros_extra
-   07_edicion
-   08_revision
-   10_conteo_aves
-   11_carbono
-   12_epifitas
-   13_impactos_ambientales
+   01_conglomerado_c
+   02_camara_c
+   03_grabadora_c
+   04_especies_invasoras_c
+   05_huellas_excretas_c
+   06_registros_extra_c
+   07_edicion_c
+   08_revision_c
+   10_conteo_aves_c
+   11_carbono_c
+   12_epifitas_c
+   13_impactos_ambientales_c
