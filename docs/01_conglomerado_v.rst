@@ -27,7 +27,7 @@ A continuación se describen los identificadores con funcionalidades ligadas a A
 
 * **shadow_clone** sirve para indicar el contenedor (<div></div>) donde se guardará el menú desplegable de municipios, las opciones de este menú dependen del *Estado* seleccionado en el campo anterior, por lo que se utiliza AJAX para generar el menú. Nota: el AJAX que se utiliza es una implementación simplificada de Web2py, que es conveniente cuando el resultado de la función invocada por AJAX se escribe directamente en el contenedor.
 
-* **tabla_nombre** es el id correspondiente al campo *Conglomerado* (id *tabla_nombre*), se utiliza para validar dos aspectos: 1) si el número de conglomerado que se escribió ya está registrado en la base de datos, y 2) para rechazar números de conglomerados con más de 6 dígitos. Para lograr estó se utiliza AJAX, sin embargo, no es posible utilizar el AJAX de Web2py ya que el objetivo es validación (en contraste con el caso de *shadow_clone* donde se requiere imprimir un menú en pantalla).
+* **tabla_nombre** es el id correspondiente al campo *Conglomerado*, se utiliza para validar dos aspectos: 1) si el número de conglomerado que se escribió ya está registrado en la base de datos, y 2) para rechazar números de conglomerados con más de 6 dígitos. Para lograr estó se utiliza AJAX, sin embargo, no es posible utilizar el AJAX de Web2py ya que el objetivo es validación (en contraste con el caso de *shadow_clone* donde se requiere imprimir un menú en pantalla).
 
 Validaciones
 ^^^^^^^^^^^^
