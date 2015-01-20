@@ -17,3 +17,4 @@ En este documento se explicará principalmente el código JS.
    :maxdepth: 2
    
    01_conglomerado_v
+   02_camara_v
