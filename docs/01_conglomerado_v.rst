@@ -12,7 +12,7 @@ A continuación describimos las clases utilizadas en el archivo *index.html*, as
 Clases
 ^^^^^^
 
-* **No_GPS**, **GPS**, **Centrar**. **FlotaIzquierda se utilizan para dar distinto estilo a las celdas relativas a GPS.
+* **No_GPS**, **GPS**, **Centrar**. **FlotaIzquierda** se utilizan para dar distinto estilo a las celdas relativas a GPS.
 
 * **integer, date, time, string, double, generic-widget** son clases de Web2py, y se utilizan para validación automática en la vista (por ejemplo, para evitar que se introduza un string en un campo de enteros). En particular, la clase *date* permite visualizar el calendario para seleccionar la fecha.
 
