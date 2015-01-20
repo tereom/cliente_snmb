@@ -1,18 +1,17 @@
-Conglomerado
+Cámara
 =============
 
-La carpeta de vistas asociada a conglomerado sólo consta de un archivo (index.html).
+La carpeta de vistas asociada a cámara consta de 2 archivos, index1.html e index2.html.
 
-Index
------
+Index1
+------
 
-A continuación describimos las clases utilizadas en el archivo *index.html*, así como los identificadores asociados al código JavaScript.
-
+A continuación describimos las clases e identificadores asociados al código JavaScript del archivo *index1.html*.
 
 Clases
 ^^^^^^
 
-* **No_GPS**, **GPS**, **Centrar**. **FlotaIzquierda se utilizan para dar distinto estilo a las celdas relativas a GPS.
+* **No_GPS**, **GPS**, **Centrar** y **Enviar** se utilizan para dar distinto estilo a las celdas relativas a GPS.
 
 * **integer, date, time, string, double, generic-widget** son clases de Web2py, y se utilizan para validación automática en la vista (por ejemplo, para evitar que se introduza un string en un campo de enteros). En particular, la clase *date* permite visualizar el calendario para seleccionar la fecha.
 
