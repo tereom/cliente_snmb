@@ -5,7 +5,7 @@ El archivo de vista está dividido en tres secciones: CSS, HTML y JavaScript.
 
 Index1
 ------
-A continuación describimos las clases e identificadores asociados al código JavaScript del archivo *index1.html*. Éste corresponde a la vista *Transecto especies invasoras*.
+A continuación describimos las clases utilizadas en el archivo *index1.html*, así como los identificadores asociados al código JavaScript. Éste corresponde a la vista *Transecto especies invasoras*.
 
 Clases
 ^^^^^^
@@ -16,6 +16,7 @@ Clases
 
 * **obligatorio** sirve para indicar campos obligatorios, mismos que serán validados al enviar la forma.
 
+* **nombre_cientifico, ** son clases que sirven para las acciones fade-in/fade-out, esto es, controlan que ciertos campos se desvanezan o aparezcan de acuerdo a la información ingresada. También sirven para validar los campos correspondientes.
 
 Identificadores
 ^^^^^^^^^^^^^^^
@@ -41,7 +42,7 @@ Hay dos tipos de validación, la primera (validación al momento) se lleva a cab
 
 Index2
 ------
-A continuación describimos las clases e identificadores asociados al código JavaScript del archivo *index1.html*. Éste corresponde a la vista *Registro especies invasoras*. 
+A continuación describimos las clases utilizadas en el archivo *index2.html*, así como los identificadores asociados al código JavaScript. Éste corresponde a la vista *Registro especies invasoras*. 
 
 Nota: Esta vista esta compuesta por dos secciones, en la primera (*Especies Invasoras*) se ingresa la información de campo y la segunda *Revisión de registros* sirve para revisar la información guardada en la base de datos. Las clases, identificadores y validación de este documento corresponden a la sección de *Especies Invasoras* mientras que la segunda sección se genera con la función *smartgrid* de Web2py.
 
@@ -49,6 +50,12 @@ Clases
 ^^^^^^
 
 * **Tabla** y **CentrarV** se utilizan para dar distinto estilo a las celdas de la tabla.
+
+* **FlotaIzquierda** se utiliza para ubicar el botón de *Enviar* y los campos *Nombre común*, *Nombre científico*.
+
+* **Nombre** sirve para las acciones fade-in/fade-out, esto es, controlan que los campos *Nombre común* y *Nombre científico* se desvanezan o aparezcan de acuerdo a la información ingresada. También sirven para validar los campos.
+
+* **tabla_conabio_lista**, **tabla_hay_nombre_comun**, **tabla_nombre_comun**, **tabla_hay_nombre_cientifico**, **tabla_nombre_cientifico** se utilizan para la validación de los campos *Nombre común* y *Nombre científico*.
 
 Identificadores
 ^^^^^^^^^^^^^^^
@@ -60,13 +67,7 @@ A continuación se describen los identificadores con funcionalidades ligadas a A
 Validaciones
 ^^^^^^^^^^^^
 
-Hay dos tipos de validación, la primera (validación al momento) se lleva a cabo conforme el usuario captura la información y la segunda se lleva a cabo cuando se envía la forma.
+La validación se lleva a cabo cuando se envía la forma.
 
-1. Al momento. 
-	+ Transecto (id *tabla_transecto_numero* descrito arriba), se valida que no exista previamente en la base de datos.
-
-
-2. Al enviar. 
 	+ La clase *obligatorio*, todos los campos con esta clase deben tener información.
-	+ La clase *date*, se usa para validar que la fecha esté en el formato correcto (aaaa-mm-dd), y si lo cumple se valida también que los rangos de día, mes y año sean válidos.
-	+ Los identificadores *tabla_hora_inicio* y *tabla_hora_termino* se utilizan para validar que la hora de inicio sea menor a la hora de término.
+	+ En caso de que se seleccione la opción *Otros* en Lista CONABIO (id *tabla_conabio_lista*) se deberá ingresar el nombre común y/o el nombre científico de la especie para validar esto primero se verifica que al menos uno de los dos campos esté palomeado usando *tabla_hay_nombre_comun* y *tabla_hay_nombre_cientifico*, después se verifica que si el campo se palomeó los campos Nombre común (id *tabla_nombre_comun*) y/o Nombre científico (id *tabla_nombre_cientifico*) contengan información.
