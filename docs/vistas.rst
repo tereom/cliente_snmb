@@ -20,3 +20,5 @@ En este documento se explicará principalmente el código JS.
    02_camara_v
    04_especies_invasoras_v
    05_huellas_excretas_v
+   12_epifitas_v
+   13_impactos_ambientales_v

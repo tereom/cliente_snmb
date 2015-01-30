@@ -38,3 +38,84 @@ Hay dos tipos de validación, la primera (validación al momento) se lleva a cab
 	+ Los identificadores *tabla_hora_inicio* y *tabla_hora_termino* se utilizan para validar que la hora de inicio sea menor a la hora de término.
 
 
+
+##### 
+
+Notas adicionales
+=================
+
+Ajax 
+
+1. Web2py. Este ajax funciona con .change porque cuando se selecciona Estado se llena mediante ajax la combobox de municipios.
+
+    //AJAX para llenar la combobox con los municipios asociados al estado elegido
+    $('#tabla_estado').change
+    (
+        function()
+        {
+            $('#tabla_municipio').remove();
+
+            //ajax es una función de Web2py que simplifica la función homónima de JQuery
+            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
+            // del elemento donde se insertará la respuesta
+            ajax("{{=URL('asignarMunicipios')}}", ['estado'], 'shadow_clone');
+        }
+    )
+
+2. Ajax que valida un campo generado a la hora de cargar la página.
+
+    //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
+
+
+    $('#tabla_nombre').keyup
+    (
+        function()
+        {
+            $.ajax
+            (
+                {
+                    type: "POST",
+                    data: $('#tabla_nombre').serialize(),
+                    url: "{{=URL('conglomeradoExistente')}}",
+                    success: function(resultado)
+                    {
+                        //alert(resultado);
+                        if(resultado>=1)
+                        {
+                            alert('Este conglomerado ya ha sido declarado');
+                            $('#tabla_nombre').val("");
+                        }
+                        else if(resultado==-1)
+                        {
+                            alert('El número de conglomerado consta de 6 dígitos. Ejemplo: 012345 (para conglomerados del INFyS) ó 123456 para conglomerados que no son del INFyS');
+                            $('#tabla_nombre').val("");
+                        }
+                    }
+                }
+            );
+        }
+    );
+
+3. Porque algunas veces se necesitan dos clases.
+Ajax que valida un campo generado mediante Ajax. En el ejemplo de epífitas (código de abajo), el campo generado es *Sitio*, después se utiliza Ajax para validarlo; sin embargo, los campos generados por Ajax no están considerados en el DOM (Document Object Model) por lo que la validación tiene que apuntar al objeto más cercano considerado en el DOM. Es por esto que, a diferencia del punto anterior, se utilizan dos clases en la validación: *shadow_clone* y *tabla_sitio_muestra_id*.
+
+    $('#shadow_clone').on('change','#tabla_sitio_muestra_id',function (){
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#tabla_sitio_muestra_id').serialize(),
+            url: "{{=URL('informacionEpifitasExistente')}}",
+                success: function(resultado)
+                {
+                    //alert(resultado);
+                    if(resultado>0)
+                    {
+                        alert('La información de epífitas ya ha sido insertada para el sitio seleccionado');
+                        $('#tabla_sitio_muestra_id').val("");
+                    }
+                }
+            }
+            );
+        }
+        );

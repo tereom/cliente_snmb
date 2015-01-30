@@ -1,7 +1,7 @@
 Conteo de aves
 ==================
 
-El archivo de vista está dividido en tres secciones: CSS, HTML y JavaScript. 
+Cada archivo de vista (index1 e index2) está dividido en tres secciones: CSS, HTML y JavaScript. 
 
 Index1
 ------
