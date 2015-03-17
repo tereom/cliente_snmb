@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Conglomerado &mdash; documentación de Cliente - 1.0</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentación de Cliente - 1.0" href="index.html" />
+    <link rel="up" title="Vistas" href="vistas.html" />
+    <link rel="next" title="Cámara" href="02_camara_v.html" />
+    <link rel="prev" title="Vistas" href="vistas.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             accesskey="I">índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="right" >
+          <a href="02_camara_v.html" title="Cámara"
+             accesskey="N">siguiente</a> |</li>
+        <li class="right" >
+          <a href="vistas.html" title="Vistas"
+             accesskey="P">anterior</a> |</li>
+        <li><a href="index.html">documentación de Cliente - 1.0</a> &raquo;</li>
+          <li><a href="vistas.html" accesskey="U">Vistas</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="conglomerado">
+<h1>Conglomerado<a class="headerlink" href="#conglomerado" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>La carpeta de vistas asociada a conglomerado sólo consta de un archivo (index.html).</p>
+<div class="section" id="index">
+<h2>Index<a class="headerlink" href="#index" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A continuación describimos las clases utilizadas en el archivo <em>index.html</em>, así como los identificadores asociados al código JavaScript.</p>
+<div class="section" id="clases">
+<h3>Clases<a class="headerlink" href="#clases" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul class="simple">
+<li><strong>No_GPS</strong>, <strong>GPS</strong>, <strong>Centrar</strong>. <strong>FlotaIzquierda</strong> se utilizan para dar distinto estilo a las celdas relativas a GPS.</li>
+<li><strong>integer, date, time, string, double, generic-widget</strong> son clases de Web2py, y se utilizan para validación automática en la vista (por ejemplo, para evitar que se introduza un string en un campo de enteros). En particular, la clase <em>date</em> permite visualizar el calendario para seleccionar la fecha.</li>
+<li><strong>obligatorio</strong> sirve para indicar campos obligatorios, mismos que serán validados al enviar la forma.</li>
+<li><strong>Vegetacion, Sitio_info_2, Sitio_info_3, Sitio_info_4</strong> son clases que sirven para las acciones fade-in/fade-out, esto es, controlan que ciertos campos se desvanezan o aparezcan de acuerdo a la información ingresada. También sirven para validar los campos correspondientes.</li>
+</ul>
+</div>
+<div class="section" id="identificadores">
+<h3>Identificadores<a class="headerlink" href="#identificadores" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>A continuación se describen los identificadores con funcionalidades ligadas a AJAX.</p>
+<ul class="simple">
+<li><strong>shadow_clone</strong> sirve para indicar el contenedor (&lt;div&gt;&lt;/div&gt;) donde se guardará el menú desplegable de municipios, las opciones de este menú dependen del <em>Estado</em> seleccionado en el campo anterior, por lo que se utiliza AJAX para generar el menú. Nota: el AJAX que se utiliza es una implementación simplificada de Web2py, que es conveniente cuando el resultado de la función invocada por AJAX se escribe directamente en el contenedor.</li>
+<li><strong>tabla_nombre</strong> es el id correspondiente al campo <em>Conglomerado</em>, se utiliza para validar dos aspectos: 1) si el número de conglomerado que se escribió ya está registrado en la base de datos, y 2) para rechazar números de conglomerados con más de 6 dígitos. Para lograr estó se utiliza AJAX, sin embargo, no es posible utilizar el AJAX de Web2py ya que el objetivo es validación (en contraste con el caso de <em>shadow_clone</em> donde se requiere imprimir un menú en pantalla).</li>
+</ul>
+</div>
+<div class="section" id="validaciones">
+<h3>Validaciones<a class="headerlink" href="#validaciones" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Hay dos tipos de validación, la primera (validación al momento) se lleva a cabo conforme el usuario captura la información y la segunda se lleva a cabo cuando se envía la forma.</p>
+<ol class="arabic">
+<li><dl class="first docutils">
+<dt>Al momento.</dt>
+<dd><ul class="first last simple">
+<li>Los rangos de los valores de variables que provienen del GPS: <em>latitud</em>, longitud, datum, altitud* y <em>error</em>.</li>
+<li>Número de conglomerado (id <em>tabla_nombre</em> descrito arriba), se valida que conste de no más de 6 dígitos y no exista previamente en la base de datos.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Al enviar.</dt>
+<dd><ul class="first last simple">
+<li>La clase <em>obligatorio</em>, todos los campos con esta clase deben tener información.</li>
+<li>El campo <em>municipio</em>, que no esté vacío.</li>
+<li>Los campos adicionales (<em>Vegetacion</em> y <em>tabla_perturbado</em>), en caso de que se seleccione la opción de <em>Vegetación</em> en <em>Tipo de uso de suelo</em> (id <em>tabla_uso_suelo_tipo</em>), se valida que los campos tengan información.</li>
+<li>Los campos asociados a cada sitio. En caso de que se haya marcado que el sitio existe (ids <em>tabla_existe_2</em>, <em>tabla_existe_3</em>, <em>tabla_existe_4</em>) el usuario debe ingresar todos los campos del renglón correspondiente, para esta validación se usan las clases <em>Sitio_info_2</em>, <em>Sitio_info_3</em> y <em>Sitio_info_4</em> respectivamente.</li>
+<li>Número de conglomerado (id <em>tabla_nombre</em> descrito), se valida que conste de exactamente 6 dígitos.</li>
+<li>La clase <em>date</em>, se usa para validar que la fecha esté en el formato correcto (aaaa-mm-dd), y si lo cumple se valida también que los rangos de día, mes y año sean válidos.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Tabla de Contenidos</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Conglomerado</a><ul>
+<li><a class="reference internal" href="#index">Index</a><ul>
+<li><a class="reference internal" href="#clases">Clases</a></li>
+<li><a class="reference internal" href="#identificadores">Identificadores</a></li>
+<li><a class="reference internal" href="#validaciones">Validaciones</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Tema anterior</h4>
+  <p class="topless"><a href="vistas.html"
+                        title="capítulo anterior">Vistas</a></p>
+  <h4>Próximo tema</h4>
+  <p class="topless"><a href="02_camara_v.html"
+                        title="próximo capítulo">Cámara</a></p>
+  <h3>Esta página</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/01_conglomerado_v.txt"
+           rel="nofollow">Mostrar el código</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             >índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="right" >
+          <a href="02_camara_v.html" title="Cámara"
+             >siguiente</a> |</li>
+        <li class="right" >
+          <a href="vistas.html" title="Vistas"
+             >anterior</a> |</li>
+        <li><a href="index.html">documentación de Cliente - 1.0</a> &raquo;</li>
+          <li><a href="vistas.html" >Vistas</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright .
+      Creado con <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

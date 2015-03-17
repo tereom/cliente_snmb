@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cámara &mdash; documentación de Cliente - 1.0</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentación de Cliente - 1.0" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             accesskey="I">índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li><a href="index.html">documentación de Cliente - 1.0</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="camara">
+<h1>Cámara<a class="headerlink" href="#camara" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>La carpeta de vistas asociada a cámara consta de 2 archivos, index1.html e index2.html.</p>
+<div class="section" id="index1">
+<h2>Index1<a class="headerlink" href="#index1" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>A continuación describimos las clases e identificadores asociados al código JavaScript del archivo <em>index1.html</em>.</p>
+<div class="section" id="clases">
+<h3>Clases<a class="headerlink" href="#clases" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul class="simple">
+<li><strong>No_GPS</strong>, <strong>GPS</strong>, <strong>Centrar</strong> y <strong>Enviar</strong> se utilizan para dar distinto estilo a las celdas relativas a GPS.</li>
+<li><strong>integer, date, time, string, double, generic-widget</strong> son clases de Web2py, y se utilizan para validación automática en la vista (por ejemplo, para evitar que se introduza un string en un campo de enteros). En particular, la clase <em>date</em> permite visualizar el calendario para seleccionar la fecha.</li>
+<li><strong>obligatorio</strong> sirve para indicar campos obligatorios, mismos que serán validados al enviar la forma.</li>
+</ul>
+</div>
+<div class="section" id="identificadores">
+<h3>Identificadores<a class="headerlink" href="#identificadores" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>A continuación se describen los identificadores con funcionalidades ligadas a AJAX.</p>
+<ul>
+<li><p class="first"><strong>shadow_clone</strong>, que consta de dos funcionalidades:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Sirve para indicar el contenedor (&lt;div&gt;&lt;/div&gt;) donde se guardará el menú desplegable de sitios (buscados en la base de datos al seleccionar un conglomerado). Nota: el AJAX que se utiliza es una implementación simplificada de Web2py, que es conveniente cuando el resultado de la función invocada por AJAX se escribe directamente en el contenedor.</li>
+<li>Se utiliza para validar que no exista una cámara asociada en la base de datos al conglomerado y sitio elegidos de los menús desplegables, es decir, para validar que sea declarada a lo más una cámara en cada sitio de cada conglomerado. Para lograr estó se utiliza AJAX, sin embargo, en este caso no es posible utilizar el AJAX de Web2py ya que el objetivo es validación (más que impresión en pantalla de un menú).</li>
+</ol>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="validaciones">
+<h3>Validaciones<a class="headerlink" href="#validaciones" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Hay dos tipos de validación, la primera (validación al momento) se lleva a cabo conforme el usuario captura la información y la segunda se lleva a cabo cuando se envía la forma.</p>
+<ol class="arabic">
+<li><p class="first">Al momento.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Los rangos de los valores de variables que provienen del GPS: <em>latitud, longitud, datum, altitud</em> y <em>error</em>.</li>
+<li><em>Distancia al centro del sitio</em>.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Al enviar.</p>
+<blockquote>
+<div><ul class="simple">
+<li>La clase <em>obligatorio</em>, todos los campos con esta clase deben tener información.</li>
+<li>El campo <em>sitio</em>, que no esté vacío.</li>
+<li>La clase <em>date</em> se usa para validar que la fecha esté en el formato correcto (aaaa-mm-dd), y si lo cumple se valida también que los rangos de día, mes y año sean válidos. Adicionalmente se valida que la fecha y hora de inicio sea menor que la fecha y hora de término.</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Tabla de Contenidos</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Cámara</a><ul>
+<li><a class="reference internal" href="#index1">Index1</a><ul>
+<li><a class="reference internal" href="#clases">Clases</a></li>
+<li><a class="reference internal" href="#identificadores">Identificadores</a></li>
+<li><a class="reference internal" href="#validaciones">Validaciones</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h3>Esta página</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/explicacion_avanzada_v.txt"
+           rel="nofollow">Mostrar el código</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             >índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li><a href="index.html">documentación de Cliente - 1.0</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright .
+      Creado con <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Selección de fauna &mdash; documentación de Cliente - 1.0</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentación de Cliente - 1.0" href="index.html" />
+    <link rel="up" title="Controladores" href="controladores.html" />
+    <link rel="next" title="Conteo de aves" href="10_conteo_aves_c.html" />
+    <link rel="prev" title="Revisar registros" href="07_edicion_c.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             accesskey="I">índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="right" >
+          <a href="10_conteo_aves_c.html" title="Conteo de aves"
+             accesskey="N">siguiente</a> |</li>
+        <li class="right" >
+          <a href="07_edicion_c.html" title="Revisar registros"
+             accesskey="P">anterior</a> |</li>
+        <li><a href="index.html">documentación de Cliente - 1.0</a> &raquo;</li>
+          <li><a href="controladores.html" accesskey="U">Controladores</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="seleccion-de-fauna">
+<h1>Selección de fauna<a class="headerlink" href="#seleccion-de-fauna" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>La pestaña de selección de fauna tiene su propio controlador debido a la complejidad
+de la misma. Las funciones que ésta utiliza son las siguientes:</p>
+<span class="target" id="module-08_revision"></span><dl class="function">
+<dt id="08_revision.actualizarFotografia">
+<tt class="descclassname">08_revision.</tt><tt class="descname">actualizarFotografia</tt><big>(</big><big>)</big><a class="headerlink" href="#08_revision.actualizarFotografia" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Ésta funcion se invoca mediante AJAX, y guarda la información que se introdujo/
+modificó en la forma generada para la fotografía seleccionada.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="08_revision.download">
+<tt class="descclassname">08_revision.</tt><tt class="descname">download</tt><big>(</big><big>)</big><a class="headerlink" href="#08_revision.download" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Esta función es de Web2py y se utiliza para visuallizar las fotografías.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="08_revision.index">
+<tt class="descclassname">08_revision.</tt><tt class="descname">index</tt><big>(</big><big>)</big><a class="headerlink" href="#08_revision.index" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Controlador correspondiente a la pestaña <em>Selección de fauna</em>. Éste lee la
+información de los archivos ingresados por medio de la pestaña <em>Archivos 
+trampa cámara</em> y crea un menú desplegable para ellos.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="08_revision.obtenerFotografia">
+<tt class="descclassname">08_revision.</tt><tt class="descname">obtenerFotografia</tt><big>(</big><big>)</big><a class="headerlink" href="#08_revision.obtenerFotografia" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Ésta funcion se invoca mediante AJAX, y genera una forma para ingresar/modificar
+la información de la fotografía que seleccionó el usuario en el menú desplegable.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Tema anterior</h4>
+  <p class="topless"><a href="07_edicion_c.html"
+                        title="capítulo anterior">Revisar registros</a></p>
+  <h4>Próximo tema</h4>
+  <p class="topless"><a href="10_conteo_aves_c.html"
+                        title="próximo capítulo">Conteo de aves</a></p>
+  <h3>Esta página</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/08_revision_c.txt"
+           rel="nofollow">Mostrar el código</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             >índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="right" >
+          <a href="10_conteo_aves_c.html" title="Conteo de aves"
+             >siguiente</a> |</li>
+        <li class="right" >
+          <a href="07_edicion_c.html" title="Revisar registros"
+             >anterior</a> |</li>
+        <li><a href="index.html">documentación de Cliente - 1.0</a> &raquo;</li>
+          <li><a href="controladores.html" >Controladores</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright .
+      Creado con <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

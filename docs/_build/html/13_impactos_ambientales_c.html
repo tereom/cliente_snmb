@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Impactos ambientales &mdash; documentación de Cliente - 1.0</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <link rel="top" title="documentación de Cliente - 1.0" href="index.html" />
+    <link rel="up" title="Controladores" href="controladores.html" />
+    <link rel="next" title="Vistas" href="vistas.html" />
+    <link rel="prev" title="Epífitas" href="12_epifitas_c.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             accesskey="I">índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="right" >
+          <a href="vistas.html" title="Vistas"
+             accesskey="N">siguiente</a> |</li>
+        <li class="right" >
+          <a href="12_epifitas_c.html" title="Epífitas"
+             accesskey="P">anterior</a> |</li>
+        <li><a href="index.html">documentación de Cliente - 1.0</a> &raquo;</li>
+          <li><a href="controladores.html" accesskey="U">Controladores</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="impactos-ambientales">
+<h1>Impactos ambientales<a class="headerlink" href="#impactos-ambientales" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Funciones correspondientes a la secciones:</p>
+<ol class="arabic simple">
+<li>Información de incendios.</li>
+<li>Información de plagas.</li>
+<li>Impactos ambientales actuales.</li>
+</ol>
+<span class="target" id="module-13_impactos_ambientales"></span><dl class="function">
+<dt id="13_impactos_ambientales.impactosExistentes">
+<tt class="descclassname">13_impactos_ambientales.</tt><tt class="descname">impactosExistentes</tt><big>(</big><big>)</big><a class="headerlink" href="#13_impactos_ambientales.impactosExistentes" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función de AJAX para revisar que no se haya ingresado información de impactos
+actuales en el mismo conglomerado con anterioridad.
+El AJAX se activará cuando seleccionen un conglomerado.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="13_impactos_ambientales.incendioExistente">
+<tt class="descclassname">13_impactos_ambientales.</tt><tt class="descname">incendioExistente</tt><big>(</big><big>)</big><a class="headerlink" href="#13_impactos_ambientales.incendioExistente" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Función de AJAX para revisar que no se haya ingresado información de incendios
+en el mismo conglomerado con anterioridad. El AJAX se activará cuando seleccionen 
+un conglomerado.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="13_impactos_ambientales.index1">
+<tt class="descclassname">13_impactos_ambientales.</tt><tt class="descname">index1</tt><big>(</big><big>)</big><a class="headerlink" href="#13_impactos_ambientales.index1" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Controlador correspondiente a la pestaña <em>Impactos actuales</em>.</p>
+<p>Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+información ingresada en la vista (views/13_impactos_ambientales/index1.html), antes de 
+ser agregada a la base de datos.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="13_impactos_ambientales.index2">
+<tt class="descclassname">13_impactos_ambientales.</tt><tt class="descname">index2</tt><big>(</big><big>)</big><a class="headerlink" href="#13_impactos_ambientales.index2" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Controlador correspondiente a la pestaña <em>Información de plagas</em>.</p>
+<p>Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+información ingresada en la vista (views/13_impactos_ambientales/index2.html), antes de 
+ser agregada a la base de datos.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="13_impactos_ambientales.index3">
+<tt class="descclassname">13_impactos_ambientales.</tt><tt class="descname">index3</tt><big>(</big><big>)</big><a class="headerlink" href="#13_impactos_ambientales.index3" title="Enlazar permanentemente con esta definición">¶</a></dt>
+<dd><p>Controlador correspondiente a la pestaña <em>Información de incendios</em>.</p>
+<p>Funcionamiento: Genera los campos de la forma, con el fin de validar la 
+información ingresada en la vista (views/13_impactos_ambientales/index3.html), antes de 
+ser agregada a la base de datos.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Tema anterior</h4>
+  <p class="topless"><a href="12_epifitas_c.html"
+                        title="capítulo anterior">Epífitas</a></p>
+  <h4>Próximo tema</h4>
+  <p class="topless"><a href="vistas.html"
+                        title="próximo capítulo">Vistas</a></p>
+  <h3>Esta página</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/13_impactos_ambientales_c.txt"
+           rel="nofollow">Mostrar el código</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Búsqueda rápida</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Ir a" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Introduzca los términos de búsqueda o un nombre de módulo, clase o función.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navegación</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Índice General"
+             >índice</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Índice de Módulos Python"
+             >módulos</a> |</li>
+        <li class="right" >
+          <a href="vistas.html" title="Vistas"
+             >siguiente</a> |</li>
+        <li class="right" >
+          <a href="12_epifitas_c.html" title="Epífitas"
+             >anterior</a> |</li>
+        <li><a href="index.html">documentación de Cliente - 1.0</a> &raquo;</li>
+          <li><a href="controladores.html" >Controladores</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright .
+      Creado con <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
