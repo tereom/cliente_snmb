@@ -206,11 +206,11 @@ if db(db.Cat_sensibilidad_camara.id>0).count() == 0:
 ## Pestaña Grabadora
 ########################################################################
 
-db.define_table('Cat_nombre_grabadora', Field('nombre', 'string', required='TRUE'))
+# db.define_table('Cat_nombre_grabadora', Field('nombre', 'string', required='TRUE'))
 
-if db(db.Cat_nombre_grabadora.id>0).count() == 0:
-    db.Cat_nombre_grabadora.insert(nombre='Grabadora 1')
-    db.Cat_nombre_grabadora.insert(nombre='Grabadora 2')
+# if db(db.Cat_nombre_grabadora.id>0).count() == 0:
+#     db.Cat_nombre_grabadora.insert(nombre='Grabadora 1')
+#     db.Cat_nombre_grabadora.insert(nombre='Grabadora 2')
 
 
 ##########################################################################
