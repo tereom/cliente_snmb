@@ -177,11 +177,11 @@ if db(db.Cat_elipsoide.id>0).count() == 0:
 ## Pestaña Camara
 ########################################################################
 
-db.define_table('Cat_nombre_camara', Field('nombre', 'string', required='TRUE'))
+#db.define_table('Cat_nombre_camara', Field('nombre', 'string', required='TRUE'))
 
-if db(db.Cat_nombre_camara.id>0).count() == 0:
-    db.Cat_nombre_camara.insert(nombre='Cámara 1')
-    db.Cat_nombre_camara.insert(nombre='Cámara 2')
+#if db(db.Cat_nombre_camara.id>0).count() == 0:
+    #db.Cat_nombre_camara.insert(nombre='Cámara 1')
+    #db.Cat_nombre_camara.insert(nombre='Cámara 2')
 
 #########################################################################
 

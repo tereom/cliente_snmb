@@ -13,7 +13,6 @@ Campos_Camara = [
 
 	Field('sitio_muestra_id','reference Sitio_muestra',required=True), 
 
- 	#Se insertará a partir de un catálogo
 	Field('nombre','string',required=True),
 
 	Field('fecha_inicio','date',required=True),

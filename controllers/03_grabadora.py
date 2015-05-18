@@ -26,7 +26,7 @@ def index1():
         requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
     
     #Datos de la grabadora
-    SELECT(_name='nombre',_type='string',requires=IS_NOT_EMPTY()),
+    INPUT(_name='nombre',_type='string',requires=IS_NOT_EMPTY()),
     INPUT(_name='fecha_inicio',_type='date',requires=IS_NOT_EMPTY()),
     INPUT(_name='fecha_termino',_type='date',requires=IS_NOT_EMPTY()),    
     INPUT(_name='hora_inicio',_type='time',requires=IS_NOT_EMPTY()),
@@ -160,7 +160,7 @@ def index1():
 
     #De la misma manera, llenando las otras combobox:
 
-    listaNombreGrabadora = db(db.Cat_nombre_grabadora).select(db.Cat_nombre_grabadora.nombre)
+    #listaNombreGrabadora = db(db.Cat_nombre_grabadora).select(db.Cat_nombre_grabadora.nombre)
 
     listaElipsoide = db(db.Cat_elipsoide).select(db.Cat_elipsoide.nombre)
 
@@ -168,7 +168,7 @@ def index1():
         db.Cat_condiciones_ambientales.nombre)
 
     return dict(listaConglomerado=listaConglomerado,\
-        listaNombreGrabadora=listaNombreGrabadora,\
+        #listaNombreGrabadora=listaNombreGrabadora,\
         listaElipsoide=listaElipsoide,\
         listaCondicionesAmbientales=listaCondicionesAmbientales)
 

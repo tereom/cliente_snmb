@@ -252,9 +252,9 @@
                         <!--
                         <select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
                             <option value=""/>
-                            {{for nombreCamara in listaNombreCamara:}}
-                                <option value="{{=nombreCamara.nombre}}">
-                                    {{=nombreCamara.nombre}}
+                            {{# for nombreCamara in listaNombreCamara:}}
+                                <option value="{{#=nombreCamara.nombre}}">
+                                    {{#=nombreCamara.nombre}}
                                 </option>
                             {{pass}}
                         </select>   -->

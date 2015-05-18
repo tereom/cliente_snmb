@@ -36,8 +36,6 @@ db.Camara.sensibilidad.requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.nombre,
 # Grabadora
 # Las siguientes instrucciones se necesitan para que aparezcan los menus
 # desplegables cuando se revisa ...
-db.Grabadora.nombre.requires=IS_IN_DB(db,db.Cat_nombre_grabadora.nombre,
-    '%(nombre)s')
 db.Grabadora.elipsoide.requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')
 
 # Especies
