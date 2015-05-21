@@ -57,7 +57,7 @@ Campos_Archivo_especie_invasora_extra =[
 db.define_table('Archivo_especie_invasora_extra',
     *Campos_Archivo_especie_invasora_extra,
     singular='Archivo especie invasora extra',
-    plural='Archivo especies invasoras extra')
+    plural='Archivos especies invasoras extra')
 
 ##########################################################################
 ## Huella_excreta_extra
@@ -108,7 +108,8 @@ Campos_Archivo_huella_excreta_extra = [
 
 db.define_table('Archivo_huella_excreta_extra',
     *Campos_Archivo_huella_excreta_extra,
-    singular='Huella/excreta extra',plural='Huellas/excretas extra')
+    singular='Archivo huella/excreta extra',
+    plural='Archivos huellas/excretas extra')
 
 ##########################################################################
 ## Especimen_restos_extra

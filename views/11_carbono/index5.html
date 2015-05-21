@@ -8,11 +8,26 @@
         width: 4.4cm;
     }
 
-    .TablaCONANP .string, .TablaCONANP .double
+    .TablaCONANP .double
     {
-        /*margin-left: 0.5cm;*/
-        margin-right: 0.5cm;
+        margin-left: 0.25cm;
+        margin-right: 0.25cm;
         width: 2.5cm;
+        text-align: center;
+    }
+
+    .TablaCONANP .Cuadrante
+    {
+        /*Que la frase Cuadrante i quede en un solo renglón*/
+        white-space: nowrap;
+    }
+
+    .TablaCONANP .string
+    {
+        /*Nombres comunes y científicos*/
+        margin-left: 0.25cm;
+        margin-right: 0.25cm;
+        width: 4cm;
         text-align: center;
     }
         
@@ -123,7 +138,7 @@
                 <tr>
                     <!-- Campo cuadrante solo se escribe una vez -->
                     {{if i % 2 == 0: }}
-                        <td rowspan="2">
+                        <td rowspan="2" class="Cuadrante">
                             <b>{{=cuadrante_i}}</b>
                         </td>
                     {{pass}}

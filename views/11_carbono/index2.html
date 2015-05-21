@@ -13,16 +13,16 @@ de los formularios de trabajo de campo*/
 
     .TablaCONANP .integer, .TablaCONANP .double
     {
-        margin-right: 0.5cm;
-        margin-left: 0.5cm;
-        width: 2cm;
+        margin-right: 0.25cm;
+        margin-left: 0.25cm;
+        width: 2.5cm;
         text-align: center;
     }
     .TablaCONANP .generic-widget
     {
-        margin-right: 0.5cm;
-        margin-left: 0.5cm;
-        width: 2.4cm;
+        margin-right: 0.25cm;
+        margin-left: 0.25cm;
+        width: 2.9cm;
         text-align: center;
     }
     
@@ -180,7 +180,6 @@ de los formularios de trabajo de campo*/
         {
            for(i=1; i<=10; i++)
            {
-
                 tabla_existe_i = '#tabla_existe_'.concat(i);
                 Rama_i = '.Rama_'.concat(i);
                 if(i <= 5){
@@ -189,11 +188,11 @@ de los formularios de trabajo de campo*/
                 }
                 else{
                     $(Rama_i).hide();
-                }
-                
+                }            
             }
         }
      )
+
     $('#tabla_existe_1').change
     (
         function()
@@ -346,7 +345,8 @@ de los formularios de trabajo de campo*/
     (
          function()
          {
-            flag =true;
+            flag = true;
+            flag_diametro = true;
             campos=$('.obligatorio');
             campos.each(function() 
             {
@@ -362,133 +362,162 @@ de los formularios de trabajo de campo*/
 
             if($('#tabla_existe_1').prop('checked'))
             {
-                campos=$('.Rama_1 input, .Rama_1 select');
-                campos.each(function() 
+                if(!$('.Rama_1 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_1 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_1 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }
             }
+
             if($('#tabla_existe_2').prop('checked'))
             {
-                campos=$('.Rama_2 input, .Rama_2 select');
-                campos.each(function() 
+                if(!$('.Rama_2 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_2 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_2 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }
             }
+
             if($('#tabla_existe_3').prop('checked'))
             {
-                campos=$('.Rama_3 input, .Rama_3 select');
-                campos.each(function() 
+                if(!$('.Rama_3 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_3 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_3 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }
             }
+
             if($('#tabla_existe_4').prop('checked'))
             {
-                campos=$('.Rama_4 input, .Rama_4 select');
-                campos.each(function() 
+                if(!$('.Rama_4 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_4 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_4 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }            
             }
+
             if($('#tabla_existe_5').prop('checked'))
             {
-                campos=$('.Rama_5 input, .Rama_5 select');
-                campos.each(function() 
+                if(!$('.Rama_5 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_5 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_5 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }            
             }
+
             if($('#tabla_existe_6').prop('checked'))
             {
-                campos=$('.Rama_6 input, .Rama_6 select');
-                campos.each(function() 
+                if(!$('.Rama_6 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_6 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_6 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }            
             }
+
             if($('#tabla_existe_7').prop('checked'))
             {
-                campos=$('.Rama_7 input, .Rama_7 select');
-                campos.each(function() 
+                if(!$('.Rama_7 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_7 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_7 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }            
             }
+
             if($('#tabla_existe_8').prop('checked'))
             {
-                campos=$('.Rama_8 input, .Rama_8 select');
-                campos.each(function() 
+                if(!$('.Rama_8 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_8 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_8 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }            
             }
+
             if($('#tabla_existe_9').prop('checked'))
             {
-                campos=$('.Rama_9 input, .Rama_9 select');
-                campos.each(function() 
+                if(!$('.Rama_9 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_9 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_9 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }            
             }
+
             if($('#tabla_existe_10').prop('checked'))
             {
-                campos=$('.Rama_10 input, .Rama_10 select');
-                campos.each(function() 
+                if(!$('.Rama_10 select').val())
                 {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
+                    flag = false;
                 }
-                );
+                if(!$('.Rama_10 input').val())
+                {
+                    flag = false;
+                }
+                else if($('.Rama_10 input').val()<7.5)
+                {
+                    flag_diametro = false;
+                }
             }
 
             //Sin embargo, como el campo de "sitio_muestra_id" es generado por
@@ -511,7 +540,11 @@ de los formularios de trabajo de campo*/
                 alert('Faltó llenar algún campo');
                 return false;
             }
-
+            else if(!flag_diametro)
+            {
+                alert('El diámetro mínimo debe ser de 7.5cm');
+                return(false);
+            }
         }
     )
 </script>
