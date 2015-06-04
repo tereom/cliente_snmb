@@ -433,17 +433,17 @@
 
     $('.gps_error').change
     (
-      function()
-      {
-        if($(this).val())
+        function()
         {
-          if($(this).val()<0 || $(this).val()>10)
-          {
-            alert('El error de precisión está en el rango 0-10');
-            $(this).val("");
-          }
+            if($(this).val())
+            {
+                if($(this).val()<0)
+                {
+                    alert('El error de precisión debe ser positivo');
+                    $(this).val("");
+                }
+            }
         }
-      }
     )
       
     $('.altitud').change

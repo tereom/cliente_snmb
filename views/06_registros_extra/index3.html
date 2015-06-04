@@ -416,9 +416,9 @@ $('.gps_error').change
     {
         if($(this).val())
         {
-            if($(this).val()<0 || $(this).val()>10)
+            if($(this).val()<0)
             {
-                alert('El error de precisión está en el rango 0-10');
+                alert('El error de precisión debe ser positivo');
                 $(this).val("");
             }
         }
