@@ -172,7 +172,6 @@ de los formularios de trabajo de campo*/
 
 {{#=BEAUTIFY(request.vars)}}
 <script>
-
     $(document).ready
     (
         function()
@@ -187,7 +186,8 @@ de los formularios de trabajo de campo*/
                 }
                 else{
                     $(Rama_i).hide();
-                }            
+                }
+                
             }
         }
      )
@@ -202,6 +202,7 @@ de los formularios de trabajo de campo*/
                 $('.Rama_1').fadeOut();
         }
     )
+
     $('#tabla_existe_2').change
     (
         function()
@@ -212,6 +213,7 @@ de los formularios de trabajo de campo*/
                 $('.Rama_2').fadeOut();
         }
     )
+
     $('#tabla_existe_3').change
     (
         function()
@@ -222,6 +224,7 @@ de los formularios de trabajo de campo*/
                 $('.Rama_3').fadeOut();
         }
     )
+
     $('#tabla_existe_4').change
     (
         function()
@@ -232,6 +235,7 @@ de los formularios de trabajo de campo*/
                 $('.Rama_4').fadeOut();
         }
     )
+
     $('#tabla_existe_5').change
     (
         function()
@@ -242,6 +246,7 @@ de los formularios de trabajo de campo*/
                 $('.Rama_5').fadeOut();
         }
     )
+
     $('#tabla_existe_6').change
     (
         function()
@@ -252,6 +257,7 @@ de los formularios de trabajo de campo*/
                 $('.Rama_6').fadeOut();
         }
     )
+
     $('#tabla_existe_7').change
     (
         function()
@@ -262,6 +268,7 @@ de los formularios de trabajo de campo*/
                 $('.Rama_7').fadeOut();
         }
     )
+
     $('#tabla_existe_8').change
     (
         function()
@@ -272,6 +279,7 @@ de los formularios de trabajo de campo*/
                 $('.Rama_8').fadeOut();
         }
     )
+
     $('#tabla_existe_9').change
     (
         function()
@@ -282,6 +290,7 @@ de los formularios de trabajo de campo*/
                 $('.Rama_9').fadeOut();
         }
     )
+
     $('#tabla_existe_10').change
     (
         function()
@@ -293,23 +302,171 @@ de los formularios de trabajo de campo*/
         }
     )
 
+    $('#tabla_diametro_1').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('#tabla_diametro_2').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('#tabla_diametro_3').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('#tabla_diametro_4').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('#tabla_diametro_5').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('#tabla_diametro_6').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('#tabla_diametro_7').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('#tabla_diametro_8').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('#tabla_diametro_9').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+    $('#tabla_diametro_10').change
+    (
+        function()
+        {
+            if($(this).val())
+            {
+                if($(this).val()<7.5)
+                {
+                    alert('El diámetro mínimo es 7.5cm');
+                    $(this).val("");
+                }
+            }
+        }
+    )
+
+
     //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
     $('#tabla_conglomerado_muestra_id').change
     (
         function()
         {
             $('#tabla_sitio_muestra_id, #tabla_transecto_ramas_id').remove();
-
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
             // del elemento donde se insertará la respuesta
             ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-
             // ajax para asignar transectos
             ajax("{{=URL('asignarTransectos')}}", ['sitio_muestra_id'], 'shadow_clone_2');
         }
        )
-
     // ajax para asignar transectos
     $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
     {
@@ -331,21 +488,18 @@ de los formularios de trabajo de campo*/
         }
         );
         $('#tabla_transecto_ramas_id').remove();
-
         //ajax es una función de Web2py que simplifica la función homónima de JQuery
         //recibe el URL destino, los nombres de los campos que se enviarán y el ID
         // del elemento donde se insertará la respuesta
         ajax("{{=URL('asignarTransectos')}}", ['sitio_muestra_id'], 'shadow_clone_2');
     }
     );
-
     //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
     (
          function()
          {
-            flag = true;
-            flag_diametro = true;
+            flag =true;
             campos=$('.obligatorio');
             campos.each(function() 
             {
@@ -355,170 +509,138 @@ de los formularios de trabajo de campo*/
                 }
             }
             );
-
             /*Validando que los campos correspondientes a una rama estén 
             llenos si ésta existe*/
-
             if($('#tabla_existe_1').prop('checked'))
             {
-                if(!$('.Rama_1 select').val())
+                campos=$('.Rama_1 input, .Rama_1 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_1 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_1 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }
+                );
             }
-
             if($('#tabla_existe_2').prop('checked'))
             {
-                if(!$('.Rama_2 select').val())
+                campos=$('.Rama_2 input, .Rama_2 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_2 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_2 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }
+                );
             }
-
             if($('#tabla_existe_3').prop('checked'))
             {
-                if(!$('.Rama_3 select').val())
+                campos=$('.Rama_3 input, .Rama_3 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_3 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_3 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }
+                );
             }
-
             if($('#tabla_existe_4').prop('checked'))
             {
-                if(!$('.Rama_4 select').val())
+                campos=$('.Rama_4 input, .Rama_4 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_4 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_4 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }            
+                );
             }
-
             if($('#tabla_existe_5').prop('checked'))
             {
-                if(!$('.Rama_5 select').val())
+                campos=$('.Rama_5 input, .Rama_5 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_5 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_5 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }            
+                );
             }
-
             if($('#tabla_existe_6').prop('checked'))
             {
-                if(!$('.Rama_6 select').val())
+                campos=$('.Rama_6 input, .Rama_6 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_6 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_6 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }            
+                );
             }
-
             if($('#tabla_existe_7').prop('checked'))
             {
-                if(!$('.Rama_7 select').val())
+                campos=$('.Rama_7 input, .Rama_7 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_7 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_7 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }            
+                );
             }
-
             if($('#tabla_existe_8').prop('checked'))
             {
-                if(!$('.Rama_8 select').val())
+                campos=$('.Rama_8 input, .Rama_8 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_8 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_8 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }            
+                );
             }
-
             if($('#tabla_existe_9').prop('checked'))
             {
-                if(!$('.Rama_9 select').val())
+                campos=$('.Rama_9 input, .Rama_9 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_9 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_9 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }            
+                );
             }
-
             if($('#tabla_existe_10').prop('checked'))
             {
-                if(!$('.Rama_10 select').val())
+                campos=$('.Rama_10 input, .Rama_10 select');
+                campos.each(function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        //alert('this');
+                        flag = false;
+                    }
                 }
-                if(!$('.Rama_10 input').val())
-                {
-                    flag = false;
-                }
-                else if($('.Rama_10 input').val()<7.5)
-                {
-                    flag_diametro = false;
-                }
+                );
             }
-
             //Sin embargo, como el campo de "sitio_muestra_id" es generado por
             //medio de AJAX; no entra en la validación anterior. Lo tenemos que
             //validar aparte:
@@ -527,7 +649,6 @@ de los formularios de trabajo de campo*/
                 flag = false;
                 //alert('Falta llenar el sitio');
             }
-
             //Lo mismo para el campo de transecto.
             if(!$('#shadow_clone_2').find('select:first').val())
             {
@@ -538,11 +659,6 @@ de los formularios de trabajo de campo*/
             {
                 alert('Faltó llenar algún campo');
                 return false;
-            }
-            else if(!flag_diametro)
-            {
-                alert('El diámetro mínimo debe ser de 7.5cm');
-                return(false);
             }
         }
     )
