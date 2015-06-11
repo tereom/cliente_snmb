@@ -348,6 +348,75 @@
         }
         );
 
+    /* Los campos de clase double no deben contener comas*/
+    $('.double').change
+    (
+        function()
+        {
+            var comaReg = /,/;
+            if(comaReg.test($(this).val()))
+            {
+                alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
+                $(this).val("");
+            }
+        }
+    )
+
+    /* Validando los valores del azimut (a) para cada uno de los 4 cuadrantes:
+    - 1º: 0º <= a <= 90º (árboles 1 y 2)
+    - 2º: 90º <= a <= 180º (árboles 3 y 4)
+    - 3º 180º <= a <= 270º (árboles 5 y 6)
+    - 4º 270º <= a <= 360º (árboles 7 y 8)*/
+
+    /* la siguiente función es para definir un event trigger para cada cuadrante,
+    cuando se cambie el valor del azimut del arbol i, va a validar que esté en
+    el rango adecuado*/
+
+    function listener(cuadrante, min_azimut, max_azimut){
+        return function(){
+            if($(this).val()){
+                if($(this).val() < min_azimut || $(this).val() > max_azimut)
+                {
+                    alert('El azimut correspondiente al cuadrante ' + cuadrante +
+                        ' debe estar entre ' + min_azimut + ' y ' + max_azimut + ' grados.');
+                    $(this).val("");
+                }
+            }
+        }
+    }
+
+    for(i = 1; i <= 8; i++){
+        // dependiendo del número de árbol, se define el cuadrante del mismo
+        switch(i) {
+            case 1:
+            case 2:
+                min_azimut = 0;
+                max_azimut = 90;
+                cuadrante = 1;
+            break;
+            case 3:
+            case 4:
+                min_azimut = 90;
+                max_azimut = 180;
+                cuadrante = 2;
+            break;
+            case 5:
+            case 6:
+                min_azimut = 180;
+                max_azimut = 270;
+                cuadrante = 3;
+            break;
+            case 7:
+            case 8:
+                min_azimut = 270;
+                max_azimut = 360;
+                cuadrante = 4;
+            break;
+        }
+
+        $('#tabla_azimut_' + i).change(listener(cuadrante, min_azimut, max_azimut));
+    }
+
     //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
     (

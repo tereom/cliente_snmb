@@ -440,6 +440,21 @@ $('.altitud').change
     }
 )
 
+/* Los campos de clase double no deben contener comas*/
+$('.double').change
+(
+    function()
+    {
+        var comaReg = /,/;
+        if(comaReg.test($(this).val()))
+        {
+            alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
+            $(this).val("");
+        }
+    }
+)
+
+
 //Validando, para ello utilizamos la clase "obligatorio":
 $('form').submit
 (
