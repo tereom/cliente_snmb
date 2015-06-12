@@ -380,7 +380,12 @@ de los formularios de trabajo de campo*/
     (
          function()
          {
-            flag =true;
+            flag = true;
+
+            // la siguiente variable se usa para validar que peso seco submuestra
+            // <= peso húmedo submuestra <= peso húmedo
+            pesos_validos = true;
+
             campos=$('.obligatorio');
             campos.each(function() 
             {
@@ -400,12 +405,37 @@ de los formularios de trabajo de campo*/
                 //alert('falta llenar el sitio');
             }
 
+            //Validando que peso seco submuestra <= peso húmedo submuestra <= peso húmedo:
+            for(i = 1; i <= 8; i++)
+            {
+                // Hago la comparación cuando los tres tienen valores, si alguno se
+                // envió sin valores, pesos_validos = true, pero flag = false (va
+                // a rebotar por la validación de ".obligatorio")
+                if($('#tabla_peso_seco_muestra_' + i).val() && $('#tabla_peso_humedo_muestra_' + i).val()
+                    && $('#tabla_peso_humedo_' + i).val())
+                {
+                    if($('#tabla_peso_seco_muestra_' + i).val() > $('#tabla_peso_humedo_muestra_' + i).val() ||
+                    $('#tabla_peso_humedo_muestra_' + i).val() > $('#tabla_peso_humedo_' + i).val())
+                    {
+                        flag == false;
+                        pesos_validos = false;
+                        //alert(i + ' está mal');
+                    }
+                }
+            };
+
             if(!flag)
             {
                 alert('Faltó llenar algún campo');
                 return false;
             }
-
+            else if(!pesos_validos)
+            {
+                alert('El peso seco de la submuestra debe ser menor (o igual) ' +
+                    'al peso húmedo de la submuestra, y éste debe ser menor (o igual ' +
+                    'al peso húmedo de la muestra');
+                return false;
+            }
         }
     )
     
