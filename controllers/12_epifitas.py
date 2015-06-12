@@ -23,11 +23,8 @@ def index():
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
-        SELECT(_name='sitio_muestra_id',
-            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
 
         #Datos de epífitas:
-
         INPUT(_name='helechos_observados',_type='boolean'),
         INPUT(_name='orquideas_observadas',_type='boolean'),
         INPUT(_name='musgos_observados',_type='boolean'),
@@ -45,7 +42,7 @@ def index():
 
         datosEpifitas = {}
 
-        datosEpifitas['sitio_muestra_id']=forma.vars['sitio_muestra_id']
+        datosEpifitas['conglomerado_muestra_id']=forma.vars['conglomerado_muestra_id']
 
         #Insertando "False" cuando se recibe "None" del HTML:
 
@@ -108,65 +105,25 @@ def index():
 
     return dict(listaConglomerado=listaConglomerado)
 
-def asignarSitios():
-
-    '''
-    Función invocada mediante AJAX para llenar la combobox de "número de sitio" a 
-    partir de los sitios existentes de un conglomerado seleccionado.
-
-    '''
-
-
-    #Obteniendo la información del conglomerado que seleccionó el usuario:
-    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
-
-    #Obteniendo los sitios que existen en dicho conglomerado
-    sitiosAsignados = db(
-        (db.Sitio_muestra.conglomerado_muestra_id==conglomeradoElegidoID)&\
-        (db.Sitio_muestra.existe==True)&\
-        (db.Sitio_muestra.sitio_numero!='Punto de control')
-        ).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
-
-    #Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
-
-    dropdownHTML = "<select class='generic-widget' name='sitio_muestra_id' id='tabla_sitio_muestra_id'>"
-
-    dropdownHTML += "<option value=''/>"
-
-    for sitio in sitiosAsignados:
-
-        dropdownHTML += "<option value='" + str(sitio.id) + "'>" + sitio.sitio_numero + "</option>"  
-    
-    dropdownHTML += "</select>"
-    
-    return XML(dropdownHTML)
-
 def informacionEpifitasExistente():
 
     '''
     Función convocada mediante AJAX para revisar que no se haya ingresado información
-    de epífitas en el mismo sitio con anterioridad. El AJAX se activará cuando
-    seleccionen un conglomerado y un número de sitio.
+    de epífitas en el mismo conglomerado con anterioridad. El AJAX se activará cuando
+    seleccionen un conglomerado.
 
     '''
 
     #Obteniendo la información del sitio que seleccionó el usuario:
-    sitioElegidoID = request.vars.sitio_muestra_id
+    conglomeradoElegidoID = request.vars.conglomerado_muestra_id
 
     #Haciendo un query a la tabla de Informacion_epifitas con la información anterior:
 
-    informacionYaInsertada=db(db.Informacion_epifitas.sitio_muestra_id==sitioElegidoID).select()
+    informacionYaInsertada=db(db.Informacion_epifitas.conglomerado_muestra_id==conglomeradoElegidoID).select()
 
     #regresa la longitud de informacionYaInsertada para que sea interpretada por JS
 
     return len(informacionYaInsertada)
-
-# AQUÍ SURGE UNA CUESTIÓN: PARA PODER VALIDAR LA UNICIDAD DE LA INFORMACION,
-# NECESITAMOS UN TRIGGER "ON CHANGE". SIN EMBARGO, PARA PODER HACER ESTO BIEN
-# REQUERIMOS INCLUIR UN ESPACIO EN BLANCO POR DEFAULT EN LAS COMBOBOX GENERADAS
-# MEDIANTE AJAX, CON LO QUE SURGE LA CUESTIÓN DE VALIDARLAS, Y NECESITAMOS UNA
-# FUNCIÓN DE JQUERY DISTINTA PARA PODER PEGARLES A LOS ELEMENTOS QUE NO EXISTEN
-# DESDE UN PRINCIPIO.
 
 
 

@@ -266,7 +266,7 @@ def editarArbolTransecto():
 
 def editarEpifitas():
     # writeble=False implica que no se puede editar el id
-    db.Informacion_epifitas.sitio_muestra_id.writable = False
+    db.Informacion_epifitas.conglomerado_muestra_id.writable = False
     form = SQLFORM.smartgrid(db.Informacion_epifitas,
         # csv= False implica que no se pueden descargar las tablas
         csv=False,

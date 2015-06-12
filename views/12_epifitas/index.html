@@ -42,11 +42,6 @@
                         <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
                     </div>
                     <div>
-                        <!--este campo sólo sirve para encontrar
-                        con AJAX los sitios existentes asociados al conglomerado
-                        elegido, al enviar la forma al controlador, se utilizará
-                        para guardar el registro de la cámara, únicamente el id
-                        del sitio (de la dropdown generada mediante AJAX)-->
                         <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
                             <option value=""/>
                             {{for conglomerado in listaConglomerado:}}
@@ -57,17 +52,6 @@
                         </select>
                     </div>
                 </td>                
-                <td>
-                    <div>
-                        <label for="tabla_sitio_muestra_id">Sitio</label>
-                    </div>
-                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
-                    <div id="shadow_clone">
-                        <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
-                            <option value=""/>
-                        </select>
-                    </div>
-                </td>
             </tr>
         </table>
         <hr/>
@@ -176,36 +160,22 @@
         }
     )
 
-    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
-    $('#tabla_conglomerado_muestra_id').change
-    (
-        function()
-        {
-            $('#tabla_sitio_muestra_id').remove();
-
-            //ajax es una función de Web2py que simplifica la función homónima de JQuery
-            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-            // del elemento donde se insertará la respuesta
-            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-        }
-       )
-
-    //AJAX para evitar que se envíe la información de los sitios correspondientes
-    //a un sitio más de una vez:
-    $('#shadow_clone').on('change','#tabla_sitio_muestra_id',function (){
+    //AJAX para evitar que se envíe la información de epífitas correspondiente
+    //a un conglomerado más de una vez:
+    $('#tabla_conglomerado_muestra_id').change(function (){
         $.ajax
         (
         {
             type: "POST",
-            data: $('#tabla_sitio_muestra_id').serialize(),
+            data: $('#tabla_conglomerado_muestra_id').serialize(),
             url: "{{=URL('informacionEpifitasExistente')}}",
-                success: function(resultado)
+            success: function(resultado)
                 {
                     //alert(resultado);
                     if(resultado>0)
                     {
-                        alert('La información de epífitas ya ha sido insertada para el sitio seleccionado');
-                        $('#tabla_sitio_muestra_id').val("");
+                        alert('La información de epífitas ya ha sido insertada para el conglomerado seleccionado');
+                        $('#tabla_conglomerado_muestra_id').val("");
                     }
                 }
             }
@@ -241,15 +211,6 @@
                     flag=false;
                     faltanNombres=true;
                 }
-            }
-
-            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
-            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
-            //validar aparte:
-            if(!$('#shadow_clone').find('select:first').val())
-            {
-                flag = false;
-                //alert('Falta llenar el sitio');
             }
 
             if(!flag)
