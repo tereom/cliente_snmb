@@ -147,13 +147,32 @@ def index2():
         #(no hay ningún campo que haga referencia a la lista conabio como tal),
         #es mejor si el formulario regresa los nombres en el catálogo (en lugar
         #de los ID's):
-        INPUT(_name='conabio_lista',
-            requires=IS_IN_DB(db,db.Cat_conabio_aves.nombre,'%(nombre)s')),
+        
+        #Razonamiento detrás de la forma:
+        #1. Preferimos el nombre científico al nombre común, por ello, en la vista,
+        #la casilla correspondiente al campo "hay_nombre_cientifico" estará marca
+        #da por default.
+        #2. Pensábamos que la lista de nombres científicos era exhaustiva, pero no
+        #lo es si sólo conocen el género y no la especie, conviene permitirles
+        #que escriban el nombre.
+        #3. Si conocen el nombre científico, nos interesa que también escriban/
+        #seleccionen el nombre común, NO queremos ligar ambas listas (ie. que al
+        #elegir un nombre científico, se llene el nombre común por default), ya
+        #que como los nombres comunes cambian por región, esa información puede
+        #resultar valiosa si en el futuro queremos imputar información de los
+        #nombres científicos a partir de los comunes.
+        #4. Si no conocen el nombre científico, deben escribir el nombre común,
+        #pero no se ligará al nombre científico, ya que puede ser que dos aves
+        #de distintas regiones tengan el mismo nombre común pero diferentes
+        #nombres científicos.
+
+        INPUT(_name='hay_nombre_cientifico',_type='boolean'),
+        INPUT(_name='conabio_lista_nombre_cientifico',_type='string'),
+        INPUT(_name='nombre_cientifico',_type='string'),
 
         INPUT(_name='hay_nombre_comun',_type='boolean'),
+        INPUT(_name='conabio_lista_nombre_comun',_type='string'),
         INPUT(_name='nombre_comun',_type='string'),
-        INPUT(_name='hay_nombre_cientifico',_type='boolean'),
-        INPUT(_name='nombre_cientifico',_type='string'),
 
         INPUT(_name='es_visual',_type='boolean'),
         INPUT(_name='es_sonora',_type='boolean'),
@@ -169,50 +188,59 @@ def index2():
     formaConteoAve = FORM(*camposConteoAve)
 
     if formaConteoAve.accepts(request.vars,formname='formaConteoAveHTML'):    
-        #Filtrando los datos correspondientes a la tabla de observaciones:
+        
+        datosConteoAve['punto_conteo_aves_id']=formaConteoAve.vars['punto_conteo_aves_id']
 
-        datosConteoAve = db.Conteo_ave._filter_fields(formaConteoAve.vars)
+        datosConteoAve['numero_individuos']=formaConteoAve.vars['numero_individuos']
+        datosConteoAve['distancia_aproximada']=formaConteoAve.vars['distancia_aproximada']
 
         #La observación es visual/sonora, entonces True se guarda en la base de datos,
         #en caso contrario, se tiene que guardar manualmente False, pues si no,
         #Web2py guarda Null.
 
         if bool(formaConteoAve.vars['es_visual']):
-            datosConteoAve['es_visual']=formaConteoAve.vars['es_visual']
+            datosConteoAve['es_visual']=True
         else:
             datosConteoAve['es_visual']=False
 
         if bool(formaConteoAve.vars['es_sonora']):
-            datosConteoAve['es_sonora']=formaConteoAve.vars['es_sonora']
+            datosConteoAve['es_sonora']=True
         else:
             datosConteoAve['es_sonora']=False
+
+        #Asignando nombres comunes y científicos
         
-        # Revisando la selección de lista CONABIO
+        if bool(formaConteoAve.vars['hay_nombre_cientifico']):
 
-        selListaConabio=formaConteoAve.vars['conabio_lista']
+            selListaCientifico=formaConteoAve.vars['conabio_lista_nombre_cientifico']
 
-        #Si se eligió una especie invasora de la lista CONABIO, entonces se marcan
-        #las casillas de:
-        #nombre_en_lista
-        #hay_nombre_común
-        #hay_nombre_científico
-        #y utilizando el valor de seleccionado se llenan los campos de:
-        #nombre_comun
-        #nombre_cientifico.
+            if bool(selListaCientifico!='Otros'):
 
-        if selListaConabio!='Otros':
+                datosConteoAve['nombre_cientifico_en_lista'] = True
+                datosConteoAve['nombre_cientifico'] = selListaCientifico
 
-            datosConteoAve['nombre_en_lista'] = True
+            else:
 
-            #Separando el valor obtenido en mombre común y científico:
-            nombre = selListaConabio.split(' - ')
-            datosConteoAve['nombre_comun'] = nombre[0]
-            datosConteoAve['nombre_cientifico'] = nombre[1]
+                datosConteoAve['nombre_cientifico_en_lista'] = False
+                datosConteoAve['nombre_cientifico'] = formaConteoAve.vars['nombre_cientifico']
 
-        else:
+        #Si no hay nombre científico, los dos campos anteriores se insertan vacíos.
 
-            datosConteoAve['nombre_en_lista'] = False
-        #Guardando el registro de la observación en la base de datos:
+        if bool(formaConteoAve.vars['hay_nombre_comun']):
+
+            selListaComun=formaConteoAve.vars['conabio_lista_nombre_comun']
+
+            if bool(selListaComun!='Otros'):
+
+                datosConteoAve['nombre_comun_en_lista'] = True
+                datosConteoAve['nombre_comun'] = selListaComun
+
+            else:
+
+                datosConteoAve['nombre_comun_en_lista'] = False
+                datosConteoAve['nombre_comun'] = formaConteoAve.vars['nombre_comun']
+
+        #Si no hay nombre común, los dos campos anteriores se insertan vacíos.
         
         conteoAveInsertado = db.Conteo_ave.insert(**datosConteoAve)
 
@@ -264,7 +292,8 @@ def index2():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-    listaConabio = db(db.Cat_conabio_aves).select(db.Cat_conabio_aves.nombre)
+    listaConabio = db(db.Cat_conabio_aves).select(
+        db.Cat_conabio_aves.nombre_comun, db.Cat_conabio_aves.nombre_cientifico)
 
     # Tabla de revisión de registros ingresados
     db.Conteo_ave.punto_conteo_aves_id.writable = False

@@ -88,27 +88,22 @@
         <hr/>
         <table class="Tabla">
             <tr>
-                <td rowspan="2" class="CentrarV">
-                    <div>
-                        <label for="tabla_conabio_lista">Lista aves<sup>1</sup></label>
+                <td>
+                    <div class="FlotaIzquierda" style="padding-right:10px;">
+                        <input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
                     </div>
-                    <div>
-                        <select class="generic-widget obligatorio" name="conabio_lista" id="tabla_conabio_lista">
+                    <div class="FlotaIzquierda" style="padding-right:22px;">
+                        <label for="tabla_conabio_lista_nombre_comun">Nombre común<sup>1</sup></label>
+                    </div>
+                    <div class="FlotaIzquierda" style="padding-right:22px">
+                        <select class="generic-widget" name="conabio_lista_nombre_comun" id="tabla_conabio_lista_nombre_comun">
                             <option value=""/>
                             {{for ave in listaConabio:}}
-                                <option value="{{=ave.nombre}}">
-                                    {{=ave.nombre}}
+                                <option value="{{=ave.nombre_comun}}">
+                                    {{=ave.nombre_comun}}
                                 </option>
                             {{pass}}
                         </select>
-                    </div>
-                </td>   
-                <td>
-                    <div class="Nombre FlotaIzquierda" style="padding-right:10px;">
-                        <input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
-                    </div>
-                    <div class="Nombre FlotaIzquierda" style="padding-right:22px;">
-                        <label for="tabla_nombre_comun">Nombre común</label>
                     </div>
                     <div class="FlotaIzquierda">
                         <input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
@@ -117,11 +112,21 @@
             </tr>
             <tr>
                 <td>
-                    <div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+                    <div class="FlotaIzquierda" style="padding-right:10px;">
                         <input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
                     </div>
-                    <div class="Nombre FlotaIzquierda" style="padding-right:10px;">
-                        <label for="tabla_nombre_cientifico">Nombre científico</label>
+                    <div class="FlotaIzquierda" style="padding-right:22px;">
+                        <label for="tabla_conabio_lista_nombre_cientifico">Nombre científico<sup>1</sup></label>
+                    </div>
+                    <div class="FlotaIzquierda" style="padding-right:22px">
+                        <select class="generic-widget" name="conabio_lista_nombre_cientifico" id="tabla_conabio_lista_nombre_cientifico">
+                            <option value=""/>
+                            {{for ave in listaConabio:}}
+                                <option value="{{=ave.nombre_cientifico}}">
+                                    {{=ave.nombre_cientifico}}
+                                </option>
+                            {{pass}}
+                        </select>
                     </div>
                     <div class="FlotaIzquierda">
                         <input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>

@@ -19,8 +19,6 @@ def index():
         #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
         #de datos y así, evitar excepciones.
 
-        #Datos para localizar un sitio único y la información de epífitas a éste.
-
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
 
