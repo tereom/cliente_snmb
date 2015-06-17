@@ -10,7 +10,7 @@
 
 .Tabla .generic-widget
 {
-     margin-right: 2cm;
+    margin-right: 2cm;
     width: 4.4cm;
 }
 
@@ -92,11 +92,12 @@
                     <div class="FlotaIzquierda" style="padding-right:10px;">
                         <input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
                     </div>
-                    <div class="FlotaIzquierda" style="padding-right:22px;">
+                    <div class="FlotaIzquierda" style="padding-right:24px;">
                         <label for="tabla_conabio_lista_nombre_comun">Nombre común<sup>1</sup></label>
                     </div>
-                    <div class="FlotaIzquierda" style="padding-right:22px">
-                        <select class="generic-widget" name="conabio_lista_nombre_comun" id="tabla_conabio_lista_nombre_comun">
+                    <div class="FlotaIzquierda" style="padding-right:10px">
+                        <select class="generic-widget" name="conabio_lista_nombre_comun" id="tabla_conabio_lista_nombre_comun"
+                        style="margin-right: 1cm;">
                             <option value=""/>
                             {{for ave in listaConabio:}}
                                 <option value="{{=ave.nombre_comun}}">
@@ -115,11 +116,12 @@
                     <div class="FlotaIzquierda" style="padding-right:10px;">
                         <input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
                     </div>
-                    <div class="FlotaIzquierda" style="padding-right:22px;">
+                    <div class="FlotaIzquierda" style="padding-right:10px;">
                         <label for="tabla_conabio_lista_nombre_cientifico">Nombre científico<sup>1</sup></label>
                     </div>
-                    <div class="FlotaIzquierda" style="padding-right:22px">
-                        <select class="generic-widget" name="conabio_lista_nombre_cientifico" id="tabla_conabio_lista_nombre_cientifico">
+                    <div class="FlotaIzquierda" style="padding-right:10px">
+                        <select class="generic-widget" name="conabio_lista_nombre_cientifico" id="tabla_conabio_lista_nombre_cientifico"
+                        style="margin-right: 1cm;">
                             <option value=""/>
                             {{for ave in listaConabio:}}
                                 <option value="{{=ave.nombre_cientifico}}">
@@ -242,66 +244,84 @@ $(document).ready
 (
   function()
   {
-    /*Cuando el documento se carga, los campos para ingresar nombre están
-    escondidos*/
-    // La clase Nombre engloba las checkbox y las etiquetas.
-    $('.Nombre').hide();
-    $('#tabla_nombre_comun').hide();
+    /*Cuando el documento se carga, los campos para ingresar nombre común están
+    escondidos, y sólo se visualiza la combobox para ingresar nombre científico*/
+    $('#tabla_hay_nombre_cientifico').prop('checked', true);
     $('#tabla_nombre_cientifico').hide();
+    $('#tabla_conabio_lista_nombre_comun').hide();
+    $('#tabla_nombre_comun').hide();
   }
 )
-/*Fade in de los campos de ingreso de nombre del ave si no se encuentra en
-la lista.*/
 
-$('#tabla_conabio_lista').change
+/*Activando y descativando los campos apropiados, dependiendo de si se marcan las
+casillas o no, y dependiendo del valor seleccionado en la combobox*/
+
+$('#tabla_hay_nombre_cientifico').change
 (
     function()
     {
-        if($(this).val()=="Otros")
+        if($(this).prop('checked'))
         {
-            //Aparecen las casillas y etiquetas
-            $('.Nombre').fadeIn();
-
-            $('#tabla_hay_nombre_comun').prop('checked', true);
-            $('#tabla_nombre_comun').fadeIn();
-
-            $('#tabla_hay_nombre_cientifico').prop('checked', true);
-            $('#tabla_nombre_cientifico').fadeIn();
+            $('#tabla_conabio_lista_nombre_cientifico').fadeIn();
+            if($('#tabla_conabio_lista_nombre_cientifico').val()=="Otros")
+            {
+                $('#tabla_nombre_cientifico').fadeIn();
+            }
         }
         else
         {
-            $('#tabla_hay_nombre_comun').prop('checked', false);
-            $('#tabla_nombre_comun').fadeOut();
-
-            $('#tabla_hay_nombre_cientifico').prop('checked', false);
+            $('#tabla_conabio_lista_nombre_cientifico').fadeOut();
             $('#tabla_nombre_cientifico').fadeOut();
-
-            $('.Nombre').fadeOut();
         }
     }
 )
-/*Fade in/out de los campos de ingreso de nombre común/científico, de acuerdo
-a si se marcó o no la casilla correspondiente*/
 
 $('#tabla_hay_nombre_comun').change
 (
     function()
     {
         if($(this).prop('checked'))
-            $('#tabla_nombre_comun').fadeIn();
+        {
+            $('#tabla_conabio_lista_nombre_comun').fadeIn();
+            if($('#tabla_conabio_lista_nombre_comun').val()=="Otros")
+            {
+                $('#tabla_nombre_comun').fadeIn();
+            }
+        }
         else
+        {
+            $('#tabla_conabio_lista_nombre_comun').fadeOut();
             $('#tabla_nombre_comun').fadeOut();
+        }
     }
 )
 
- $('#tabla_hay_nombre_cientifico').change
+/*Activando y desactivando el campo para ingresar el nombre a mano, dependiendo de 
+si se seleccionó "otros" en la combobox correspondiente*/
+
+$('#tabla_conabio_lista_nombre_cientifico').change
 (
     function()
     {
-        if($(this).prop('checked'))
+        if($(this).val()=="Otros")
+        {
             $('#tabla_nombre_cientifico').fadeIn();
+        }
         else
             $('#tabla_nombre_cientifico').fadeOut();
+    }
+)
+
+$('#tabla_conabio_lista_nombre_comun').change
+(
+    function()
+    {
+        if($(this).val()=="Otros")
+        {
+            $('#tabla_nombre_comun').fadeIn();
+        }
+        else
+            $('#tabla_nombre_comun').fadeOut();
     }
 )
 
@@ -340,36 +360,56 @@ $('form').submit
     }
     );
 
-    //Si no se marcó ninguna casilla para ingresar el nombre
+    //variable para validar si falta escribir al menos algún nombre: común/científico
+
     faltanNombres = false;
 
-         /*Validando: si el nombre de la especie no se encuentra en la lista 
-        CONABIO. entonces:*/
-        if($('#tabla_conabio_lista').val()=="Otros")
+    /* En términos generales, primero se verifica al menos una casilla (correspondiente
+    a algún nombre) esté marcada, y luego, que los nombres que se marcaron estén
+    correctamente registrados.
+
+    Para saber los detalles de cada condición, ver el alert() correspondiente.*/
+    if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+    {
+        flag = false;
+        faltanNombres = true;
+        alert('Caso 1: ninguna casilla marcada');
+    }
+    
+    else
+    {
+        if($('#tabla_hay_nombre_comun').prop('checked'))
         {
-            //Si no se marcó ninguna casilla para ingresar el nombre
-            if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+            if(!$('#tabla_conabio_lista_nombre_comun').val())
             {
                 flag = false;
                 faltanNombres = true;
-                //alert('caso1');
+                alert('Caso 2: se indica que hay nombre común pero no se selecciona nada');
             }
-            else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
-            /*Si se marcó la casilla de nombre común pero no se escribió
-            nada en el campo subsecuente.*/
+            else if($('#tabla_conabio_lista_nombre_comun').val()=="Otros" && !$('#tabla_nombre_comun').val())
             {
                 flag = false;
                 faltanNombres = true;
-                //alert('caso2');
-            }
-            //Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
-            else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
-            {
-                flag = false;
-                faltanNombres = true;
-                //alert('caso3');
+                alert('Caso 3: se indica que se va a ingresar el nombre común a mano, pero no se hizo');
             }
         }
+
+        if($('#tabla_hay_nombre_cientifico').prop('checked'))
+        {
+            if(!$('#tabla_conabio_lista_nombre_cientifico').val())
+            {
+                flag = false;
+                faltanNombres = true;
+                alert('Caso 4: se indica que hay nombre científico pero no se selecciona nada');
+            }
+            else if($('#tabla_conabio_lista_nombre_cientifico').val()=="Otros" && !$('#tabla_nombre_cientifico').val())
+            {
+                flag = false;
+                faltanNombres = true;
+                alert('Caso 5: se indica que se va a ingresar el nombre científico a mano, pero no se hizo');
+            }
+        }
+    }
 
 
     //Validando que al menos una casilla de observación visual/sonora esté marcada:
@@ -400,7 +440,7 @@ $('form').submit
     if(!flag)
     {
         if(faltanNombres)
-            alert('Favor de escribir al menos un nombre (ya sea común o científico)');
+            alert('Faltó ingresar algún nombre (común o científico)');
         else if(faltaTipo)
             alert('Favor de indicar si la observación es visual, sonora o ambas')
         else
