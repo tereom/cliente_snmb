@@ -30,6 +30,9 @@ db.define_table('Punto_conteo_aves',*Campos_Punto_conteo_aves,
 Campos_Conteo_ave =[
 
 	Field('punto_conteo_aves_id','reference Punto_conteo_aves',required=True),
+
+	#Los campos 'nombre_comun_en_lista' y 'nombre_cientifico_en_lista' no son
+	#obligatorios, pues se dejan vacíos si no introdujeron alguno de los nombres.
 	Field('nombre_comun_en_lista','boolean'),
 	Field('nombre_comun','string'),
 	Field('nombre_cientifico_en_lista','boolean'),
