@@ -109,18 +109,19 @@ de los formularios de trabajo de campo*/
                         {{pass}}
                     </select>
                 </td>
-                <td>
-                    <input class="integer obligatorio punto_1" name="grosor_1" id="tabla_grosor_1" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio punto_1" name="peso_humedo_1" id="tabla_peso_humedo_1" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio punto_1" name="peso_humedo_muestra_1" id="tabla_peso_humedo_muestra_1" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio punto_1" name="peso_seco_muestra_1" id="tabla_peso_seco_muestra_1" type="text" value=""/>
-                </td>
+                    <td>
+                        <input class="integer obligatorio punto_1" name="grosor_1" id="tabla_grosor_1" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input class="double obligatorio punto_1" name="peso_humedo_1" id="tabla_peso_humedo_1" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input class="double obligatorio punto_1" name="peso_humedo_muestra_1" id="tabla_peso_humedo_muestra_1" type="text" value=""/>
+                    </td>
+                    <td>
+                        <input class="double obligatorio punto_1" name="peso_seco_muestra_1" id="tabla_peso_seco_muestra_1" type="text" value=""/>
+                    </td>
+                
             </tr>
             <tr>
                 <td>2. Norte 10m</td>
@@ -305,7 +306,6 @@ de los formularios de trabajo de campo*/
 {{#=BEAUTIFY(request.vars)}}
 
 <script>
-
     //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
     $('#tabla_conglomerado_muestra_id').change
     (
@@ -342,24 +342,32 @@ de los formularios de trabajo de campo*/
                 );
         }
         );
-
     //Si se elige como tipo de material roca desnuda, entonces todos los campos se
     //hacen 0, pues no es posible obtener dichos valores.
-    $('#tabla_material_tipo_1').change
-    (
-        function()
-        {
-            if($(this).val() == "RD - Roca desnuda")
+    for(var i=1 ;i < 9; i++)
+    {
+        $('#tabla_material_tipo_' + i).change(createListener(i));
+    }
+
+    function createListener(i)
+    {
+        return function(){
+            if($('#tabla_material_tipo_' + i).val() == "RD - Roca desnuda" || $('#tabla_material_tipo_' + i).val() == "NO - No contiene")
             {
-                campos=$('.punto_1');
-                campos.each(function()
-                {
+                $('.punto_'+i).each(function(){
                     $(this).val(0);
-                }
-                )
+                });
             }
+            else
+            {
+                $('.punto_'+i).each(function()
+                {
+                    $(this).val("");
+                });  
+            }           
         }
-    )
+    }
+
 
     /* Los campos de clase double no deben contener comas*/
     $('.double').change
@@ -374,7 +382,6 @@ de los formularios de trabajo de campo*/
             }
         }
     )
-
     //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
     (

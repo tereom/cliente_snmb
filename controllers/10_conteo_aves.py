@@ -187,7 +187,10 @@ def index2():
 
     formaConteoAve = FORM(*camposConteoAve)
 
-    if formaConteoAve.accepts(request.vars,formname='formaConteoAveHTML'):    
+    if formaConteoAve.accepts(request.vars,formname='formaConteoAveHTML'):
+
+        #Definiendo el nuevo diccionario
+        datosConteoAve = {}  
         
         datosConteoAve['punto_conteo_aves_id']=formaConteoAve.vars['punto_conteo_aves_id']
 
