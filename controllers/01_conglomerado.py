@@ -11,7 +11,7 @@ def index():
 
     '''
 
-    campos= [
+    campos = [
 
     # Utilizamos una FORM porque nos brinda mayor flexibilidad que una SQLFORM.
     
