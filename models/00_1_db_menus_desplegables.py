@@ -17,6 +17,7 @@ if db(db.Cat_tipo_conglomerado.id>0).count() == 0:
     db.Cat_tipo_conglomerado.insert(nombre='5 Inaccesible gabinete')
     db.Cat_tipo_conglomerado.insert(nombre='6 Supervisión interna')
     db.Cat_tipo_conglomerado.insert(nombre='7 Biodiversidad')
+    db.Cat_tipo_conglomerado.insert(nombre='7 Biodiversidad (remuestreo)')
 
 #########################################################################
 
@@ -170,7 +171,7 @@ if db(db.Cat_numero_sitio.id>0).count() == 0:
 db.define_table('Cat_elipsoide', Field('nombre', 'string', required='TRUE'))
 
 if db(db.Cat_elipsoide.id>0).count() == 0:
-    db.Cat_elipsoide.insert(nombre='NAD27')
+    #db.Cat_elipsoide.insert(nombre='NAD27')
     db.Cat_elipsoide.insert(nombre='WGS84')
 
 ##########################################################################
