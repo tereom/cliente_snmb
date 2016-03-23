@@ -31,8 +31,8 @@ cuál tiene las siguientes características:
 	se genera con el uso de la aplicación, por lo que pueden ser eliminadas una
 	y otra vez sin porblemas (siempre que los datos capturados no sean importantes).
 
-Se eligió progrmar el cliente utilizando Web2py, debido a que:
-* Al empaquetar un intérprete de python y un servidor local, es ideal
+Se eligió programar el cliente utilizando Web2py, debido a que:
+* Al empaquetar un intérprete de Python, un servidor local, y un DBMS SQlite, es ideal
 	para nuestros fines: una aplicación de escritorio que sirva para capturar
 	datos en una base de datos local y fácilmente distribuíble (SQLite); pero
 	que eventualmente pueda escalar para estar en un servidor remoto.
