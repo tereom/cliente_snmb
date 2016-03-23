@@ -23,7 +23,7 @@ cuál tiene las siguientes características:
 	+ __static__
 	+ uploads
 	+ __views__
-	+
+	
 	Las carpetas resaltadas son las que contienen el código propio de la aplicación
 	que estamos desarrollando. Sin embargo, también pueden contener código autogenerado
 	que es indispensable para que nuestra aplicación corra adecuadamente. Con respecto
