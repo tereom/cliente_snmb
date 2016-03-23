@@ -233,7 +233,7 @@ if db(db.Cat_numero_transecto.id>0).count() == 0:
 db.define_table('Cat_numero_individuos', Field('nombre', 'string', required='TRUE'))
 
 if db(db.Cat_numero_individuos.id>0).count() == 0:
-    db.Cat_numero_individuos.insert(nombre='No aplica')
+    #db.Cat_numero_individuos.insert(nombre='No aplica')
     db.Cat_numero_individuos.insert(nombre='1 a 5')
     db.Cat_numero_individuos.insert(nombre='6 a 10')
     db.Cat_numero_individuos.insert(nombre='más de 10')

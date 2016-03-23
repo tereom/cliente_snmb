@@ -1,9 +1,7 @@
 # coding: utf8
 
-## En esta sección se definen las tablas correspondientes a la pestaña de Conglomerado, es decir: Conglomerado_muestra, Sitio_muestra y Reference_image_site:
-## El campo de ID es automático en Web2py, por lo que no se incluye:
-
-###FALTA REVISAR CUÁLES CAMPOS SON ÚNICOS (LLAVES NO PRIMARIAS)
+## En esta sección se definen las tablas correspondientes a la sección de
+## Conglomerado. El campo de ID es automático en Web2py, por lo que no se incluye:
 
 ########################
 #Conglomerado_muestra

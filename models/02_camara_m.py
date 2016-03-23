@@ -1,13 +1,11 @@
 #coding: utf8
 
-# En esta sección se definen las tablas correspondientes a la pestaña de 
-# Camara, es decir: Camara, File_camera, Reference_image_camera
-# El campo de ID es automático en Web2py, por lo que no se incluye:
+## En esta sección se definen las tablas correspondientes a la sección de 
+## Cámara. El campo de ID es automático en Web2py, por lo que no se incluye:
 
-##########################################################################
+########################
 ## Cámara
-########################################################################
-
+########################
 
 Campos_Camara = [
 
