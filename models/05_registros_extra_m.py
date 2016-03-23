@@ -1,13 +1,12 @@
 # coding: utf8
 
-# En esta sección se definen las tablas correspondientes a la pestaña de Registros Extras,
-# es decir: Especie_invasora_extra, Archivo_especie_invasora_extra,
-# Huella_excreta_extra, Archivo_huella_excreta_extra,
-# Especimen_restos_extra, Archivo_especimen_restos_extra.
+## En esta sección se definen las tablas correspondientes a la sección de
+## Registros Extra.
+## El campo de ID es automático en Web2py, por lo que no se incluye:
 
-##########################################################################
+########################
 ## Especie_invasora_extra
-##########################################################################
+########################
 
 Campos_Especie_invasora_extra = [
 
@@ -40,18 +39,19 @@ Campos_Especie_invasora_extra = [
     Field('comentario', 'text')
     ]
 
-db.define_table('Especie_invasora_extra',*Campos_Especie_invasora_extra,
-    singular='Especie invasora extra',plural='Especies invasoras extra')
+db.define_table('Especie_invasora_extra', *Campos_Especie_invasora_extra,
+    singular='Especie invasora extra', plural='Especies invasoras extra')
 
-##########################################################################
+########################
 ## Archivo_especie_invasora_extra
-########################################################################
+########################
 
 Campos_Archivo_especie_invasora_extra =[
 
-    Field('especie_invasora_extra_id','reference Especie_invasora_extra',required=True),
-    Field('archivo_nombre_original',required=True),
-    Field('archivo','upload', autodelete=True,required=True)
+    Field('especie_invasora_extra_id', 'reference Especie_invasora_extra',
+        required=True),
+    Field('archivo_nombre_original', required=True),
+    Field('archivo', 'upload', autodelete=True, required=True)
 ]
 
 db.define_table('Archivo_especie_invasora_extra',
@@ -59,9 +59,9 @@ db.define_table('Archivo_especie_invasora_extra',
     singular='Archivo especie invasora extra',
     plural='Archivos especies invasoras extra')
 
-##########################################################################
+########################
 ## Huella_excreta_extra
-##########################################################################
+########################
 
 Campos_Huella_excreta_extra = [
 
@@ -92,11 +92,13 @@ Campos_Huella_excreta_extra = [
     Field('comentario','text')
     ]
 
-db.define_table('Huella_excreta_extra', *Campos_Huella_excreta_extra)
+db.define_table('Huella_excreta_extra', *Campos_Huella_excreta_extra,
+    singular='Huella/excreta extra',
+    plural='Huellas/excretas extra')
 
-##########################################################################
+########################
 ## Archivo_huella_excreta_extra
-########################################################################
+########################
 
 Campos_Archivo_huella_excreta_extra = [
 
@@ -111,9 +113,9 @@ db.define_table('Archivo_huella_excreta_extra',
     singular='Archivo huella/excreta extra',
     plural='Archivos huellas/excretas extra')
 
-##########################################################################
+########################
 ## Especimen_restos_extra
-##########################################################################
+########################
 
 Campos_Especimen_restos_extra = [
 
@@ -145,12 +147,12 @@ Campos_Especimen_restos_extra = [
     Field('comentario','text')
     ]
 
-db.define_table('Especimen_restos_extra',*Campos_Especimen_restos_extra,
+db.define_table('Especimen_restos_extra', *Campos_Especimen_restos_extra,
     singular='Espécimen/restos', plural='Especímenes/restos')
 
-##########################################################################
+########################
 ## Archivo_Especimen_restos_extra
-########################################################################
+########################
 
 Campos_Archivo_especimen_restos_extra = [
 

@@ -41,8 +41,8 @@ Campos_Camara = [
     Field('comentario', 'text')
     ]
 
-db.define_table('Camara',*Campos_Camara,singular='Trampa cámara',plural=
-	'Trampas cámara')
+db.define_table('Camara', *Campos_Camara,
+	singular='Trampa cámara', plural='Trampas cámara')
 
 ########################
 #Imagen_referencia_camara
@@ -55,7 +55,7 @@ Campos_Imagen_referencia_camara = [
     Field('archivo','upload',autodelete=True,required=True)
     ]
 
-db.define_table('Imagen_referencia_camara',*Campos_Imagen_referencia_camara, 
+db.define_table('Imagen_referencia_camara', *Campos_Imagen_referencia_camara, 
 	singular='Imagen cámara',plural='Imágenes cámaras')
 
 ########################
@@ -73,5 +73,5 @@ Campos_Archivo_camara = [
     Field('numero_individuos','integer')
     ]
 
-db.define_table('Archivo_camara',*Campos_Archivo_camara, 
-	singular='Archivo cámara',plural='Archivos cámara')
+db.define_table('Archivo_camara', *Campos_Archivo_camara, 
+	singular='Archivo cámara', plural='Archivos cámara')

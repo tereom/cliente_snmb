@@ -1,14 +1,11 @@
 # coding: utf8
 
-## En esta sección se definen las tablas correspondientes a la pestaña de 
-## Grabadora, es decir: Grabadora, Imagen_referencia_grabadora, 
-## Archivo_referencia_grabadora, Imagen_referencia_microfonos,
-## Archivo_grabadora
-## El campo de ID es automático en Web2py, por lo que no se incluye:
+## En esta sección se definen las tablas correspondientes a la sección de 
+## Grabadora. El campo de ID es automático en Web2py, por lo que no se incluye:
 
-##########################################################################
+########################
 ## Grabadora
-########################################################################
+########################
 
 Campos_Grabadora = [
 
@@ -38,7 +35,8 @@ Campos_Grabadora = [
     Field('comentario', 'text')
     ]
 
-db.define_table('Grabadora',*Campos_Grabadora)
+db.define_table('Grabadora', *Campos_Grabadora,
+    singular='Grabadora', plural='Grabadoras')
 
 ########################
 #Imagen_referencia_grabadora
@@ -50,7 +48,7 @@ Campos_Imagen_referencia_grabadora = [
     Field('archivo','upload',autodelete=True,required=True)
     ]
 
-db.define_table('Imagen_referencia_grabadora',*Campos_Imagen_referencia_grabadora,
+db.define_table('Imagen_referencia_grabadora', *Campos_Imagen_referencia_grabadora,
     singular='Imagen grabadora', plural='Imágenes gradadoras')
 
 ########################
@@ -63,7 +61,7 @@ Campos_Imagen_referencia_microfonos = [
     Field('archivo','upload',autodelete=True,required=True)
     ]
 
-db.define_table('Imagen_referencia_microfonos',*Campos_Imagen_referencia_microfonos,
+db.define_table('Imagen_referencia_microfonos', *Campos_Imagen_referencia_microfonos,
     singular='Imágen micrófonos', plural='Imágenes micrófonos')
 
 ########################
@@ -76,7 +74,7 @@ Campos_Archivo_referencia_grabadora = [
     Field('archivo','upload', autodelete=True,required=True)
     ]
 
-db.define_table('Archivo_referencia_grabadora',*Campos_Archivo_referencia_grabadora, 
+db.define_table('Archivo_referencia_grabadora', *Campos_Archivo_referencia_grabadora, 
     singular='Archivo metadatos', plural='Archivos metadatos')
 
 ########################
@@ -90,5 +88,5 @@ Campos_Archivo_grabadora = [
     Field('es_audible','boolean',required=True)
     ]
 
-db.define_table('Archivo_grabadora',*Campos_Archivo_grabadora, 
+db.define_table('Archivo_grabadora', *Campos_Archivo_grabadora, 
     singular='Archivo grabadora', plurals='Archivos grabadoras')

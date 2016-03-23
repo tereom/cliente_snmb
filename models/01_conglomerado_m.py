@@ -60,8 +60,8 @@ Campos_Sitio_muestra = [
     Field('hay_evidencia','boolean')
     ] 
 
-db.define_table('Sitio_muestra',*Campos_Sitio_muestra,singular='Sitio', 
-	plural='Sitios')
+db.define_table('Sitio_muestra', *Campos_Sitio_muestra,
+	singular='Sitio', plural='Sitios')
 
 ########################
 #Imagen_referencia_sitio
@@ -74,8 +74,8 @@ Campos_Imagen_referencia_sitio = [
     Field('archivo','upload',autodelete=True,required=True)
     ]
     
-db.define_table('Imagen_referencia_sitio',*Campos_Imagen_referencia_sitio, 
-	singular='Imagen sitio',plural='Imágenes sitios')
+db.define_table('Imagen_referencia_sitio', *Campos_Imagen_referencia_sitio, 
+	singular='Imagen sitio', plural='Imágenes sitios')
 
 ########################################################################
 ## Fields can be 'string','text','password','integer','double','boolean'
