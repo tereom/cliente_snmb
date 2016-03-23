@@ -9,7 +9,7 @@ cuál tiene las siguientes características:
 * Se descarga como un paquete, que incluye su propio intérprete de Python, un
 	servidor local, un DBMS SQLite e incluso un IDE para programar.
 * Crear una nueva aplicación es muy sencillo: simplemente se utiliza la interfaz
-	gráfica, y automáticamente se inserta una carpete en applications con el nombre
+	gráfica, y automáticamente se inserta una carpeta en applications con el nombre
 	de la aplicación creada.
 * Cada aplicación tiene una estructura de carpetas como sigue:
 	+ __controllers__
@@ -25,7 +25,7 @@ cuál tiene las siguientes características:
 	+ __views__
 	
 	Las carpetas resaltadas son las que contienen el código propio de la aplicación
-	que estamos desarrollando. Sin embargo, también pueden contener código autogenerado
+	que estamos desarrollando. Sin embargo, también pueden contener código precargado
 	que es indispensable para que nuestra aplicación corra adecuadamente. Con respecto
 	a las carpetas "sessions", "errors", "databases" y "uploads", su contenido
 	se genera con el uso de la aplicación, por lo que pueden ser eliminadas una
@@ -33,27 +33,25 @@ cuál tiene las siguientes características:
 
 Se eligió programar el cliente utilizando Web2py, debido a que:
 * Al empaquetar un intérprete de Python, un servidor local, y un DBMS SQlite, es ideal
-	para nuestros fines: una aplicación de escritorio que sirva para capturar
-	datos en una base de datos local y fácilmente distribuíble (SQLite); pero
+	para nuestros fines: una aplicación de escritorio de fácil instalación, que sirva
+	para capturar datos en una base local y fácilmente distribuíble (SQLite); pero
 	que eventualmente pueda escalar para estar en un servidor remoto.
 * Permite hacer exportaciones CSV de la base local SQLite, que sirve para
 	diseminar los datos entre los que levantan la información y la capturan.
 * Por medio de esos archivos CSV, permite fusionar la información de varias bases
-	de datos en una sola (lidiando automáticamente con los problemas de los ID's).
-	Éste proceso es indispensable para la integración de los datos en CONABIO.
+	de datos en una sola (lidiando automáticamente con los problemas de las ID's).
 
+Bajo el esquema de Web2py, el cliente de captura es una aplicación y todo el código
+desarrollado se engloba en la carpeta *cliente_web2py*, dentro de sus subcarpetas adecuadas.
+El código está modularizado en scripts numerados, cada número representa una sección distinta.
+Dichas secciones se reflejan en la interfaz gráfica del cliente como secciones en el menú.
 
-Bajo el esquema de Web2py, el cliente de captura es una aplicación y todo el
-código desarrollado se engloba en la carpeta *cliente_web2py* con las 
-siguientes subcarpetas:
+1. **models**: los scripts están numerados, y cada número representa una sección distinta.
+	
 
-1. **controllers**: contiene los controladores que unen el modelo con la vista. Hay un archivo para cada sección: Conglomerado, Conteo de aves, Especies invasorasHuellas y excretas, Vegetación y suelo, Epífitas, Impactos ambientales, Trampa cámara y Selección de fauna, Grabadora, Registros extra, Revisar registros y Exportar datos.
+3. **controllers**: Hay un archivo para cada sección: Conglomerado, Conteo de aves, Especies invasorasHuellas y excretas, Vegetación y suelo, Epífitas, Impactos ambientales, Trampa cámara y Selección de fauna, Grabadora, Registros extra, Revisar registros y Exportar datos.
 
-2. **databases**: contiene la base de datos generada por el cliente. Esta incluye catálogos para menús desplegables y la información que ingresa el usuario. Esta carpeta no contiene código, sus archivos se generan a través de otros scripts.
-
-3. **docs**: archivos de documentación del cliente. La documentación se hizo con `sphinx <http://sphinx-doc.org>`_.
-
-4. **models**: contiene los modelos que generan la base de datos e incluye:
+4. 
 	
 	+ el archivo de configuración de la base de datos *00_0_db.py*.  
 	+ los modelos de menús desplegables.  
