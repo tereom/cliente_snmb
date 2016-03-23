@@ -7,11 +7,11 @@ Monitoreo de Biodiversidad (SNMB).
 Éste se desarrolló usando el marco de trabajo [Web2py](http://www.web2py.com/),
 el cuál tiene las siguientes características:
 
-	* Sigue un paradigma de modelo-vista-controlador, en el cuál el modelo define
-		el esquema de la base de datos; la vista, la interfaz gráfica que
-		utiliza el usuario, y el controlador, la liga entre el input del usuario
-		y la base de datos.
-	* Se descarga como un paquete, que incluye su propio intérprete de Python, un
+* Sigue un paradigma de modelo-vista-controlador, en el cuál el modelo define
+el esquema de la base de datos; la vista, la interfaz gráfica que utiliza el
+usuario, y el controlador, la liga entre el input del usuario y la base de datos.
+
+* Se descarga como un paquete, que incluye su propio intérprete de Python, un
 		servidor local, un DBMS SQLite e incluso un IDE para programar.
 	* Crear una nueva aplicación es muy sencillo: simplemente se utiliza la
 		interfaz gráfica, y automáticamente se inserta una carpeta en applications
