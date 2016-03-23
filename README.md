@@ -6,6 +6,7 @@ Monitoreo de Biodiversidad (SNMB).
 
 Éste se desarrolló usando el marco de trabajo [Web2py](http://www.web2py.com/),
 el cuál tiene las siguientes características:
+
 	* Sigue un paradigma de modelo-vista-controlador, en el cuál el modelo define
 		el esquema de la base de datos; la vista, la interfaz gráfica que
 		utiliza el usuario, y el controlador, la liga entre el input del usuario
