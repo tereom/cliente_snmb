@@ -4,9 +4,9 @@
 ## Especies Invasoras/Huellas y excretas. 
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
 
-########################
+###########################################
 ## Transecto_muestra
-########################
+###########################################
 
 Campos_Transecto_muestra =[
 
@@ -28,9 +28,9 @@ db.define_table('Transecto_muestra', *Campos_Transecto_muestra,
 
 #db.Transecto_especies_invasoras_muestra.fecha.requires=IS_DATE('%d-%m-%Y')
 
-########################
+###########################################
 ## Especie_invasora
-########################
+###########################################
 
 Campos_Especie_invasora =[
 
@@ -46,9 +46,9 @@ Campos_Especie_invasora =[
 db.define_table('Especie_invasora', *Campos_Especie_invasora,
 	singular='Especie invasora', plural='Especies invasoras')
 
-########################
+###########################################
 ## Archivo_especie_invasora
-########################
+###########################################
 
 Campos_Archivo_especie_invasora =[
 
@@ -60,9 +60,9 @@ Campos_Archivo_especie_invasora =[
 db.define_table('Archivo_especie_invasora', *Campos_Archivo_especie_invasora,
 	singular='Archivo especie invasora', plural='Archivos especies invasoras')
 
-########################
+###########################################
 ## Huella_excreta
-########################
+###########################################
 
 
 Campos_Huella_excreta = [
@@ -78,9 +78,9 @@ Campos_Huella_excreta = [
 db.define_table('Huella_excreta', *Campos_Huella_excreta,
     singular='Huella/excreta', plural='Huellas/excretas')
 
-########################
+###########################################
 ## Archivo_huella_excreta
-########################
+###########################################
 
 Campos_Archivo_huella_excreta = [
 

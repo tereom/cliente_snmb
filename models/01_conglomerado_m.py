@@ -3,9 +3,9 @@
 ## En esta sección se definen las tablas correspondientes a la sección de
 ## Conglomerado. El campo de ID es automático en Web2py, por lo que no se incluye:
 
-########################
+###########################################
 #Conglomerado_muestra
-########################
+###########################################
 
 Campos_Conglomerado_muestra = [
 
@@ -35,9 +35,24 @@ Campos_Conglomerado_muestra = [
 db.define_table('Conglomerado_muestra', *Campos_Conglomerado_muestra, 
 	singular='Conglomerado', plural='Conglomerados')
 
-########################
+###########################################
+# Formato_campo
+###########################################
+
+Campos_Formato_campo = [
+
+	Field('conglomerado_muestra_id','reference Conglomerado_muestra',required=True),
+    Field('archivo_nombre_original',required=True),
+    Field('archivo','upload',autodelete=True,required=True)
+    ]
+    
+db.define_table('Formato_campo', *Campos_Formato_campo, 
+	singular='Formato de campo', plural='Formatos de campo')
+
+
+###########################################
 #Sitio_muestra
-########################
+###########################################
 
 Campos_Sitio_muestra = [
 
@@ -63,9 +78,9 @@ Campos_Sitio_muestra = [
 db.define_table('Sitio_muestra', *Campos_Sitio_muestra,
 	singular='Sitio', plural='Sitios')
 
-########################
+###########################################
 #Imagen_referencia_sitio
-########################
+###########################################
 
 Campos_Imagen_referencia_sitio = [
 

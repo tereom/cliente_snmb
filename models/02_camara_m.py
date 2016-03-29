@@ -3,9 +3,9 @@
 ## En esta sección se definen las tablas correspondientes a la sección de 
 ## Cámara. El campo de ID es automático en Web2py, por lo que no se incluye:
 
-########################
+###########################################
 ## Cámara
-########################
+###########################################
 
 Campos_Camara = [
 
@@ -44,9 +44,9 @@ Campos_Camara = [
 db.define_table('Camara', *Campos_Camara,
 	singular='Trampa cámara', plural='Trampas cámara')
 
-########################
+###########################################
 #Imagen_referencia_camara
-########################
+###########################################
 
 Campos_Imagen_referencia_camara = [
 
@@ -58,9 +58,9 @@ Campos_Imagen_referencia_camara = [
 db.define_table('Imagen_referencia_camara', *Campos_Imagen_referencia_camara, 
 	singular='Imagen cámara',plural='Imágenes cámaras')
 
-########################
+###########################################
 #Archivo_camara
-########################
+###########################################
 
 Campos_Archivo_camara = [
 	Field('camara_id','reference Camara',required=True),

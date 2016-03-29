@@ -1,11 +1,12 @@
 # coding: utf8
 
-# En esta sección se definen las tablas correspondientes a la sección de 
-# Vegetación y suelo
+## En esta sección se definen las tablas correspondientes a la sección de 
+## Vegetación y suelo
+## El campo de ID es automático en Web2py, por lo que no se incluye:
 
-########################
+###########################################
 ## Transecto_ramas
-########################
+###########################################
 
 Campos_Transecto_ramas = [
 
@@ -15,17 +16,18 @@ Campos_Transecto_ramas = [
     Field('abundancia_1h','integer',required=True),
     Field('abundancia_10h','integer',required=True),
     Field('abundancia_100h','integer',required=True)
-    ]
+]
 
 db.define_table('Transecto_ramas', *Campos_Transecto_ramas,
     singular='Ramas en transecto', plural='Ramas en transectos')
 
 
-########################
+###########################################
 ## Rama_1000h
-########################
+###########################################
 
 Campos_Rama_1000h = [    
+
     Field('transecto_ramas_id','reference Transecto_ramas',required=True),
     Field('diametro','double',required=True),
     
@@ -37,9 +39,9 @@ db.define_table('Rama_1000h', *Campos_Rama_1000h,
     singular='Rama 1000h', plural='Ramas 1000h')
 
 
-########################
+###########################################
 ## Punto_carbono
-########################
+###########################################
 
 Campos_Punto_carbono = [
 
@@ -55,27 +57,43 @@ Campos_Punto_carbono = [
     Field('peso_humedo','double',required=True),
     Field('peso_humedo_muestra','double',required=True),
     Field('peso_seco_muestra','double',required=True)
-    ]
+]
 
 db.define_table('Punto_carbono', *Campos_Punto_carbono,
     singular='Carbono en el mantillo', plural='Carbono en el mantillo')
 
 
-########################
-## Arbol_transecto: arboles pequeños y arbustos
-########################
+###########################################
+##  Transecto_arboles (pequeños y arbustos)
+###########################################
+
+Campos_Transecto_arboles = [
+    
+    Field('sitio_muestra_id','reference Sitio_muestra',required=True),
+
+    #Se insertará a partir de campos ocultos:
+    Field('direccion','string',required=True)
+]
+
+db.define_table('Transecto_arboles', *Campos_Transecto_arboles,
+    singular='Transecto árboles', plural='Transectos árboles')
+
+
+###########################################
+## Arbol_transecto (pequeños y arbustos)
+###########################################
 
 Campos_Arbol_transecto = [
 
-    Field('sitio_muestra_id','reference Sitio_muestra',required=True),
-    #Se insertará a partir de un catálogo
-    Field('transecto','string',required=True),
+    Field('transecto_arboles_id','reference Transecto_arboles',required=True),
     Field('individuo_numero','integer',required=True),
     Field('nombre_comun','string'),
     Field('nombre_cientifico','string'),
-    Field('forma_vida','string',required=True),
     Field('distancia_copa','double',required=True),
     Field('altura','double',required=True),
+
+    # Se insertará a partir de un catálogo
+    Field('forma_vida','string',required=True)
     
     ]
 
@@ -83,9 +101,9 @@ db.define_table('Arbol_transecto', *Campos_Arbol_transecto,
     singular='Árbol transecto', plural='Árboles transectos')
 
 
-########################
+###########################################
 ## Arbol_cuadrante: árboles grandes
-########################
+###########################################
 
 Campos_Arbol_cuadrante = [
 
@@ -105,7 +123,7 @@ Campos_Arbol_cuadrante = [
     ]
 
 db.define_table('Arbol_cuadrante', *Campos_Arbol_cuadrante,
-    singular='Árbol cuadrante', plural='Árboles cuadrante')
+    singular='Árbol cuadrante', plural='Árboles cuadrantes')
 
 ########################
 ## Informacion_epifitas

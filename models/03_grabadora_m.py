@@ -3,9 +3,9 @@
 ## En esta sección se definen las tablas correspondientes a la sección de 
 ## Grabadora. El campo de ID es automático en Web2py, por lo que no se incluye:
 
-########################
+###########################################
 ## Grabadora
-########################
+###########################################
 
 Campos_Grabadora = [
 
@@ -38,9 +38,9 @@ Campos_Grabadora = [
 db.define_table('Grabadora', *Campos_Grabadora,
     singular='Grabadora', plural='Grabadoras')
 
-########################
+###########################################
 #Imagen_referencia_grabadora
-########################
+###########################################
 
 Campos_Imagen_referencia_grabadora = [
     Field('grabadora_id','reference Grabadora',required=True),
@@ -51,9 +51,9 @@ Campos_Imagen_referencia_grabadora = [
 db.define_table('Imagen_referencia_grabadora', *Campos_Imagen_referencia_grabadora,
     singular='Imagen grabadora', plural='Imágenes gradadoras')
 
-########################
+###########################################
 #Imagen_referencia_microfonos
-########################
+###########################################
 
 Campos_Imagen_referencia_microfonos = [
     Field('grabadora_id','reference Grabadora',required=True),
@@ -64,9 +64,9 @@ Campos_Imagen_referencia_microfonos = [
 db.define_table('Imagen_referencia_microfonos', *Campos_Imagen_referencia_microfonos,
     singular='Imágen micrófonos', plural='Imágenes micrófonos')
 
-########################
+###########################################
 #Archivo_referencia_grabadora (metadatos)
-########################
+###########################################
 
 Campos_Archivo_referencia_grabadora = [
     Field('grabadora_id','reference Grabadora',required=True),
@@ -77,9 +77,9 @@ Campos_Archivo_referencia_grabadora = [
 db.define_table('Archivo_referencia_grabadora', *Campos_Archivo_referencia_grabadora, 
     singular='Archivo metadatos', plural='Archivos metadatos')
 
-########################
+###########################################
 #Archivo_grabadora
-########################
+###########################################
 
 Campos_Archivo_grabadora = [
     Field('grabadora_id','reference Grabadora',required=True),
