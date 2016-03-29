@@ -45,7 +45,7 @@ db.define_table('Camara', *Campos_Camara,
 	singular='Trampa cámara', plural='Trampas cámara')
 
 ###########################################
-#Imagen_referencia_camara
+# Imagen_referencia_camara
 ###########################################
 
 Campos_Imagen_referencia_camara = [
@@ -59,7 +59,7 @@ db.define_table('Imagen_referencia_camara', *Campos_Imagen_referencia_camara,
 	singular='Imagen cámara',plural='Imágenes cámaras')
 
 ###########################################
-#Archivo_camara
+# Archivo_camara
 ###########################################
 
 Campos_Archivo_camara = [

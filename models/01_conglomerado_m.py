@@ -4,7 +4,7 @@
 ## Conglomerado. El campo de ID es automático en Web2py, por lo que no se incluye:
 
 ###########################################
-#Conglomerado_muestra
+# Conglomerado_muestra
 ###########################################
 
 Campos_Conglomerado_muestra = [
@@ -51,7 +51,7 @@ db.define_table('Formato_campo', *Campos_Formato_campo,
 
 
 ###########################################
-#Sitio_muestra
+# Sitio_muestra
 ###########################################
 
 Campos_Sitio_muestra = [
@@ -79,7 +79,7 @@ db.define_table('Sitio_muestra', *Campos_Sitio_muestra,
 	singular='Sitio', plural='Sitios')
 
 ###########################################
-#Imagen_referencia_sitio
+# Imagen_referencia_sitio
 ###########################################
 
 Campos_Imagen_referencia_sitio = [

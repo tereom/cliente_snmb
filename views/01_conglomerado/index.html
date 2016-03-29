@@ -1,44 +1,44 @@
 {{extend 'layout.html'}}
+
 {{block head}}
-<style type="text/css">
+    <style type="text/css">
 
-    .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
-    {
-        margin-right: 2cm;
-        width: 4cm;
-    }
-    
-    .No_GPS .generic-widget
-    {
-    	margin-right: 2cm;
-        width: 4.4cm;
-    }
+        .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
+        {
+            margin-right: 2cm;
+            width: 4cm;
+        }
+        
+        .No_GPS .generic-widget
+        {
+        	margin-right: 2cm;
+            width: 4.4cm;
+        }
 
-    .GPS .integer, .GPS .date, .GPS .string, .GPS .double
-    {
-        width: 2cm;
-    }
-    
-    .GPS .generic-widget
-    {
-        width: 2.5cm;
-    }
-    
-    .Centrar
-    {
-        text-align: center;
-    }
-    
-    .FlotaIzquierda
-    {
-        float: left;
-    }
+        .GPS .integer, .GPS .date, .GPS .string, .GPS .double
+        {
+            width: 2cm;
+        }
+        
+        .GPS .generic-widget
+        {
+            width: 2.5cm;
+        }
+        
+        .Centrar
+        {
+            text-align: center;
+        }
+        
+        .FlotaIzquierda
+        {
+            float: left;
+        }
 
-</style>
+    </style>
 {{end}}
 
 {{#=response.toolbar()}}
-
 
 <form action="" enctype="multipart/form-data" method="post">
     <input type="hidden" name="_formname" value="formaHTML"/>

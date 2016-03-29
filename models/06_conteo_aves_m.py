@@ -5,7 +5,7 @@
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
 
 ###########################################
-## Punto_conteo_aves
+# Punto_conteo_aves
 ###########################################
 
 Campos_Punto_conteo_aves =[
@@ -24,7 +24,7 @@ db.define_table('Punto_conteo_aves', *Campos_Punto_conteo_aves,
 	singular='Punto de conteo de aves', plural='Puntos de conteo de aves')
 
 ###########################################
-## Conteo_ave
+# Conteo_ave
 ###########################################
 
 Campos_Conteo_ave =[
@@ -47,7 +47,7 @@ db.define_table('Conteo_ave', *Campos_Conteo_ave,
 	singular='Conteo de aves', plural='Conteos de aves')
 
 ###########################################
-## Archivo_conteo_ave
+# Archivo_conteo_ave
 ###########################################
 
 Campos_Archivo_conteo_ave = [

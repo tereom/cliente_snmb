@@ -5,7 +5,7 @@
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
 
 ###########################################
-## Transecto_ramas
+# Transecto_ramas
 ###########################################
 
 Campos_Transecto_ramas = [
@@ -23,7 +23,7 @@ db.define_table('Transecto_ramas', *Campos_Transecto_ramas,
 
 
 ###########################################
-## Rama_1000h
+# Rama_1000h
 ###########################################
 
 Campos_Rama_1000h = [    
@@ -40,7 +40,7 @@ db.define_table('Rama_1000h', *Campos_Rama_1000h,
 
 
 ###########################################
-## Punto_carbono
+# Punto_carbono
 ###########################################
 
 Campos_Punto_carbono = [
@@ -64,7 +64,7 @@ db.define_table('Punto_carbono', *Campos_Punto_carbono,
 
 
 ###########################################
-##  Transecto_arboles (pequeños y arbustos)
+## Transecto_arboles (pequeños y arbustos)
 ###########################################
 
 Campos_Transecto_arboles = [
@@ -80,7 +80,7 @@ db.define_table('Transecto_arboles', *Campos_Transecto_arboles,
 
 
 ###########################################
-## Arbol_transecto (pequeños y arbustos)
+# Arbol_transecto (pequeños y arbustos)
 ###########################################
 
 Campos_Arbol_transecto = [
@@ -102,7 +102,7 @@ db.define_table('Arbol_transecto', *Campos_Arbol_transecto,
 
 
 ###########################################
-## Arbol_cuadrante: árboles grandes
+# Arbol_cuadrante: árboles grandes
 ###########################################
 
 Campos_Arbol_cuadrante = [
@@ -126,7 +126,7 @@ db.define_table('Arbol_cuadrante', *Campos_Arbol_cuadrante,
     singular='Árbol cuadrante', plural='Árboles cuadrantes')
 
 ########################
-## Informacion_epifitas
+# Informacion_epifitas
 ########################
 
 Campos_Informacion_epifitas = [

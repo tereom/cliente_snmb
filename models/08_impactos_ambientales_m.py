@@ -5,7 +5,7 @@
 ## El campo de ID es automático en Web2py, por lo que no se incluye:
 
 ###########################################
-## Impacto actual
+# Impacto_actual
 ###########################################
 
 Campos_Impacto_actual = [
@@ -25,7 +25,7 @@ db.define_table('Impacto_actual', *Campos_Impacto_actual,
     singular='Impactos ambientales', plural='Impactos ambientales')
 
 ###########################################
-## Muestreo_plagas
+# Muestreo_plagas
 ###########################################
 
 Campos_Muestreo_plagas = [
@@ -38,7 +38,7 @@ db.define_table('Muestreo_plagas', *Campos_Muestreo_plagas,
 
 
 ###########################################
-## Plaga
+# Plaga
 ###########################################
 
 Campos_Plaga = [
@@ -60,7 +60,7 @@ db.define_table('Plaga', *Campos_Plaga, singular='Plaga', plural='Plagas')
 
 
 ###########################################
-## Archivo plaga
+# Archivo_plaga
 ###########################################
 
 Campos_Archivo_plaga = [
@@ -74,7 +74,7 @@ db.define_table('Archivo_plaga', *Campos_Archivo_plaga,
 
 
 ###########################################
-## Incendio
+# Incendio
 ###########################################
 
 Campos_Incendio = [
@@ -95,7 +95,7 @@ db.define_table('Incendio', *Campos_Incendio,
     singular='Incendio', plural='Incendios')
 
 ###########################################
-## Archivo incendio
+# Archivo_incendio
 ###########################################
 
 Campos_Archivo_incendio = [

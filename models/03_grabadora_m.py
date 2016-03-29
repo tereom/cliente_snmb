@@ -4,7 +4,7 @@
 ## Grabadora. El campo de ID es automático en Web2py, por lo que no se incluye:
 
 ###########################################
-## Grabadora
+# Grabadora
 ###########################################
 
 Campos_Grabadora = [
@@ -39,7 +39,7 @@ db.define_table('Grabadora', *Campos_Grabadora,
     singular='Grabadora', plural='Grabadoras')
 
 ###########################################
-#Imagen_referencia_grabadora
+# Imagen_referencia_grabadora
 ###########################################
 
 Campos_Imagen_referencia_grabadora = [
@@ -52,7 +52,7 @@ db.define_table('Imagen_referencia_grabadora', *Campos_Imagen_referencia_grabado
     singular='Imagen grabadora', plural='Imágenes gradadoras')
 
 ###########################################
-#Imagen_referencia_microfonos
+# Imagen_referencia_microfonos
 ###########################################
 
 Campos_Imagen_referencia_microfonos = [
@@ -65,7 +65,7 @@ db.define_table('Imagen_referencia_microfonos', *Campos_Imagen_referencia_microf
     singular='Imágen micrófonos', plural='Imágenes micrófonos')
 
 ###########################################
-#Archivo_referencia_grabadora (metadatos)
+# Archivo_referencia_grabadora (metadatos)
 ###########################################
 
 Campos_Archivo_referencia_grabadora = [
@@ -78,7 +78,7 @@ db.define_table('Archivo_referencia_grabadora', *Campos_Archivo_referencia_graba
     singular='Archivo metadatos', plural='Archivos metadatos')
 
 ###########################################
-#Archivo_grabadora
+# Archivo_grabadora
 ###########################################
 
 Campos_Archivo_grabadora = [
