@@ -65,7 +65,7 @@ db.define_table('Plaga', *Campos_Plaga, singular='Plaga', plural='Plagas')
 
 Campos_Archivo_plaga = [
     Field('plaga_id','reference Plaga',required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',required=True)
     ]
 
@@ -100,7 +100,7 @@ db.define_table('Incendio', *Campos_Incendio,
 
 Campos_Archivo_incendio = [
     Field('incendio_id','reference Incendio',required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',required=True)
     ]
 

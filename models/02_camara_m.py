@@ -51,7 +51,7 @@ db.define_table('Camara', *Campos_Camara,
 Campos_Imagen_referencia_camara = [
 
 	Field('camara_id','reference Camara',required=True),
-    Field('archivo_nombre_original',required=True),
+	Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',autodelete=True,required=True)
     ]
 
@@ -64,7 +64,7 @@ db.define_table('Imagen_referencia_camara', *Campos_Imagen_referencia_camara,
 
 Campos_Archivo_camara = [
 	Field('camara_id','reference Camara',required=True),
-    Field('archivo_nombre_original',required=True),
+	Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',autodelete=True,required=True),
 # uploadfolder='static/pictures'),      pensar estructura de carpetas
     Field('presencia','boolean'),

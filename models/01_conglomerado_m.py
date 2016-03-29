@@ -42,7 +42,7 @@ db.define_table('Conglomerado_muestra', *Campos_Conglomerado_muestra,
 Campos_Formato_campo = [
 
 	Field('conglomerado_muestra_id','reference Conglomerado_muestra',required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',autodelete=True,required=True)
     ]
     
@@ -85,7 +85,7 @@ db.define_table('Sitio_muestra', *Campos_Sitio_muestra,
 Campos_Imagen_referencia_sitio = [
 
 	Field('sitio_muestra_id','reference Sitio_muestra',required=True),
-    Field('archivo_nombre_original',required=True),
+	Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',autodelete=True,required=True)
     ]
     

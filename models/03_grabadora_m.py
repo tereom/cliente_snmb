@@ -44,7 +44,7 @@ db.define_table('Grabadora', *Campos_Grabadora,
 
 Campos_Imagen_referencia_grabadora = [
     Field('grabadora_id','reference Grabadora',required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',autodelete=True,required=True)
     ]
 
@@ -57,7 +57,7 @@ db.define_table('Imagen_referencia_grabadora', *Campos_Imagen_referencia_grabado
 
 Campos_Imagen_referencia_microfonos = [
     Field('grabadora_id','reference Grabadora',required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',autodelete=True,required=True)
     ]
 
@@ -70,7 +70,7 @@ db.define_table('Imagen_referencia_microfonos', *Campos_Imagen_referencia_microf
 
 Campos_Archivo_referencia_grabadora = [
     Field('grabadora_id','reference Grabadora',required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload', autodelete=True,required=True)
     ]
 
@@ -83,7 +83,7 @@ db.define_table('Archivo_referencia_grabadora', *Campos_Archivo_referencia_graba
 
 Campos_Archivo_grabadora = [
     Field('grabadora_id','reference Grabadora',required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload', autodelete=True,required=True),
     Field('es_audible','boolean',required=True)
     ]

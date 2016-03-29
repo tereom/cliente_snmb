@@ -53,7 +53,7 @@ db.define_table('Conteo_ave', *Campos_Conteo_ave,
 Campos_Archivo_conteo_ave = [
 
 	Field('conteo_ave_id','reference Conteo_ave',required=True),
-    Field('archivo_nombre_original',required=True),
+	Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',autodelete=True,required=True)
 ]
 

@@ -50,7 +50,7 @@ Campos_Archivo_especie_invasora_extra =[
 
     Field('especie_invasora_extra_id', 'reference Especie_invasora_extra',
         required=True),
-    Field('archivo_nombre_original', required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo', 'upload', autodelete=True, required=True)
 ]
 
@@ -104,7 +104,7 @@ Campos_Archivo_huella_excreta_extra = [
 
     Field('huella_excreta_extra_id','reference Huella_excreta_extra',
         required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload',autodelete=True,required=True)
     ]
 
@@ -158,7 +158,7 @@ Campos_Archivo_especimen_restos_extra = [
 
     Field('especimen_restos_extra_id','reference Especimen_restos_extra',
     	required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo','upload', autodelete=True,required=True)
     ]
 

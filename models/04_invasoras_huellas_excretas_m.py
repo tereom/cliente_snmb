@@ -53,7 +53,7 @@ db.define_table('Especie_invasora', *Campos_Especie_invasora,
 Campos_Archivo_especie_invasora =[
 
 	Field('especie_invasora_id','reference Especie_invasora',required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo', 'upload', autodelete=True,required=True)
 ]
 
@@ -85,7 +85,7 @@ db.define_table('Huella_excreta', *Campos_Huella_excreta,
 Campos_Archivo_huella_excreta = [
 
     Field('huella_excreta_id','reference Huella_excreta',required=True),
-    Field('archivo_nombre_original',required=True),
+    Field('archivo_nombre_original','string',required=True),
     Field('archivo', 'upload', autodelete=True,required=True)
     ]
 
