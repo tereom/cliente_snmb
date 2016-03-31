@@ -1,207 +1,231 @@
 {{extend 'layout.html'}}
 {{block head}}
-<style type="text/css">
+	<style type="text/css">
 
-    .Tabla .generic-widget, .Estatica
-    {
-        margin-right: 2cm;
-        width: 4.4cm;
-    }
+		.Tabla .generic-widget, .Estatica
+		{
+			margin-right: 2cm;
+			width: 4.4cm;
+		}
 
-    .FlotaIzquierda
-    {
-        float: left;
-    }
+		.FlotaIzquierda
+		{
+			float: left;
+		}
 
-    .CentrarV
-    {
-        vertical-align: middle;
-    }
-    
-</style>
+		.CentrarV
+		{
+			vertical-align: middle;
+		}
+
+	</style>
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="_formname" value="formaArchivosCamaraHTML"/>
-    <fieldset>
-        <legend>
-            Trampa cámara: fotografías y videos
-        </legend>
-        <table class="Tabla">
-        	<tr>
-        		<td>
-                    <div>
-                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
-                    </div>
-                    <div class="Estatica">
-                        <!--este campo (y el de sitio), en realidad sólo sirven 
-                        para encontrar con AJAX las cámaras que han sido declaradas
-                        en el sitio elegido. Al enviar la forma al controlador,
-                        se utilizará para registrar los archivos, únicamente el 
-                        id de la cámara (de la dropdown generada mediante AJAX)-->
-                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-                            <option value=""/>
-                            {{for conglomerado in listaConglomerado:}}
-                                <option value="{{=conglomerado.id}}">
-                                    {{=conglomerado.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>                
-                <td>
-                	<div class="Estatica">
-                    	<div>
-                        	<label for="tabla_sitio_muestra_id">Sitio</label>
-                    	</div>
-                    	<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
-                    	<div id="shadow_clone">
-                        	<select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
-                            	<option value=""/>
-                        	</select>
-                    	</div>
-                	</div>
-                </td>
-                <td>
-                	<!--<div class="Estatica">-->
-                        <!-- Para más de una cámara por sitio, descomentar esto
-                		<div>
-                        	<label for="tabla_camara_id">Cámara</label>
-                    	</div>
-                    	El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX
-                    	<div id="shadow_clone_2">
-                        	<select class="generic-widget" name="camara_id" id="tabla_camara_id">
-                            	<option value=""/>
-                        	</select>
-                    	</div>
-                        -->
+	<input type="hidden" name="_formname" value="formaArchivosCamaraHTML"/>
+	<fieldset>
+		<legend>
+			Trampa cámara: fotografías y videos
+		</legend>
+		<table class="Tabla">
+			<tr>
+				<td>
+					<div>
+						<label for="conglomerado_muestra_id">Conglomerado</label>
+					</div>
+					<div class="Estatica">
+						<!--este campo (y el de sitio), en realidad sólo sirven 
+						para encontrar con AJAX las cámaras que han sido declaradas
+						en el sitio elegido. Al enviar la forma al controlador,
+						únicamente el id de la cámara (de la dropdown generada
+						mediante AJAX) se utilizará para registrar los archivos, -->
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+							<option value=""/>
+							{{for conglomerado in listaConglomerado:}}
+								<option value="{{=conglomerado.id}}">
+									{{=conglomerado.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>                
+				<td>
+					<div class="Estatica">
+						<div>
+							<label for="sitio_muestra_id">Sitio</label>
+						</div>
+						<!-- El ID es para cambiar la lista de sitios asociados
+						a un conglomerado dinámicamente, utilizando AJAX-->
+						<div id="shadow_clone">
+							<select class="generic-widget" name="sitio_muestra_id" id="sitio_muestra_id">
+								<option value=""/>
+							</select>
+						</div>
+					</div>
+				</td>
+				<td>
+					<!--<div class="Estatica">-->
+						<!-- Para más de una cámara por sitio, descomentar esto
+						<div>
+							<label for="camara_id">Cámara</label>
+						</div>
+						El ID es para cambiar la lista de sitios asociados a un
+						conglomerado dinámicamente, utilizando AJAX
+						<div id="shadow_clone_2">
+							<select class="generic-widget" name="camara_id" id="camara_id">
+								<option value=""/>
+							</select>
+						</div>
+						-->
 
-                        <!-- el siguiente div guardará la información de la cámara declarada en determinado conglomerado
-                        y sitio, si es que existe. La clase Mensaje se usa para esconder el campo-->
-                        <div id="shadow_clone_2" class="Mensaje">
-                            <input type='hidden' name='camara_id' id='tabla_camara_id' value=''/>
-                        </div>
-                	<!--</div>-->
-                </td>
-        	</tr>
-        </table>
-    </fieldset>
-    <hr/>
-    <div>
-        <input class="obligatorio" type="file" id="tabla_archivos_camara" name="archivos_camara" multiple/>
-    </div>
-    <br/>
-    <input type="submit" value="Enviar" class="btn FlotaIzquierda" id="enviar"/>
+						<!-- el siguiente div guardará la información de la cámara
+						declarada en determinado conglomerado y sitio, si es que
+						existe. La clase Mensaje se usa para esconder el campo-->
+						<div id="shadow_clone_2" class="Mensaje">
+							<input type='hidden' name='camara_id' id='camara_id' value=''/>
+						</div>
+					<!--</div>-->
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+
+	<hr/>
+
+	<div>
+		<input class="obligatorio" type="file" id="archivos_camara" name="archivos_camara" multiple/>
+	</div>
+
+	<br/>
+	<br/>
+	<input type="submit" value="Enviar" class="btn FlotaIzquierda" id="enviar"/>
 </form>
 
 <br/>
 <br/>
 
 <fieldset>
-<legend>
-  Revisión de registros
-</legend>
+	<legend>
+		Revisión de registros
+	</legend>
+	{{=grid}}
 </fieldset>
-{{=grid}}
 
 <script>
 
-    $(document).ready
-    (
-        function()
-        {
-        	alert('Si no se cargan todos los archivos al mismo tiempo, por favor, súbalos por partes, asignándolos siempre a la misma trampa cámara.');
-        }
-    )
+	//////////////////////////////////////////
+	// AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+	//////////////////////////////////////////
 
-    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
-    $('#tabla_conglomerado_muestra_id').change
-    (
-    function()
-    {
+	$('#conglomerado_muestra_id').change
+	(
+	function()
+	{
 
-        //Como a la hora de seleccionar el conglomerado, se resetea la combobox de sitio,
-        // desaparece el mensaje de tabla_camara:
+		/* Como a la hora de seleccionar el conglomerado, se resetea la combobox
+		de sitio, desaparece el mensaje de camara: */
 
-        $('.Mensaje').hide();
+		$('.Mensaje').hide();
 
-        $('#tabla_sitio_muestra_id, #tabla_camara_id').remove();
+		$('#sitio_muestra_id, #camara_id').remove();
 
-        //ajax es una función de Web2py que simplifica la función homónima de JQuery
-        //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-        // del elemento donde se insertará la respuesta.
+		// ajax es una función de Web2py que simplifica la función homónima de
+		// JQuery recibe el URL destino, los nombres de los campos que se enviarán
+		// y el ID del elemento donde se insertará la respuesta.
 
-        ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 
-        ajax("{{=URL('asignarCamara')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-    }
-    );
+		ajax("{{=URL('asignarCamara')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+	}
+	);
 
-    //AJAX para mandar la información con la cámara declarada al elegir un sitio
-    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
-    {
-        $.ajax
-        (
-        {
-            type: "POST",
-            data: $('#tabla_sitio_muestra_id').serialize(),
-            url: "{{=URL('asignarCamara')}}",
-            async: false,
-            success: function(resultado)
-            {
-                $("#shadow_clone_2").html(resultado);
-            }
-        }
-        );
-        if($(this).val())
-        {
-            $('.Mensaje').show();
-        }
-        else
-        {
-            $('.Mensaje').hide();
-        }
-    }
-    );
+	//////////////////////////////////////////
+	// AJAX para mandar la información con la cámara declarada al elegir un sitio
+	//////////////////////////////////////////
 
-    //Validando, para ello utilizamos la clase "obligatorio":
-    $('form').submit
-    (
-       function()
-       {
-            flag =true;
-            campos=$('.obligatorio');
-            campos.each(function() 
-            {
-                if(!$(this).val())
-                {
-                    flag = false;
-                }
-            }
-            );
+	$('#shadow_clone').on('change', '#sitio_muestra_id', function ()
+	{
+		$.ajax
+		(
+		{
+			type: "POST",
+			data: $('#sitio_muestra_id').serialize(),
+			url: "{{=URL('asignarCamara')}}",
+			async: false,
+			success: function(resultado)
+			{
+				$("#shadow_clone_2").html(resultado);
+			}
+		}
+		);
+		if($(this).val())
+		{
+			$('.Mensaje').show();
+		}
+		else
+		{
+			$('.Mensaje').hide();
+		}
+	}
+	);
 
-            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
-            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
-            //validar aparte:
-            if(!$('#shadow_clone').find('select:first').val())
-            {
-                flag = false;
-                //alert('Falta llenar el sitio');
-            }
+	//////////////////////////////////////////
+	// Este código se ejecuta en cuanto el html termina de llegar al navegador:
+	//////////////////////////////////////////
 
-            //Lo mismo para el campo de "camara_id":
-            if(!$('#shadow_clone_2').find('#tabla_camara_id').val())
-            {
-                flag = false;
-                //alert('Falta llenar la cámara');
-            }
+	$(document).ready
+	(
+		function()
+		{
+			alert('Si no se cargan todos los archivos al mismo tiempo,' + 
+				' por favor, súbalos por partes, asignándolos siempre a' +
+				' la misma trampa cámara.');
+		}
+	)
 
-            if(!flag)
-            {
-                alert('Faltó llenar algún campo o subir alguna imagen');
-                return false;
-            }
-        }
-    );
+	//////////////////////////////////////////
+	// Validaciones a la hora de enviar la forma
+	//////////////////////////////////////////
 
+	$('form').submit
+	(
+	   function()
+	   {
+			//Validando los campos obligatorios
+
+			flag = true;
+			campos = $('.obligatorio');
+			campos.each(function() 
+			{
+				if(!$(this).val())
+				{
+					flag = false;
+				}
+			}
+			);
+
+			//Sin embargo, como el campo de "sitio_muestra_id" es generado por
+			//medio de AJAX; no entra en la validación anterior. Lo tenemos que
+			//validar aparte:
+
+			if(!$('#shadow_clone').find('select:first').val())
+			{
+				flag = false;
+				//alert('Falta llenar el sitio');
+			}
+
+			//Lo mismo para el campo de "camara_id":
+			if(!$('#shadow_clone_2').find('#camara_id').val())
+			{
+				flag = false;
+				//alert('Falta llenar la cámara');
+			}
+
+			if(!flag)
+			{
+				alert('Faltó llenar algún campo o subir alguna imagen');
+				return false;
+			}
+		}
+	);
 </script>

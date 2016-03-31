@@ -1,583 +1,583 @@
 {{extend 'layout.html'}}
+
 {{block head}}
-<style type="text/css">
+	<style type="text/css">
 
-    .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
-    {
-        margin-right: 2cm;
-        width: 4cm;
-    }
-    
-    .No_GPS .generic-widget
-    {
-        margin-right: 2cm;
-        width: 4.4cm;
-    }
+		.No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
+		{
+			margin-right: 2cm;
+			width: 4cm;
+		}
+		
+		.No_GPS .generic-widget
+		{
+			margin-right: 2cm;
+			width: 4.4cm;
+		}
 
-    .GPS .integer, .GPS .double
-    {
-        width: 2cm;
-    }
-    
-    .GPS .generic-widget
-    {
-        width: 2.5cm;
-    }
-    
-    .Centrar
-    {
-        text-align: center;
-    }
-    
-    #enviar
-    {
-        float: left;
-    }
+		.GPS .integer, .GPS .double
+		{
+			width: 2cm;
+		}
+		
+		.GPS .generic-widget
+		{
+			width: 2.5cm;
+		}
+		
+		.Centrar
+		{
+			text-align: center;
+		}
+		
+		#enviar
+		{
+			float: left;
+		}
 
 </style>
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="_formname" value="formaCamaraHTML"/>
-    <fieldset>
-        <legend>
-        Datos de la trampa cámara
-        </legend>
-        <table class="No_GPS">
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
-                    </div>
-                    <div>
-                        <!--este campo, en realidad sólo sirve para encontrar
-                        con AJAX los sitios existentes asociados al conglomerado
-                        elegido, al enviar la forma al controlador, se utilizará
-                        para guardar el registro de la cámara, únicamente el id
-                        del sitio (de la dropdown generada mediante AJAX)-->
-                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-                            <option value=""/>
-                            {{for conglomerado in listaConglomerado:}}
-                                <option value="{{=conglomerado.id}}">
-                                    {{=conglomerado.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>                
-                <td>
-                    <div>
-                        <label for="tabla_sitio_muestra_id">Sitio</label>
-                    </div>
-                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
-                    <div id="shadow_clone">
-                        <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
-                            <option value=""/>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_fecha_inicio">Fecha inicio 
-                        </label>
-                    </div>
-                    <div>
-                        <input class="date obligatorio" name="fecha_inicio" id="tabla_fecha_inicio" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_hora_inicio">Hora inicio (24 horas)</label>
-                    </div>
-                    <div>
-                        <input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_fecha_termino">Fecha término
-                        </label>
-                    </div>
-                    <div>
-                        <input class="date obligatorio" name="fecha_termino" id="tabla_fecha_termino" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_hora_termino">Hora término (24 horas)</label>
-                    </div>
-                    <div>
-                        <input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_distancia_centro">Distancia al centro del sitio (m)*</label>
-                    </div>
-                    <div>
-                        <input class="double" name="distancia_centro" id="tabla_distancia_centro" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_azimut">Azimut (º)*</label>
-                    </div>
-                    <div>
-                        <input class="double" name="azimut" id="tabla_azimut" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_condiciones_ambientales">Condiciones ambientales</label>
-                    </div>
-                    <div>
-                    <select class="generic-widget obligatorio" name="condiciones_ambientales" id="tabla_condiciones_ambientales">
-                        <option value=""/>
-                        {{for condicion in listaCondicionesAmbientales:}}
-                            <option value="{{=condicion.nombre}}">
-                                {{=condicion.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <hr/>
-        <table class="GPS">
-            <tr>
-                <th colspan="3", class="Centrar">
-                    Latitud
-                </th>
-                <th colspan="3", class="Centrar">
-                    Longitud
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-                <th>
-                </th>
-            </tr>
-            <tr>
-                <th class="Centrar">
-                    <label for="lat_grado">Grado</label>
-                </th>
-                <th class="Centrar">
-                    <label for="lat_min">Minuto</label>
-                </th>
-                <th class="Centrar">
-                    <label for="lat_seg">Segundo</label>
-                </th>
-                <th class="Centrar">
-                    <label for="lon_grado">Grado</label>
-                </th>
-                <th class="Centrar">
-                    <label for="lon_min">Minuto</label>
-                </th>
-                <th class="Centrar">
-                    <label for="lon_seg">Segundo</label>
-                </th>
-                <th class="Centrar">                    
-                    <label for="tabla_elipsoide">Datum</label>
-                </th>
-                <th class="Centrar">
-                    <label for="tabla_altitud">Altitud(m)</label>
-                </th>
-                <th class="Centrar">
-                    <label for="tabla_gps_error">Error(m)</label>
-                </th>
-            </tr>
+	<input type="hidden" name="_formname" value="formaCamaraHTML"/>
 
-            <tr>
-                <td>
-                    <input class="integer obligatorio lat_grado" name="lat_grado" id="tabla_lat_grado" type="text"/>
-                </td>
-                <td>
-                    <input class="integer obligatorio min" name="lat_min" id="tabla_lat_min" type="text"/>
-                </td>
-                <td>
-                    <input class="double obligatorio seg" name="lat_seg" id="tabla_lat_seg" type="text"/>
-                </td>
-                <td>
-                    <input class="integer obligatorio lon_grado" name="lon_grado" id="tabla_lon_grado" type="text"/>
-                </td>
-                <td>
-                    <input class="integer obligatorio min" name="lon_min" id="tabla_lon_min" type="text"/>
-                </td>
-                <td>
-                    <input class="double obligatorio seg" name="lon_seg" id="tabla_lon_seg" type="text"/>
-                </td>
-                <td>
-                    <select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
-                        <option value=""/>
-                        {{for elipsoide in listaElipsoide:}}
-                            <option value="{{=elipsoide.nombre}}">
-                                {{=elipsoide.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                </td>
-                <td>
-                    <input class="double obligatorio altitud" name="altitud" id="tabla_altitud" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio gps_error" name="gps_error" id="tabla_gps_error" type="text" value=""/>
-                </td>
-            </tr>
-        </table>
-        <div>
-            <p>
-                <strong>Nota importante</strong>: las coordenadas deben escribirse en grados, minutos y segundos. Por ejemplo: 25º13'46.53''. En este caso, en la casilla de "Grado" se escribirá 25, en la de "Minuto" 13, y en la de "Segundo" 46.53. Si las coordenadas leídas del GPS no tienen el formato anterior, por ejemplo, si están escritas como 25º13.7755' ó incluso como 25.2296º, hay que cambiar el formato. Para ello, utilizar la siguiente <a href = "http://rumkin.com/tools/gps/degrees.php" target = "_blank">calculadora</a>.
-            </p>
-        </div>
-        
-        <hr/>
 
-        <table class="No_GPS">
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_nombre">Código cámara</label>
-                    </div>
-                    <div>
-                        <input class="string obligatorio" name="nombre" id="tabla_nombre" type="text"/>
-                        <!--
-                        <select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
-                            <option value=""/>
-                            {{# for nombreCamara in listaNombreCamara:}}
-                                <option value="{{#=nombreCamara.nombre}}">
-                                    {{#=nombreCamara.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>   -->
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_resolucion">Resolución</label>
-                    </div>
-                    <div>
-                        <select class="generic-widget obligatorio" name="resolucion" id="tabla_resolucion">
-                            <option value=""/>
-                            {{for resolucion in listaResolucion:}}
-                                <option value="{{=resolucion.nombre}}">
-                                    {{=resolucion.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_sensibilidad">Sensibilidad</label>
-                    </div>
-                    <div>
-                        <select class="generic-widget obligatorio" name="sensibilidad" id="tabla_sensibilidad">
-                            <option value=""/>
-                            {{for sensibilidad in listaSensibilidad:}}
-                                <option value="{{=sensibilidad.nombre}}">
-                                    {{=sensibilidad.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_imagen_camara">Foto cámara y GPS</label>
-                    </div>
-                    <div>
-                        <input class="obligatorio" type="file" id="tabla_imagen_camara" name="imagen_camara"/>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-    <br/>
-    <fieldset>
-        <label for="tabla_comentario">Observaciones</label>
-        <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
-    </fieldset>
-    <input type="submit" value="Enviar" class="btn" id="enviar"/>
+	<fieldset>
+		<legend>
+		Datos de la trampa cámara
+		</legend>
+		<table class="No_GPS">
+			<tr>
+				<td>
+					<div>
+						<label for="conglomerado_muestra_id">Conglomerado</label>
+					</div>
+					<div>
+						<!--este campo, en realidad sólo sirve para encontrar con AJAX los sitios existentes asociados al conglomerado
+						elegido, al enviar la forma al controlador, se utilizará únicamente el id del sitio (de la dropdown generada mediante
+						AJAX)-->
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+							<option value=""/>
+							{{for conglomerado in listaConglomerado:}}
+								<option value="{{=conglomerado.id}}">
+									{{=conglomerado.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>                
+				<td>
+					<div>
+						<label for="sitio_muestra_id">Sitio</label>
+					</div>
+					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
+						<select class="generic-widget" name="sitio_muestra_id" id="sitio_muestra_id">
+							<option value=""/>
+						</select>
+					</div>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<label for="fecha_inicio">Fecha inicio 
+						</label>
+					</div>
+					<div>
+						<input class="date obligatorio" name="fecha_inicio" id="fecha_inicio" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="hora_inicio">Hora inicio (24 horas)</label>
+					</div>
+					<div>
+						<input class="time obligatorio" name="hora_inicio" id="hora_inicio" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<label for="fecha_termino">Fecha término
+						</label>
+					</div>
+					<div>
+						<input class="date obligatorio" name="fecha_termino" id="fecha_termino" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="hora_termino">Hora término (24 horas)</label>
+					</div>
+					<div>
+						<input class="time obligatorio" name="hora_termino" id="hora_termino" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<label for="distancia_centro">Distancia al centro del sitio (m)*</label>
+					</div>
+					<div>
+						<input class="double" name="distancia_centro" id="distancia_centro" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="azimut">Azimut (º)*</label>
+					</div>
+					<div>
+						<input class="double" name="azimut" id="azimut" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="condiciones_ambientales">Condiciones ambientales</label>
+					</div>
+					<div>
+					<select class="generic-widget obligatorio" name="condiciones_ambientales" id="condiciones_ambientales">
+						<option value=""/>
+						{{for condicion in listaCondicionesAmbientales:}}
+							<option value="{{=condicion.nombre}}">
+								{{=condicion.nombre}}
+							</option>
+						{{pass}}
+					</select>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<hr/>
+		<table class="GPS">
+			<tr>
+				<th colspan="3", class="Centrar">
+					Latitud
+				</th>
+				<th colspan="3", class="Centrar">
+					Longitud
+				</th>
+				<th>
+				</th>
+				<th>
+				</th>
+				<th>
+				</th>
+			</tr>
+			<tr>
+				<th class="Centrar">
+					<label for="lat_grado">Grado</label>
+				</th>
+				<th class="Centrar">
+					<label for="lat_min">Minuto</label>
+				</th>
+				<th class="Centrar">
+					<label for="lat_seg">Segundo</label>
+				</th>
+				<th class="Centrar">
+					<label for="lon_grado">Grado</label>
+				</th>
+				<th class="Centrar">
+					<label for="lon_min">Minuto</label>
+				</th>
+				<th class="Centrar">
+					<label for="lon_seg">Segundo</label>
+				</th>
+				<th class="Centrar">                    
+					<label for="elipsoide">Datum</label>
+				</th>
+				<th class="Centrar">
+					<label for="altitud">Altitud(m)</label>
+				</th>
+				<th class="Centrar">
+					<label for="gps_error">Error(m)</label>
+				</th>
+			</tr>
+
+			<tr>
+				<td>
+					<input class="integer obligatorio lat_grado" name="lat_grado" id="lat_grado" type="text"/>
+				</td>
+				<td>
+					<input class="integer obligatorio min" name="lat_min" id="lat_min" type="text"/>
+				</td>
+				<td>
+					<input class="double obligatorio seg" name="lat_seg" id="lat_seg" type="text"/>
+				</td>
+				<td>
+					<input class="integer obligatorio lon_grado" name="lon_grado" id="lon_grado" type="text"/>
+				</td>
+				<td>
+					<input class="integer obligatorio min" name="lon_min" id="lon_min" type="text"/>
+				</td>
+				<td>
+					<input class="double obligatorio seg" name="lon_seg" id="lon_seg" type="text"/>
+				</td>
+				<td>
+					<select class="generic-widget obligatorio" name="elipsoide" id="elipsoide">
+						<option value=""/>
+						{{for elipsoide in listaElipsoide:}}
+							<option value="{{=elipsoide.nombre}}">
+								{{=elipsoide.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>
+				<td>
+					<input class="double obligatorio altitud" name="altitud" id="altitud" type="text" value=""/>
+				</td>
+				<td>
+					<input class="double obligatorio gps_error" name="gps_error" id="gps_error" type="text" value=""/>
+				</td>
+			</tr>
+		</table>
+		<div>
+			<p>
+				<strong>Nota importante</strong>: las coordenadas deben escribirse en grados, minutos y segundos. Por ejemplo: 25º13'46.53''. En este caso, en la casilla de "Grado" se escribirá 25, en la de "Minuto" 13, y en la de "Segundo" 46.53. Si las coordenadas leídas del GPS no tienen el formato anterior, por ejemplo, si están escritas como 25º13.7755' ó incluso como 25.2296º, hay que cambiar el formato. Para ello, utilizar la siguiente <a href = "http://rumkin.com/tools/gps/degrees.php" target = "_blank">calculadora</a>.
+			</p>
+		</div>
+		<hr/>
+		<table class="No_GPS">
+			<tr>
+				<td>
+					<div>
+						<label for="nombre">Código cámara</label>
+					</div>
+					<div>
+						<input class="string obligatorio" name="nombre" id="nombre" type="text"/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="resolucion">Resolución</label>
+					</div>
+					<div>
+						<select class="generic-widget obligatorio" name="resolucion" id="resolucion">
+							<option value=""/>
+							{{for resolucion in listaResolucion:}}
+								<option value="{{=resolucion.nombre}}">
+									{{=resolucion.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="sensibilidad">Sensibilidad</label>
+					</div>
+					<div>
+						<select class="generic-widget obligatorio" name="sensibilidad" id="sensibilidad">
+							<option value=""/>
+							{{for sensibilidad in listaSensibilidad:}}
+								<option value="{{=sensibilidad.nombre}}">
+									{{=sensibilidad.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="imagen_camara">Foto cámara y GPS</label>
+					</div>
+					<div>
+						<input class="obligatorio" type="file" id="imagen_camara" name="imagen_camara"/>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<label for="comentario">Observaciones</label>
+		<textarea class="text" cols="40" id="comentario" name="comentario" rows="5">
+		</textarea>
+	</fieldset>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 
 <script>
 
-    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
-    $('#tabla_conglomerado_muestra_id').change
-    (
-        function()
-        {
-            $('#tabla_sitio_muestra_id').remove();
+	//////////////////////////////////////////
+	// AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+	//////////////////////////////////////////
 
-            //ajax es una función de Web2py que simplifica la función homónima de JQuery
-            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-            // del elemento donde se insertará la respuesta
-            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-        }
-    );
+	$('#conglomerado_muestra_id').change
+	(
+		function()
+		{
+			$('#sitio_muestra_id').remove();
 
-    //Rangos de los campos:
+			//ajax es una función de Web2py que simplifica la función homónima de JQuery
+			//recibe el URL destino, los nombres de los campos que se enviarán y el ID
+			// del elemento donde se insertará la respuesta
+			ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+		}
+	);
 
-    $('.min').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>=60)
-                {
-                    alert('Los minutos están en el rango de 0 a 59');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	//////////////////////////////////////////
+	// AJAX para evitar que se envíe la información de la cámara correspondiente
+	// a un sitio más de una vez
+	//////////////////////////////////////////
 
-    $('.seg').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>=60)
-                {
-                    alert('Los segundos están en el rango de 0 a 60');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#shadow_clone').on('change', '#sitio_muestra_id', function ()
+	{
+		$.ajax
+		(
+		{
+			type: "POST",
+			data: $('#sitio_muestra_id').serialize(),
+			url: "{{=URL('camaraExistente')}}",
+			success: function(resultado)
+				{
+					//alert(resultado);
+					if(resultado>=1)
+					{
+						alert('La cámara correspondiente a este sitio ya ha sido declarada');
+						$('#sitio_muestra_id').val("");
+					}
+				}
+		}
+		);
+	}
+	);
 
-    $('.lat_grado').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<13 || $(this).val()>33)
-                {
-                    alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	//////////////////////////////////////////
+	// Funcionamiento de la vista
+	//////////////////////////////////////////
 
-    $('.lon_grado').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if(($(this).val()<85 || $(this).val()>119) & ($(this).val()<-119 || $(this).val()>-85))
-                {
-                    alert('Los grados correspondientes a longitud  están en el rango de 85 a 119 o en el rango -119 a -85');
-                    $(this).val("");
-                }
-                /* if($(this).val()<-119|| $(this).val()>-85)
-                {
-                    alert('Los grados correspondientes a longitud  están en el rango de -119 a -85');
-                    $(this).val("");
-                }
-                */
-            }
-        }
-    )
+	$('.min').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < 0 || $(this).val() >= 60)
+				{
+					alert('Los minutos están en el rango de 0 a 59');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    $('.gps_error').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0)
-                {
-                    alert('El error de precisión debe ser positivo');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('.seg').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < 0 || $(this).val() >= 60)
+				{
+					alert('Los segundos están en el rango de 0 a 60');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    $('.altitud').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<-10 || $(this).val()>5715)
-                {
-                    alert('La altitud está en el rango -10 a 5715');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('.lat_grado').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < 13 || $(this).val() > 33)
+				{
+					alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    /* Los campos de clase double no deben contener comas*/
-    $('.double').change
-    (
-        function()
-        {
-            var comaReg = /,/;
-            if(comaReg.test($(this).val()))
-            {
-                alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
-                $(this).val("");
-            }
-        }
-    )
+	$('.lon_grado').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if(($(this).val() < 85 || $(this).val() > 119) & ($(this).val() < -119 || $(this).val() > -85))
+				{
+					alert('Los grados correspondientes a longitud  están en el rango de 85 a 119 o en el rango -119 a -85');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    // Rango de la distancia al centro
-    $('#tabla_distancia_centro').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>58)
-                {
-                    alert('La distancia debe ser menor a 58');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-    //AJAX para evitar que se envíe la información de la cámara correspondiente
-    //a un sitio más de una vez:
-    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
-    {
-        $.ajax
-        (
-        {
-            type: "POST",
-            data: $('#tabla_sitio_muestra_id').serialize(),
-            url: "{{=URL('camaraExistente')}}",
-            success: function(resultado)
-                {
-                    //alert(resultado);
-                    if(resultado>=1)
-                    {
-                        alert('La cámara correspondiente a este sitio ya ha sido declarada');
-                        $('#tabla_sitio_muestra_id').val("");
-                    }
-                }
-        }
-        );
-    }
-    );
+	$('.gps_error').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < 0)
+				{
+					alert('El error de precisión debe ser positivo');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    //Validando, para ello utilizamos la clase "obligatorio":
-    $('form').submit
-    (
-       function()
-       {
+	$('.altitud').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < -10 || $(this).val() > 5715)
+				{
+					alert('La altitud está en el rango -10 a 5715');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-            flag =true;
-            campos=$('.obligatorio');
-            campos.each(function() 
-            {
-                if(!$(this).val())
-                {
-                    flag = false;
-                }
-            }
-            );
+	// Los campos de clase double no deben contener comas
+	$('.double').change
+	(
+		function()
+		{
+			var comaReg = /,/;
+			if(comaReg.test($(this).val()))
+			{
+				alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
+				$(this).val("");
+			}
+		}
+	)
 
-             //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-            var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
-            campos_fecha=$('.date');
-            flag_m = true;
-            campos_fecha.each(function(){   
-                if(!fechaReg.test($(this).val()))
-                {
-                    flag_m = false;
-                }
-                //Revisando que el mes y el día estén en un rango aceptable:
-                else
-                {
-                    //match contiene como primer elemento, el match de toda la regex, y como elementos
-                    //posteriores, el match de los elementos en paréntesis de la regex (en órden).
-                    var match = fechaReg.exec($(this).val());
-                    //alert(match);
+	// Rango de la distancia al centro
+	$('#distancia_centro').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < 0 || $(this).val() > 12)
+				{
+					alert('La distancia debe ser menor a 12m');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-                    //Validando que el mes se encuentre en un rango aceptable:
-                    if(match[1]<1 || match[1]>12)
-                    {
-                        //alert('El mes es incorrecto');
-                        //alert(match[1]);
-                        flag_m = false;
-                    }
+	//////////////////////////////////////////
+	// Validaciones a la hora de enviar la forma
+	//////////////////////////////////////////
 
-                    //Validando que el día se encuentre en un rango aceptable:
-                    if(match[2]<1 || match[2]>31)
-                    {
-                        //alert('El día es incorrecto');
-                        //alert(match[2]);
-                        flag_m = false;
-                    }
-                }
-            });
+	$('form').submit
+	(
+		function()
+		{
 
-            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
-            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
-            //validar aparte:
-            if(!$('#shadow_clone').find('select:first').val())
-            {
-                flag = false;
-                //alert('Falta llenar el sitio');
-            }
+			// Validando los campos obligatorios:
+
+			flag =true;
+			campos=$('.obligatorio');
+			campos.each(function() 
+			{
+				if(!$(this).val())
+				{
+					flag = false;
+				}
+			}
+			);
+
+			/* Sin embargo, como el campo de "sitio_muestra_id" es generado por
+			medio de AJAX; no entra en la validación anterior. Lo tenemos que
+			validar aparte: */
+
+			if(!$('#shadow_clone').find('select:first').val())
+			{
+				flag = false;
+				//alert('Falta llenar el sitio');
+			}
 
 
-            if(!flag)
-            {
-                alert('Faltó llenar algún campo o subir alguna imagen');
-                return false;
-            }
-            else if(!flag_m)
-            {
-                alert('El formato de fecha es aaaa-mm-dd');
-                return false;
-            }
+			/* Validando que la fecha esté en formato adecuado para que Web2py
+			no tenga problemas: */
 
-            //Validando que la fecha de inicio sea menor que la fecha de término
-            //y que, en caso de ser necesario, la hora de inicio sea menor que la de término
-            else
-            {
+			var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
+			campos_fecha=$('.date');
+			flag_f = true;
+			campos_fecha.each(function(){   
+				if(!fechaReg.test($(this).val()))
+				{
+					flag_f = false;
+				}
+				//Revisando que el mes y el día estén en un rango aceptable:
+				else
+				{
+					/* match contiene como primer elemento, el match de toda la
+					regex, y como elementos posteriores, el match de los elementos
+					en paréntesis de la regex (en órden).*/
+					var match = fechaReg.exec($(this).val());
+					//alert(match);
 
-                var fecha_inicio = $('#tabla_fecha_inicio').val();
-                var fecha_termino = $('#tabla_fecha_termino').val();
-                var hora_inicio = $('#tabla_hora_inicio').val();
-                var hora_termino = $('#tabla_hora_termino').val();
+					//Validando que el mes se encuentre en un rango aceptable:
+					if(match[1]<1 || match[1]>12)
+					{
+						//alert('El mes es incorrecto');
+						//alert(match[1]);
+						flag_f = false;
+					}
 
-                //Usando el órden lexicográfico natural de strings para comparar fechas:
-                if(fecha_inicio>fecha_termino)
-                {
-                    alert('La fecha de inicio debe ser menor o igual a la fecha de término');
-                    return false;
-                }
+					//Validando que el día se encuentre en un rango aceptable:
+					if(match[2]<1 || match[2]>31)
+					{
+						//alert('El día es incorrecto');
+						//alert(match[2]);
+						flag_f = false;
+					}
+				}
+			});
 
-                else if(fecha_inicio==fecha_termino && hora_inicio>hora_termino)
-                {
-                    alert('La hora de inicio debe ser menor a la hora de término');
-                    return false;
-                }
-            }
-        }
-    );
+			if(!flag)
+			{
+				alert('Faltó llenar algún campo o subir alguna imagen');
+				return false;
+			}
+			else if(!flag_f)
+			{
+				alert('El formato de fecha es aaaa-mm-dd');
+				return false;
+			}
 
+			/* Validando que la fecha de inicio sea menor que la fecha de término
+			y que, en caso de ser necesario, la hora de inicio sea menor que la
+			de término */
+			else
+			{
+
+				var fecha_inicio = $('#fecha_inicio').val();
+				var fecha_termino = $('#fecha_termino').val();
+				var hora_inicio = $('#hora_inicio').val();
+				var hora_termino = $('#hora_termino').val();
+
+				//Usando el órden lexicográfico natural de strings para comparar fechas:
+				if(fecha_inicio > fecha_termino)
+				{
+					alert('La fecha de inicio debe ser menor o igual a la fecha de término');
+					return false;
+				}
+
+				else if(fecha_inicio==fecha_termino && hora_inicio>hora_termino)
+				{
+					alert('La hora de inicio debe ser menor a la hora de término');
+					return false;
+				}
+			}
+		}
+	);
 </script>

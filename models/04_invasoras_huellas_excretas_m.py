@@ -14,13 +14,13 @@ Campos_Transecto_muestra =[
 		required=True),
 	Field('fecha','date',required=True),
 
-    #Se insertará a partir de un catálogo
+	#Se insertará a partir de un catálogo
 	Field('transecto_numero','string', required=True),
 
 	Field('tecnico','string',required=True),
-    Field('hora_inicio','time',required=True),
+	Field('hora_inicio','time',required=True),
 	Field('hora_termino','time',required=True),
-    Field('comentario','text')
+	Field('comentario','text')
 ]
 
 db.define_table('Transecto_muestra', *Campos_Transecto_muestra, 
@@ -37,10 +37,10 @@ Campos_Especie_invasora =[
 	Field('transecto_muestra_id','reference Transecto_muestra', required=True),
 	Field('nombre_en_lista','boolean', required=True),
 	Field('nombre_comun','string'),
-    Field('nombre_cientifico','string'),
+	Field('nombre_cientifico','string'),
 
-    #Se insertará a partir de un catálogo
-    Field('numero_individuos', 'string', required=True)
+	#Se insertará a partir de un catálogo
+	Field('numero_individuos', 'string', required=True)
 ]
 
 db.define_table('Especie_invasora', *Campos_Especie_invasora,
@@ -53,8 +53,8 @@ db.define_table('Especie_invasora', *Campos_Especie_invasora,
 Campos_Archivo_especie_invasora =[
 
 	Field('especie_invasora_id','reference Especie_invasora',required=True),
-    Field('archivo_nombre_original','string',required=True),
-    Field('archivo', 'upload', autodelete=True,required=True)
+	Field('archivo_nombre_original','string',required=True),
+	Field('archivo', 'upload', autodelete=True,required=True)
 ]
 
 db.define_table('Archivo_especie_invasora', *Campos_Archivo_especie_invasora,
@@ -67,16 +67,16 @@ db.define_table('Archivo_especie_invasora', *Campos_Archivo_especie_invasora,
 
 Campos_Huella_excreta = [
 
-    Field('transecto_muestra_id','reference Transecto_muestra', required=True),
-    Field('es_huella','boolean', required=True),
-    Field('nombre_comun','string'),
-    Field('nombre_cientifico','string'),
-    Field('largo','double',required=True),
-    Field('ancho','double',required=True)
-    ]
+	Field('transecto_muestra_id','reference Transecto_muestra', required=True),
+	Field('es_huella','boolean', required=True),
+	Field('nombre_comun','string'),
+	Field('nombre_cientifico','string'),
+	Field('largo','double',required=True),
+	Field('ancho','double',required=True)
+	]
 
 db.define_table('Huella_excreta', *Campos_Huella_excreta,
-    singular='Huella/excreta', plural='Huellas/excretas')
+	singular='Huella/excreta', plural='Huellas/excretas')
 
 ###########################################
 # Archivo_huella_excreta
@@ -84,11 +84,11 @@ db.define_table('Huella_excreta', *Campos_Huella_excreta,
 
 Campos_Archivo_huella_excreta = [
 
-    Field('huella_excreta_id','reference Huella_excreta',required=True),
-    Field('archivo_nombre_original','string',required=True),
-    Field('archivo', 'upload', autodelete=True,required=True)
-    ]
+	Field('huella_excreta_id','reference Huella_excreta',required=True),
+	Field('archivo_nombre_original','string',required=True),
+	Field('archivo', 'upload', autodelete=True,required=True)
+	]
 
 db.define_table('Archivo_huella_excreta', *Campos_Archivo_huella_excreta,
-    singular='Archivo huella/excreta', plural='Archivos huellas/excretas')
+	singular='Archivo huella/excreta', plural='Archivos huellas/excretas')
 

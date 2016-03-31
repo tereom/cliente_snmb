@@ -1,536 +1,549 @@
 {{extend 'layout.html'}}
 
 {{block head}}
-    <style type="text/css">
+	<style type="text/css">
 
-        .No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
-        {
-            margin-right: 2cm;
-            width: 4cm;
-        }
-        
-        .No_GPS .generic-widget
-        {
-        	margin-right: 2cm;
-            width: 4.4cm;
-        }
+		.No_GPS .integer, .No_GPS .date, .No_GPS .string, .No_GPS .double
+		{
+			margin-right: 2cm;
+			width: 4cm;
+		}
+		
+		.No_GPS .generic-widget
+		{
+			margin-right: 2cm;
+			width: 4.4cm;
+		}
 
-        .GPS .integer, .GPS .date, .GPS .string, .GPS .double
-        {
-            width: 2cm;
-        }
-        
-        .GPS .generic-widget
-        {
-            width: 2.5cm;
-        }
-        
-        .Centrar
-        {
-            text-align: center;
-        }
-        
-        .FlotaIzquierda
-        {
-            float: left;
-        }
+		.GPS .integer, .GPS .double
+		{
+			width: 2cm;
+		}
+		
+		.GPS .generic-widget
+		{
+			width: 2.5cm;
+		}
+		
+		.Centrar
+		{
+			text-align: center;
+		}
+		
+		.FlotaIzquierda
+		{
+			float: left;
+		}
 
-    </style>
+	</style>
 {{end}}
 
 {{#=response.toolbar()}}
 
 <form action="" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="_formname" value="formaHTML"/>
-    <fieldset class='No_GPS'>
-        <legend>
-            Datos del conglomerado
-        </legend>
-        <table>
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_nombre">Número de conglomerado</label>
-                    </div>
-                    <div>
-                        <input class="integer obligatorio" name="nombre" id="tabla_nombre" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_fecha_visita">Fecha de visita</label>
-                    </div>
-                    <div>
-                        <input class="date obligatorio" name="fecha_visita" id="tabla_fecha_visita" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_tipo">Tipo de conglomerado</label>
-                    </div>
-                    <div>
-                        <!-- Menu desplegable -->
-                        <select class="generic-widget obligatorio" name="tipo" id="tabla_tipo">
-                            <option value=""/>
-                            <!-- listaTipo: lista que se envía en el controlador con las opciones
-                            para el menú desplegable -->
-                            {{for tipo in listaTipo:}}
-                                <option value="{{=tipo.nombre}}">
-                                    {{=tipo.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_compania">Compañía/organización</label>
-                    </div>
-                    <div>
-                        <input class="string obligatorio" name="compania" id="tabla_compania" type="text" value=""/>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_estado">Estado</label>
-                    </div>
-                    <div>
-                        <select class="generic-widget obligatorio" name="estado" id="tabla_estado">
-                        <option value=""/>
-                        {{for estado in listaEstado:}}
-                            <option value="{{=estado.nombre}}">
-                                {{=estado.nombre}}
-                            </option>
-                        {{pass}}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_municipio">Municipio</label>
-                    </div>
-                    <!-- El ID es para cambiar la lista de municipios asociados a un estado dinámicamente, utilizando AJAX-->
-                    <div id="shadow_clone">
-                        <select class="generic-widget" name="municipio" id="tabla_municipio">
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_predio">Predio</label>
-                    </div>
-                    <div>
-                        <input class="string obligatorio" name="predio" id="tabla_predio" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_tenencia">Tenencia</label>
-                    </div>
-                    <div>
-                        <select class="generic-widget obligatorio" name="tenencia" id="tabla_tenencia">
-                            <option value=""/>
-                            {{for tenencia in listaTenencia:}}
-                                <option value="{{=tenencia.nombre}}">
-                                    {{=tenencia.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_uso_suelo_tipo">Tipo de uso de suelo</label>
-                    </div>
-                    <div>
-                        <select class="generic-widget obligatorio" name="uso_suelo_tipo" id="tabla_uso_suelo_tipo">
-                            <option value=""/>
-                            {{for usoSuelo in listaUsoSuelo:}}
-                                <option value="{{=usoSuelo.nombre}}">
-                                    {{=usoSuelo.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <!--La clase vegetación sirve para el JQuery que desvanece/reaparece el campo-->
-                    <div class="Vegetacion">
-                        <label for="tabla_vegetacion_tipo">Tipo de vegetación</label>
-                    </div>
-                    <div class="Vegetacion">
-                        <select class="generic-widget" name="vegetacion_tipo" id="tabla_vegetacion_tipo">
-                            <option value=""/>
-                            {{for vegetacion in listaVegetacion:}}
-                                <option value="{{=vegetacion.nombre}}">
-                                    {{=vegetacion.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="Vegetacion">
-                        <label for="tabla_perturbado">Perturbado</label>
-                    </div>
-                    <div class="Vegetacion">
-                        <input class="boolean" name="perturbado" id="tabla_perturbado" type="checkbox" value="on"/>
-                    </div>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </table>
-    </fieldset>
-    <fieldset>
-        <label for="tabla_comentario">Observaciones</label>
-        <textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
-    </fieldset>
+	<input type="hidden" name="_formname" value="formaHTML"/>
 
-    <fieldset class="GPS">
-        <legend>
-            Datos de los sitios y punto de control
-        </legend>
-        <table>
-            <tr>
-                <th></th>
-                <th></th>
-                <th colspan="3", class="Centrar">Latitud</th>
-                <th colspan="3", class="Centrar">Longitud</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-            <tr>
-                <td class="Centrar">Muestreado</td>
-                <td class="Centrar">Elemento</td>
-                <td class="Centrar">Grado</td>
-                <td class="Centrar">Minuto</td>
-                <td class="Centrar">Segundo</td>
-                <td class="Centrar">Grado</td>
-                <td class="Centrar">Minuto</td>
-                <td class="Centrar">Segundo</td>
-                <td class="Centrar">Datum</td>
-                <td class="Centrar">Altitud(m)</td>
-                <td class="Centrar">Error(m)</td>
-                <td class="Centrar">Evidencia<br/>anterior</td>
-                <td class="Centrar">Archivo</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Punto de control</td>                
-                <td>
-                    <input class="integer obligatorio lat_grado" name="lat_grado_c" id="tabla_lat_grado_c" type="text" value=""/>
-                </td>
-                <!--Las clases min y seg sirven para validar las cotas superiores e inferiores de los grados-->
-                <td>
-                    <input class="integer obligatorio min" name="lat_min_c" id="tabla_lat_min_c" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio seg" name="lat_seg_c" id="tabla_lat_seg_c" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="integer obligatorio lon_grado" name="lon_grado_c" id="tabla_lon_grado_c" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="integer obligatorio min" name="lon_min_c" id="tabla_lon_min_c" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio seg" name="lon_seg_c" id="tabla_lon_seg_c" type="text" value=""/>
-                </td>
-                <td>
-                    <select class="generic-widget obligatorio" name="elipsoide_c" id="tabla_elipsoide_c">
-                        <option value=""/>
-                        {{for elipsoide in listaElipsoide:}}
-                            <option value="{{=elipsoide.nombre}}">
-                                {{=elipsoide.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                </td>
-                <td>
-                    <input class="double obligatorio altitud" name="altitud_c" id="tabla_altitud_c" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio gps_error" name="gps_error_c" id="tabla_gps_error_c" type="text" value=""/>
-                </td>
-                <td class="Centrar">
-                    <input class="boolean" name="hay_evidencia_c" id="tabla_hay_evidencia_c" type="checkbox" value="on"/>
-                </td>
-                <td>
-                    <input class="obligatorio" type="file" id="tabla_imagen_c" name="imagen_c" multiple/>
-                </td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>
-                    Centro
-                </td>
-                <td>
-                    <input class="integer obligatorio lat_grado" name="lat_grado_1" id="tabla_lat_grado_1" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="integer obligatorio min" name="lat_min_1" id="tabla_lat_min_1" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio seg" name="lat_seg_1" id="tabla_lat_seg_1" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="integer obligatorio lon_grado" name="lon_grado_1" id="tabla_lon_grado_1" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="integer obligatorio min" name="lon_min_1" id="tabla_lon_min_1" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio seg" name="lon_seg_1" id="tabla_lon_seg_1" type="text" value=""/>
-                </td>
-                <td>
-                    <select class="generic-widget obligatorio" name="elipsoide_1" id="tabla_elipsoide_1">
-                        <option value=""/>
-                        {{for elipsoide in listaElipsoide:}}
-                            <option value="{{=elipsoide.nombre}}">
-                                {{=elipsoide.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                </td>
-                <td>
-                    <input class="double obligatorio altitud" name="altitud_1" id="tabla_altitud_1" type="text" value=""/>
-                </td>
-                <td>
-                    <input class="double obligatorio gps_error" name="gps_error_1" id="tabla_gps_error_1" type="text" value=""/>
-                </td>
-                <td class="Centrar">
-                    <input class="boolean" name="hay_evidencia_1" id="tabla_hay_evidencia_1" type="checkbox" value="on"/>
-                </td>
-                <td>
-                    <input class="obligatorio" type="file" id="tabla_imagen_1" name="imagen_1"/>
-                </td>
-            </tr>
-            <tr>
-                <td class="Centrar">
-                    <input class="boolean" name="existe_2" id="tabla_existe_2" type="checkbox" value="on"/>
-                </td>
-                <td>
-                    Sitio 2
-                </td>
-                <td>
-                    <div class="Sitio_info_2">
-                        <input class="integer lat_grado" name="lat_grado_2" id="tabla_lat_grado_2" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_2">
-                        <input class="integer min" name="lat_min_2" id="tabla_lat_min_2" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_2">
-                        <input class="double seg" name="lat_seg_2" id="tabla_lat_seg_2" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_2">
-                        <input class="integer lon_grado" name="lon_grado_2" id="tabla_lon_grado_2" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_2">
-                        <input class="integer min" name="lon_min_2" id="tabla_lon_min_2" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_2">
-                        <input class="double seg" name="lon_seg_2" id="tabla_lon_seg_2" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_2">
-                        <select class="generic-widget" name="elipsoide_2" id="tabla_elipsoide_2">
-                            <option value=""/>
-                            {{for elipsoide in listaElipsoide:}}
-                                <option value="{{=elipsoide.nombre}}">
-                                    {{=elipsoide.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_2">
-                        <input class="double altitud" name="altitud_2" id="tabla_altitud_2" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_2">
-                        <input class="double gps_error" name="gps_error_2" id="tabla_gps_error_2" type="text" value=""/>
-                    </div>
-                </td>
-                <td class="Centrar">
-                    <div class="Sitio_info_2">
-                        <input class="boolean" name="hay_evidencia_2" id="tabla_hay_evidencia_2" type="checkbox" value="on"/>
-                    </div>
-                </td>                
-                <td>
-                    <div class="Sitio_info_2">
-                        <input type="file" id="tabla_imagen_2" name="imagen_2"/>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="Centrar">
-                    <input class="boolean" name="existe_3" id="tabla_existe_3" type="checkbox" value="on"/>
-                </td>
-                <td>
-                    Sitio 3
-                </td>
-                <td>
-                    <div class="Sitio_info_3">
-                        <input class="integer lat_grado" name="lat_grado_3" id="tabla_lat_grado_3" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_3">
-                        <input class="integer min" name="lat_min_3" id="tabla_lat_min_3" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_3">
-                        <input class="double seg" name="lat_seg_3" id="tabla_lat_seg_3" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_3">
-                        <input class="integer lon_grado" name="lon_grado_3" id="tabla_lon_grado_3" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_3">
-                        <input class="integer min" name="lon_min_3" id="tabla_lon_min_3" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_3">
-                        <input class="double seg" name="lon_seg_3" id="tabla_lon_seg_3" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_3">
-                        <select class="generic-widget" name="elipsoide_3" id="tabla_elipsoide_3">
-                            <option value=""/>
-                            {{for elipsoide in listaElipsoide:}}
-                                <option value="{{=elipsoide.nombre}}">
-                                    {{=elipsoide.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_3">
-                        <input class="double altitud" name="altitud_3" id="tabla_altitud_3" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_3">
-                        <input class="double gps_error" name="gps_error_3" id="tabla_gps_error_3" type="text" value=""/>
-                    </div>
-                </td>
-                <td class="Centrar">
-                    <div class="Sitio_info_3">
-                        <input class="boolean" name="hay_evidencia_3" id="tabla_hay_evidencia_3" type="checkbox" value="on"/>
-                    </div>
-                </td>                
-                <td>
-                    <div class="Sitio_info_3">
-                        <input type="file" id="tabla_imagen_3" name="imagen_3"/>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="Centrar">
-                    <input class="boolean" name="existe_4" id="tabla_existe_4" type="checkbox" value="on"/>
-                </td>
-                <td>
-                    Sitio 4
-                </td>
-                <td>
-                    <div class="Sitio_info_4">
-                        <input class="integer lat_grado" name="lat_grado_4" id="tabla_lat_grado_4" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_4">
-                        <input class="integer min" name="lat_min_4" id="tabla_lat_min_4" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_4">
-                        <input class="double seg" name="lat_seg_4" id="tabla_lat_seg_4" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_4">
-                        <input class="integer lon_grado" name="lon_grado_4" id="tabla_lon_grado_4" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_4">
-                        <input class="integer min" name="lon_min_4" id="tabla_lon_min_4" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_4">
-                        <input class="double seg" name="lon_seg_4" id="tabla_lon_seg_4" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_4">
-                        <select class="generic-widget" name="elipsoide_4" id="tabla_elipsoide_4">
-                            <option value=""/>
-                            {{for elipsoide in listaElipsoide:}}
-                                <option value="{{=elipsoide.nombre}}">
-                                    {{=elipsoide.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_4">
-                        <input class="double altitud" name="altitud_4" id="tabla_altitud_4" type="text" value=""/>
-                    </div>
-                </td>
-                <td>
-                    <div class="Sitio_info_4">
-                        <input class="double gps_error" name="gps_error_4" id="tabla_gps_error_4" type="text" value=""/>
-                    </div>
-                </td>
-                <td class="Centrar">
-                    <div class="Sitio_info_4">
-                        <input class="boolean" name="hay_evidencia_4" id="tabla_hay_evidencia_4" type="checkbox" value="on"/>
-                    </div>
-                </td>                
-                <td>
-                    <div class="Sitio_info_4">
-                        <input type="file" id="tabla_imagen_4" name="imagen_4"/>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <div>
-            <p>
-                <strong>Nota importante</strong>: las coordenadas deben escribirse en grados, minutos y segundos. Por ejemplo: 25º13'46.53''. En este caso, en la casilla de "Grado" se escribirá 25, en la de "Minuto" 13, y en la de "Segundo" 46.53. Si las coordenadas leídas del GPS no tienen el formato anterior, por ejemplo, si están escritas como 25º13.7755' ó incluso como 25.2296º, hay que cambiar el formato. Para ello, utilizar la siguiente <a href = "http://rumkin.com/tools/gps/degrees.php" target = "_blank">calculadora</a>.
-            </p>
-        </div>
-    </fieldset>
-    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+
+	<fieldset class='No_GPS'>
+		<legend>
+			Datos del conglomerado
+		</legend>
+		<table>
+			<tr>
+				<td>
+					<div>
+						<label for="nombre">Número de conglomerado</label>
+					</div>
+					<div>
+						<input class="integer obligatorio" name="nombre" id="nombre" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="fecha_visita">Fecha de visita</label>
+					</div>
+					<div>
+						<input class="date obligatorio" name="fecha_visita" id="fecha_visita" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tipo">Tipo de conglomerado</label>
+					</div>
+					<div>
+						<!-- Menu desplegable -->
+						<select class="generic-widget obligatorio" name="tipo" id="tipo">
+							<option value=""/>
+							<!-- listaTipo: lista que se envía en el controlador con las opciones
+							para el menú desplegable -->
+							{{for tipo in listaTipo:}}
+								<option value="{{=tipo.nombre}}">
+									{{=tipo.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="compania">Compañía/organización</label>
+					</div>
+					<div>
+						<input class="string obligatorio" name="compania" id="compania" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<label for="estado">Estado</label>
+					</div>
+					<div>
+						<select class="generic-widget obligatorio" name="estado" id="estado">
+						<option value=""/>
+						{{for estado in listaEstado:}}
+							<option value="{{=estado.nombre}}">
+								{{=estado.nombre}}
+							</option>
+						{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="municipio">Municipio</label>
+					</div>
+					<!-- El ID es para cambiar la lista de municipios asociados a un estado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
+						<select class="generic-widget" name="municipio" id="municipio">
+						</select>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="predio">Predio</label>
+					</div>
+					<div>
+						<input class="string obligatorio" name="predio" id="predio" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="tenencia">Tenencia</label>
+					</div>
+					<div>
+						<select class="generic-widget obligatorio" name="tenencia" id="tenencia">
+							<option value=""/>
+							{{for tenencia in listaTenencia:}}
+								<option value="{{=tenencia.nombre}}">
+									{{=tenencia.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<label for="uso_suelo_tipo">Tipo de uso de suelo</label>
+					</div>
+					<div>
+						<select class="generic-widget obligatorio" name="uso_suelo_tipo" id="uso_suelo_tipo">
+							<option value=""/>
+							{{for usoSuelo in listaUsoSuelo:}}
+								<option value="{{=usoSuelo.nombre}}">
+									{{=usoSuelo.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<!--La clase vegetación sirve para el JQuery que desvanece/reaparece el campo-->
+					<div class="Vegetacion">
+						<label for="vegetacion_tipo">Tipo de vegetación</label>
+					</div>
+					<div class="Vegetacion">
+						<select class="generic-widget" name="vegetacion_tipo" id="vegetacion_tipo">
+							<option value=""/>
+							{{for vegetacion in listaVegetacion:}}
+								<option value="{{=vegetacion.nombre}}">
+									{{=vegetacion.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<div class="Vegetacion">
+						<label for="perturbado">Perturbado</label>
+					</div>
+					<div class="Vegetacion">
+						<input class="boolean" name="perturbado" id="perturbado" type="checkbox" value="on"/>
+					</div>
+				</td>
+				<td>
+				</td>
+			</tr>
+		</table>
+		<label for="comentario">Observaciones</label>
+		<textarea class="text" cols="40" id="comentario" name="comentario" rows="5">
+		</textarea>
+	</fieldset>
+
+	<fieldset class="GPS">
+		<legend>
+			Datos de los sitios y punto de control
+		</legend>
+		<table>
+			<tr>
+				<th></th>
+				<th></th>
+				<th colspan="3", class="Centrar">Latitud</th>
+				<th colspan="3", class="Centrar">Longitud</th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+			<tr>
+				<td class="Centrar">Muestreado</td>
+				<td class="Centrar">Elemento</td>
+				<td class="Centrar">Grado</td>
+				<td class="Centrar">Minuto</td>
+				<td class="Centrar">Segundo</td>
+				<td class="Centrar">Grado</td>
+				<td class="Centrar">Minuto</td>
+				<td class="Centrar">Segundo</td>
+				<td class="Centrar">Datum</td>
+				<td class="Centrar">Altitud(m)</td>
+				<td class="Centrar">Error(m)</td>
+				<td class="Centrar">Evidencia<br/>anterior</td>
+				<td class="Centrar">Archivo</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>Punto de control</td>                
+				<td>
+					<input class="integer obligatorio lat_grado" name="lat_grado_c" id="lat_grado_c" type="text" value=""/>
+				</td>
+				<!--Las clases min y seg sirven para validar las cotas superiores e inferiores de los grados-->
+				<td>
+					<input class="integer obligatorio min" name="lat_min_c" id="lat_min_c" type="text" value=""/>
+				</td>
+				<td>
+					<input class="double obligatorio seg" name="lat_seg_c" id="lat_seg_c" type="text" value=""/>
+				</td>
+				<td>
+					<input class="integer obligatorio lon_grado" name="lon_grado_c" id="lon_grado_c" type="text" value=""/>
+				</td>
+				<td>
+					<input class="integer obligatorio min" name="lon_min_c" id="lon_min_c" type="text" value=""/>
+				</td>
+				<td>
+					<input class="double obligatorio seg" name="lon_seg_c" id="lon_seg_c" type="text" value=""/>
+				</td>
+				<td>
+					<select class="generic-widget obligatorio" name="elipsoide_c" id="elipsoide_c">
+						<option value=""/>
+						{{for elipsoide in listaElipsoide:}}
+							<option value="{{=elipsoide.nombre}}">
+								{{=elipsoide.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>
+				<td>
+					<input class="double obligatorio altitud" name="altitud_c" id="altitud_c" type="text" value=""/>
+				</td>
+				<td>
+					<input class="double obligatorio gps_error" name="gps_error_c" id="gps_error_c" type="text" value=""/>
+				</td>
+				<td class="Centrar">
+					<input class="boolean" name="hay_evidencia_c" id="hay_evidencia_c" type="checkbox" value="on"/>
+				</td>
+				<td>
+					<input class="obligatorio" type="file" id="imagen_c" name="imagen_c" multiple/>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					Centro
+				</td>
+				<td>
+					<input class="integer obligatorio lat_grado" name="lat_grado_1" id="lat_grado_1" type="text" value=""/>
+				</td>
+				<td>
+					<input class="integer obligatorio min" name="lat_min_1" id="lat_min_1" type="text" value=""/>
+				</td>
+				<td>
+					<input class="double obligatorio seg" name="lat_seg_1" id="lat_seg_1" type="text" value=""/>
+				</td>
+				<td>
+					<input class="integer obligatorio lon_grado" name="lon_grado_1" id="lon_grado_1" type="text" value=""/>
+				</td>
+				<td>
+					<input class="integer obligatorio min" name="lon_min_1" id="lon_min_1" type="text" value=""/>
+				</td>
+				<td>
+					<input class="double obligatorio seg" name="lon_seg_1" id="lon_seg_1" type="text" value=""/>
+				</td>
+				<td>
+					<select class="generic-widget obligatorio" name="elipsoide_1" id="elipsoide_1">
+						<option value=""/>
+						{{for elipsoide in listaElipsoide:}}
+							<option value="{{=elipsoide.nombre}}">
+								{{=elipsoide.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>
+				<td>
+					<input class="double obligatorio altitud" name="altitud_1" id="altitud_1" type="text" value=""/>
+				</td>
+				<td>
+					<input class="double obligatorio gps_error" name="gps_error_1" id="gps_error_1" type="text" value=""/>
+				</td>
+				<td class="Centrar">
+					<input class="boolean" name="hay_evidencia_1" id="hay_evidencia_1" type="checkbox" value="on"/>
+				</td>
+				<td>
+					<input class="obligatorio" type="file" id="imagen_1" name="imagen_1"/>
+				</td>
+			</tr>
+			<tr>
+				<td class="Centrar">
+					<input class="boolean" name="existe_2" id="existe_2" type="checkbox" value="on"/>
+				</td>
+				<td>
+					Sitio 2
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<input class="integer lat_grado" name="lat_grado_2" id="lat_grado_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<input class="integer min" name="lat_min_2" id="lat_min_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<input class="double seg" name="lat_seg_2" id="lat_seg_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<input class="integer lon_grado" name="lon_grado_2" id="lon_grado_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<input class="integer min" name="lon_min_2" id="lon_min_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<input class="double seg" name="lon_seg_2" id="lon_seg_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<select class="generic-widget" name="elipsoide_2" id="elipsoide_2">
+							<option value=""/>
+							{{for elipsoide in listaElipsoide:}}
+								<option value="{{=elipsoide.nombre}}">
+									{{=elipsoide.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<input class="double altitud" name="altitud_2" id="altitud_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<input class="double gps_error" name="gps_error_2" id="gps_error_2" type="text" value=""/>
+					</div>
+				</td>
+				<td class="Centrar">
+					<div class="Sitio_info_2">
+						<input class="boolean" name="hay_evidencia_2" id="hay_evidencia_2" type="checkbox" value="on"/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_2">
+						<input type="file" id="imagen_2" name="imagen_2"/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="Centrar">
+					<input class="boolean" name="existe_3" id="existe_3" type="checkbox" value="on"/>
+				</td>
+				<td>
+					Sitio 3
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<input class="integer lat_grado" name="lat_grado_3" id="lat_grado_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<input class="integer min" name="lat_min_3" id="lat_min_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<input class="double seg" name="lat_seg_3" id="lat_seg_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<input class="integer lon_grado" name="lon_grado_3" id="lon_grado_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<input class="integer min" name="lon_min_3" id="lon_min_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<input class="double seg" name="lon_seg_3" id="lon_seg_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<select class="generic-widget" name="elipsoide_3" id="elipsoide_3">
+							<option value=""/>
+							{{for elipsoide in listaElipsoide:}}
+								<option value="{{=elipsoide.nombre}}">
+									{{=elipsoide.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<input class="double altitud" name="altitud_3" id="altitud_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<input class="double gps_error" name="gps_error_3" id="gps_error_3" type="text" value=""/>
+					</div>
+				</td>
+				<td class="Centrar">
+					<div class="Sitio_info_3">
+						<input class="boolean" name="hay_evidencia_3" id="hay_evidencia_3" type="checkbox" value="on"/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_3">
+						<input type="file" id="imagen_3" name="imagen_3"/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="Centrar">
+					<input class="boolean" name="existe_4" id="existe_4" type="checkbox" value="on"/>
+				</td>
+				<td>
+					Sitio 4
+				</td>
+				<td>
+					<div class="Sitio_info_4">
+						<input class="integer lat_grado" name="lat_grado_4" id="lat_grado_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_4">
+						<input class="integer min" name="lat_min_4" id="lat_min_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_4">
+						<input class="double seg" name="lat_seg_4" id="lat_seg_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_4">
+						<input class="integer lon_grado" name="lon_grado_4" id="lon_grado_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_4">
+						<input class="integer min" name="lon_min_4" id="lon_min_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_4">
+						<input class="double seg" name="lon_seg_4" id="lon_seg_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_4">
+						<select class="generic-widget" name="elipsoide_4" id="elipsoide_4">
+							<option value=""/>
+							{{for elipsoide in listaElipsoide:}}
+								<option value="{{=elipsoide.nombre}}">
+									{{=elipsoide.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_4">
+						<input class="double altitud" name="altitud_4" id="altitud_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Sitio_info_4">
+						<input class="double gps_error" name="gps_error_4" id="gps_error_4" type="text" value=""/>
+					</div>
+				</td>
+				<td class="Centrar">
+					<div class="Sitio_info_4">
+						<input class="boolean" name="hay_evidencia_4" id="hay_evidencia_4" type="checkbox" value="on"/>
+					</div>
+				</td>                
+				<td>
+					<div class="Sitio_info_4">
+						<input type="file" id="imagen_4" name="imagen_4"/>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<div>
+			<p>
+				<strong>Nota importante</strong>: las coordenadas deben escribirse en grados, minutos y segundos. Por ejemplo: 25º13'46.53''. En este caso, en la casilla de "Grado" se escribirá 25, en la de "Minuto" 13, y en la de "Segundo" 46.53. Si las coordenadas leídas del GPS no tienen el formato anterior, por ejemplo, si están escritas como 25º13.7755' ó incluso como 25.2296º, hay que cambiar el formato. Para ello, utilizar la siguiente <a href = "http://rumkin.com/tools/gps/degrees.php" target = "_blank">calculadora</a>.
+			</p>
+		</div>
+	</fieldset>
+
+	<fieldset class="No_GPS">
+		<legend>
+			Formato de campo pdf (un solo archivo)
+		</legend>
+		<div>
+			<input class="obligatorio" type="file" id="formato_campo" name="formato_campo"/>
+		</div>
+	</fieldset>
+
+	<br/>
+	<br/>
+	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
 
 <!--<br/>
@@ -543,426 +556,402 @@
 {{#=BEAUTIFY(forma.errors)}}
 </div>-->
 
-<!-- <script type="text/javascript"> 
-    Intento de bloquear botón back
-    //window.history.forward();
-    //function preventBack() { window.history.forward(); }-->
-
 <script>
-    //AJAX para llenar la combobox con los municipios asociados al estado elegido
-    $('#tabla_estado').change
-    (
-        function()
-        {
-            $('#tabla_municipio').remove();
 
-            //ajax es una función de Web2py que simplifica la función homónima de JQuery
-            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-            // del elemento donde se insertará la respuesta
-            ajax("{{=URL('asignarMunicipios')}}", ['estado'], 'shadow_clone');
-        }
-    )
+	//////////////////////////////////////////
+	// AJAX para llenar la combobox con los municipios asociados al estado elegido
+	//////////////////////////////////////////
+	
+	$('#estado').change
+	(
+		function()
+		{
+			$('#municipio').remove();
 
-    //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
+			// ajax es una función de Web2py que simplifica la función homónima
+			// de JQuery recibe el URL destino, los nombres de los campos que se
+			// enviarán y el ID del elemento donde se insertará la respuesta
+			ajax("{{=URL('asignarMunicipios')}}", ['estado'], 'shadow_clone');
+		}
+	)
 
+	//////////////////////////////////////////
+	// AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
+	//////////////////////////////////////////
 
-    $('#tabla_nombre').keyup
-    (
-        function()
-        {
-            $.ajax
-            (
-                {
-                    type: "POST",
-                    data: $('#tabla_nombre').serialize(),
-                    url: "{{=URL('conglomeradoExistente')}}",
-                    success: function(resultado)
-                    {
-                        //alert(resultado);
-                        if(resultado>=1)
-                        {
-                            alert('Este conglomerado ya ha sido declarado');
-                            $('#tabla_nombre').val("");
-                        }
-                        else if(resultado==-1)
-                        {
-                            alert('El número de conglomerado consta de 6 dígitos. Ejemplo: 012345 (para conglomerados del INFyS) ó 123456 para conglomerados que no son del INFyS');
-                            $('#tabla_nombre').val("");
-                        }
-                    }
-                }
-            );
-        }
-    );
+	$('#nombre').keyup
+	(
+		function()
+		{
+			$.ajax
+			(
+				{
+					type: "POST",
+					data: $('#nombre').serialize(),
+					url: "{{=URL('conglomeradoExistente')}}",
+					success: function(resultado)
+					{
+						//alert(resultado);
+						if(resultado>=1)
+						{
+							alert('Este conglomerado ya ha sido declarado');
+							$('#nombre').val("");
+						}
+						else if(resultado==-1)
+						{
+							alert('El número de conglomerado consta de 6 dígitos.' +
+								' Ejemplo: 012345 (para conglomerados del INFyS)' +
+								' ó 123456 para conglomerados que no son del INFyS');
+							$('#nombre').val("");
+						}
+					}
+				}
+			);
+		}
+	);
 
-    //AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
+	//////////////////////////////////////////
+	// Este código se ejecuta en cuanto el html termina de llegar al navegador:
+	//////////////////////////////////////////
 
-    /*$('#tabla_nombre').keyup
-    (
-        function()
-        {
-            $.ajax
-            (
-                {
-                    type: "POST",
-                    data: $('#tabla_nombre').serialize(),
-                    url: "{{=URL('conglomeradoExistente')}}",
-                    success: function(resultado)
-                    {
-                        //alert(resultado);
-                        if(resultado>=1)
-                        {
-                            alert('Este conglomerado ya ha sido declarado');
-                            $('#tabla_nombre').val("");
-                        }
-                        else if(resultado==-1)
-                        {
-                            alert('El número de conglomerado lleva el formato: ccccc-ppp (sin espacios). Donde los primeros 5 dígitos (ccccc) se refieren número único asociado a cada conglomerado con base en la malla proporcionada por la CONAFOR y los siguientes 3 dígitos (ppp) se refieren al número de área natural protegida (CONANP). Ejemplo: 12345-123');
-                            $('#tabla_nombre').val("");
-                        }
-                    }
-                }
-            );
-        }
-    );*/
+	$(document).ready
+	(
+		function()
+		{
+			// Cuando el documento se carga, el campo de vegetación está escondido
+			$('#uso_suelo_tipo').val("");
+			$('.Vegetacion').hide();
+		
+			//Cuando el documento se carga, se muestran los sitios como si existieran*/
+			$('#existe_2').prop('checked', true);
+			$('.Sitio_info_2').show();
+			
+			$('#existe_3').prop('checked', true);
+			$('.Sitio_info_3').show();
+			
+			$('#existe_4').prop('checked', true);
+			$('.Sitio_info_4').show();
+		}
+	)
 
-    $(document).ready
-    (
-        function()
-        {
-           /*Cuando el documento se carga, el campo de vegetación está escondido*/
-           $('#tabla_uso_suelo_tipo').val("");
-           $('.Vegetacion').hide();
-           
-           /*Cuando el documento se carga, se muestran los sitios como si existieran*/
-           $('#tabla_existe_2').prop('checked', true);
-           $('.Sitio_info_2').show();
-           
-           $('#tabla_existe_3').prop('checked', true);
-           $('.Sitio_info_3').show();
-           
-           $('#tabla_existe_4').prop('checked', true);
-           $('.Sitio_info_4').show();
-        }
-    )
-
-    /* Cuando cambia el tipo de uso de suelo seleccionado, si el uso de suelo principal es
-    'Vegetación', entonces aparecen los campos correspondientes, en caso contrario,
-    se sombrean dichos campos */
-    
-    $('#tabla_uso_suelo_tipo').change
-    (
-        function()
-        {
-            if($(this).val()=="Vegetación")
-            {
-                $('.Vegetacion').fadeIn();
-            }
-            else
-                $('.Vegetacion').fadeOut();
-        }
-    )
-
-    $('.min').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>=60)
-                {
-                    alert('Los minutos están en el rango de 0 a 59');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    //Rangos de los campos:
-    $('.seg').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0 || $(this).val()>=60)
-                {
-                    alert('Los segundos están en el rango de 0 a 60');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    $('.lat_grado').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<13 || $(this).val()>33)
-                {
-                    alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    $('.lon_grado').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if(($(this).val()<85|| $(this).val()>119) & ($(this).val()<-119|| $(this).val()>-85))
-                {
-                    alert('Los grados correspondientes a longitud  están en el rango de 85 a 119 o en el rango -119 a -85');
-                    $(this).val("");
-                }
-                /* if($(this).val()<-119|| $(this).val()>-85)
-                {
-                    alert('Los grados correspondientes a longitud  están en el rango de -119 a -85');
-                    $(this).val("");
-                }
-                */
-            }
-        }
-    )
-
-    $('.gps_error').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<0)
-                {
-                    alert('El error de precisión debe ser positivo');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    $('.altitud').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<-10 || $(this).val()>5715)
-                {
-                    alert('La altitud está en el rango -10 a 5715');
-                    $(this).val("");
-                }
-            }
-        }
-    )
-
-    /* Los campos de clase double no deben contener comas*/
-    $('.double').change
-    (
-        function()
-        {
-            var comaReg = /,/;
-            if(comaReg.test($(this).val()))
-            {
-                alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
-                $(this).val("");
-            }
-        }
-    )
-
-    
-    /*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, se sombrean
-    o reaparecen los campos correspondientes, dependiendo si el sitio existe o no.*/
-    
-    $('#tabla_existe_2').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Sitio_info_2').fadeIn();
-            else
-                $('.Sitio_info_2').fadeOut();
-        }
-    )
-
-    $('#tabla_existe_3').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Sitio_info_3').fadeIn();
-            else
-                $('.Sitio_info_3').fadeOut();
-        }
-    )
-
-    $('#tabla_existe_4').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-            {
-                $('.Sitio_info_4').fadeIn();
-            }
-            else
-                $('.Sitio_info_4').fadeOut();
-        }
-    )
-
-    //Validando, para ello utilizamos la clase "obligatorio":
-    $('form').submit
-    (
-        function()
-        {
-            flag =true;
-            campos=$('.obligatorio');
-            campos.each(function() 
-            {
-                if(!$(this).val())
-                {
-                     flag = false;
-                }
-            }
-            );
-
-            //Sin embargo, como el campo de "municipio" es generado por
-            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
-            //validar aparte:
-            if(!$('#shadow_clone').find('select:first').val())
-            {
-                flag = false;
-                //alert('Falta llenar el municipio');
-            }
+	//////////////////////////////////////////
+	// Funcionamiento de la vista
+	//////////////////////////////////////////
 
 
-            /*Validando que esté lleno el campo de "vegetacion_tipo" cuando el
-            tipo de uso de suelo es vegetación"*/
+	/* Cuando cambia el tipo de uso de suelo seleccionado, si el uso de suelo
+	principal es 'Vegetación', entonces aparecen los campos correspondientes,
+	en caso contrario, desaparecen */
+	
+	$('#uso_suelo_tipo').change
+	(
+		function()
+		{
+			if($(this).val() == "Vegetación")
+			{
+				$('.Vegetacion').fadeIn();
+			}
+			else
+				$('.Vegetacion').fadeOut();
+		}
+	)
 
-            if(($('#tabla_uso_suelo_tipo').val()=="Vegetación") && !$('#tabla_vegetacion_tipo').val())
-            {
-                flag = false;
-                //alert('Falta seleccionar un tipo de vegetación');
-            }
+	$('.min').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < 0 || $(this).val() >= 60)
+				{
+					alert('Los minutos están en el rango de 0 a 59');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-            /*Validando que los campos correspondientes a un sitio 2,3,4 estén 
-            llenos si estos existen*/
+	//Rangos de los campos:
+	$('.seg').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < 0 || $(this).val() >= 60)
+				{
+					alert('Los segundos están en el rango de 0 a 60');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-            if($('#tabla_existe_2').prop('checked'))
-            {
-                campos=$('.Sitio_info_2 input, .Sitio_info_2 select').not('#tabla_hay_evidencia_2');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
+	$('.lat_grado').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < 13 || $(this).val() > 33)
+				{
+					alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-            if($('#tabla_existe_3').prop('checked'))
-            {
-                campos=$('.Sitio_info_3 input, .Sitio_info_3 select').not('#tabla_hay_evidencia_3');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
+	$('.lon_grado').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if(($(this).val() < 85|| $(this).val() > 119) & ($(this).val() < -119|| $(this).val() > -85))
+				{
+					alert('Los grados correspondientes a longitud  están en el rango de 85 a 119 o en el rango -119 a -85');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-            if($('#tabla_existe_4').prop('checked'))
-            {
-                campos=$('.Sitio_info_4 input, .Sitio_info_4 select').not('#tabla_hay_evidencia_4');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
+	$('.gps_error').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < 0)
+				{
+					alert('El error de precisión debe ser positivo');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-            //Validando que el nombre del conglomerado conste de 6 caracteres:
-            
-            flag_lon = true;
-            if($('#tabla_nombre').val().length<6)
-            {
-                flag_lon = false;
-            }
+	$('.altitud').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() < -10 || $(this).val() > 5715)
+				{
+					alert('La altitud está en el rango -10 a 5715');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-            //alert(flag_lon);
+	/* Los campos de clase double no deben contener comas*/
+	$('.double').change
+	(
+		function()
+		{
+			var comaReg = /,/;
+			if(comaReg.test($(this).val()))
+			{
+				alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
+				$(this).val("");
+			}
+		}
+	)
 
-            //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
-            // fechaReg es una expresión regular par validar el formato aaaa-mm-dd.
-            var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
-            campos_fecha=$('.date');
-            flag_m = true;
-            campos_fecha.each(function(){   
-                if(!fechaReg.test($(this).val()))
-                {
-                    flag_m = false;
-                }
-                //Revisando que el mes y el día estén en un rango aceptable:
-                else
-                {
-                    //match contiene como primer elemento, el match de toda la regex, y como elementos
-                    //posteriores, el match de los elementos en paréntesis de la regex (en órden).
-                    var match = fechaReg.exec($(this).val());
-                    //alert(match);
+	/*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, 
+	desaparecen o reaparecen los campos correspondientes, dependiendo si el sitio
+	existe o no.*/
+	
+	$('#existe_2').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Sitio_info_2').fadeIn();
+			else
+				$('.Sitio_info_2').fadeOut();
+		}
+	)
 
-                    //Validando que el mes se encuentre en un rango aceptable:
-                    if(match[1]<1 || match[1]>12)
-                    {
-                        //alert('El mes es incorrecto');
-                        //alert(match[1]);
-                        flag_m = false;
-                    }
+	$('#existe_3').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Sitio_info_3').fadeIn();
+			else
+				$('.Sitio_info_3').fadeOut();
+		}
+	)
 
-                    //Validando que el día se encuentre en un rango aceptable:
-                    if(match[2]<1 || match[2]>31)
-                    {
-                        //alert('El día es incorrecto');
-                        //alert(match[2]);
-                        flag_m = false;
-                    }
-                }
-            });
+	$('#existe_4').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+			{
+				$('.Sitio_info_4').fadeIn();
+			}
+			else
+				$('.Sitio_info_4').fadeOut();
+		}
+	)
 
-            /*
-            //Validando que el conglomerado esté en formato pedido:
-            var conglomeradoReg = /^\d{5}\-\d{3}$/;
-            flag_c = true;
-            if(!conglomeradoReg.test($('#tabla_nombre').val()))
-            {
-                flag_c = false;
-                //alert('Error en conglomerado');
-            }
-            */
+	//////////////////////////////////////////
+	// Validaciones a la hora de enviar la forma
+	//////////////////////////////////////////
 
-            if(!flag)
-            {
-                alert('Faltó llenar algún campo o subir alguna imagen');
-                return false;
-            }
-            else if(!flag_m){
-                alert('El formato de fecha es aaaa-mm-dd');
-                return false;
-            }
-            else if(!flag_lon){
-                alert('El número de conglomerado consta de 6 caracteres. Completar con ceros al principio si es necesario. Ejemplo: 000123');
-                return false;
-            }
-        }
-    )
+	$('form').submit
+	(
+		function()
+		{
+			// Validando los campos obligatorios
+
+			flag = true;
+			campos = $('.obligatorio');
+			campos.each(function() 
+			{
+				if(!$(this).val())
+				{
+					 flag = false;
+				}
+			}
+			);
+
+			/* Sin embargo, como el campo de "municipio" es generado por
+			medio de AJAX; no entra en la validación anterior. Lo tenemos que
+			validar aparte: */
+
+			if(!$('#shadow_clone').find('select:first').val())
+			{
+				flag = false;
+				//alert('Falta llenar el municipio');
+			}
+
+
+			/*Validando que esté lleno el campo de "vegetacion_tipo" cuando el
+			tipo de uso de suelo es vegetación"*/
+
+			if(($('#uso_suelo_tipo').val() == "Vegetación") && !$('#vegetacion_tipo').val())
+			{
+				flag = false;
+				//alert('Falta seleccionar un tipo de vegetación');
+			}
+
+			/*Validando que los campos correspondientes a un sitio 2,3,4 estén 
+			llenos si estos existen*/
+
+			if($('#existe_2').prop('checked'))
+			{
+				campos = $('.Sitio_info_2 input, .Sitio_info_2 select').not('#hay_evidencia_2');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_3').prop('checked'))
+			{
+				campos = $('.Sitio_info_3 input, .Sitio_info_3 select').not('#hay_evidencia_3');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_4').prop('checked'))
+			{
+				campos = $('.Sitio_info_4 input, .Sitio_info_4 select').not('#hay_evidencia_4');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			// Validando que el nombre del conglomerado conste de 6 caracteres:
+			
+			flag_lon = true;
+			if($('#nombre').val().length < 6)
+			{
+				flag_lon = false;
+			}
+
+			//alert(flag_lon);
+
+			/* Validando que la fecha esté en formato adecuado para que Web2py no
+			tenga problemas. fechaReg es una expresión regular par validar el
+			formato aaaa-mm-dd.*/
+
+			var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
+			campos_fecha = $('.date');
+			flag_f = true;
+			campos_fecha.each(function(){   
+				if(!fechaReg.test($(this).val()))
+				{
+					flag_f = false;
+				}
+				// Revisando que el mes y el día estén en un rango aceptable:
+				else
+				{
+					/* match contiene como primer elemento, el match de toda la
+					regex, y como elementos posteriores, el match de los elementos
+					en paréntesis de la regex (en órden). */
+					var match = fechaReg.exec($(this).val());
+					//alert(match);
+
+					//Validando que el mes se encuentre en un rango aceptable:
+					if(match[1]<1 || match[1]>12)
+					{
+						//alert('El mes es incorrecto');
+						//alert(match[1]);
+						flag_f = false;
+					}
+
+					//Validando que el día se encuentre en un rango aceptable:
+					if(match[2]<1 || match[2]>31)
+					{
+						//alert('El día es incorrecto');
+						//alert(match[2]);
+						flag_f = false;
+					}
+				}
+			});
+
+			// Juntando todas las validaciones:
+
+			if(!flag)
+			{
+				alert('Faltó llenar algún campo o subir alguna imagen');
+				return false;
+			}
+			else if(!flag_f){
+				alert('El formato de fecha es aaaa-mm-dd');
+				return false;
+			}
+			else if(!flag_lon){
+				alert('El número de conglomerado consta de 6 caracteres. ' + 
+					'Completar con ceros al principio si es necesario. ' + 
+					'Ejemplo: 000123');
+				return false;
+			}
+		}
+	)
 </script>

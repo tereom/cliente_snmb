@@ -38,8 +38,8 @@ Campos_Camara = [
 	Field('resolucion','string',required=True),
 	Field('sensibilidad','string',required=True),
 
-    Field('comentario', 'text')
-    ]
+	Field('comentario', 'text')
+	]
 
 db.define_table('Camara', *Campos_Camara,
 	singular='Trampa cámara', plural='Trampas cámara')
@@ -52,8 +52,8 @@ Campos_Imagen_referencia_camara = [
 
 	Field('camara_id','reference Camara',required=True),
 	Field('archivo_nombre_original','string',required=True),
-    Field('archivo','upload',autodelete=True,required=True)
-    ]
+	Field('archivo','upload',autodelete=True,required=True)
+	]
 
 db.define_table('Imagen_referencia_camara', *Campos_Imagen_referencia_camara, 
 	singular='Imagen cámara',plural='Imágenes cámaras')
@@ -65,13 +65,13 @@ db.define_table('Imagen_referencia_camara', *Campos_Imagen_referencia_camara,
 Campos_Archivo_camara = [
 	Field('camara_id','reference Camara',required=True),
 	Field('archivo_nombre_original','string',required=True),
-    Field('archivo','upload',autodelete=True,required=True),
+	Field('archivo','upload',autodelete=True,required=True),
 # uploadfolder='static/pictures'),      pensar estructura de carpetas
-    Field('presencia','boolean'),
-    Field('nombre_comun','string'),
-    Field('nombre_cientifico','string'),
-    Field('numero_individuos','integer')
-    ]
+	Field('presencia','boolean'),
+	Field('nombre_comun','string'),
+	Field('nombre_cientifico','string'),
+	Field('numero_individuos','integer')
+	]
 
 db.define_table('Archivo_camara', *Campos_Archivo_camara, 
 	singular='Archivo cámara', plural='Archivos cámara')

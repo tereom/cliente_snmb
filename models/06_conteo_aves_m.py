@@ -14,10 +14,10 @@ Campos_Punto_conteo_aves =[
 		required=True),
 	Field('tecnico','string',required=True),
 	Field('fecha','date',required=True),
-    Field('hora_inicio','time',required=True),
+	Field('hora_inicio','time',required=True),
 	Field('hora_termino','time',required=True),
 	Field('condiciones_ambientales','string',required=True),
-    Field('comentario','text')
+	Field('comentario','text')
 ]
 
 db.define_table('Punto_conteo_aves', *Campos_Punto_conteo_aves, 
@@ -36,11 +36,11 @@ Campos_Conteo_ave =[
 	Field('nombre_comun_en_lista','boolean'),
 	Field('nombre_comun','string'),
 	Field('nombre_cientifico_en_lista','boolean'),
-    Field('nombre_cientifico','string'),
-    Field('es_visual','boolean',required=True),
-    Field('es_sonora','boolean',required=True),
-    Field('numero_individuos','integer',required=True),
-    Field('distancia_aproximada','double',required=True)
+	Field('nombre_cientifico','string'),
+	Field('es_visual','boolean',required=True),
+	Field('es_sonora','boolean',required=True),
+	Field('numero_individuos','integer',required=True),
+	Field('distancia_aproximada','double',required=True)
 ]
 
 db.define_table('Conteo_ave', *Campos_Conteo_ave,
@@ -54,7 +54,7 @@ Campos_Archivo_conteo_ave = [
 
 	Field('conteo_ave_id','reference Conteo_ave',required=True),
 	Field('archivo_nombre_original','string',required=True),
-    Field('archivo','upload',autodelete=True,required=True)
+	Field('archivo','upload',autodelete=True,required=True)
 ]
 
 db.define_table('Archivo_conteo_ave', *Campos_Archivo_conteo_ave,
