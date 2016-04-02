@@ -13,11 +13,6 @@
 			float: left;
 		}
 
-		.CentrarV
-		{
-			vertical-align: middle;
-		}
-
 	</style>
 {{end}}
 
@@ -33,6 +28,9 @@
 					<div>
 						<label for="conglomerado_muestra_id">Conglomerado</label>
 					</div>
+					<!-- La clase estática se usa para que, en tablas de un sólo
+                    renglón, no se modifique el tamaño de la misma cuando se 
+                    desaparecen algunos campos-->
 					<div class="Estatica">
 						<!--este campo (y el de sitio), en realidad sólo sirven 
 						para encontrar con AJAX las cámaras que han sido declaradas
@@ -76,28 +74,25 @@
 								<option value=""/>
 							</select>
 						</div>
-						-->
+					-->
 
-						<!-- el siguiente div guardará la información de la cámara
-						declarada en determinado conglomerado y sitio, si es que
-						existe. La clase Mensaje se usa para esconder el campo-->
-						<div id="shadow_clone_2" class="Mensaje">
-							<input type='hidden' name='camara_id' id='camara_id' value=''/>
-						</div>
+					<!-- el siguiente div guardará la información de la cámara
+					declarada en determinado conglomerado y sitio, si es que
+					existe. La clase Mensaje se usa para esconder el campo-->
+					<div id="shadow_clone_2" class="Mensaje">
+						<input type='hidden' name='camara_id' id='camara_id' value=''/>
+					</div>
 					<!--</div>-->
 				</td>
 			</tr>
 		</table>
+		<hr/>
+		<div>
+			<input class="obligatorio" type="file" id="archivos_camara" name="archivos_camara" multiple/>
+		</div>
 	</fieldset>
-
-	<hr/>
-
-	<div>
-		<input class="obligatorio" type="file" id="archivos_camara" name="archivos_camara" multiple/>
-	</div>
-
-	<br/>
-	<br/>
+		<br/>
+		<br/>
 	<input type="submit" value="Enviar" class="btn FlotaIzquierda" id="enviar"/>
 </form>
 
@@ -129,9 +124,9 @@
 
 		$('#sitio_muestra_id, #camara_id').remove();
 
-		// ajax es una función de Web2py que simplifica la función homónima de
-		// JQuery recibe el URL destino, los nombres de los campos que se enviarán
-		// y el ID del elemento donde se insertará la respuesta.
+		/* ajax es una función de Web2py que simplifica la función homónima de
+		JQuery recibe el URL destino, los nombres de los campos que se enviarán
+		y el ID del elemento donde se insertará la respuesta. */
 
 		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 
@@ -204,9 +199,9 @@
 			}
 			);
 
-			//Sin embargo, como el campo de "sitio_muestra_id" es generado por
-			//medio de AJAX; no entra en la validación anterior. Lo tenemos que
-			//validar aparte:
+			/* Sin embargo, como el campo de "sitio_muestra_id" es generado por
+			medio de AJAX; no entra en la validación anterior. Lo tenemos que
+			validar aparte:*/
 
 			if(!$('#shadow_clone').find('select:first').val())
 			{
@@ -228,4 +223,5 @@
 			}
 		}
 	);
+	
 </script>

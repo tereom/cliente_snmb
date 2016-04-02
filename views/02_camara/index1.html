@@ -35,7 +35,7 @@
 			float: left;
 		}
 
-</style>
+	</style>
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post">
@@ -53,9 +53,10 @@
 						<label for="conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
-						<!--este campo, en realidad sólo sirve para encontrar con AJAX los sitios existentes asociados al conglomerado
-						elegido, al enviar la forma al controlador, se utilizará únicamente el id del sitio (de la dropdown generada mediante
-						AJAX)-->
+						<!--este campo, en realidad sólo sirve para encontrar
+						con AJAX los sitios existentes asociados al conglomerado
+						elegido. Al enviar la forma al controlador, se utilizará únicamente el id del sitio (de la dropdown generada
+						mediante AJAX)-->
 						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
 							<option value=""/>
 							{{for conglomerado in listaConglomerado:}}
@@ -326,7 +327,7 @@
 	// a un sitio más de una vez
 	//////////////////////////////////////////
 
-	$('#shadow_clone').on('change', '#sitio_muestra_id', function ()
+	$('#shadow_clone').on('change', '#sitio_muestra_id', function()
 	{
 		$.ajax
 		(
@@ -337,7 +338,7 @@
 			success: function(resultado)
 				{
 					//alert(resultado);
-					if(resultado>=1)
+					if(resultado >= 1)
 					{
 						alert('La cámara correspondiente a este sitio ya ha sido declarada');
 						$('#sitio_muestra_id').val("");
@@ -483,8 +484,8 @@
 
 			// Validando los campos obligatorios:
 
-			flag =true;
-			campos=$('.obligatorio');
+			flag = true;
+			campos = $('.obligatorio');
 			campos.each(function() 
 			{
 				if(!$(this).val())
@@ -509,7 +510,7 @@
 			no tenga problemas: */
 
 			var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
-			campos_fecha=$('.date');
+			campos_fecha = $('.date');
 			flag_f = true;
 			campos_fecha.each(function(){   
 				if(!fechaReg.test($(this).val()))
@@ -526,7 +527,7 @@
 					//alert(match);
 
 					//Validando que el mes se encuentre en un rango aceptable:
-					if(match[1]<1 || match[1]>12)
+					if(match[1] < 1 || match[1] > 12)
 					{
 						//alert('El mes es incorrecto');
 						//alert(match[1]);
@@ -534,7 +535,7 @@
 					}
 
 					//Validando que el día se encuentre en un rango aceptable:
-					if(match[2]<1 || match[2]>31)
+					if(match[2] < 1 || match[2] > 31)
 					{
 						//alert('El día es incorrecto');
 						//alert(match[2]);
@@ -572,7 +573,7 @@
 					return false;
 				}
 
-				else if(fecha_inicio==fecha_termino && hora_inicio>hora_termino)
+				else if(fecha_inicio == fecha_termino && hora_inicio > hora_termino)
 				{
 					alert('La hora de inicio debe ser menor a la hora de término');
 					return false;

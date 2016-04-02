@@ -1,43 +1,46 @@
 {{extend 'layout.html'}}
+
 {{block head}}
-<style type="text/css">
+    <style type="text/css">
 
-    .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
-    {
-        margin-right: 2cm;
-        width: 4cm;
-    }
-    
-    .No_GPS .generic-widget
-    {
-    	margin-right: 2cm;
-        width: 4.4cm;
-    }
+        .No_GPS .double, .No_GPS .date, .No_GPS .string, .No_GPS .time
+        {
+            margin-right: 2cm;
+            width: 4cm;
+        }
+        
+        .No_GPS .generic-widget
+        {
+        	margin-right: 2cm;
+            width: 4.4cm;
+        }
 
-    .GPS .integer, .GPS .double
-    {
-        width: 2cm;
-    }
-    
-    .GPS .generic-widget
-    {
-        width: 2.5cm;
-    }
-    
-    .Centrar
-    {
-        text-align: center;
-    }
-    
-    #enviar
-    {
-        float: left;
-    }
-</style>
+        .GPS .integer, .GPS .double
+        {
+            width: 2cm;
+        }
+        
+        .GPS .generic-widget
+        {
+            width: 2.5cm;
+        }
+        
+        .Centrar
+        {
+            text-align: center;
+        }
+        
+        #enviar
+        {
+            float: left;
+        }
+    </style>
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post">
 	<input type="hidden" name="_formname" value="formaGrabadoraHTML"/>
+
+
 	<fieldset>
 		<legend>
 		Datos de la grabadora y los micrófonos
@@ -46,15 +49,15 @@
 			<tr>
 				<td>
 					<div>
-						<label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+						<label for="conglomerado_muestra_id">Conglomerado</label>
 					</div>
 					<div>
 						<!--este campo, en realidad sólo sirve para encontrar
 						con AJAX los sitios existentes asociados al conglomerado
-						elegido, al enviar la forma al controlador, se utilizará
-						para guardar el registro de la grabadora, únicamente el
-						id del sitio (de la dropdown generada mediante AJAX)-->
-						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+						elegido. Al enviar la forma al controlador, se utilizará
+						únicamente el id del sitio (de la dropdown generada
+                        mediante AJAX)-->
+						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
 							<option value=""/>
 							{{for conglomerado in listaConglomerado:}}
 								<option value="{{=conglomerado.id}}">
@@ -66,11 +69,11 @@
 				</td>
 				<td>
 					<div>
-						<label for="tabla_sitio_muestra_id">Sitio</label>
+						<label for="sitio_muestra_id">Sitio</label>
 					</div>
 					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
 					<div id="shadow_clone">
-						<select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
+						<select class="generic-widget" name="sitio_muestra_id" id="sitio_muestra_id">
 							<option value=""/>
 						</select>
 					</div>
@@ -79,46 +82,46 @@
 			<tr>
 				<td>
 					<div>
-						<label for="tabla_fecha_inicio">Fecha de colocación</label>
+						<label for="fecha_inicio">Fecha de colocación</label>
 					</div>
 					<div>
-						<input class="date obligatorio" name="fecha_inicio" id="tabla_fecha_inicio" type="text" value=""/>
+						<input class="date obligatorio" name="fecha_inicio" id="fecha_inicio" type="text" value=""/>
 					</div>
 				</td>
 				<td>
 					<div>
-						<label for="tabla_hora_inicio">Hora inicio (24 horas)</label>
+						<label for="hora_inicio">Hora inicio (24 horas)</label>
 					</div>
 					<div>
-						<input class="time obligatorio" name="hora_inicio" id="tabla_hora_inicio" type="text" value=""/>
+						<input class="time obligatorio" name="hora_inicio" id="hora_inicio" type="text" value=""/>
 					</div>
 				</td>
 			</tr>
         	<tr>
         		<td>
 					<div>
-						<label for="tabla_fecha_termino">Fecha de levantamiento</label>
+						<label for="fecha_termino">Fecha de levantamiento</label>
 					</div>
 					<div>
-						<input class="date obligatorio" name="fecha_termino" id="tabla_fecha_termino" type="text" value=""/>
+						<input class="date obligatorio" name="fecha_termino" id="fecha_termino" type="text" value=""/>
 					</div>
 				</td>
 				<td>
 					<div>
-						<label for="tabla_hora_termino">Hora término (24 horas)</label>
+						<label for="hora_termino">Hora término (24 horas)</label>
 					</div>
 					<div>
-						<input class="time obligatorio" name="hora_termino" id="tabla_hora_termino" type="text" value=""/>
+						<input class="time obligatorio" name="hora_termino" id="hora_termino" type="text" value=""/>
 					</div>
 				</td>
             </tr>
             <tr>
                 <td>
                     <div>
-                        <label for="tabla_condiciones_ambientales">Condiciones ambientales</label>
+                        <label for="condiciones_ambientales">Condiciones ambientales</label>
                     </div>
                     <div>
-                    <select class="generic-widget obligatorio" name="condiciones_ambientales" id="tabla_condiciones_ambientales">
+                    <select class="generic-widget obligatorio" name="condiciones_ambientales" id="condiciones_ambientales">
                         <option value=""/>
                         {{for condicion in listaCondicionesAmbientales:}}
                             <option value="{{=condicion.nombre}}">
@@ -130,10 +133,10 @@
                 </td>
 				<td>
 					<div>
-						<label for="tabla_microfonos_mojados">Se mojaron los micrófonos</label>
+						<label for="microfonos_mojados">Se mojaron los micrófonos</label>
 					</div>
 					<div>
-						<input class="boolean" name="microfonos_mojados" id="tabla_microfonos_mojados" type="checkbox" value="on"/>
+						<input class="boolean" name="microfonos_mojados" id="microfonos_mojados" type="checkbox" value="on"/>
 					</div>
 				</td>
 			</tr>
@@ -174,36 +177,36 @@
             		<label for="lon_seg">Segundo</label>
             	</th>
             	<th class="Centrar">            	    
-            		<label for="tabla_elipsoide">Datum</label>
+            		<label for="elipsoide">Datum</label>
             	</th>
             	<th class="Centrar">
-            		<label for="tabla_altitud">Altitud(m)</label>
+            		<label for="altitud">Altitud(m)</label>
             	</th>
             	<th class="Centrar">
-            		<label for="tabla_gps_error">Error(m)</label>
+            		<label for="gps_error">Error(m)</label>
             	</th>
             </tr>
             <tr>
             	<td>
-            		<input class="integer obligatorio lat_grado" name="lat_grado" id="tabla_lat_grado" type="text"/>
+            		<input class="integer obligatorio lat_grado" name="lat_grado" id="lat_grado" type="text"/>
             	</td>
             	<td>
-            		<input class="integer obligatorio min" name="lat_min" id="tabla_lat_min" type="text"/>
+            		<input class="integer obligatorio min" name="lat_min" id="lat_min" type="text"/>
             	</td>
             	<td>
-            		<input class="double obligatorio seg" name="lat_seg" id="tabla_lat_seg" type="text"/>
+            		<input class="double obligatorio seg" name="lat_seg" id="lat_seg" type="text"/>
             	</td>
             	<td>
-            		<input class="integer obligatorio lon_grado" name="lon_grado" id="tabla_lon_grado" type="text"/>
+            		<input class="integer obligatorio lon_grado" name="lon_grado" id="lon_grado" type="text"/>
             	</td>
             	<td>
-        			<input class="integer obligatorio min" name="lon_min" id="tabla_lon_min" type="text"/>
+        			<input class="integer obligatorio min" name="lon_min" id="lon_min" type="text"/>
             	</td>
             	<td>
-            		<input class="double obligatorio seg" name="lon_seg" id="tabla_lon_seg" type="text"/>
+            		<input class="double obligatorio seg" name="lon_seg" id="lon_seg" type="text"/>
             	</td>
             	<td>
-        			<select class="generic-widget obligatorio" name="elipsoide" id="tabla_elipsoide">
+        			<select class="generic-widget obligatorio" name="elipsoide" id="elipsoide">
 						<option value=""/>
 						{{for elipsoide in listaElipsoide:}}
 							<option value="{{=elipsoide.nombre}}">
@@ -213,10 +216,10 @@
 					</select>
             	</td>
             	<td>
-            		<input class="double obligatorio altitud" name="altitud" id="tabla_altitud" type="text" value=""/>
+            		<input class="double obligatorio altitud" name="altitud" id="altitud" type="text" value=""/>
             	</td>
             	<td>
-            	    <input class="double obligatorio gps_error" name="gps_error" id="tabla_gps_error" type="text" value=""/>
+            	    <input class="double obligatorio gps_error" name="gps_error" id="gps_error" type="text" value=""/>
             	</td>
             </tr>
     	</table>
@@ -225,71 +228,59 @@
                 <strong>Nota importante</strong>: las coordenadas deben escribirse en grados, minutos y segundos. Por ejemplo: 25º13'46.53''. En este caso, en la casilla de "Grado" se escribirá 25, en la de "Minuto" 13, y en la de "Segundo" 46.53. Si las coordenadas leídas del GPS no tienen el formato anterior, por ejemplo, si están escritas como 25º13.7755' ó incluso como 25.2296º, hay que cambiar el formato. Para ello, utilizar la siguiente <a href = "http://rumkin.com/tools/gps/degrees.php" target = "_blank">calculadora</a>.
             </p>
         </div>
-
     	<hr/>
-
     	<table class="No_GPS">
     		<tr>
     			<td>
 					<div>
-						<label for="tabla_nombre">Código grabadora</label>
+						<label for="nombre">Código grabadora</label>
 					</div>
 					<div>
-                        <input class="string obligatorio" name="nombre" id="tabla_nombre" type="text"/>
-						<!-- Catálogo
-                        <select class="generic-widget obligatorio" name="nombre" id="tabla_nombre">
-							<option value=""/>
-							{{#for nombreGrabadora in listaNombreGrabadora:}}
-								<option value="{{#=nombreGrabadora.nombre}}">
-									{{#=nombreGrabadora.nombre}}
-								</option>
-							{{pass}}
-						</select>  -->
+                        <input class="string obligatorio" name="nombre" id="nombre" type="text"/>
 					</div>
 				</td>
 				<td>
 					<div>
-						<label for="tabla_archivo_metadatos">Metadatos</label>
+						<label for="archivo_metadatos">Metadatos</label>
 					</div>
 					<div>
-						<input type="file" class="obligatorio" id="tabla_archivo_metadatos" name="archivo_metadatos"/>
-					</div>
-				</td>
-				<td>
-					<div>
-						<label for="tabla_imagen_grabadora">Foto grabadora</label>
-					</div>
-					<div>
-						<input type="file" class="obligatorio" id="tabla_imagen_grabadora" name="imagen_grabadora"/>
+						<input type="file" class="obligatorio" id="archivo_metadatos" name="archivo_metadatos"/>
 					</div>
 				</td>
 				<td>
 					<div>
-						<label for="tabla_imagen_microfonos">Fotos micrófonos</label>
+						<label for="imagen_grabadora">Foto grabadora</label>
 					</div>
 					<div>
-						<input type="file" class="obligatorio" id="tabla_imagen_microfonos" name="imagen_microfonos" multiple/>
+						<input type="file" class="obligatorio" id="imagen_grabadora" name="imagen_grabadora"/>
+					</div>
+				</td>
+				<td>
+					<div>
+						<label for="imagen_microfonos">Fotos micrófonos</label>
+					</div>
+					<div>
+						<input type="file" class="obligatorio" id="imagen_microfonos" name="imagen_microfonos" multiple/>
 					</div>
 				</td>
 		</table>
-	</fieldset>
-	<br/>
-	<fieldset>
-		<label for="tabla_comentario">Observaciones</label>
-    	<textarea class="text" cols="40" id="tabla_comentario" name="comentario" rows="5"></textarea>
+		<label for="comentario">Observaciones</label>
+    	<textarea class="text" cols="40" id="comentario" name="comentario" rows="5"></textarea>
 	</fieldset>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
-<!-- {{=BEAUTIFY(response._vars)}} -->
 
 <script>
 
-    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
-    $('#tabla_conglomerado_muestra_id').change
+    //////////////////////////////////////////
+    // AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+    //////////////////////////////////////////
+
+    $('#conglomerado_muestra_id').change
     (
         function()
         {
-            $('#tabla_sitio_muestra_id').remove();
+            $('#sitio_muestra_id').remove();
 
             //ajax es una función de Web2py que simplifica la función homónima de JQuery
             //recibe el URL destino, los nombres de los campos que se enviarán y el ID
@@ -298,7 +289,37 @@
         }
     );
 
-    //Rangos de los campos:
+    //////////////////////////////////////////
+    // AJAX para evitar que se envíe la información de la grabadora correspondiente
+    // a un sitio más de una vez:
+    //////////////////////////////////////////
+
+
+    $('#shadow_clone').on('change', '#sitio_muestra_id', function()
+    {
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#sitio_muestra_id').serialize(),
+            url: "{{=URL('grabadoraExistente')}}",
+            success: function(resultado)
+                {
+                    //alert(resultado);
+                    if(resultado >=1 )
+                    {
+                        alert('La grabadora correspondiente a este sitio ya ha sido declarada');
+                        $('#sitio_muestra_id').val("");
+                    }
+                }
+        }
+        );
+    }
+    );
+
+    //////////////////////////////////////////
+    // Funcionamiento de la vista
+    //////////////////////////////////////////
 
     $('.min').change
     (
@@ -306,7 +327,7 @@
         {
             if($(this).val())
             {
-                if($(this).val()<0 || $(this).val()>=60)
+                if($(this).val() < 0 || $(this).val() >= 60)
                 {
                     alert('Los minutos están en el rango de 0 a 59');
                     $(this).val("");
@@ -321,7 +342,7 @@
         {
             if($(this).val())
             {
-                if($(this).val()<0 || $(this).val()>=60)
+                if($(this).val() < 0 || $(this).val() >= 60)
                 {
                     alert('Los segundos están en el rango de 0 a 60');
                     $(this).val("");
@@ -336,7 +357,7 @@
         {
             if($(this).val())
             {
-                if($(this).val()<13 || $(this).val()>33)
+                if($(this).val() < 13 || $(this).val() > 33)
                 {
                     alert('Los grados correspondientes a latitud  están en el rango de 13 a 33');
                     $(this).val("");
@@ -351,17 +372,11 @@
         {
             if($(this).val())
             {
-                if(($(this).val()<85|| $(this).val()>119) & ($(this).val()<-119|| $(this).val()>-85))
+                if(($(this).val() < 85 || $(this).val() > 119) & ($(this).val() < -119 || $(this).val() > -85))
                 {
                     alert('Los grados correspondientes a longitud  están en el rango de 85 a 119 o en el rango -119 a -85');
                     $(this).val("");
                 }
-                /* if($(this).val()<-119|| $(this).val()>-85)
-                {
-                    alert('Los grados correspondientes a longitud  están en el rango de -119 a -85');
-                    $(this).val("");
-                }
-                */
             }
         }
     )
@@ -372,7 +387,7 @@
         {
             if($(this).val())
             {
-                if($(this).val()<0)
+                if($(this).val() < 0)
                 {
                     alert('El error de precisión debe ser positivo');
                     $(this).val("");
@@ -387,7 +402,7 @@
         {
             if($(this).val())
             {
-                if($(this).val()<-10 || $(this).val()>5715)
+                if($(this).val() < -10 || $(this).val() > 5715)
                 {
                     alert('La altitud está en el rango -10 a 5715');
                     $(this).val("");
@@ -410,37 +425,19 @@
         }
     )
 
-    //AJAX para evitar que se envíe la información de la grabadora correspondiente
-    //a un sitio más de una vez:
-    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
-    {
-        $.ajax
-        (
-        {
-            type: "POST",
-            data: $('#tabla_sitio_muestra_id').serialize(),
-            url: "{{=URL('grabadoraExistente')}}",
-            success: function(resultado)
-                {
-                    //alert(resultado);
-                    if(resultado>=1)
-                    {
-                        alert('La grabadora correspondiente a este sitio ya ha sido declarada');
-                        $('#tabla_sitio_muestra_id').val("");
-                    }
-                }
-        }
-        );
-    }
-    );
+    //////////////////////////////////////////
+    // Validaciones a la hora de enviar la forma
+    //////////////////////////////////////////
 
-	//Validando, para ello utilizamos la clase "obligatorio":
    $('form').submit
    (
        function()
        {
-            flag =true;
-            campos=$('.obligatorio');
+
+            // Validando los campos obligatorios:
+
+            flag = true;
+            campos = $('.obligatorio');
             campos.each(function() 
             {
                 if(!$(this).val())
@@ -450,20 +447,33 @@
             }
             );
 
-            //Validando que la fecha esté en formato adecuado para que Web2py no tenga problemas:
+            /* Sin embargo, como el campo de "sitio_muestra_id" es generado por
+            medio de AJAX; no entra en la validación anterior. Lo tenemos que
+            validar aparte: */
+
+            if(!$('#shadow_clone').find('select:first').val())
+            {
+                flag = false;
+                //alert('Falta llenar el sitio');
+            }
+
+            /*Validando que la fecha esté en formato adecuado para que Web2py
+            no tenga problemas: */
+
             var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
-            campos_fecha=$('.date');
-            flag_m = true;
+            campos_fecha = $('.date');
+            flag_f = true;
             campos_fecha.each(function(){   
                 if(!fechaReg.test($(this).val()))
                 {
-                    flag_m = false;
+                    flag_f = false;
                 }
                 //Revisando que el mes y el día estén en un rango aceptable:
                 else
                 {
-                    //match contiene como primer elemento, el match de toda la regex, y como elementos
-                    //posteriores, el match de los elementos en paréntesis de la regex (en órden).
+                    /* match contiene como primer elemento, el match de toda la
+                    regex, y como elementos posteriores, el match de los elementos
+                    en paréntesis de la regex (en órden). */
                     var match = fechaReg.exec($(this).val());
                     //alert(match);
 
@@ -472,50 +482,43 @@
                     {
                         //alert('El mes es incorrecto');
                         //alert(match[1]);
-                        flag_m = false;
+                        flag_f = false;
                     }
 
                     //Validando que el día se encuentre en un rango aceptable:
-                    if(match[2]<1 || match[2]>31)
+                    if(match[2] < 1 || match[2] > 31)
                     {
                         //alert('El día es incorrecto');
                         //alert(match[2]);
-                        flag_m = false;
+                        flag_f = false;
                     }
                 }
             });
-
-            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
-        	//medio de AJAX; no entra en la validación anterior. Lo tenemos que
-        	//validar aparte:
-        	if(!$('#shadow_clone').find('select:first').val())
-        	{
-            	flag = false;
-            	//alert('Falta llenar el sitio');
-        	}
 
             if(!flag)
             {
                 alert('Faltó llenar algún campo o subir alguna imagen');
                 return false;
             }
-            else if(!flag_m)
+            else if(!flag_f)
             {
                 alert('El formato de fecha es aaaa-mm-dd');
                 return false;
             }
-            //Validando que la fecha de inicio sea menor que la fecha de término
-            //y que, en caso de ser necesario, la hora de inicio sea menor que la de término
+
+            /* Validando que la fecha de inicio sea menor que la fecha de término
+            y que, en caso de ser necesario, la hora de inicio sea menor que la
+            de término */
             else
             {
 
-                var fecha_inicio = $('#tabla_fecha_inicio').val();
-                var fecha_termino = $('#tabla_fecha_termino').val();
-                var hora_inicio = $('#tabla_hora_inicio').val();
-                var hora_termino = $('#tabla_hora_termino').val();
+                var fecha_inicio = $('#fecha_inicio').val();
+                var fecha_termino = $('#fecha_termino').val();
+                var hora_inicio = $('#hora_inicio').val();
+                var hora_termino = $('#hora_termino').val();
 
                 //Usando el órden lexicográfico natural de strings para comparar fechas:
-                if(fecha_inicio>fecha_termino)
+                if(fecha_inicio > fecha_termino)
                 {
                     alert('La fecha de inicio debe ser menor o igual a la fecha de término');
                     return false;

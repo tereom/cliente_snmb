@@ -9,10 +9,7 @@ def index1():
 		###########################################
 		# Cámara
 		###########################################
-					
-		# Ésta forma únicamente se utilizará para validar antes de ingresar a la
-		# base de datos y así, evitar excepciones.
-		
+
 		# Datos para localizar un sitio único y asociarle la cámara a éste.
 
 		SELECT(_name='conglomerado_muestra_id',
@@ -20,7 +17,7 @@ def index1():
 		SELECT(_name='sitio_muestra_id',
 			requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
 		
-		#Datos de la cámara
+		# Datos de la cámara
 
 		INPUT(_name='nombre',_type='string',requires=IS_NOT_EMPTY()),
 		INPUT(_name='fecha_inicio',_type='date',requires=IS_NOT_EMPTY()),
@@ -63,7 +60,7 @@ def index1():
 	if formaCamara.accepts(request.vars,formname='formaCamaraHTML'):
 	
 		###########################################
-		# Cámara
+		# Procesando los datos de la cámara
 		###########################################
 	
 		# Filtrando los datos correspondientes a la tabla de la cámara:
@@ -73,10 +70,11 @@ def index1():
 		camaraInsertada = db.Camara.insert(**datosCamara)
 		
 		###########################################
-		# Imagen de referencia de la cámara
+		# Procesando la imagen de referencia de la cámara
 		###########################################
 		
 		# Guardando la imagen de referencia en la carpeta adecuada
+
 		imagenRef = db.Imagen_referencia_camara.archivo.store(
 			formaCamara.vars.imagen_camara.file, formaCamara.vars.imagen_camara.filename)
 		
@@ -162,6 +160,7 @@ def camaraExistente():
 	## conglomerado y un número de sitio.
 	
 	# Obteniendo la información del sitio que seleccionó el usuario:
+
 	sitioElegidoID = request.vars.sitio_muestra_id
 
 	# Haciendo un query a la tabla de Camara con la información anterior:
@@ -177,11 +176,11 @@ def index2():
 	## Controlador correspondiente a la pestaña "Archivos trampa cámara", de
 	## la sección "Trampa cámara"
 
-	###########################################
-	# Archivos de la cámara
-	###########################################
-
 	camposArchivosCamara = [
+
+		###########################################
+		# Archivos de la cámara
+		###########################################
 
 		# Localización de la cámara. Por medio del conglomerado y sitio debe ser
 		# posible localizar a lo más una cámara.
@@ -201,9 +200,9 @@ def index2():
 
 	if formaArchivosCamara.accepts(request.vars,formname='formaArchivosCamaraHTML'):
 
-	###########################################
-	# Procesando los múltiples capturados con una cámara
-	###########################################
+		###########################################
+		# Procesando los archivos múltiples capturados con una cámara
+		###########################################
 		
 		archivos = formaArchivosCamara.vars['archivos_camara']
 
@@ -215,6 +214,8 @@ def index2():
 			# Guardando el archivo en la carpeta adecuada
 
 			archivoCamara = db.Archivo_camara.archivo.store(aux, aux.filename)
+
+			# Creando los campos de la tabla "Archivo_camara".
 			
 			datosArchivoCamara = {}
 			datosArchivoCamara['camara_id'] = formaArchivosCamara.vars['camara_id']
@@ -237,8 +238,8 @@ def index2():
 	# Enviando la información de la dropdown de conglomerado
 	##############################################################
 
-	#Regresando los nombres de todos los conglomerados insertados en la tabla de
-	#conglomerado junto con sus id's para llenar la combobox de conglomerado.
+	# Regresando los nombres de todos los conglomerados insertados en la tabla de
+	# conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
 	listaConglomerado = db(db.Conglomerado_muestra).select(
 		db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
@@ -253,7 +254,7 @@ def index2():
 		create = False, searchable = False, editable = False,
 		maxtextlengths = {'Archivo_camara.archivo_nombre_original' : 50})
 
-	return dict(listaConglomerado = listaConglomerado,grid = grid)
+	return dict(listaConglomerado = listaConglomerado, grid = grid)
 
 # La siguiente función es para generar una combobox de cámaras por sitio, es decir,
 # sirve mejor para cuando hay más de una cámara declarada en un sitio.
@@ -286,8 +287,8 @@ def index2():
 
 def asignarCamara():
 	
-	## Función invocada mediante AJAX para verificar si se ha ingresado información 
-	## de trampa cámara para el conglomerado y sitio seleccionados. El AJAX se
+	## Función invocada mediante AJAX para de la misma manera, enviar información 
+	## de la trampa cámara para el conglomerado y sitio seleccionados. El AJAX se
 	## activará al seleccionar un sitio asociado a un conglomerado.
 
 	# El campo sitio_muestra_id es únicamente auxiliar y se utiliza para buscar
@@ -295,14 +296,15 @@ def asignarCamara():
 
 	sitioElegidoID = request.vars.sitio_muestra_id
 
-	#Obteniendo las cámaras que han sido declaradas en dicho sitio
+	# Obteniendo las cámaras que han sido declaradas en dicho sitio
 
 	camarasAsignadas = db(db.Camara.sitio_muestra_id ==\
 		sitioElegidoID).select(db.Camara.id, db.Camara.nombre)
 
 	camara = camarasAsignadas.first()
 
-	#Bajo el supuesto que sólo existe una cámara por sitio, no se requiere hacer dropdowns:
+	# Bajo el supuesto que sólo existe una cámara por sitio, no se requiere
+	# hacer dropdowns:
 
 	respuestaHTML = "<p>Cámara localizada: </p>"
 

@@ -27,38 +27,34 @@ response.menu = [
 
     (T('Conglomerado'), False, URL('01_conglomerado', 'index'), []),
 
-    ### Conteo de aves
-    (T('Conteo de aves'), False, URL('10_conteo_aves', 'index1'), [
-      (T('Punto de conteo'), False, URL('10_conteo_aves', 'index1')),
-      (T('Observaciones aves'), False, URL('10_conteo_aves', 'index2'))]),
+    # ### Conteo de aves
+    # (T('Conteo de aves'), False, URL('10_conteo_aves', 'index1'), [
+    #   (T('Punto de conteo'), False, URL('10_conteo_aves', 'index1')),
+    #   (T('Observaciones aves'), False, URL('10_conteo_aves', 'index2'))]),
 
-    ### Especies invasoras
-    (T('Especies invasoras'), False, URL('04_especies_invasoras', 'index1'), [
+    ### Especies invasoras y huellas/excretas
+    (T('Especies invasoras y huellas/excretas'), False, URL('04_especies_invasoras', 'index1'), [
       (T('Transecto especies invasoras'), False, URL('04_especies_invasoras', 'index1')),
-      (T('Registros especies invasoras'), False, URL('04_especies_invasoras', 'index2'))]),
-
-    ### Huellas y excretas
-    (T('Huellas y excretas'), False, URL('05_huellas_excretas', 'index1'), [
-      (T('Transecto huellas y excretas'), False, URL('05_huellas_excretas', 'index1')),
+      (T('Registros especies invasoras'), False, URL('04_especies_invasoras', 'index2')),
       (T('Registros huellas y excretas'), False, URL('05_huellas_excretas', 'index2'))]),
 
-    ### Carbono
-    (T('Vegetación y suelo'), False, URL('11_carbono', 'index1'), [
-      (T('Material leñoso caído'), False, URL('11_carbono', 'index1')),
-      (T('Material 1000h'), False, URL('11_carbono', 'index2')),
-      (T('Carbono en el mantillo'), False, URL('11_carbono', 'index3')),
-      (T('Árboles pequeños y arbustos'), False, URL('11_carbono', 'index4')),
-      (T('Árboles grandes'), False, URL('11_carbono', 'index5'))]),
+    # ### Carbono
+    # (T('Vegetación y suelo'), False, URL('11_carbono', 'index1'), [
+    #   (T('Material leñoso caído'), False, URL('11_carbono', 'index1')),
+    #   (T('Material 1000h'), False, URL('11_carbono', 'index2')),
+    #   (T('Carbono en el mantillo'), False, URL('11_carbono', 'index3')),
+    #   (T('Árboles pequeños y arbustos'), False, URL('11_carbono', 'index4')),
+    #   (T('Árboles grandes'), False, URL('11_carbono', 'index5'))]),
 
-    ### Epífitas
-    (T('Epífitas'), False, URL('12_epifitas', 'index'),[]),
+    # ### Epífitas
+    # (T('Epífitas'), False, URL('12_epifitas', 'index'),[]),
 
-    ### Impactos ambientales
-    (T('Impactos ambientales'),False,URL('13_impactos_ambientales','index3'), [
-      (T('Incendios'),False,URL('13_impactos_ambientales','index3')),
-      (T('Plagas'),False,URL('13_impactos_ambientales','index2')),
-      (T('Impactos actuales'),False,URL('13_impactos_ambientales','index1'))
-      ]),
+    # ### Impactos ambientales
+    # (T('Impactos ambientales'),False,URL('13_impactos_ambientales','index3'), [
+    #   (T('Incendios'),False,URL('13_impactos_ambientales','index3')),
+    #   (T('Plagas'),False,URL('13_impactos_ambientales','index2')),
+    #   (T('Impactos actuales'),False,URL('13_impactos_ambientales','index1'))
+    #   ]),
 
     ### Camara
     (T('Trampa cámara'), False, URL('02_camara', 'index1'), [
