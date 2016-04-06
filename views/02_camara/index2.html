@@ -8,7 +8,7 @@
 			width: 4.4cm;
 		}
 
-		.FlotaIzquierda
+		#enviar
 		{
 			float: left;
 		}
@@ -25,9 +25,7 @@
 		<table class="Tabla">
 			<tr>
 				<td>
-					<div>
-						<label for="conglomerado_muestra_id">Conglomerado</label>
-					</div>
+					<label for="conglomerado_muestra_id">Conglomerado</label>
 					<!-- La clase estática se usa para que, en tablas de un sólo
                     renglón, no se modifique el tamaño de la misma cuando se 
                     desaparecen algunos campos-->
@@ -49,9 +47,7 @@
 				</td>                
 				<td>
 					<div class="Estatica">
-						<div>
-							<label for="sitio_muestra_id">Sitio</label>
-						</div>
+						<label for="sitio_muestra_id">Sitio</label>
 						<!-- El ID es para cambiar la lista de sitios asociados
 						a un conglomerado dinámicamente, utilizando AJAX-->
 						<div id="shadow_clone">
@@ -64,9 +60,7 @@
 				<td>
 					<!--<div class="Estatica">-->
 						<!-- Para más de una cámara por sitio, descomentar esto
-						<div>
-							<label for="camara_id">Cámara</label>
-						</div>
+						<label for="camara_id">Cámara</label>
 						El ID es para cambiar la lista de sitios asociados a un
 						conglomerado dinámicamente, utilizando AJAX
 						<div id="shadow_clone_2">
@@ -86,14 +80,13 @@
 				</td>
 			</tr>
 		</table>
+
 		<hr/>
-		<div>
-			<input class="obligatorio" type="file" id="archivos_camara" name="archivos_camara" multiple/>
-		</div>
+		<input class="obligatorio" type="file" id="archivos_camara" name="archivos_camara" multiple/>
 	</fieldset>
 		<br/>
 		<br/>
-	<input type="submit" value="Enviar" class="btn FlotaIzquierda" id="enviar"/>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 
 <br/>

@@ -30,7 +30,7 @@
 			text-align: center;
 		}
 		
-		.FlotaIzquierda
+		#enviar
 		{
 			float: left;
 		}
@@ -51,68 +51,46 @@
 		<table>
 			<tr>
 				<td>
-					<div>
-						<label for="nombre">Número de conglomerado</label>
-					</div>
-					<div>
-						<input class="integer obligatorio" name="nombre" id="nombre" type="text" value=""/>
-					</div>
+					<label for="nombre">Número de conglomerado</label>
+					<input class="integer obligatorio" name="nombre" id="nombre" type="text" value=""/>
 				</td>
 				<td>
-					<div>
-						<label for="fecha_visita">Fecha de visita</label>
-					</div>
-					<div>
-						<input class="date obligatorio" name="fecha_visita" id="fecha_visita" type="text" value=""/>
-					</div>
+					<label for="fecha_visita">Fecha de visita</label>
+					<input class="date obligatorio" name="fecha_visita" id="fecha_visita" type="text" value=""/>
 				</td>
 				<td>
-					<div>
-						<label for="tipo">Tipo de conglomerado</label>
-					</div>
-					<div>
-						<!-- Menu desplegable -->
-						<select class="generic-widget obligatorio" name="tipo" id="tipo">
-							<option value=""/>
-							<!-- listaTipo: lista que se envía en el controlador con las opciones
-							para el menú desplegable -->
-							{{for tipo in listaTipo:}}
-								<option value="{{=tipo.nombre}}">
-									{{=tipo.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
+					<label for="tipo">Tipo de conglomerado</label>
+					<!-- Menu desplegable -->
+					<select class="generic-widget obligatorio" name="tipo" id="tipo">
+						<option value=""/>
+						<!-- listaTipo: lista que se envía en el controlador con las opciones
+						para el menú desplegable -->
+						{{for tipo in listaTipo:}}
+							<option value="{{=tipo.nombre}}">
+								{{=tipo.nombre}}
+							</option>
+						{{pass}}
+					</select>
 				</td>
 				<td>
-					<div>
-						<label for="compania">Compañía/organización</label>
-					</div>
-					<div>
-						<input class="string obligatorio" name="compania" id="compania" type="text" value=""/>
-					</div>
+					<label for="compania">Compañía/organización</label>
+					<input class="string obligatorio" name="compania" id="compania" type="text" value=""/>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<div>
-						<label for="estado">Estado</label>
-					</div>
-					<div>
-						<select class="generic-widget obligatorio" name="estado" id="estado">
-						<option value=""/>
-						{{for estado in listaEstado:}}
-							<option value="{{=estado.nombre}}">
-								{{=estado.nombre}}
-							</option>
-						{{pass}}
-						</select>
-					</div>
+					<label for="estado">Estado</label>
+					<select class="generic-widget obligatorio" name="estado" id="estado">
+					<option value=""/>
+					{{for estado in listaEstado:}}
+						<option value="{{=estado.nombre}}">
+							{{=estado.nombre}}
+						</option>
+					{{pass}}
+					</select>
 				</td>
 				<td>
-					<div>
-						<label for="municipio">Municipio</label>
-					</div>
+					<label for="municipio">Municipio</label>
 					<!-- El ID es para cambiar la lista de municipios asociados a un estado dinámicamente, utilizando AJAX-->
 					<div id="shadow_clone">
 						<select class="generic-widget" name="municipio" id="municipio">
@@ -120,44 +98,32 @@
 					</div>
 				</td>
 				<td>
-					<div>
-						<label for="predio">Predio</label>
-					</div>
-					<div>
-						<input class="string obligatorio" name="predio" id="predio" type="text" value=""/>
-					</div>
+					<label for="predio">Predio</label>
+					<input class="string obligatorio" name="predio" id="predio" type="text" value=""/>
 				</td>
 				<td>
-					<div>
-						<label for="tenencia">Tenencia</label>
-					</div>
-					<div>
-						<select class="generic-widget obligatorio" name="tenencia" id="tenencia">
-							<option value=""/>
-							{{for tenencia in listaTenencia:}}
-								<option value="{{=tenencia.nombre}}">
-									{{=tenencia.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
+					<label for="tenencia">Tenencia</label>
+					<select class="generic-widget obligatorio" name="tenencia" id="tenencia">
+						<option value=""/>
+						{{for tenencia in listaTenencia:}}
+							<option value="{{=tenencia.nombre}}">
+								{{=tenencia.nombre}}
+							</option>
+						{{pass}}
+					</select>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<div>
-						<label for="uso_suelo_tipo">Tipo de uso de suelo</label>
-					</div>
-					<div>
-						<select class="generic-widget obligatorio" name="uso_suelo_tipo" id="uso_suelo_tipo">
-							<option value=""/>
-							{{for usoSuelo in listaUsoSuelo:}}
-								<option value="{{=usoSuelo.nombre}}">
-									{{=usoSuelo.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
+					<label for="uso_suelo_tipo">Tipo de uso de suelo</label>
+					<select class="generic-widget obligatorio" name="uso_suelo_tipo" id="uso_suelo_tipo">
+						<option value=""/>
+						{{for usoSuelo in listaUsoSuelo:}}
+							<option value="{{=usoSuelo.nombre}}">
+								{{=usoSuelo.nombre}}
+							</option>
+						{{pass}}
+					</select>
 				</td>
 				<td>
 					<!--La clase vegetación sirve para el JQuery que desvanece/reaparece el campo-->
@@ -322,6 +288,9 @@
 					Sitio 2
 				</td>
 				<td>
+					<!--La clase Sitio_info_2 sirve para el JQuery que
+					desvanece/reaparece el campo, además de para validar que los
+					campos estén llenos si la casilla "existe_2" está marcada-->
 					<div class="Sitio_info_2">
 						<input class="integer lat_grado" name="lat_grado_2" id="lat_grado_2" type="text" value=""/>
 					</div>
@@ -392,6 +361,9 @@
 					Sitio 3
 				</td>
 				<td>
+					<!--La clase Sitio_info_3 sirve para el JQuery que
+					desvanece/reaparece el campo, además de para validar que los
+					campos estén llenos si la casilla "existe_2" está marcada-->
 					<div class="Sitio_info_3">
 						<input class="integer lat_grado" name="lat_grado_3" id="lat_grado_3" type="text" value=""/>
 					</div>
@@ -462,6 +434,9 @@
 					Sitio 4
 				</td>
 				<td>
+					<!--La clase Sitio_info_4 sirve para el JQuery que
+					desvanece/reaparece el campo, además de para validar que los
+					campos estén llenos si la casilla "existe_2" está marcada-->
 					<div class="Sitio_info_4">
 						<input class="integer lat_grado" name="lat_grado_4" id="lat_grado_4" type="text" value=""/>
 					</div>
@@ -525,25 +500,21 @@
 				</td>
 			</tr>
 		</table>
-		<div>
-			<p>
-				<strong>Nota importante</strong>: las coordenadas deben escribirse en grados, minutos y segundos. Por ejemplo: 25º13'46.53''. En este caso, en la casilla de "Grado" se escribirá 25, en la de "Minuto" 13, y en la de "Segundo" 46.53. Si las coordenadas leídas del GPS no tienen el formato anterior, por ejemplo, si están escritas como 25º13.7755' ó incluso como 25.2296º, hay que cambiar el formato. Para ello, utilizar la siguiente <a href = "http://rumkin.com/tools/gps/degrees.php" target = "_blank">calculadora</a>.
-			</p>
-		</div>
+		<p>
+			<strong>Nota importante</strong>: las coordenadas deben escribirse en grados, minutos y segundos. Por ejemplo: 25º13'46.53''. En este caso, en la casilla de "Grado" se escribirá 25, en la de "Minuto" 13, y en la de "Segundo" 46.53. Si las coordenadas leídas del GPS no tienen el formato anterior, por ejemplo, si están escritas como 25º13.7755' ó incluso como 25.2296º, hay que cambiar el formato. Para ello, utilizar la siguiente <a href = "http://rumkin.com/tools/gps/degrees.php" target = "_blank">calculadora</a>.
+		</p>
 	</fieldset>
 
 	<fieldset class="No_GPS">
 		<legend>
 			Formato de campo pdf (un solo archivo)
 		</legend>
-		<div>
-			<input class="obligatorio" type="file" id="formato_campo" name="formato_campo"/>
-		</div>
+		<input class="obligatorio" type="file" id="formato_campo" name="formato_campo"/>
 	</fieldset>
 
 	<br/>
 	<br/>
-	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 
 <!--<br/>
@@ -576,7 +547,8 @@
 	)
 
 	//////////////////////////////////////////
-	// AJAX para advertir al usuario que un conglomerado ya ha sido asignado con anterioridad
+	// AJAX para advertir al usuario que un conglomerado ya ha sido asignado con
+	// anterioridad
 	//////////////////////////////////////////
 
 	$('#nombre').keyup
@@ -622,7 +594,8 @@
 			$('#uso_suelo_tipo').val("");
 			$('.Vegetacion').hide();
 		
-			//Cuando el documento se carga, se muestran los sitios como si existieran*/
+			/* Cuando el documento se carga, se muestran los sitios como si
+			existieran*/
 			$('#existe_2').prop('checked', true);
 			$('.Sitio_info_2').show();
 			
@@ -671,7 +644,7 @@
 		}
 	)
 
-	//Rangos de los campos:
+	// Rangos de los campos:
 	$('.seg').change
 	(
 		function()
@@ -761,7 +734,7 @@
 		}
 	)
 
-	/*Cuando se cambia el valor de la casilla "existe" asociada a un sitio, 
+	/* Cuando se cambia el valor de la casilla "existe" asociada a un sitio, 
 	desaparecen o reaparecen los campos correspondientes, dependiendo si el sitio
 	existe o no.*/
 	
@@ -792,9 +765,7 @@
 		function()
 		{
 			if($(this).prop('checked'))
-			{
 				$('.Sitio_info_4').fadeIn();
-			}
 			else
 				$('.Sitio_info_4').fadeOut();
 		}

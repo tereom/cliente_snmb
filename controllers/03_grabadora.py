@@ -158,8 +158,8 @@ def index1():
 		response.flash = 'Éxito'
 		
 	elif formaGrabadora.errors:
-	   response.flash = 'Hubo un error al llenar la forma'
-	   
+		response.flash = 'Hubo un error al llenar la forma'
+		
 	else:
 		pass
 
@@ -195,7 +195,7 @@ def asignarSitios():
 
 	# Obteniendo los sitios que existen en dicho conglomerado
 	sitiosAsignados = db(
-		(db.Sitio_muestra.conglomerado_muestra_id == conglomeradoElegidoID)&\
+		(db.Sitio_muestra.conglomerado_muestra_id == conglomeradoElegidoID) &\
 		(db.Sitio_muestra.existe == True)&\
 		(db.Sitio_muestra.sitio_numero != 'Punto de control')
 		).select(db.Sitio_muestra.sitio_numero,db.Sitio_muestra.id)
@@ -308,13 +308,13 @@ def index2():
 		
 	elif formaArchivosGrabadora.errors:
 
-	   response.flash = 'Hubo un error al llenar la forma'
-	   
+		response.flash = 'Hubo un error al llenar la forma'
+		
 	else:
 		pass
 
 	##############################################################
-	# Enviando la información de la dropdown de conglomerado
+	# Procesando la información de la dropdown de conglomerado
 	##############################################################
 
 	# Regresando los nombres de todos los conglomerados insertados en la tabla de

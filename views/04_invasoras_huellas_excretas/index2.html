@@ -1,0 +1,331 @@
+{{extend 'layout.html'}}
+{{block head}}
+
+	<style type="text/css">
+
+		.Tabla .string
+		{
+			margin-right: 2cm;
+			width: 4cm;
+		}
+		
+		.Tabla .generic-widget
+		{
+			margin-right: 2cm;
+			width: 4.4cm;
+		}
+		
+		.CentrarV
+		{
+			vertical-align: middle;
+		}    
+
+		.FlotaIzquierda
+		{
+			float: left;
+		}
+
+	</style>
+
+{{end}}
+
+<form action="" enctype="multipart/form-data" method="post">
+	<input type="hidden"  name="_formname" value="formaEspecieHTML"/>
+
+	<fieldset>
+		<legend>
+		Especies invasoras
+		</legend>
+		<table class="Tabla">
+			<tr>
+				<td>
+					<label for="conglomerado_muestra_id">Conglomerado</label>
+					<!--este campo, en realidad sólo sirve para encontrar
+					con AJAX los transectos declarados asociados al conglomerado
+					elegido. Al enviar la forma al controlador, se utilizará
+					para guardar el registro de la especie invasora únicamente el
+					id del transecto (de la dropdown generada mediante AJAX)-->
+					<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+						<option value=""/>
+						{{for conglomerado in listaConglomerado:}}
+							<option value="{{=conglomerado.id}}">
+								{{=conglomerado.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>
+				<td>
+					<label for="transecto_muestra_id">Transecto</label>
+					<!-- El ID es para cambiar la lista de transectos asociados
+					a un conglomerado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
+						<select class="generic-widget" name="transecto_muestra_id" id="transecto_muestra_id">
+							<option value=""/>
+						</select>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<hr/>
+
+		<table class="Tabla">
+			<tr>
+				<td rowspan="2" class="CentrarV">
+					<label for="seleccion_conabio_lista">Lista CONABIO invasoras</label>
+					<select class="generic-widget obligatorio" name="seleccion_conabio_lista" id="seleccion_conabio_lista">
+						<option value=""/>
+						{{for especie in listaInvasoras:}}
+							<option value="{{=especie.nombre}}">
+								{{=especie.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>
+				<td>
+					<div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+						<input class="boolean" name="hay_nombre_comun" id="hay_nombre_comun" type="checkbox" value="on"/>
+					</div>
+					<div class="Nombre FlotaIzquierda" style="padding-right:22px;">
+						<label for="nombre_comun">Nombre común</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_comun" id="nombre_comun" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+						<input class="boolean" name="hay_nombre_cientifico" id="hay_nombre_cientifico" type="checkbox" value="on"/>
+					</div>
+					<div class="Nombre FlotaIzquierda" style="padding-right:10px;">
+						<label for="nombre_cientifico">Nombre científico</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_cientifico" id="nombre_cientifico" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+		<hr/>
+
+		<table class="Tabla">
+			<tr>
+				<td>
+					<label for="numero_individuos">Número de individuos</label>
+					<select class="generic-widget obligatorio" name="numero_individuos" id="numero_individuos">
+						<option value=""/>
+						{{for numIndividuos in listaNumIndividuos:}}
+							<option value="{{=numIndividuos.nombre}}">
+								{{=numIndividuos.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<label for="archivos_invasora">Subir archivos</label>
+					<input class="obligatorio" type="file" id="archivos_invasora" name="archivos_invasora" multiple/>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<br/>
+	<br/>
+	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+</form>
+
+<br/>
+<br/>
+
+<fieldset>
+	<legend>
+		Revisión de registros
+	</legend>
+	{{=grid}}
+</fieldset>
+
+<script>
+
+	//////////////////////////////////////////
+	//AJAX para llenar la combobox con los transectos declarados como existentes
+	// al elegir el conglomerado
+	//////////////////////////////////////////
+
+	$('#conglomerado_muestra_id').change(
+		function()
+		{
+			$('#transecto_muestra_id').remove();
+
+			//ajax es una función de Web2py que simplifica la función homónima
+			// de JQuery. Recibe el URL destino, los nombres de los campos que
+			//se enviarán y el ID del elemento donde se insertará la respuesta
+			ajax("{{=URL('asignarTransectos')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+		}
+	)
+
+	//////////////////////////////////////////
+	// Este código se ejecuta en cuanto el html termina de llegar al navegador:
+	//////////////////////////////////////////
+
+	$(document).ready
+	(
+		function()
+		{
+			/*Cuando el documento se carga, los campos para ingresar nombre están
+			escondidos*/
+
+			// La clase Nombre engloba las checkbox y las etiquetas.
+			$('.Nombre').hide();
+
+			$('#nombre_comun').hide();
+			$('#nombre_cientifico').hide();
+		}
+	)
+
+	//////////////////////////////////////////
+	// Funcionamiento de la vista
+	//////////////////////////////////////////
+
+	/* Fade in de los campos de ingreso de nombre de especie si no se encuentra
+	en la lista.*/
+
+	$('#seleccion_conabio_lista').change
+	(
+		function()
+		{
+			if($(this).val() == "Otros")
+			{
+				// Aparecen las casillas y etiquetas
+				$('.Nombre').fadeIn();
+
+				$('#hay_nombre_comun').prop('checked', true);
+				$('#nombre_comun').fadeIn();
+
+				$('#hay_nombre_cientifico').prop('checked', true);
+				$('#nombre_cientifico').fadeIn();
+			}
+			else
+			{
+				$('#hay_nombre_comun').prop('checked', false);
+				$('#nombre_comun').fadeOut();
+
+				$('#hay_nombre_cientifico').prop('checked', false);
+				$('#nombre_cientifico').fadeOut();
+
+				$('.Nombre').fadeOut();
+			}
+		}
+	)
+
+	/* Fade in/out de los campos de ingreso de nombre común/científico, de
+	acuerdo a si se marcó o no la casilla correspondiente*/
+
+	$('#hay_nombre_comun').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('#nombre_comun').fadeIn();
+			else
+				$('#nombre_comun').fadeOut();
+		}
+	)
+
+	$('#hay_nombre_cientifico').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('#nombre_cientifico').fadeIn();
+			else
+				$('#nombre_cientifico').fadeOut();
+		}
+	)
+
+	//////////////////////////////////////////
+	// Validaciones a la hora de enviar la forma
+	//////////////////////////////////////////
+
+	$('form').submit
+	(
+		function()
+		{
+			// Validando los campos obligatorios
+
+			flag = true;
+			campos = $('.obligatorio');
+			campos.each(
+				function(){
+					if(!$(this).val())
+					{
+						flag = false;
+					}
+				}
+			);
+
+			/* Sin embargo, como el campo de "transecto_muestra_id" es generado
+			por medio de AJAX; no entra en la validación anterior. Lo tenemos que
+			validar aparte:*/
+
+			if(!$('#shadow_clone').find('select:first').val())
+			{
+				flag = false;
+				//alert('Falta llenar el transecto');
+			}
+
+			/* faltanNombres es un indicador para enviar un mensaje que indique
+			que es necesario que se escriban ya sea el nombre común o el
+			científico de la especie (ésto es cuando la especie no se encuentra
+			en la lista de invasoras)*/
+
+			faltanNombres = false;
+
+			//Si el nombre de la especie no se encuentra en la lista CONABIO:
+
+			if($('#seleccion_conabio_lista').val() == "Otros")
+			{
+				//Si no se marcó ninguna casilla para ingresar el nombre
+
+				if(!$('#hay_nombre_comun').prop('checked') && !$('#hay_nombre_cientifico').prop('checked'))
+				{
+					flag = false;
+					faltanNombres = true;
+					//alert('caso1');
+				}
+				else if($('#hay_nombre_comun').prop('checked') && !$('#nombre_comun').val())
+
+				/*Si se marcó la casilla de nombre común pero no se escribió
+				nada en el campo subsecuente.*/
+				{
+					flag = false;
+					faltanNombres = true;
+					//alert('caso2');
+				}
+
+				/* Si se marcó la casilla de nombre científico pero no se
+				escribió nada en el campo subsecuente.*/
+
+				else if($('#hay_nombre_cientifico').prop('checked') && !$('#nombre_cientifico').val())
+				{
+					flag = false;
+					faltanNombres = true;
+					//alert('caso3');
+				}
+			}
+
+			if(!flag)
+			{
+				if(faltanNombres)
+					alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+				else
+					alert('Faltó llenar algún campo o subir alguna imagen');
+				return false;
+			}
+		}
+	)
+</script>

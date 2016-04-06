@@ -1,0 +1,314 @@
+{{extend 'layout.html'}}
+{{block head}}
+	<style type="text/css">
+
+		.Tabla .double, .Tabla .string
+		{
+			margin-right: 2cm;
+			width: 4cm;
+		}
+		
+		.Tabla .generic-widget, .Tabla .Estatico
+		{
+			margin-right: 2cm;
+			width: 4.4cm;
+		}
+		
+		.FlotaIzquierda
+		{
+			float: left;
+		}
+
+		.CentrarV
+		{
+			vertical-align: middle;
+		}
+
+	</style>
+{{end}}
+
+<form action="" enctype="multipart/form-data" method="post">
+	<input type="hidden"  name="_formname" value="formaHuellaExcretaHTML"/>
+
+	<fieldset>
+		<legend>
+			Huellas y excretas
+		</legend>
+		<table class="Tabla">
+			<tr>
+				<td rowspan="2">
+					<label for="conglomerado_muestra_id">Conglomerado</label>
+					<!--este campo, en realidad sólo sirve para encontrar con
+					AJAX los transectos declarados asociados alconglomerado
+					elegido. Al enviar la forma al controlador, se utilizará
+					para guardar el registro de la especie invasora únicamente
+					el id del transecto (de la dropdown generada mediante AJAX)-->
+					<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+						<option value=""/>
+						{{for conglomerado in listaConglomerado:}}
+							<option value="{{=conglomerado.id}}">
+								{{=conglomerado.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>
+				<td rowspan="2">
+					<div class="Estatico">
+						<label for="transecto_muestra_id">Transecto</label>
+					</div>
+					<!-- El ID es para cambiar la lista de transectos asociados
+					a un conglomerado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
+						<select class="generic-widget" name="transecto_muestra_id" id="transecto_muestra_id">
+							<option value=""/>
+						</select>
+					</div>
+				</td>
+				<td class="CentrarV">
+					<div class="FlotaIzquierda" style="padding-right:17px;">
+						<label for="es_huella">Huella</label>
+					</div>
+					<input class="boolean" name="es_huella_excreta" id="es_huella" type="radio" value="huella"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<label for="es_excreta">Excreta</label>
+					</div>
+					<input class="boolean" name="es_huella_excreta" id="es_excreta" type="radio" value="excreta"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					<!--Para dar formato a la última columna-->
+					<span class="generic-widget"></span>
+				</td>
+			</tr>
+		</table>
+
+		<hr/>
+
+		<table class="Tabla">
+			<tr>
+				<td>
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<input class="boolean" name="hay_nombre_comun" id="hay_nombre_comun" type="checkbox" value="on"/>
+					</div>
+					<div class="FlotaIzquierda" style="padding-right:22px;">
+						<label for="nombre_comun">Nombre común</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_comun" id="nombre_comun" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<input class="boolean" name="hay_nombre_cientifico" id="hay_nombre_cientifico" type="checkbox" value="on"/>
+					</div>
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<label for="nombre_cientifico">Nombre científico</label>
+					</div>
+					<div class="FlotaIzquierda">
+						<input class="string" name="nombre_cientifico" id="nombre_cientifico" type="text" value=""/>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+		<hr/>
+
+		<table class="Tabla">
+			<tr>
+				<td>
+					<label for="largo">Largo (cm)</label>
+					<input class="double obligatorio" name="largo" id="largo" type="text" value=""/>
+				</td>
+				<td>
+					<label for="ancho">Ancho (cm)</label>
+					<input class="double obligatorio" name="ancho" id="ancho" type="text" value=""/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<label for="archivos_huella_excreta">Subir archivos</label>
+					<input type="file" class="obligatorio" id="archivos_huella_excreta" name="archivos_huella_excreta" multiple/>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<br/>
+	<br/>
+	<input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+</form>
+
+<br/>
+<br/>
+
+<fieldset>
+	<legend>
+		Revisión de registros
+	</legend>
+	{{=grid}}
+</fieldset>
+
+<script>
+
+	//////////////////////////////////////////
+	//AJAX para llenar la combobox con los transectos declarados como existentes
+	// al elegir el conglomerado
+	//////////////////////////////////////////
+
+	$('#conglomerado_muestra_id').change(
+		function()
+		{
+			$('#transecto_muestra_id').remove();
+
+			//ajax es una función de Web2py que simplifica la función homónima
+			// de JQuery. Recibe el URL destino, los nombres de los campos que
+			//se enviarán y el ID del elemento donde se insertará la respuesta
+			ajax("{{=URL('asignarTransectos')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+		}
+	)
+
+	//////////////////////////////////////////
+	// Este código se ejecuta en cuanto el html termina de llegar al navegador:
+	//////////////////////////////////////////
+
+	$(document).ready
+	(
+		function()
+		{
+			/* Cuando el documento se carga, las casillas para seleccionar nombres
+		   están seleccionadas y los campos de texto son visibles (default):*/
+			$('#hay_nombre_comun').prop('checked', true);
+
+			$('#hay_nombre_cientifico').prop('checked', true);
+		}
+	)
+
+	//////////////////////////////////////////
+	// Funcionamiento de la vista
+	//////////////////////////////////////////
+
+	/* Fade in/out de los campos de ingreso de nombre común/científico, de
+	acuerdo a si se marcó o no la casilla correspondiente*/
+
+	$('#hay_nombre_comun').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('#nombre_comun').fadeIn();
+			else
+				$('#nombre_comun').fadeOut();
+		}
+	)
+
+	$('#hay_nombre_cientifico').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('#nombre_cientifico').fadeIn();
+			else
+				$('#nombre_cientifico').fadeOut();
+		}
+	)
+
+	/* Los campos de clase double no deben contener comas*/
+	$('.double').change
+	(
+		function()
+		{
+			var comaReg = /,/;
+			if(comaReg.test($(this).val()))
+			{
+				alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
+				$(this).val("");
+			}
+		}
+	)
+
+	//////////////////////////////////////////
+	// Validaciones a la hora de enviar la forma
+	//////////////////////////////////////////
+
+	$('form').submit
+	(
+		function()
+		{
+			// Validando los campos obligatorios
+
+			flag = true;
+			campos=$('.obligatorio');
+			campos.each(function() 
+			{
+				if(!$(this).val())
+				{
+					 flag = false;
+				}
+			}
+			);
+
+			// Validando los radio-botones
+
+			if(!$('input:radio[name=es_huella_excreta]:checked').val())
+			{
+				flag = false;
+				//alert('falta presionar un radio-botón');
+			}
+
+			/* faltanNombres es un indicador para enviar un mensaje que indique
+			que es necesario que se escriban ya sea el nombre común o el
+			científico de la especie*/
+
+			faltanNombres = false;
+
+			//Si no se marcó ninguna casilla para ingresar el nombre
+
+			if(!$('#hay_nombre_comun').prop('checked') && !$('#hay_nombre_cientifico').prop('checked'))
+			{
+				flag = false;
+				faltanNombres = true;
+				//alert('caso1');
+			}
+			else if($('#hay_nombre_comun').prop('checked') && !$('#nombre_comun').val())
+			/* Si se marcó la casilla de nombre común pero no se escribió
+			nada en el campo subsecuente.*/
+			{
+				flag = false;
+				faltanNombres = true;
+				//alert('caso2');
+			}
+
+			//Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
+			else if($('#hay_nombre_cientifico').prop('checked') && !$('#nombre_cientifico').val())
+			{
+				flag = false;
+				faltanNombres = true;
+				//alert('caso3');
+			}
+
+			if(!flag)
+			{
+				if(faltanNombres)
+					alert('Favor de escribir al menos un nombre (ya sea común científico)');
+				else
+					alert('Faltó llenar algún campo o subir alguna imagen');
+
+				return false;
+			}
+		}
+	)
+</script>

@@ -49,28 +49,22 @@
 		<table class="No_GPS">
 			<tr>
 				<td>
-					<div>
-						<label for="conglomerado_muestra_id">Conglomerado</label>
-					</div>
-					<div>
-						<!--este campo, en realidad sólo sirve para encontrar
-						con AJAX los sitios existentes asociados al conglomerado
-						elegido. Al enviar la forma al controlador, se utilizará únicamente el id del sitio (de la dropdown generada
-						mediante AJAX)-->
-						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
-							<option value=""/>
-							{{for conglomerado in listaConglomerado:}}
-								<option value="{{=conglomerado.id}}">
-									{{=conglomerado.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
+					<label for="conglomerado_muestra_id">Conglomerado</label>
+					<!--este campo, en realidad sólo sirve para encontrar
+					con AJAX los sitios existentes asociados al conglomerado
+					elegido. Al enviar la forma al controlador, se utilizará únicamente el id del sitio (de la dropdown generada
+					mediante AJAX)-->
+					<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+						<option value=""/>
+						{{for conglomerado in listaConglomerado:}}
+							<option value="{{=conglomerado.id}}">
+								{{=conglomerado.nombre}}
+							</option>
+						{{pass}}
+					</select>
 				</td>                
 				<td>
-					<div>
-						<label for="sitio_muestra_id">Sitio</label>
-					</div>
+					<label for="sitio_muestra_id">Sitio</label>
 					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
 					<div id="shadow_clone">
 						<select class="generic-widget" name="sitio_muestra_id" id="sitio_muestra_id">
@@ -83,68 +77,39 @@
 			</tr>
 			<tr>
 				<td>
-					<div>
-						<label for="fecha_inicio">Fecha inicio 
-						</label>
-					</div>
-					<div>
-						<input class="date obligatorio" name="fecha_inicio" id="fecha_inicio" type="text" value=""/>
-					</div>
+					<label for="fecha_inicio">Fecha inicio</label>
+					<input class="date obligatorio" name="fecha_inicio" id="fecha_inicio" type="text" value=""/>
 				</td>
 				<td>
-					<div>
-						<label for="hora_inicio">Hora inicio (24 horas)</label>
-					</div>
-					<div>
-						<input class="time obligatorio" name="hora_inicio" id="hora_inicio" type="text" value=""/>
-					</div>
+					<label for="hora_inicio">Hora inicio (24 horas)</label>
+					<input class="time obligatorio" name="hora_inicio" id="hora_inicio" type="text" value=""/>
 				</td>
 				<td>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<div>
-						<label for="fecha_termino">Fecha término
-						</label>
-					</div>
-					<div>
-						<input class="date obligatorio" name="fecha_termino" id="fecha_termino" type="text" value=""/>
-					</div>
+					<label for="fecha_termino">Fecha término</label>
+					<input class="date obligatorio" name="fecha_termino" id="fecha_termino" type="text" value=""/>
 				</td>
 				<td>
-					<div>
-						<label for="hora_termino">Hora término (24 horas)</label>
-					</div>
-					<div>
-						<input class="time obligatorio" name="hora_termino" id="hora_termino" type="text" value=""/>
-					</div>
+					<label for="hora_termino">Hora término (24 horas)</label>
+					<input class="time obligatorio" name="hora_termino" id="hora_termino" type="text" value=""/>
 				</td>
 				<td>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<div>
-						<label for="distancia_centro">Distancia al centro del sitio (m)*</label>
-					</div>
-					<div>
-						<input class="double" name="distancia_centro" id="distancia_centro" type="text" value=""/>
-					</div>
+					<label for="distancia_centro">Distancia al centro del sitio (m)*</label>
+					<input class="double" name="distancia_centro" id="distancia_centro" type="text" value=""/>
 				</td>
 				<td>
-					<div>
-						<label for="azimut">Azimut (º)*</label>
-					</div>
-					<div>
-						<input class="double" name="azimut" id="azimut" type="text" value=""/>
-					</div>
+					<label for="azimut">Azimut (º)*</label>
+					<input class="double" name="azimut" id="azimut" type="text" value=""/>
 				</td>
 				<td>
-					<div>
-						<label for="condiciones_ambientales">Condiciones ambientales</label>
-					</div>
-					<div>
+					<label for="condiciones_ambientales">Condiciones ambientales</label>
 					<select class="generic-widget obligatorio" name="condiciones_ambientales" id="condiciones_ambientales">
 						<option value=""/>
 						{{for condicion in listaCondicionesAmbientales:}}
@@ -153,7 +118,6 @@
 							</option>
 						{{pass}}
 					</select>
-					</div>
 				</td>
 			</tr>
 		</table>
@@ -240,59 +204,43 @@
 				</td>
 			</tr>
 		</table>
-		<div>
-			<p>
-				<strong>Nota importante</strong>: las coordenadas deben escribirse en grados, minutos y segundos. Por ejemplo: 25º13'46.53''. En este caso, en la casilla de "Grado" se escribirá 25, en la de "Minuto" 13, y en la de "Segundo" 46.53. Si las coordenadas leídas del GPS no tienen el formato anterior, por ejemplo, si están escritas como 25º13.7755' ó incluso como 25.2296º, hay que cambiar el formato. Para ello, utilizar la siguiente <a href = "http://rumkin.com/tools/gps/degrees.php" target = "_blank">calculadora</a>.
-			</p>
-		</div>
+		<p>
+			<strong>Nota importante</strong>: las coordenadas deben escribirse en grados, minutos y segundos. Por ejemplo: 25º13'46.53''. En este caso, en la casilla de "Grado" se escribirá 25, en la de "Minuto" 13, y en la de "Segundo" 46.53. Si las coordenadas leídas del GPS no tienen el formato anterior, por ejemplo, si están escritas como 25º13.7755' ó incluso como 25.2296º, hay que cambiar el formato. Para ello, utilizar la siguiente <a href = "http://rumkin.com/tools/gps/degrees.php" target = "_blank">calculadora</a>.
+		</p>
+
 		<hr/>
+
 		<table class="No_GPS">
 			<tr>
 				<td>
-					<div>
-						<label for="nombre">Código cámara</label>
-					</div>
-					<div>
-						<input class="string obligatorio" name="nombre" id="nombre" type="text"/>
-					</div>
+					<label for="nombre">Código cámara</label>
+					<input class="string obligatorio" name="nombre" id="nombre" type="text"/>
 				</td>
 				<td>
-					<div>
-						<label for="resolucion">Resolución</label>
-					</div>
-					<div>
-						<select class="generic-widget obligatorio" name="resolucion" id="resolucion">
-							<option value=""/>
-							{{for resolucion in listaResolucion:}}
-								<option value="{{=resolucion.nombre}}">
-									{{=resolucion.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
+					<label for="resolucion">Resolución</label>
+					<select class="generic-widget obligatorio" name="resolucion" id="resolucion">
+						<option value=""/>
+						{{for resolucion in listaResolucion:}}
+							<option value="{{=resolucion.nombre}}">
+								{{=resolucion.nombre}}
+							</option>
+						{{pass}}
+					</select>
 				</td>
 				<td>
-					<div>
-						<label for="sensibilidad">Sensibilidad</label>
-					</div>
-					<div>
-						<select class="generic-widget obligatorio" name="sensibilidad" id="sensibilidad">
-							<option value=""/>
-							{{for sensibilidad in listaSensibilidad:}}
-								<option value="{{=sensibilidad.nombre}}">
-									{{=sensibilidad.nombre}}
-								</option>
-							{{pass}}
-						</select>
-					</div>
+					<label for="sensibilidad">Sensibilidad</label>
+					<select class="generic-widget obligatorio" name="sensibilidad" id="sensibilidad">
+						<option value=""/>
+						{{for sensibilidad in listaSensibilidad:}}
+							<option value="{{=sensibilidad.nombre}}">
+								{{=sensibilidad.nombre}}
+							</option>
+						{{pass}}
+					</select>
 				</td>
 				<td>
-					<div>
-						<label for="imagen_camara">Foto cámara y GPS</label>
-					</div>
-					<div>
-						<input class="obligatorio" type="file" id="imagen_camara" name="imagen_camara"/>
-					</div>
+					<label for="imagen_camara">Foto cámara y GPS</label>
+					<input class="obligatorio" type="file" id="imagen_camara" name="imagen_camara"/>
 				</td>
 			</tr>
 		</table>

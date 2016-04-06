@@ -1,0 +1,434 @@
+{{extend 'layout.html'}}
+
+{{block head}}
+	<style type="text/css">
+
+		.Tabla .generic-widget
+		{
+			margin-right: 2cm;
+			width: 4.4cm;
+		}
+
+		/* Se usa la clase TablaTransectos para formatear la tabla de información de
+		transectos */
+
+		.TablaTransectos .date, .TablaTransectos .time
+		{
+			width: 2cm;
+		}
+
+		/* La clase estático es para que el header de la tabla permanezca fijo,
+		si desaparecen todos los registros*/
+		.TablaTransectos .Estatico2cm
+		{
+			/* La razón de sumar 0.5cm es porque Web2py formatea los divs con un
+			padding de 0.25cm de cada lado. hay que tomar ésto en cuenta para
+			cuadrar la tabla */
+			width: 2.5cm;
+		}
+
+		.TablaTransectos .string
+		{
+			width: 4cm;
+		}
+
+		.TablaTransectos .Estatico4cm
+		{
+			width: 4.5cm;
+		}
+
+
+		.Centrar
+		{
+			text-align: center;
+		}
+ 
+		#enviar
+		{
+			float: left;
+		}
+	</style>
+{{end}}
+
+<form action="" enctype="multipart/form-data" method="post" id="forma">
+	<fieldset>
+		<legend>
+			Datos de los transectos de especies invasoras y huellas/excretas
+		</legend>
+		<input type="hidden"  name="_formname" value="formaTransectosHTML"/>
+		<table class="Tabla">
+			<tr>
+				<td>
+					<label for="conglomerado_muestra_id">Conglomerado</label>
+					<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+						<option value=""/>
+						{{for conglomerado in listaConglomerado:}}
+							<option value="{{=conglomerado.id}}">
+								{{=conglomerado.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>                
+			</tr>
+		</table>
+
+		<hr/>
+		<table class="TablaTransectos">
+
+			<tr>
+				<th class="Centrar">Muestreado</td>
+				<th class="Centrar">Elemento</td>
+				<th class="Centrar Estatico2cm">Fecha</td>
+				<th class="Centrar Estatico2cm">Hora de <br/>inicio (24h)</td>
+				<th class="Centrar Estatico2cm">Hora de <br/>término (24h)</td>
+				<th class="Centrar Estatico4cm">Técnico</td>
+				<th class="Centrar">Observaciones</td>
+			</tr>
+
+			<tr>
+				<td class="Centrar">
+					<input class="boolean" name="existe_2" id="existe_2" type="checkbox" value="on"/>
+				</td>
+				<td class="Centrar">
+					Transecto 2
+				</td>
+				<td>
+					<!--La clase Transecto_info_2 sirve para el JQuery que
+					desvanece/reaparece el campo, además de para validar que los
+					campos estén llenos si la casilla "existe_2" está marcada-->
+					<div class="Transecto_info_2">
+						<input class="date" name="fecha_2" id="fecha_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Transecto_info_2">
+						<input class="time" name="hora_inicio_2" id="hora_inicio_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Transecto_info_2">
+						<input class="time" name="hora_termino_2" id="hora_termino_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Transecto_info_2">
+						<input class="string" name="tecnico_2" id="tecnico_2" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<textarea class="text" cols="40" id="comentario_2" name="comentario_2" rows="5"></textarea>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="Centrar">
+					<input class="boolean" name="existe_3" id="existe_3" type="checkbox" value="on"/>
+				</td>
+				<td class="Centrar">
+					Transecto 3
+				</td>
+				<td>
+					<!--La clase Transecto_info_3 sirve para el JQuery que
+					desvanece/reaparece el campo, además de para validar que los
+					campos estén llenos si la casilla "existe_2" está marcada-->
+					<div class="Transecto_info_3">
+						<input class="date" name="fecha_3" id="fecha_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Transecto_info_3">
+						<input class="time" name="hora_inicio_3" id="hora_inicio_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Transecto_info_3">
+						<input class="time" name="hora_termino_3" id="hora_termino_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Transecto_info_3">
+						<input class="string" name="tecnico_3" id="tecnico_3" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<textarea class="text" cols="40" id="comentario_3" name="comentario_3" rows="5"></textarea>
+				</td>
+			</tr>
+
+			<tr>
+				<td class="Centrar">
+					<input class="boolean" name="existe_4" id="existe_4" type="checkbox" value="on"/>
+				</td>
+				<td class="Centrar">
+					Transecto 4
+				</td>
+				<td>
+					<!--La clase Transecto_info_4 sirve para el JQuery que
+					desvanece/reaparece el campo, además de para validar que los
+					campos estén llenos si la casilla "existe_2" está marcada-->
+					<div class="Transecto_info_4">
+						<input class="date" name="fecha_4" id="fecha_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Transecto_info_4">
+						<input class="time" name="hora_inicio_4" id="hora_inicio_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Transecto_info_4">
+						<input class="time" name="hora_termino_4" id="hora_termino_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<div class="Transecto_info_4">
+						<input class="string" name="tecnico_4" id="tecnico_4" type="text" value=""/>
+					</div>
+				</td>
+				<td>
+					<textarea class="text" cols="40" id="comentario_4" name="comentario_4" rows="5"></textarea>
+				</td>
+			</tr>
+		</table>
+	</fieldset>
+	<br/>
+	<br/>
+
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
+</form>
+
+<script>
+
+	//////////////////////////////////////////
+	// AJAX para advertir al usuario que los transectos asociados a un
+	// conglomerado ya han sido declarados con anterioridad
+	//////////////////////////////////////////
+
+	$('#conglomerado_muestra_id').change
+	(
+		function()
+		{
+			$.ajax
+			(
+			{
+				type: "POST",
+				data: $('#forma').serialize(),
+				url: "{{=URL('transectosExistentes')}}",
+				success: function(resultado)
+				{
+						//alert(resultado);
+						if(resultado >= 1)
+						{
+							alert('Los transectos de este conglomerado' + 
+								' ya han sido declarados');
+							$('#conglomerado_muestra_id').val("");
+						}
+				}
+			}
+			);
+		}
+		);
+
+	//////////////////////////////////////////
+	// Este código se ejecuta en cuanto el html termina de llegar al navegador:
+	//////////////////////////////////////////
+
+	$(document).ready
+	(
+		function()
+		{	
+
+			alert('Ahora sólo se pueden declarar todos los transectos asociados' +
+				' a un conglomerado al mismo tiempo. Por ello, si un transecto' +
+				' no fue declarado por error, se deben eliminar todos los asociados' +
+				' al conglomerado en cuestión, y posteriormente declararlos nuevamente');
+	
+			/* Cuando el documento se carga, se muestran los transectos como si
+			existieran*/
+			$('#existe_2').prop('checked', true);
+			$('.Transecto_info_2').show();
+			
+			$('#existe_3').prop('checked', true);
+			$('.Transecto_info_3').show();
+			
+			$('#existe_4').prop('checked', true);
+			$('.Transecto_info_4').show();
+		}
+	)
+
+	//////////////////////////////////////////
+	// Funcionamiento de la vista
+	//////////////////////////////////////////
+
+
+	/* Cuando se cambia el valor de la casilla "existe" asociada a un transecto, 
+	desaparecen o reaparecen los campos correspondientes, dependiendo si el
+	transecto existe o no.*/
+	
+	$('#existe_2').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Transecto_info_2').fadeIn();
+			else
+				$('.Transecto_info_2').fadeOut();
+		}
+	)
+
+	$('#existe_3').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Transecto_info_3').fadeIn();
+			else
+				$('.Transecto_info_3').fadeOut();
+		}
+	)
+
+	$('#existe_4').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Transecto_info_4').fadeIn();
+			else
+				$('.Transecto_info_4').fadeOut();
+		}
+	)
+
+	//////////////////////////////////////////
+	// Validaciones a la hora de enviar la forma
+	//////////////////////////////////////////
+
+	$('form').submit
+	(
+		function()
+		{
+			// Validando los campos obligatorios
+			flag = true;
+			campos = $('.obligatorio');
+			campos.each(function() 
+			{
+				if(!$(this).val())
+				{
+					 flag = false;
+				}
+			}
+			);
+
+			/* Validando que los campos correspondientes a un transecto 2, 3, 4
+			estén llenos si estos existen */
+
+			if($('#existe_2').prop('checked'))
+			{
+				campos = $('.Transecto_info_2 input');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_3').prop('checked'))
+			{
+				campos = $('.Transecto_info_3 input');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_4').prop('checked'))
+			{
+				campos = $('.Transecto_info_4 input');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			/* Validando que la fecha esté en formato adecuado para que Web2py no
+			tenga problemas. fechaReg es una expresión regular par validar el
+			formato aaaa-mm-dd.*/
+
+			var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
+			campos_fecha = $('.date');
+			flag_f = true;
+			campos_fecha.each(function(){   
+				if(!fechaReg.test($(this).val()))
+				{
+					flag_f = false;
+				}
+				// Revisando que el mes y el día estén en un rango aceptable:
+				else
+				{
+					/* match contiene como primer elemento, el match de toda la
+					regex, y como elementos posteriores, el match de los elementos
+					en paréntesis de la regex (en órden). */
+					var match = fechaReg.exec($(this).val());
+					//alert(match);
+
+					//Validando que el mes se encuentre en un rango aceptable:
+					if(match[1]<1 || match[1]>12)
+					{
+						//alert('El mes es incorrecto');
+						//alert(match[1]);
+						flag_f = false;
+					}
+
+					//Validando que el día se encuentre en un rango aceptable:
+					if(match[2]<1 || match[2]>31)
+					{
+						//alert('El día es incorrecto');
+						//alert(match[2]);
+						flag_f = false;
+					}
+				}
+			});
+
+			// Juntando todas las validaciones:
+
+			if(!flag)
+			{
+				alert('Faltó llenar algún campo');
+				return false;
+			}
+			else if(!flag_f){
+				alert('El formato de fecha es aaaa-mm-dd');
+				return false;
+			}
+
+			// Validando que la hora de inicio sea menor que la de término
+
+			else
+			{
+				var hora_inicio = $('#hora_inicio').val();
+				var hora_termino = $('#hora_termino').val();
+
+				/* Usando el órden lexicográfico natural de strings para
+				comparar fechas: */
+				if(hora_inicio > hora_termino)
+				{
+					alert('La hora de inicio debe ser menor a la hora de término');
+					return false;
+				}
+			}
+		}
+	)
+</script>

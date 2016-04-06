@@ -235,7 +235,7 @@ def index2():
 		pass
 
 	##############################################################
-	# Enviando la información de la dropdown de conglomerado
+	# Procesando la información de la dropdown de conglomerado
 	##############################################################
 
 	# Regresando los nombres de todos los conglomerados insertados en la tabla de

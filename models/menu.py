@@ -33,8 +33,8 @@ response.menu = [
     #   (T('Observaciones aves'), False, URL('10_conteo_aves', 'index2'))]),
 
     ### Especies invasoras y huellas/excretas
-    (T('Especies invasoras y huellas/excretas'), False, URL('04_especies_invasoras', 'index1'), [
-      (T('Transecto especies invasoras'), False, URL('04_especies_invasoras', 'index1')),
+    (T('Especies invasoras y huellas/excretas'), False, URL('04_invasoras_huellas_excretas', 'index1'), [
+      (T('Transecto especies invasoras'), False, URL('04_invasoras_huellas_excretas', 'index1')),
       (T('Registros especies invasoras'), False, URL('04_especies_invasoras', 'index2')),
       (T('Registros huellas y excretas'), False, URL('05_huellas_excretas', 'index2'))]),
 

@@ -10,16 +10,14 @@
 
 Campos_Transecto_muestra =[
 
-	Field('conglomerado_muestra_id','reference Conglomerado_muestra',
-		required=True),
-	Field('fecha','date',required=True),
-
-	#Se insertará a partir de un catálogo
+	Field('conglomerado_muestra_id','reference Conglomerado_muestra',required=True),
 	Field('transecto_numero','string', required=True),
+	Field('existe','boolean',required=True),
 
-	Field('tecnico','string',required=True),
-	Field('hora_inicio','time',required=True),
-	Field('hora_termino','time',required=True),
+	Field('tecnico','string'),
+	Field('fecha','date'),
+	Field('hora_inicio','time'),
+	Field('hora_termino','time'),
 	Field('comentario','text')
 ]
 
