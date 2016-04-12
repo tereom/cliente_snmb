@@ -22,23 +22,43 @@ response.google_analytics_id = None
 ## this is the main application menu add/remove items as required
 #########################################################################
 
+#########################################################################
+#########################################################################
+# <Editado para el cliente>
+#########################################################################
+#########################################################################
+
 response.menu = [
     # describe el menú de la parte superior del cliente
 
+    ###########################################
+    # Conglomerado
+    ###########################################
+
     (T('Conglomerado'), False, URL('01_conglomerado', 'index'), []),
 
-    # ### Conteo de aves
+    ###########################################
+    # Conteo de aves
+    ###########################################
+
     # (T('Conteo de aves'), False, URL('10_conteo_aves', 'index1'), [
     #   (T('Punto de conteo'), False, URL('10_conteo_aves', 'index1')),
     #   (T('Observaciones aves'), False, URL('10_conteo_aves', 'index2'))]),
 
-    ### Especies invasoras y huellas/excretas
-    (T('Especies invasoras y huellas/excretas'), False, URL('04_invasoras_huellas_excretas', 'index1'), [
-      (T('Transecto especies invasoras'), False, URL('04_invasoras_huellas_excretas', 'index1')),
-      (T('Registros especies invasoras'), False, URL('04_especies_invasoras', 'index2')),
-      (T('Registros huellas y excretas'), False, URL('05_huellas_excretas', 'index2'))]),
+    ###########################################
+    # Especies invasoras y huellas/excretas
+    ###########################################
 
-    # ### Carbono
+    (T('Especies invasoras y huellas/excretas'), False, URL('04_invasoras_huellas_excretas', 'index1'), [
+      (T('Transectos'), False, URL('04_invasoras_huellas_excretas', 'index1')),
+      (T('Registros especies invasoras'), False, URL('04_invasoras_huellas_excretas', 'index2')),
+      (T('Registros huellas y excretas'), False, URL('04_invasoras_huellas_excretas', 'index3'))
+    ]),
+
+    ###########################################
+    # Carbono
+    ###########################################
+
     # (T('Vegetación y suelo'), False, URL('11_carbono', 'index1'), [
     #   (T('Material leñoso caído'), False, URL('11_carbono', 'index1')),
     #   (T('Material 1000h'), False, URL('11_carbono', 'index2')),
@@ -56,48 +76,67 @@ response.menu = [
     #   (T('Impactos actuales'),False,URL('13_impactos_ambientales','index1'))
     #   ]),
 
-    ### Camara
+    ###########################################
+    # Cámara
+    ###########################################
+
     (T('Trampa cámara'), False, URL('02_camara', 'index1'), [
       (T('Información de trampa cámara'), False, URL('02_camara', 'index1')),
       (T('Archivos trampa cámara'), False, URL('02_camara', 'index2')),
       # Revisión de imágenes
       (T('Selección de fauna'), False, URL('08_revision', 'index'))]),
     
-    ### Grabadora
+    ###########################################
+    # Grabadora
+    ###########################################
+
     (T('Grabadora'), False, URL('03_grabadora', 'index1'), [
       (T('Información de grabadora'), False, URL('03_grabadora', 'index1')),
       (T('Archivos de audio'), False, URL('03_grabadora', 'index2'))]),
 
-    ### Registros extra
-    (T('Registros extra'), False, URL('06_registros_extra', 'index1'), [
-      (T('Especies invasoras'), False, URL('06_registros_extra', 'index1')),
-      (T('Huellas y excretas'), False, URL('06_registros_extra', 'index2')),
-      (T('Especímenes y restos'), False, URL('06_registros_extra', 'index3'))]),
+    ###########################################
+    # Registros extra
+    ###########################################
 
-    ### Edición
-    (T('Revisar registros'), False, URL('07_edicion', 'editarConglomerado'), [
-      (T('Conglomerado'), False, URL('07_edicion', 'editarConglomerado')),
-      (T('Conteo de aves'), False, URL('07_edicion', 'editarConteoAves')),
-      (T('Especies Invasoras'), False, URL('07_edicion', 'editarEspeciesInvasoras')),
-      (T('Huellas y excretas'), False, URL('07_edicion', 'editarHuellasExcretas')),
-      (T('Material leñoso'), False, URL('07_edicion', 'editarCarbonoRamas')),
-      (T('Carbono mantillo'), False, URL('07_edicion', 'editarCarbono')),
-      (T('Árboles pequeños'), False, URL('07_edicion', 'editarArbolTransecto')),
-      (T('Árboles grandes'), False, URL('07_edicion', 'editarArbolCuadrante')),
-      (T('Epífitas'), False, URL('07_edicion', 'editarEpifitas')),
-      (T('Incendios'), False, URL('07_edicion', 'editarIncendio')),
-      (T('Plagas'), False, URL('07_edicion', 'editarPlaga')),
-      (T('Impactos ambientales'), False, URL('07_edicion', 'editarImpacto')),
-      (T('Trampa cámara'), False, URL('07_edicion', 'editarCamara')),
-      (T('Grabadora'), False, URL('07_edicion', 'editarGrabadora')),
-      (T('Especies Invasoras extra'), False, URL('07_edicion', 'editarEspeciesInvasorasExtra')),
-      (T('Huellas y excretas extra'), False, URL('07_edicion', 'editarHuellasExcretasExtra')),
-      (T('Especímenes extra'), False, URL('07_edicion', 'editarEspecimenExtra')),
+    (T('Registros extra'), False, URL('05_registros_extra', 'index1'), [
+      (T('Especies invasoras'), False, URL('05_registros_extra', 'index1')),
+      (T('Huellas y excretas'), False, URL('05_registros_extra', 'index2')),
+      (T('Especímenes y restos'), False, URL('05_registros_extra', 'index3'))]),
+
+    ###########################################
+    # Revisar registros
+    ###########################################
+    
+    (T('Revisar registros'), False, URL('09_revisar_registros', 'conglomerado'), [
+      (T('Conglomerado'), False, URL('09_revisar_registros', 'conglomerado')),
+      #(T('Conteo de aves'), False, URL('09_revisar_registros', 'editarConteoAves')),
+      (T('Especies invasoras y huellas/excretas'), False, URL('09_revisar_registros', 'invasoras_huellas_excretas')),
+      #(T('Material leñoso'), False, URL('09_revisar_registros', 'editarCarbonoRamas')),
+      #(T('Carbono mantillo'), False, URL('09_revisar_registros', 'editarCarbono')),
+      #(T('Árboles pequeños'), False, URL('09_revisar_registros', 'editarArbolTransecto')),
+      #(T('Árboles grandes'), False, URL('09_revisar_registros', 'editarArbolCuadrante')),
+      #(T('Epífitas'), False, URL('09_revisar_registros', 'editarEpifitas')),
+      #(T('Incendios'), False, URL('09_revisar_registros', 'editarIncendio')),
+      #(T('Plagas'), False, URL('09_revisar_registros', 'editarPlaga')),
+      #(T('Impactos ambientales'), False, URL('09_revisar_registros', 'editarImpacto')),
+      (T('Cámara'), False, URL('09_revisar_registros', 'camara')),
+      (T('Grabadora'), False, URL('09_revisar_registros', 'grabadora')),
+      (T('Registros extra'), False, URL('09_revisar_registros', 'registros_extra'))
       ]),
     
-    # Exportación
-    (T('Exportar datos'), False, URL('09_exportador', 'index'), [])
+    ###########################################
+    # Exportar datos
+    ###########################################
+
+    (T('Exportar datos'), False, URL('10_exportar_datos', 'index'), [])
     ]
+
+#########################################################################
+#########################################################################
+# </Editado para el cliente>
+#########################################################################
+#########################################################################
+
     
 DEVELOPMENT_MENU = False
 
@@ -207,6 +246,7 @@ def _():
                         ])
                 ]
          )]
+
 if DEVELOPMENT_MENU: _()
 
 if "auth" in locals(): auth.wikimenu()

@@ -333,8 +333,8 @@ def index2():
 	listaConglomerado = db(db.Conglomerado_muestra).select(
 		db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
 
-	#De la misma manera, llenando la lista Invasoras (en este caso no requerimos
-	#de los ID's, pues se guardará el nombre) y la lista de número de individuos
+	# De la misma manera, llenando la lista de invasoras (en este caso no requerimos
+	# de los ID's, pues se guardará el nombre) y la lista de número de individuos
 
 	listaInvasoras = db(db.Cat_conabio_invasoras).select(db.Cat_conabio_invasoras.nombre)
 
@@ -351,10 +351,10 @@ def index2():
 		csv=False,user_signature=False,
 		create=False,searchable=False,editable=False)
 
-	return dict(listaConglomerado=listaConglomerado,\
-		listaInvasoras=listaInvasoras,\
-		listaNumIndividuos=listaNumIndividuos, 
-		grid=grid)
+	return dict(listaConglomerado = listaConglomerado,\
+		listaInvasoras = listaInvasoras,\
+		listaNumIndividuos = listaNumIndividuos,\
+		grid = grid)
 
 def asignarTransectos():
 

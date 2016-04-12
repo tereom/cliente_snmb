@@ -3,6 +3,16 @@
 ## En esta sección se definen las tablas de los menus desplegables
 
 ##########################################################################
+## Versión del cliente
+########################################################################
+
+db.define_table('Version_cliente', Field('v', 'string', required='TRUE'))
+
+## El if indica que las tablas se llenarán únicamente cuando estan vacías
+if db(db.Version_cliente.id>0).count() == 0:
+    db.Version_cliente.insert(v='5')
+
+##########################################################################
 ## Pestaña Conglomerado
 ########################################################################
 
@@ -202,6 +212,16 @@ if db(db.Cat_sensibilidad_camara.id>0).count() == 0:
     db.Cat_sensibilidad_camara.insert(nombre='High')
     db.Cat_sensibilidad_camara.insert(nombre='Low')
 
+#########################################################################
+
+db.define_table('Cat_condiciones_ambientales',Field('nombre','string', required='TRUE'))
+
+if db(db.Cat_condiciones_ambientales.id>0).count() == 0:
+    db.Cat_condiciones_ambientales.insert(nombre='Ninguna')
+    db.Cat_condiciones_ambientales.insert(nombre='Lluvia')
+    db.Cat_condiciones_ambientales.insert(nombre='Viento')
+    db.Cat_condiciones_ambientales.insert(nombre='Nieve')
+    db.Cat_condiciones_ambientales.insert(nombre='Neblina')
 
 ##########################################################################
 ## Pestaña Grabadora

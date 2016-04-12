@@ -51,11 +51,12 @@
 {{end}}
 
 <form action="" enctype="multipart/form-data" method="post" id="forma">
+	<input type="hidden"  name="_formname" value="formaTransectosHTML"/>
+
 	<fieldset>
 		<legend>
 			Datos de los transectos de especies invasoras y huellas/excretas
 		</legend>
-		<input type="hidden"  name="_formname" value="formaTransectosHTML"/>
 		<table class="Tabla">
 			<tr>
 				<td>
@@ -73,8 +74,8 @@
 		</table>
 
 		<hr/>
-		<table class="TablaTransectos">
 
+		<table class="TablaTransectos">
 			<tr>
 				<th class="Centrar">Muestreado</td>
 				<th class="Centrar">Elemento</td>
@@ -84,7 +85,6 @@
 				<th class="Centrar Estatico4cm">Técnico</td>
 				<th class="Centrar">Observaciones</td>
 			</tr>
-
 			<tr>
 				<td class="Centrar">
 					<input class="boolean" name="existe_2" id="existe_2" type="checkbox" value="on"/>
@@ -119,7 +119,6 @@
 					<textarea class="text" cols="40" id="comentario_2" name="comentario_2" rows="5"></textarea>
 				</td>
 			</tr>
-
 			<tr>
 				<td class="Centrar">
 					<input class="boolean" name="existe_3" id="existe_3" type="checkbox" value="on"/>
@@ -154,7 +153,6 @@
 					<textarea class="text" cols="40" id="comentario_3" name="comentario_3" rows="5"></textarea>
 				</td>
 			</tr>
-
 			<tr>
 				<td class="Centrar">
 					<input class="boolean" name="existe_4" id="existe_4" type="checkbox" value="on"/>

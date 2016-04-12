@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
-# intente algo como
+
 def index():
 
-#Forma para que el usuario introduzca el nombre del archivo a exportar.
-
+    ## Controlador correspondiente a la pestaña "Exportar_datos", de la sección
+    ## homónima.
+    
     Campos_forma = [
-        INPUT(_name='nombre_archivo',_type='string',requires=IS_ALPHANUMERIC()),
+        INPUT(_name='nombre_archivo', _type='string', requires=IS_ALPHANUMERIC()),
     ]
 
     forma = FORM(*Campos_forma)
 
     if forma.accepts(request.vars,formname='formaHTML'):
         
-        #Asignando el nombre al archivo CSV que contendrá la base de datos
+        # Asignando el nombre al archivo CSV que contendrá la base de datos
         nombreCSV = "exportacion_" + forma.vars['nombre_archivo'] + ".csv"
         
-        #Generando el archivo
+        # Creando el archivo y escribiendo la información en él.
         db.export_to_csv_file(open(nombreCSV,'w'))
 
         response.flash = 'Éxito'
