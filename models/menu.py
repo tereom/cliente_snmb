@@ -84,7 +84,7 @@ response.menu = [
       (T('Información de trampa cámara'), False, URL('02_camara', 'index1')),
       (T('Archivos trampa cámara'), False, URL('02_camara', 'index2')),
       # Revisión de imágenes
-      (T('Selección de fauna'), False, URL('08_revision', 'index'))]),
+      (T('Selección de fauna'), False, URL('02_camara', 'index3'))]),
     
     ###########################################
     # Grabadora

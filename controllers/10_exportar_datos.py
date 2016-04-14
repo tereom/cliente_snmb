@@ -14,9 +14,11 @@ def index():
     if forma.accepts(request.vars,formname='formaHTML'):
         
         # Asignando el nombre al archivo CSV que contendrá la base de datos
+
         nombreCSV = "exportacion_" + forma.vars['nombre_archivo'] + ".csv"
         
         # Creando el archivo y escribiendo la información en él.
+        
         db.export_to_csv_file(open(nombreCSV,'w'))
 
         response.flash = 'Éxito'

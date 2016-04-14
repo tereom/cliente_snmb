@@ -1,0 +1,303 @@
+{{extend 'layout.html'}}
+
+{{block head}}
+    <style type="text/css">
+
+        #shadow_clone .integer, #shadow_clone .string
+        {
+            width: 4cm;
+        }
+        
+        /* La clase "Estatica" es para que no se mueva la tabla cuando cambian
+        los controles generados mediante AJAX. Como la tabla tiene un sólo
+        renglón se mueve si no ponemos esta clase */
+
+        .generic-widget, .Estatica
+        {
+            margin-right: 2cm;
+            width: 4.4cm;
+        }
+
+    </style>
+{{end}}
+
+<div id="shadow_clone_4">
+    <form id='forma_shadow'>
+    </form>
+</div>
+
+<form>
+    <fieldset>
+        <legend>
+            Selección de fauna
+        </legend>
+
+        <table class="Tabla">
+            <tr>
+                <td>
+                    <label for="conglomerado_muestra_id">Conglomerado</label>
+                    <!--este campo, en realidad sólo sirve para encontrar
+                    con AJAX los sitios existentes asociados al conglomerado
+                    elegido. Al enviar la forma al controlador, se utilizará
+                    únicamente el id del sitio (de la dropdown generada mediante
+                    AJAX)-->
+                    <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+                        <option value=""/>
+                        {{for conglomerado in listaConglomerado:}}
+                            <option value="{{=conglomerado.id}}">
+                                {{=conglomerado.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
+                </td>
+                <td>
+                    <div class="Estatica">
+                        <label for="sitio_muestra_id">Sitio</label>
+                        <!-- El ID es para cambiar la lista de sitios asociados
+                        a un conglomerado dinámicamente, utilizando AJAX-->
+                        <div id="shadow_clone">
+                            <select class="generic-widget" name="sitio_muestra_id" id="sitio_muestra_id">
+                                <option value=""/>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+                <!-- aunque desde el punto de vista lógico, "shadow_clone_2" se
+                debe actualizar antes que "shadow_clone_3", como el primero es un
+                mensaje, creo que es mejor que se despliegue hasta el extremo
+                derecho-->
+                <td>
+                    <div class="Estatica">
+                        <label for="archivo_camara_id">Archivo</label>
+                        <!-- El ID es para cambiar la lista de archivos asociados
+                        a una cámara dinámicamente, utilizando AJAX-->
+                        <div id="shadow_clone_3">
+                            <select class="generic-widget" name="archivo_camara_id" id="archivo_camara_id">
+                                <option value=""/>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div id="shadow_clone_2" class="Mensaje">
+                        <input type='hidden' name='camara_id' id='camara_id' value=''/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </fieldset>
+</form>
+
+
+<script>
+
+    /* Funcionamiento de la pestaña:
+
+    Se actualizan en cascada las combobox de conglomerado, sitio, el mensaje de
+    cámara, la combobox de archivos(en ese orden)-->
+
+    <!--Al elegir un archivo de la combobox de archivos, mediante AJAX, se crea
+    una "forma_shadow" con un input "hidden" que contiene la ID del archivo elegido.
+    Asimismo, se utiliza el nombre de la foto para poder desplegarla en pantalla.
+
+    La forma anterior también tienen un botón de "Enviar", que al
+    hacerle clic envía la información del formulario "forma_shadow" (ID del archivo
+    y hay_individuo, para poder actualizar la base de datos */
+
+    //////////////////////////////////////////
+    // AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+    //////////////////////////////////////////
+
+    $('#conglomerado_muestra_id').change
+    (
+    function()
+    {
+
+        /* Como a la hora de seleccionar el conglomerado, se resetea la combobox
+        de sitio, desaparece el mensaje de camara: */
+
+        $('.Mensaje').hide();
+
+        $('#sitio_muestra_id, #camara_id, #archivo_camara_id, #forma_shadow').remove();
+
+        /* ajax es una función de Web2py que simplifica la función homónima de
+        JQuery recibe el URL destino, los nombres de los campos que se enviarán
+        y el ID del elemento donde se insertará la respuesta. */
+
+        ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+
+        ajax("{{=URL('asignarCamara')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+
+        ajax("{{=URL('asignarArchivos')}}", ['camara_id'], 'shadow_clone_3');
+
+        ajax("{{=URL('asignarInformacionArchivo')}}", ['archivo_camara_id'], 'shadow_clone_4');
+    }
+    );
+
+    //////////////////////////////////////////
+    // AJAX para mandar la información con la cámara declarada al elegir un sitio
+    // y justo después encontrar los archivos correspondientes a esta última
+    //////////////////////////////////////////
+
+    $('#shadow_clone').on('change', '#sitio_muestra_id', function()
+    {
+        /* Aquí usamos la función de JQuery en lugar de la de Web2py, porque
+        necesitamos AJAX sincrónico para que se ejecute correctamente el código
+        que sigue. No así en el caso anterior, en el que al eliminar los elementos
+        cuya información es enviada mediante AJAX antes de cualquiera de éstos,
+        se resetean siempre las combobox en cascada.*/
+
+        $('#camara_id, #archivo_camara_id, #forma_shadow').remove();
+
+        // AJAX para obtener la información de la cámara al ejegir un sitio.
+
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#sitio_muestra_id').serialize(),
+            url: "{{=URL('asignarCamara')}}",
+            async: false,
+            success: function(resultado)
+            {
+                $("#shadow_clone_2").html(resultado);
+            }
+        }
+        );
+
+        if($(this).val())
+        {
+            $('.Mensaje').show();
+        }
+        else
+        {
+            $('.Mensaje').hide();
+        }
+
+        /* AJAX para obtener la información de los archivos correspondientes a
+        la cámara seleccionada */
+
+        $.ajax
+        (
+        {
+            type: "POST",
+            data: $('#camara_id').serialize(),
+            url: "{{=URL('asignarArchivos')}}",
+            async: false,
+            success: function(resultado)
+            {
+                $("#shadow_clone_3").html(resultado);
+            }
+        }
+        );
+
+        /* AJAX para recalcular "forma_shadow" (siempre va a dar como resultado
+        una forma vacía, pues en la combo box de "archivo_camara_id", que se
+        acaba de calcular, no hay ninguna opción seleccionada) */
+
+        ajax("{{=URL('asignarInformacionArchivo')}}", ['archivo_camara_id'], 'shadow_clone_4');
+    }
+    );
+
+    //////////////////////////////////////////
+    // AJAX para obtener la información de un archivo seleccionado
+    //////////////////////////////////////////
+
+    $('#shadow_clone_3').on('change', '#archivo_camara_id', function(){
+    	$('#forma_shadow').remove();
+
+    	ajax("{{=URL('asignarInformacionArchivo')}}", ['archivo_camara_id'], 'shadow_clone_4');
+    }
+   	)
+
+    //////////////////////////////////////////
+    //Fade-in/out del formulario generado por AJAX:
+    //////////////////////////////////////////
+
+    // $(document).on('click', '#con_fauna_evidente', function(){
+    //     $('#info_fauna').fadeIn();
+    // })
+
+    // $(document).on('click', '#sin_fauna_evidente', function(){
+    //     $('#info_fauna').fadeOut();
+    // })
+
+    //////////////////////////////////////////
+    // Validaciones a la hora de enviar la forma
+    //////////////////////////////////////////
+
+    $('#shadow_clone_4').on('click', '#enviar', function (){
+
+        flag = true;
+
+        /* faltanNombres es una bandera para mostrar un mensaje en caso de que
+        no hayan escrito ningún nombre */
+
+        faltanNombres = false;
+
+        // Validando los radio-botones
+
+        if(!$('input:radio[name=fauna_evidente]:checked').val())
+        {
+            flag = false;
+            //alert('falta presionar un radio-botón');
+        }
+
+        /* Si el radio-botón muestra que existe fauna evidente, entonces se
+        valida que esté lleno al menos un campo de nombre (común/científico) y
+        número de individuos. */
+
+        else if($('input:radio[name=fauna_evidente]:checked').val() == 'encontrada')
+        {
+            if(!$('#numero_individuos').val())
+            {
+                flag = false;
+                //alert('Falta ingresar número de individuos');
+            }
+
+            if(!$('#nombre_comun').val() && !$('#nombre_cientifico').val())
+            {
+                flag = false;
+                faltanNombres = true;
+                //alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+            }
+        }
+
+        if(!flag)
+        {
+          if(faltanNombres)
+            alert('Favor de escribir al menos un nombre (ya sea común ó científico)');
+          else
+            alert('Faltó llenar algún campo');
+        }
+
+        // Si pasa la validación:
+
+        else
+        {
+            // AJAX para actualizar la información de una archivo
+
+            $.ajax
+            (
+            {
+                type: "POST",
+                data: $('#forma_shadow').serialize(),
+                url: "{{=URL('actualizarArchivo')}}",
+                success: function()
+                {
+                    //alert('Registro actualizado exitosamente');
+
+                    // pasando al siguiente archivo en la combo box:
+
+                    indice = $("#archivo_camara_id")[0].selectedIndex;
+                    //alert(indice);
+                    $('#archivo_camara_id').prop('selectedIndex', indice + 1);
+                    $('#archivo_camara_id').trigger('change');
+                }
+            }
+            );
+        }
+    });
+
+</script>
