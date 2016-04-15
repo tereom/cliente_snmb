@@ -127,6 +127,9 @@
 
         ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 
+        /* Al eliminar los elementos cuya información es enviada mediante AJAX
+        antes de ejecutar los AJAX, se resetean siempre las combobox en cascada. */
+
         ajax("{{=URL('asignarCamara')}}", ['sitio_muestra_id'], 'shadow_clone_2');
 
         ajax("{{=URL('asignarArchivos')}}", ['camara_id'], 'shadow_clone_3');
@@ -144,9 +147,7 @@
     {
         /* Aquí usamos la función de JQuery en lugar de la de Web2py, porque
         necesitamos AJAX sincrónico para que se ejecute correctamente el código
-        que sigue. No así en el caso anterior, en el que al eliminar los elementos
-        cuya información es enviada mediante AJAX antes de cualquiera de éstos,
-        se resetean siempre las combobox en cascada.*/
+        que sigue.*/
 
         $('#camara_id, #archivo_camara_id, #forma_shadow').remove();
 
@@ -194,7 +195,7 @@
 
         /* AJAX para recalcular "forma_shadow" (siempre va a dar como resultado
         una forma vacía, pues en la combo box de "archivo_camara_id", que se
-        acaba de calcular, no hay ninguna opción seleccionada) */
+        acaba de generar, no hay ninguna opción seleccionada) */
 
         ajax("{{=URL('asignarInformacionArchivo')}}", ['archivo_camara_id'], 'shadow_clone_4');
     }
@@ -222,6 +223,24 @@
     // $(document).on('click', '#sin_fauna_evidente', function(){
     //     $('#info_fauna').fadeOut();
     // })
+
+    //////////////////////////////////////////
+    // Funcionalidades de los botones "Anterior" y "Siguiente":
+    //////////////////////////////////////////
+
+    $('#shadow_clone_4').on('click', '#anterior', function (){
+        indice = $("#archivo_camara_id")[0].selectedIndex;
+        //alert(indice);
+        $('#archivo_camara_id').prop('selectedIndex', indice - 1);
+        $('#archivo_camara_id').trigger('change');
+    })
+
+    $('#shadow_clone_4').on('click', '#siguiente', function (){
+        indice = $("#archivo_camara_id")[0].selectedIndex;
+        //alert(indice);
+        $('#archivo_camara_id').prop('selectedIndex', indice + 1);
+        $('#archivo_camara_id').trigger('change');
+    })
 
     //////////////////////////////////////////
     // Validaciones a la hora de enviar la forma

@@ -475,7 +475,15 @@ def asignarInformacionArchivo():
 		# 		id='numero_individuos' value='datosArchivo.numero_individuos'/>
 		# 	</div>
 		# 	<br/>
-		# 	<input type='button' value='Enviar' id='enviar'/>
+        #	<input type='button' accesskey='a' style='float:left;' value='Anterior' id='anterior'/>
+        #	<input type='button' accesskey='s' style='float:right;' value='Siguiente' id='siguiente'/>
+        #
+        # 	<!--Se pone el center hasta el final, para que tome en cuenta el
+        #	margen del elemento que flota a la derecha. -->
+        #
+        #	<center>
+        #		<input type='button' value='Enviar' id='enviar'/>
+        #	</center>
 		# </form>
 
         revisionHTML = "<form id='forma_shadow'><input type='hidden' " +\
@@ -536,14 +544,18 @@ def asignarInformacionArchivo():
             revisionHTML += datosArchivo.nombre_cientifico
 
         revisionHTML += "'/><br/><label for='numero_individuos' " +\
-        "style='float:left;padding-right:10px;'>Número de individuos:</label>" +\
-        "<input type='text' name='numero_individuos' class='integer' id='numero_individuos' value='"
+        	"style='float:left;padding-right:10px;'>Número de individuos:</label>" +\
+        	"<input type='text' name='numero_individuos' class='integer' id='numero_individuos' value='"
 
         if datosArchivo.numero_individuos:
 
             revisionHTML += str(datosArchivo.numero_individuos)
 
-        revisionHTML += "'/></div><br/><input type='button' value='Enviar' id='enviar'/></form>"
+        revisionHTML += "'/></div><br/>" +\
+        	"<input type='button' accesskey='a' style='float:left;' value='Anterior' id='anterior'/>" +\
+        	"<input type='button' accesskey='s' style='float:right;' value='Siguiente' id='siguiente'/>" +\
+        	"<center><input type='button' value='Enviar' id='enviar'/></center>" +\
+        	"</form>"
     
     return XML(revisionHTML)
 
