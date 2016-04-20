@@ -21,7 +21,7 @@ db.define_table('Cat_tipo_conglomerado', Field('nombre', 'string', required='TRU
 ## El if indica que las tablas se llenarán únicamente cuando estan vacías
 if db(db.Cat_tipo_conglomerado.id>0).count() == 0:
     db.Cat_tipo_conglomerado.insert(nombre='1 Inicial')
-    db.Cat_tipo_conglomerado.insert(nombre='2 Remplazo')
+    db.Cat_tipo_conglomerado.insert(nombre='2 Reemplazo')
     db.Cat_tipo_conglomerado.insert(nombre='3 Inaccesible terreno/clima')
     db.Cat_tipo_conglomerado.insert(nombre='4 Inaccesible social')
     db.Cat_tipo_conglomerado.insert(nombre='5 Inaccesible gabinete')

@@ -235,49 +235,76 @@
 				</td>
 			</tr>
 			<tr>
-				<td></td>
+				<td class="Centrar">
+					<input class="boolean" name="existe_1" id="existe_1" type="checkbox" value="on"/>
+				</td>
 				<td>
 					Centro
 				</td>
 				<td>
-					<input class="integer obligatorio lat_grado" name="lat_grado_1" id="lat_grado_1" type="text" value=""/>
+					<!--La clase Sitio_info_1 sirve para el JQuery que
+					desvanece/reaparece el campo, además de para validar que los
+					campos estén llenos si la casilla "existe_1" está marcada-->
+					<div class="Sitio_info_1">
+						<input class="integer lat_grado" name="lat_grado_1" id="lat_grado_1" type="text" value=""/>
+					</div>
 				</td>
 				<td>
-					<input class="integer obligatorio min" name="lat_min_1" id="lat_min_1" type="text" value=""/>
+					<div class="Sitio_info_1">
+						<input class="integer min" name="lat_min_1" id="lat_min_1" type="text" value=""/>
+					</div>
 				</td>
 				<td>
-					<input class="double obligatorio seg" name="lat_seg_1" id="lat_seg_1" type="text" value=""/>
+					<div class="Sitio_info_1">
+						<input class="double seg" name="lat_seg_1" id="lat_seg_1" type="text" value=""/>
+					</div>
 				</td>
 				<td>
-					<input class="integer obligatorio lon_grado" name="lon_grado_1" id="lon_grado_1" type="text" value=""/>
+					<div class="Sitio_info_1">
+						<input class="integer lon_grado" name="lon_grado_1" id="lon_grado_1" type="text" value=""/>
+					</div>
 				</td>
 				<td>
-					<input class="integer obligatorio min" name="lon_min_1" id="lon_min_1" type="text" value=""/>
+					<div class="Sitio_info_1">
+						<input class="integer min" name="lon_min_1" id="lon_min_1" type="text" value=""/>
+					</div>
 				</td>
 				<td>
-					<input class="double obligatorio seg" name="lon_seg_1" id="lon_seg_1" type="text" value=""/>
+					<div class="Sitio_info_1">
+						<input class="double seg" name="lon_seg_1" id="lon_seg_1" type="text" value=""/>
+					</div>
 				</td>
 				<td>
-					<select class="generic-widget obligatorio" name="elipsoide_1" id="elipsoide_1">
-						<option value=""/>
-						{{for elipsoide in listaElipsoide:}}
-							<option value="{{=elipsoide.nombre}}">
-								{{=elipsoide.nombre}}
-							</option>
-						{{pass}}
-					</select>
+					<div class="Sitio_info_1">
+						<select class="generic-widget" name="elipsoide_1" id="elipsoide_1">
+							<option value=""/>
+							{{for elipsoide in listaElipsoide:}}
+								<option value="{{=elipsoide.nombre}}">
+									{{=elipsoide.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</div>
 				</td>
 				<td>
-					<input class="double obligatorio altitud" name="altitud_1" id="altitud_1" type="text" value=""/>
+					<div class="Sitio_info_1">
+						<input class="double altitud" name="altitud_1" id="altitud_1" type="text" value=""/>
+					</div>
 				</td>
 				<td>
-					<input class="double obligatorio gps_error" name="gps_error_1" id="gps_error_1" type="text" value=""/>
+					<div class="Sitio_info_1">
+						<input class="double gps_error" name="gps_error_1" id="gps_error_1" type="text" value=""/>
+					</div>
 				</td>
 				<td class="Centrar">
-					<input class="boolean" name="hay_evidencia_1" id="hay_evidencia_1" type="checkbox" value="on"/>
+					<div class="Sitio_info_1">
+						<input class="boolean" name="hay_evidencia_1" id="hay_evidencia_1" type="checkbox" value="on"/>
+					</div>
 				</td>
 				<td>
-					<input class="obligatorio" type="file" id="imagen_1" name="imagen_1"/>
+					<div class="Sitio_info_1">
+						<input type="file" id="imagen_1" name="imagen_1"/>
+					</div>
 				</td>
 			</tr>
 			<tr>
@@ -596,6 +623,11 @@
 		
 			/* Cuando el documento se carga, se muestran los sitios como si
 			existieran*/
+
+
+			$('#existe_1').prop('checked', true);
+			$('.Sitio_info_1').show();
+
 			$('#existe_2').prop('checked', true);
 			$('.Sitio_info_2').show();
 			
@@ -738,6 +770,18 @@
 	/* Cuando se cambia el valor de la casilla "existe" asociada a un sitio, 
 	desaparecen o reaparecen los campos correspondientes, dependiendo si el sitio
 	existe o no.*/
+
+	$('#existe_1').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Sitio_info_1').fadeIn();
+			else
+				$('.Sitio_info_1').fadeOut();
+		}
+	)
+
 	
 	$('#existe_2').change
 	(
@@ -813,8 +857,22 @@
 				//alert('Falta seleccionar un tipo de vegetación');
 			}
 
-			/*Validando que los campos correspondientes a un sitio 2,3,4 estén 
+			/*Validando que los campos correspondientes a un sitio 1, 2,3,4 estén 
 			llenos si estos existen*/
+
+			if($('#existe_1').prop('checked'))
+			{
+				campos = $('.Sitio_info_1 input, .Sitio_info_1 select').not('#hay_evidencia_1');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
 
 			if($('#existe_2').prop('checked'))
 			{
@@ -907,6 +965,22 @@
 				}
 			});
 
+			/* La siguiente variable es para la última validación, que revisa
+			que los sitios llenados vayan de acuerdo con el tipo de conglomerado
+			(inaccesible o no) */
+
+			accesible = true;
+
+			if($('#tipo').val()){
+				if($('#tipo').val() == '3 Inaccesible terreno/clima' || 
+					$('#tipo').val() == '4 Inaccesible social' || 
+					$('#tipo').val() == '5 Inaccesible gabinete'){
+					accesible = false;
+				}
+			}
+
+			//alert(accesible);
+
 			// Juntando todas las validaciones:
 
 			if(!flag)
@@ -923,7 +997,28 @@
 					'Completar con ceros al principio si es necesario. ' + 
 					'Ejemplo: 000123');
 				return false;
+			}			
+
+			/* Validando que si el conglomerado es inaccesible, entonces no esté
+			marcada ninguna palomita de existencia, en caso contrario, el centro
+			siempre tiene que existir: */
+			else if(accesible && !$('#existe_1').prop('checked')){
+				alert('Si el conglomerado es accesible, debe llenarse la ' +
+					'información del sitio central');
+				return false;
 			}
+
+			else if(!accesible && (
+				$('#existe_1').prop('checked') || 
+				$('#existe_2').prop('checked') || 
+				$('#existe_3').prop('checked') || 
+				$('#existe_4').prop('checked'))){
+				alert('Si el conglomerado es inaccesible, sólo debe llenarse la ' +
+					'información del punto de control');
+				return false;
+			}
+
+
 		}
 	)
 </script>

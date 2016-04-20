@@ -53,25 +53,31 @@ def index():
 		# Sitio 1 (centro)
 		###########################################
 
-		# El centro del conglomerado y el punto de control siempre existen.
+		INPUT(_name='existe_1',_type='boolean'),
 
-		INPUT(_name='lat_grado_1',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='lat_min_1',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='lat_seg_1',_type='double',requires=IS_NOT_EMPTY()),
-		INPUT(_name='lon_grado_1',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='lon_min_1',_type='integer',requires=IS_NOT_EMPTY()),
-		INPUT(_name='lon_seg_1',_type='double',requires=IS_NOT_EMPTY()),
-		INPUT(_name='altitud_1',_type='double',requires=IS_NOT_EMPTY()),
-		INPUT(_name='gps_error_1',_type='double',requires=IS_NOT_EMPTY()),
-		SELECT(_name='elipsoide_1',
-		requires=IS_IN_DB(db,db.Cat_elipsoide.nombre,'%(nombre)s')),
+		# Como el centro puede no existir, no se pueden pedir como obligatorios
+		# los siguientes campos (sin embargo, el validador de la vista se encar-
+		# gará de que los llenen en caso de que sí exista el sitio).
+		INPUT(_name='lat_grado_1',_type='integer'),
+		INPUT(_name='lat_min_1',_type='integer'),
+		INPUT(_name='lat_seg_1',_type='double'),
+		INPUT(_name='lon_grado_1',_type='integer'),
+		INPUT(_name='lon_min_1',_type='integer'),
+		INPUT(_name='lon_seg_1',_type='double'),
+		INPUT(_name='altitud_1',_type='double'),
+		INPUT(_name='gps_error_1',_type='double'),
+
+		# El campo de elipsoide posiblemente se envíe vacío de la vista, por ello,
+		# conviene ponerlo como un string, para que no requiera que esté en
+		# el catálogo (y por ende, no vacío).
+		INPUT(_name='elipsoide_1',_type='string'),
 		INPUT(_name='hay_evidencia_1',_type='boolean'),
 		
 		###########################################
 		# Imagen sitio 1
 		###########################################
 
-		INPUT(_name='imagen_1',_type='file',requires=IS_NOT_EMPTY()),
+		INPUT(_name='imagen_1',_type='file'),
 			
 		###########################################
 		# Sitio 2
@@ -167,7 +173,7 @@ def index():
 		# Punto de control
 		###########################################
 
-		# El centro del conglomerado y el punto de control siempre existen.
+		# El punto de control siempre existe.
 		
 		INPUT(_name='lat_grado_c',_type='integer',requires=IS_NOT_EMPTY()),
 		INPUT(_name='lat_min_c',_type='integer',requires=IS_NOT_EMPTY()),
@@ -204,7 +210,7 @@ def index():
 		datosConglomerado = db.Conglomerado_muestra._filter_fields(forma.vars)
 		
 		# Campo oculto SAC-MOD (Conafor), SAR-MOD (Conanp)
-		datosConglomerado['monitoreo_tipo'] = 'SAR-MOD'
+		datosConglomerado['monitoreo_tipo'] = 'SAC-MOD'
 
 		# Si no escogieron "uso_suelo_tipo" como "Vegetación", entonces anulamos
 		# (por consistencia en base de datos), los valores que se pudieran haber
@@ -248,229 +254,259 @@ def index():
 		datosFormato['archivo_nombre_original'] = forma.vars.formato_campo.filename
 
 		db.Formato_campo.insert(**datosFormato)
-		
-		###########################################
-		# Procesando los datos del sitio 1 (centro)
-		###########################################
 
-		datosSitio1 = {}
+		# En los campos correspondientes a los sitios declarados, si no
+		# seleccionaron "inaccesible", entonces todo se guarda normalmente, de lo
+		# contrario, sólo se llena el punto de control (los otros sitios se
+		# registran como inexistentes en la base de datos)
 
-		# Agregando los datos que no se pidieron al usuario:  
-		datosSitio1['conglomerado_muestra_id'] = conglomeradoInsertado
-		datosSitio1['sitio_numero'] = 'Centro'
-		datosSitio1['existe'] = True
-		
-		# Leyendo los datos del formulario:
-		datosSitio1['lat_grado'] = forma.vars['lat_grado_1']
-		datosSitio1['lat_min'] = forma.vars['lat_min_1']
-		datosSitio1['lat_seg'] = forma.vars['lat_seg_1']
-		datosSitio1['lon_grado'] = forma.vars['lon_grado_1']
-		datosSitio1['lon_min'] = forma.vars['lon_min_1']
-		datosSitio1['lon_seg'] = forma.vars['lon_seg_1']
-		datosSitio1['altitud'] = forma.vars['altitud_1']
-		datosSitio1['gps_error'] = forma.vars['gps_error_1']
-		datosSitio1['elipsoide'] = forma.vars['elipsoide_1']
-		
-		# Si hay evidencia, entonces True se guarda en la base de datos, en caso contrario,
-		# se tiene que guardar manualmente False, pues si no, Web2py guarda Null.
-		if bool(forma.vars['hay_evidencia_1']):
-			datosSitio1['hay_evidencia'] = forma.vars['hay_evidencia_1']
-		else:
-			datosSitio1['hay_evidencia'] = False
-			
-		# Insertando en la base de datos:
-		sitio1Insertado = db.Sitio_muestra.insert(**datosSitio1)
+		if (datosConglomerado['tipo'] == '3 Inaccesible terreno/clima' or\
+			datosConglomerado['tipo'] == '4 Inaccesible social' or\
+			datosConglomerado['tipo'] == '5 Inaccesible gabinete'):
 
-		###########################################
-		# Procesando los datos de la imagen del sitio 1
-		###########################################
-		
-		# Guardando la imagen de referencia en la carpeta adecuada
-		imagen1 = db.Imagen_referencia_sitio.archivo.store(
-			forma.vars.imagen_1.file, forma.vars.imagen_1.filename)
-		
-		# Creando los campos de la tabla Imagen_referencia_sitio:
+			datosSitio = {}
+			datosSitio['conglomerado_muestra_id'] = conglomeradoInsertado
+			datosSitio['existe'] = False
 
-		datosImagen1 = {}
-		datosImagen1['sitio_muestra_id'] = sitio1Insertado
-		datosImagen1['archivo'] = imagen1
-		datosImagen1['archivo_nombre_original'] = forma.vars.imagen_1.filename
-		
-		#Insertando el registro en la base de datos:
-		
-		db.Imagen_referencia_sitio.insert(**datosImagen1)
-			
-		###########################################
-		# Procesando los datos del sitio 2
-		###########################################
+			for sitio_numero in ['Centro', 'Sitio 2',  'Sitio 3', 'Sitio 4']:
+				datosSitio['sitio_numero'] = sitio_numero
+				db.Sitio_muestra.insert(**datosSitio)    
 
-		datosSitio2 = {}
+		else:  
 
-		#Agregando los datos que no se pidieron al usuario:
-		datosSitio2['conglomerado_muestra_id'] = conglomeradoInsertado
-		datosSitio2['sitio_numero'] = 'Sitio 2'
-		
-		#Si existe el sitio 2:
-		if bool(forma.vars['existe_2']):
+			###########################################
+			# Procesando los datos del sitio 1 (centro)
+			###########################################
 
-			#Agregando los datos extraídos de la forma:
-			datosSitio2['existe'] = forma.vars['existe_2']
-			datosSitio2['lat_grado'] = forma.vars['lat_grado_2']
-			datosSitio2['lat_min'] = forma.vars['lat_min_2']
-			datosSitio2['lat_seg'] = forma.vars['lat_seg_2']
-			datosSitio2['lon_grado'] = forma.vars['lon_grado_2']
-			datosSitio2['lon_min'] = forma.vars['lon_min_2']
-			datosSitio2['lon_seg'] = forma.vars['lon_seg_2']
-			datosSitio2['altitud'] = forma.vars['altitud_2']
-			datosSitio2['gps_error'] = forma.vars['gps_error_2']
-			datosSitio2['elipsoide'] = forma.vars['elipsoide_2']
-			
-			if bool(forma.vars['hay_evidencia_2']):
-				datosSitio2['hay_evidencia'] = forma.vars['hay_evidencia_2']
+			datosSitio1 = {}
+
+			# Agregando los datos que no se pidieron al usuario:  
+			datosSitio1['conglomerado_muestra_id'] = conglomeradoInsertado
+			datosSitio1['sitio_numero'] = 'Centro'
+
+			# Si existe el sitio 1:
+			if bool(forma.vars['existe_1']):
+
+				# Agregando los datos extraídos de la forma:
+				datosSitio1['existe'] = forma.vars['existe_1']
+				datosSitio1['lat_grado'] = forma.vars['lat_grado_1']
+				datosSitio1['lat_min'] = forma.vars['lat_min_1']
+				datosSitio1['lat_seg'] = forma.vars['lat_seg_1']
+				datosSitio1['lon_grado'] = forma.vars['lon_grado_1']
+				datosSitio1['lon_min'] = forma.vars['lon_min_1']
+				datosSitio1['lon_seg'] = forma.vars['lon_seg_1']
+				datosSitio1['altitud'] = forma.vars['altitud_1']
+				datosSitio1['gps_error'] = forma.vars['gps_error_1']
+				datosSitio1['elipsoide'] = forma.vars['elipsoide_1']
+
+				# Si hay evidencia, entonces True se guarda en la base de datos, en
+				# caso contrario, se tiene que guardar manualmente False, pues si no,
+				# Web2py guarda Null.
+
+				if bool(forma.vars['hay_evidencia_1']):
+					datosSitio1['hay_evidencia'] = forma.vars['hay_evidencia_1']
+				else:
+					datosSitio1['hay_evidencia'] = False
+					
 			else:
-				datosSitio2['hay_evidencia'] = False
-				
-		else:
-			datosSitio2['existe'] = False
-		
-		#Insertando en la base de datos:
-		sitio2Insertado = db.Sitio_muestra.insert(**datosSitio2)      
-
-		###########################################
-		# Procesando los datos de la imagen del sitio 2
-		###########################################
-		
-		if bool(forma.vars['existe_2']):
-						
-			# Guardando la imagen de referencia en la carpeta adecuada
-			imagen2 = db.Imagen_referencia_sitio.archivo.store(
-				forma.vars.imagen_2.file, forma.vars.imagen_2.filename)
-		
-			# Creando los campos de la tabla Imagen_referencia_sitio:
-
-			datosImagen2 = {}
-			datosImagen2['sitio_muestra_id'] = sitio2Insertado
-			datosImagen2['archivo'] = imagen2
-			datosImagen2['archivo_nombre_original'] = forma.vars.imagen_2.filename
-		
-			# Insertando el registro en la base de datos:
-		
-			db.Imagen_referencia_sitio.insert(**datosImagen2)
-
-		###########################################
-		# Procesando los datos del sitio 3
-		###########################################
-		
-		datosSitio3 = {}
-
-		# Agregando los datos que no se pidieron al usuario:
-		datosSitio3['conglomerado_muestra_id'] = conglomeradoInsertado
-		datosSitio3['sitio_numero'] = 'Sitio 3'
-		
-		# Si existe el sitio 3:
-		if bool(forma.vars['existe_3']):
-
-			#Agregando los datos extraídos de la forma:
-			datosSitio3['existe'] = forma.vars['existe_3']
-			datosSitio3['lat_grado'] = forma.vars['lat_grado_3']
-			datosSitio3['lat_min'] = forma.vars['lat_min_3']
-			datosSitio3['lat_seg'] = forma.vars['lat_seg_3']
-			datosSitio3['lon_grado'] = forma.vars['lon_grado_3']
-			datosSitio3['lon_min'] = forma.vars['lon_min_3']
-			datosSitio3['lon_seg'] = forma.vars['lon_seg_3']
-			datosSitio3['altitud'] = forma.vars['altitud_3']
-			datosSitio3['gps_error'] = forma.vars['gps_error_3']
-			datosSitio3['elipsoide'] = forma.vars['elipsoide_3']
+				datosSitio1['existe'] = False
 			
-			if bool(forma.vars['hay_evidencia_3']):
-				datosSitio3['hay_evidencia'] = forma.vars['hay_evidencia_3']
-			else:
-				datosSitio3['hay_evidencia'] = False
-				
-		else:
-			datosSitio3['existe'] = False
-		
-		#Insertando en la base de datos:
-		sitio3Insertado = db.Sitio_muestra.insert(**datosSitio3)
-		
-		###########################################
-		# Procesando los datos de la imagen del sitio 3
-		###########################################
-		
-		if bool(forma.vars['existe_3']):
-						
-			# Guardando la imagen de referencia en la carpeta adecuada
-			imagen3 = db.Imagen_referencia_sitio.archivo.store(
-				forma.vars.imagen_3.file, forma.vars.imagen_3.filename)
-		
-			# Creando los campos de la tabla Imagen_referencia_sitio:
-		
-			datosImagen3 = {}
-			datosImagen3['sitio_muestra_id'] = sitio3Insertado
-			datosImagen3['archivo'] = imagen3
-			datosImagen3['archivo_nombre_original'] = forma.vars.imagen_3.filename
-		
-			#Insertando el registro en la base de datos:
-		
-			db.Imagen_referencia_sitio.insert(**datosImagen3)
-
-		###########################################
-		# Procesando los datos del sitio 4
-		###########################################
-		
-		datosSitio4 = {}
-
-		# Agregando los datos que no se pidieron al usuario:
-		datosSitio4['conglomerado_muestra_id'] = conglomeradoInsertado
-		datosSitio4['sitio_numero'] = 'Sitio 4'
-		
-		# Si existe el sitio 4:
-		if bool(forma.vars['existe_4']):
-
-			#Agregando los datos extraídos de la forma:
-			datosSitio4['existe'] = forma.vars['existe_4']
-			datosSitio4['lat_grado'] = forma.vars['lat_grado_4']
-			datosSitio4['lat_min'] = forma.vars['lat_min_4']
-			datosSitio4['lat_seg'] = forma.vars['lat_seg_4']
-			datosSitio4['lon_grado'] = forma.vars['lon_grado_4']
-			datosSitio4['lon_min'] = forma.vars['lon_min_4']
-			datosSitio4['lon_seg'] = forma.vars['lon_seg_4']
-			datosSitio4['altitud'] = forma.vars['altitud_4']
-			datosSitio4['gps_error'] = forma.vars['gps_error_4']
-			datosSitio4['elipsoide'] = forma.vars['elipsoide_4']
+			# Insertando en la base de datos:
+			sitio1Insertado = db.Sitio_muestra.insert(**datosSitio1)      
 			
-			if bool(forma.vars['hay_evidencia_4']):
-				datosSitio4['hay_evidencia'] = forma.vars['hay_evidencia_4']
-			else:
-				datosSitio4['hay_evidencia'] = False
-				
-		else:
-			datosSitio4['existe'] = False
-		
-		#Insertando en la base de datos:
-		sitio4Insertado = db.Sitio_muestra.insert(**datosSitio4)
-		
-		###########################################
-		# Procesando los datos de la imagen del sitio 4
-		###########################################
-		
-		if bool(forma.vars['existe_4']):
-						
-			#Guardando la imagen de referencia en la carpeta adecuada
-			imagen4 = db.Imagen_referencia_sitio.archivo.store(
-				forma.vars.imagen_4.file, forma.vars.imagen_4.filename)
-		
-			#Creando los campos de la tabla Imagen_referencia_sitio:
-		
-			datosImagen4 = {}
-			datosImagen4['sitio_muestra_id'] = sitio4Insertado
-			datosImagen4['archivo'] = imagen4
-			datosImagen4['archivo_nombre_original'] = forma.vars.imagen_4.filename
-		
-			#Insertando el registro en la base de datos:
-		
-			db.Imagen_referencia_sitio.insert(**datosImagen4)
+			###########################################
+			# Procesando los datos de la imagen del sitio 1
+			###########################################
 
+			if bool(forma.vars['existe_1']):
+
+				# Guardando la imagen de referencia en la carpeta adecuada
+				imagen1 = db.Imagen_referencia_sitio.archivo.store(
+					forma.vars.imagen_1.file, forma.vars.imagen_1.filename)
+			
+				# Creando los campos de la tabla Imagen_referencia_sitio:
+
+				datosImagen1 = {}
+				datosImagen1['sitio_muestra_id'] = sitio1Insertado
+				datosImagen1['archivo'] = imagen1
+				datosImagen1['archivo_nombre_original'] = forma.vars.imagen_1.filename
+			
+				#Insertando el registro en la base de datos:
+			
+				db.Imagen_referencia_sitio.insert(**datosImagen1)
+				
+			###########################################
+			# Procesando los datos del sitio 2
+			###########################################
+
+			datosSitio2 = {}
+
+			#Agregando los datos que no se pidieron al usuario:
+			datosSitio2['conglomerado_muestra_id'] = conglomeradoInsertado
+			datosSitio2['sitio_numero'] = 'Sitio 2'
+			
+			#Si existe el sitio 2:
+			if bool(forma.vars['existe_2']):
+
+				#Agregando los datos extraídos de la forma:
+				datosSitio2['existe'] = forma.vars['existe_2']
+				datosSitio2['lat_grado'] = forma.vars['lat_grado_2']
+				datosSitio2['lat_min'] = forma.vars['lat_min_2']
+				datosSitio2['lat_seg'] = forma.vars['lat_seg_2']
+				datosSitio2['lon_grado'] = forma.vars['lon_grado_2']
+				datosSitio2['lon_min'] = forma.vars['lon_min_2']
+				datosSitio2['lon_seg'] = forma.vars['lon_seg_2']
+				datosSitio2['altitud'] = forma.vars['altitud_2']
+				datosSitio2['gps_error'] = forma.vars['gps_error_2']
+				datosSitio2['elipsoide'] = forma.vars['elipsoide_2']
+				
+				if bool(forma.vars['hay_evidencia_2']):
+					datosSitio2['hay_evidencia'] = forma.vars['hay_evidencia_2']
+				else:
+					datosSitio2['hay_evidencia'] = False
+					
+			else:
+				datosSitio2['existe'] = False
+			
+			#Insertando en la base de datos:
+			sitio2Insertado = db.Sitio_muestra.insert(**datosSitio2)      
+
+			###########################################
+			# Procesando los datos de la imagen del sitio 2
+			###########################################
+			
+			if bool(forma.vars['existe_2']):
+							
+				# Guardando la imagen de referencia en la carpeta adecuada
+				imagen2 = db.Imagen_referencia_sitio.archivo.store(
+					forma.vars.imagen_2.file, forma.vars.imagen_2.filename)
+			
+				# Creando los campos de la tabla Imagen_referencia_sitio:
+
+				datosImagen2 = {}
+				datosImagen2['sitio_muestra_id'] = sitio2Insertado
+				datosImagen2['archivo'] = imagen2
+				datosImagen2['archivo_nombre_original'] = forma.vars.imagen_2.filename
+			
+				# Insertando el registro en la base de datos:
+			
+				db.Imagen_referencia_sitio.insert(**datosImagen2)
+
+			###########################################
+			# Procesando los datos del sitio 3
+			###########################################
+			
+			datosSitio3 = {}
+
+			# Agregando los datos que no se pidieron al usuario:
+			datosSitio3['conglomerado_muestra_id'] = conglomeradoInsertado
+			datosSitio3['sitio_numero'] = 'Sitio 3'
+			
+			# Si existe el sitio 3:
+			if bool(forma.vars['existe_3']):
+
+				#Agregando los datos extraídos de la forma:
+				datosSitio3['existe'] = forma.vars['existe_3']
+				datosSitio3['lat_grado'] = forma.vars['lat_grado_3']
+				datosSitio3['lat_min'] = forma.vars['lat_min_3']
+				datosSitio3['lat_seg'] = forma.vars['lat_seg_3']
+				datosSitio3['lon_grado'] = forma.vars['lon_grado_3']
+				datosSitio3['lon_min'] = forma.vars['lon_min_3']
+				datosSitio3['lon_seg'] = forma.vars['lon_seg_3']
+				datosSitio3['altitud'] = forma.vars['altitud_3']
+				datosSitio3['gps_error'] = forma.vars['gps_error_3']
+				datosSitio3['elipsoide'] = forma.vars['elipsoide_3']
+				
+				if bool(forma.vars['hay_evidencia_3']):
+					datosSitio3['hay_evidencia'] = forma.vars['hay_evidencia_3']
+				else:
+					datosSitio3['hay_evidencia'] = False
+					
+			else:
+				datosSitio3['existe'] = False
+			
+			#Insertando en la base de datos:
+			sitio3Insertado = db.Sitio_muestra.insert(**datosSitio3)
+			
+			###########################################
+			# Procesando los datos de la imagen del sitio 3
+			###########################################
+			
+			if bool(forma.vars['existe_3']):
+							
+				# Guardando la imagen de referencia en la carpeta adecuada
+				imagen3 = db.Imagen_referencia_sitio.archivo.store(
+					forma.vars.imagen_3.file, forma.vars.imagen_3.filename)
+			
+				# Creando los campos de la tabla Imagen_referencia_sitio:
+			
+				datosImagen3 = {}
+				datosImagen3['sitio_muestra_id'] = sitio3Insertado
+				datosImagen3['archivo'] = imagen3
+				datosImagen3['archivo_nombre_original'] = forma.vars.imagen_3.filename
+			
+				#Insertando el registro en la base de datos:
+			
+				db.Imagen_referencia_sitio.insert(**datosImagen3)
+
+			###########################################
+			# Procesando los datos del sitio 4
+			###########################################
+			
+			datosSitio4 = {}
+
+			# Agregando los datos que no se pidieron al usuario:
+			datosSitio4['conglomerado_muestra_id'] = conglomeradoInsertado
+			datosSitio4['sitio_numero'] = 'Sitio 4'
+			
+			# Si existe el sitio 4:
+			if bool(forma.vars['existe_4']):
+
+				#Agregando los datos extraídos de la forma:
+				datosSitio4['existe'] = forma.vars['existe_4']
+				datosSitio4['lat_grado'] = forma.vars['lat_grado_4']
+				datosSitio4['lat_min'] = forma.vars['lat_min_4']
+				datosSitio4['lat_seg'] = forma.vars['lat_seg_4']
+				datosSitio4['lon_grado'] = forma.vars['lon_grado_4']
+				datosSitio4['lon_min'] = forma.vars['lon_min_4']
+				datosSitio4['lon_seg'] = forma.vars['lon_seg_4']
+				datosSitio4['altitud'] = forma.vars['altitud_4']
+				datosSitio4['gps_error'] = forma.vars['gps_error_4']
+				datosSitio4['elipsoide'] = forma.vars['elipsoide_4']
+				
+				if bool(forma.vars['hay_evidencia_4']):
+					datosSitio4['hay_evidencia'] = forma.vars['hay_evidencia_4']
+				else:
+					datosSitio4['hay_evidencia'] = False
+					
+			else:
+				datosSitio4['existe'] = False
+			
+			#Insertando en la base de datos:
+			sitio4Insertado = db.Sitio_muestra.insert(**datosSitio4)
+			
+			###########################################
+			# Procesando los datos de la imagen del sitio 4
+			###########################################
+			
+			if bool(forma.vars['existe_4']):
+							
+				#Guardando la imagen de referencia en la carpeta adecuada
+				imagen4 = db.Imagen_referencia_sitio.archivo.store(
+					forma.vars.imagen_4.file, forma.vars.imagen_4.filename)
+			
+				#Creando los campos de la tabla Imagen_referencia_sitio:
+			
+				datosImagen4 = {}
+				datosImagen4['sitio_muestra_id'] = sitio4Insertado
+				datosImagen4['archivo'] = imagen4
+				datosImagen4['archivo_nombre_original'] = forma.vars.imagen_4.filename
+			
+				#Insertando el registro en la base de datos:
+			
+				db.Imagen_referencia_sitio.insert(**datosImagen4)
+
+		# El punto de control siempre existe
 
 		###########################################
 		# Procesando los datos del punto de control
