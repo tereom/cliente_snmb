@@ -41,9 +41,9 @@ response.menu = [
     # Conteo de aves
     ###########################################
 
-    # (T('Conteo de aves'), False, URL('10_conteo_aves', 'index1'), [
-    #   (T('Punto de conteo'), False, URL('10_conteo_aves', 'index1')),
-    #   (T('Observaciones aves'), False, URL('10_conteo_aves', 'index2'))]),
+    # (T('Conteo de aves'), False, URL('06_conteo_aves', 'index1'), [
+    #   (T('Punto de conteo'), False, URL('06_conteo_aves', 'index1')),
+    #   (T('Avistamientos'), False, URL('06_conteo_aves', 'index2'))]),
 
     ###########################################
     # Especies invasoras y huellas/excretas

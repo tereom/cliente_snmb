@@ -286,7 +286,7 @@ def index2():
 			if bool(formaEspecie.vars['hay_nombre_comun']):
 				datosEspecie['nombre_comun'] = formaEspecie.vars['nombre_comun']
 
-		#Insertando el registro en la base de datos:
+		# Insertando el registro en la base de datos:
 
 		especieInsertada = db.Especie_invasora.insert(**datosEspecie)
 
@@ -375,7 +375,7 @@ def asignarTransectos():
 		).select(db.Transecto_muestra.transecto_numero,\
 		db.Transecto_muestra.id)
 
-	#Creando la dropdown de transectos y enviándola a la vista para que sea desplegada:
+	# Creando la dropdown de transectos y enviándola a la vista para que sea desplegada:
 
 	dropdownHTML = "<select class='generic-widget' name='transecto_muestra_id' id='transecto_muestra_id'>"
 
@@ -499,7 +499,7 @@ def index3():
 	###########################################
 
 	# Regresando los nombres de todos los conglomerados insertados en la tabla de
-	#conglomerado junto con sus id's para llenar la combobox de conglomerado.
+	# conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
 	listaConglomerado = db(db.Conglomerado_muestra).select(
 		db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
@@ -511,9 +511,9 @@ def index3():
 	db.Huella_excreta.transecto_muestra_id.writable = False
 	db.Archivo_huella_excreta.huella_excreta_id.writable =False
 	
-	grid = SQLFORM.grid(db.Huella_excreta,orderby=~db.Huella_excreta.id,\
-		csv=False,user_signature=False,
-		create=False,searchable=False,editable=False)
+	grid = SQLFORM.grid(db.Huella_excreta, orderby =~ db.Huella_excreta.id,\
+		csv = False, user_signature = False,
+		create = False, searchable = False, editable = False)
 
 	return dict(listaConglomerado = listaConglomerado,
 		grid = grid)

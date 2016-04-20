@@ -24,15 +24,15 @@ db.define_table('Punto_conteo_aves', *Campos_Punto_conteo_aves,
 	singular='Punto de conteo de aves', plural='Puntos de conteo de aves')
 
 ###########################################
-# Conteo_ave
+# Avistamiento_aves
 ###########################################
 
-Campos_Conteo_ave =[
+Campos_Avistamiento_aves =[
 
 	Field('punto_conteo_aves_id','reference Punto_conteo_aves',required=True),
 
-	#Los campos 'nombre_comun_en_lista' y 'nombre_cientifico_en_lista' no son
-	#obligatorios, pues se dejan vacíos si no introdujeron alguno de los nombres.
+	# Los campos 'nombre_comun_en_lista' y 'nombre_cientifico_en_lista' no son
+	# obligatorios, pues se dejan vacíos si no introdujeron alguno de los nombres.
 	Field('nombre_comun_en_lista','boolean'),
 	Field('nombre_comun','string'),
 	Field('nombre_cientifico_en_lista','boolean'),
@@ -43,19 +43,19 @@ Campos_Conteo_ave =[
 	Field('distancia_aproximada','double',required=True)
 ]
 
-db.define_table('Conteo_ave', *Campos_Conteo_ave,
-	singular='Conteo de aves', plural='Conteos de aves')
+db.define_table('Avistamiento_aves', *Campos_Avistamiento_aves,
+	singular = 'Avistamiento de aves', plural = 'Avistamientos de aves')
 
 ###########################################
-# Archivo_conteo_ave
+# Archivo_avistamiento_aves
 ###########################################
 
-Campos_Archivo_conteo_ave = [
+Campos_Archivo_avistamiento_aves = [
 
-	Field('conteo_ave_id','reference Conteo_ave',required=True),
+	Field('avistamiento_aves_id','reference Avistamiento_aves',required=True),
 	Field('archivo_nombre_original','string',required=True),
 	Field('archivo','upload',autodelete=True,required=True)
 ]
 
-db.define_table('Archivo_conteo_ave', *Campos_Archivo_conteo_ave,
-	singular='Archivo conteo de aves', plural='Archivos conteo de aves')
+db.define_table('Archivo_avistamiento_aves', *Campos_Archivo_avistamiento_aves,
+	singular='Archivo avistamiento de aves', plural='Archivos avistamiento de aves')

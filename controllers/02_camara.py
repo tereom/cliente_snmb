@@ -135,11 +135,11 @@ def asignarSitios():
 	# Obteniendo los sitios que existen en dicho conglomerado
 	sitiosAsignados = db(
 		(db.Sitio_muestra.conglomerado_muestra_id == conglomeradoElegidoID) &\
-		(db.Sitio_muestra.existe == True)&\
+		(db.Sitio_muestra.existe == True) &\
 		(db.Sitio_muestra.sitio_numero != 'Punto de control')
 		).select(db.Sitio_muestra.sitio_numero, db.Sitio_muestra.id)
 
-	#Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
+	# Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
 
 	dropdownHTML = "<select class='generic-widget' name='sitio_muestra_id' id='sitio_muestra_id'>"
 

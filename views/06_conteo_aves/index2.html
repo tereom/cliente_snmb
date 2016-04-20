@@ -99,7 +99,7 @@
 						<select class="generic-widget" name="conabio_lista_nombre_comun" id="tabla_conabio_lista_nombre_comun"
 						style="margin-right: 1cm;">
 							<option value=""/>
-							{{for ave in listaConabio:}}
+							{{for ave in listaAvesNombreComun:}}
 								<option value="{{=ave.nombre_comun}}">
 									{{=ave.nombre_comun}}
 								</option>
@@ -123,7 +123,7 @@
 						<select class="generic-widget" name="conabio_lista_nombre_cientifico" id="tabla_conabio_lista_nombre_cientifico"
 						style="margin-right: 1cm;">
 							<option value=""/>
-							{{for ave in listaConabio:}}
+							{{for ave in listaAvesNombreCientifico:}}
 								<option value="{{=ave.nombre_cientifico}}">
 									{{=ave.nombre_cientifico}}
 								</option>
