@@ -7,19 +7,19 @@
 ###########################################
 
 db.Conglomerado_muestra.tipo.requires = IS_IN_DB(db,
-    db.Cat_tipo_conglomerado.nombre, '%(nombre)s')
+	db.Cat_tipo_conglomerado.nombre, '%(nombre)s')
 
 db.Conglomerado_muestra.estado.requires = IS_IN_DB(db,
-    db.Cat_estado_conglomerado.nombre, '%(nombre)s')
+	db.Cat_estado_conglomerado.nombre, '%(nombre)s')
 
 db.Conglomerado_muestra.municipio.requires = IS_IN_DB(db,
-    db.Cat_municipio_conglomerado.nombre, '%(nombre)s')
+	db.Cat_municipio_conglomerado.nombre, '%(nombre)s')
 
 db.Conglomerado_muestra.tenencia.requires = IS_IN_DB(db,
-    db.Cat_tenencia_conglomerado.nombre, '%(nombre)s')
+	db.Cat_tenencia_conglomerado.nombre, '%(nombre)s')
 
 db.Conglomerado_muestra.uso_suelo_tipo.requires = IS_IN_DB(db,
-    db.Cat_suelo_conglomerado.nombre, '%(nombre)s')
+	db.Cat_suelo_conglomerado.nombre, '%(nombre)s')
 
 # Este lo quitamos para que no tengan problemas si no deben llenar el campo
 # "vegetacion_tipo".
@@ -31,9 +31,9 @@ db.Conglomerado_muestra.uso_suelo_tipo.requires = IS_IN_DB(db,
 ###########################################
 
 db.Sitio_muestra.sitio_numero.requires = IS_IN_DB(db,db.Cat_numero_sitio.nombre,
-    '%(nombre)s')
+	'%(nombre)s')
 db.Sitio_muestra.elipsoide.requires = IS_IN_DB(db,db.Cat_elipsoide.nombre,
-    '%(nombre)s')
+	'%(nombre)s')
 
 ###########################################
 # Campos no modificables
@@ -43,242 +43,242 @@ db.Sitio_muestra.conglomerado_muestra_id.writable = False
 
 def conglomerado():
 
-    ## Controlador correspondiente a la pestaña "Conglomerado", de la sección:
-    ## "Revisar_registros". Genera las tablas de revisión usando el método  
-    ## "smartgrid" incluido en Web2py.
+	## Controlador correspondiente a la pestaña "Conglomerado", de la sección:
+	## "Revisar_registros". Genera las tablas de revisión usando el método  
+	## "smartgrid" incluido en Web2py.
 
-    ###########################################
-    # Campos no modificables
-    ###########################################
+	###########################################
+	# Campos no modificables
+	###########################################
 
-    db.Imagen_referencia_sitio.sitio_muestra_id.writable = False
+	db.Imagen_referencia_sitio.sitio_muestra_id.writable = False
 
-    ###########################################
-    # Generando la forma
-    ###########################################
+	###########################################
+	# Generando la forma
+	###########################################
 
-    form = SQLFORM.smartgrid(db.Conglomerado_muestra,
-        linked_tables = ['Sitio_muestra', 'Imagen_referencia_sitio'],
-        user_signature = False,
-        csv = True,
-        maxtextlengths = {'Imagen_referencia_sitio.archivo_nombre_original' : 50},
-        headers = {'Sitio_muestra.existe' : 'Muestreado'}
-        )
+	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+		linked_tables = ['Sitio_muestra', 'Imagen_referencia_sitio'],
+		user_signature = False,
+		csv = True,
+		maxtextlengths = {'Imagen_referencia_sitio.archivo_nombre_original' : 50},
+		headers = {'Sitio_muestra.existe' : 'Muestreado'}
+		)
 
-    return dict(form = form)
+	return dict(form = form)
 
 def camara():
 
-    ## Controlador correspondiente a la pestaña "Cámara", de la sección:
-    ## "Revisar_registros". Genera las tablas de revisión usando el método  
-    ## "smartgrid" incluido en Web2py.
+	## Controlador correspondiente a la pestaña "Cámara", de la sección:
+	## "Revisar_registros". Genera las tablas de revisión usando el método  
+	## "smartgrid" incluido en Web2py.
 
-    ###########################################
-    # Menús desplegables de "Camara"
-    ###########################################
+	###########################################
+	# Menús desplegables de "Camara"
+	###########################################
 
-    db.Camara.elipsoide.requires = IS_IN_DB(db,db.Cat_elipsoide.nombre,
-        '%(nombre)s')
-    db.Camara.resolucion.requires=IS_IN_DB(db,db.Cat_resolucion_camara.nombre,
-    '%(nombre)s')
-    db.Camara.sensibilidad.requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.nombre,
-    '%(nombre)s')
+	db.Camara.elipsoide.requires = IS_IN_DB(db,db.Cat_elipsoide.nombre,
+		'%(nombre)s')
+	db.Camara.resolucion.requires=IS_IN_DB(db,db.Cat_resolucion_camara.nombre,
+	'%(nombre)s')
+	db.Camara.sensibilidad.requires=IS_IN_DB(db,db.Cat_sensibilidad_camara.nombre,
+	'%(nombre)s')
 
-    ###########################################
-    # Campos no modificables
-    ###########################################
+	###########################################
+	# Campos no modificables
+	###########################################
 
-    db.Camara.sitio_muestra_id.writable = False
-    db.Imagen_referencia_camara.camara_id.writable = False
-    db.Archivo_camara.camara_id.writable = False
+	db.Camara.sitio_muestra_id.writable = False
+	db.Imagen_referencia_camara.camara_id.writable = False
+	db.Archivo_camara.camara_id.writable = False
 
-    ###########################################
-    # Generando la forma
-    ###########################################
+	###########################################
+	# Generando la forma
+	###########################################
 
-    form = SQLFORM.smartgrid(db.Conglomerado_muestra,
-        linked_tables = [
-            'Sitio_muestra',
-            'Camara',
-            'Archivo_camara',
-            'Imagen_referencia_camara'],
-        user_signature = False, 
-        csv = True,
-        maxtextlengths = {'Archivo_camara.archivo_nombre_original' : 50,
-        'Imagen_referencia_camara.archivo_nombre_original' : 50})
+	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+		linked_tables = [
+			'Sitio_muestra',
+			'Camara',
+			'Archivo_camara',
+			'Imagen_referencia_camara'],
+		user_signature = False, 
+		csv = True,
+		maxtextlengths = {'Archivo_camara.archivo_nombre_original' : 50,
+		'Imagen_referencia_camara.archivo_nombre_original' : 50})
 
-    return dict(form = form)
+	return dict(form = form)
 
 def grabadora():
 
-    ## Controlador correspondiente a la pestaña "Grabadora", de la sección:
-    ## "Revisar_registros". Genera las tablas de revisión usando el método  
-    ## "smartgrid" incluido en Web2py.
+	## Controlador correspondiente a la pestaña "Grabadora", de la sección:
+	## "Revisar_registros". Genera las tablas de revisión usando el método  
+	## "smartgrid" incluido en Web2py.
 
-    ###########################################
-    # Menús desplegables de "Grabadora"
-    ###########################################
+	###########################################
+	# Menús desplegables de "Grabadora"
+	###########################################
 
-    db.Grabadora.elipsoide.requires = IS_IN_DB(db,db.Cat_elipsoide.nombre,
-        '%(nombre)s')
-    db.Grabadora.condiciones_ambientales.requires = IS_IN_DB(db,
-        db.Cat_condiciones_ambientales.nombre, '%(nombre)s')
+	db.Grabadora.elipsoide.requires = IS_IN_DB(db,db.Cat_elipsoide.nombre,
+		'%(nombre)s')
+	db.Grabadora.condiciones_ambientales.requires = IS_IN_DB(db,
+		db.Cat_condiciones_ambientales.nombre, '%(nombre)s')
 
-    ###########################################
-    # Campos no modificables
-    ###########################################
+	###########################################
+	# Campos no modificables
+	###########################################
 
-    db.Grabadora.sitio_muestra_id.writable = False
-    db.Imagen_referencia_grabadora.grabadora_id.writable = False
-    db.Imagen_referencia_microfonos.grabadora_id.writable = False
-    db.Archivo_referencia_grabadora.grabadora_id.writable = False
-    db.Archivo_grabadora.grabadora_id.writable = False
+	db.Grabadora.sitio_muestra_id.writable = False
+	db.Imagen_referencia_grabadora.grabadora_id.writable = False
+	db.Imagen_referencia_microfonos.grabadora_id.writable = False
+	db.Archivo_referencia_grabadora.grabadora_id.writable = False
+	db.Archivo_grabadora.grabadora_id.writable = False
 
-    ###########################################
-    # Generando la forma
-    ###########################################
+	###########################################
+	# Generando la forma
+	###########################################
 
-    form = SQLFORM.smartgrid(db.Conglomerado_muestra,
-        linked_tables = [
-            'Sitio_muestra',
-            'Grabadora',
-            'Archivo_grabadora',
-            'Archivo_referencia_grabadora',
-            'Imagen_referencia_grabadora',
-            'Imagen_referencia_microfonos'
-        ],
-        csv = True,
-        user_signature = False, 
-        maxtextlengths = {
-            'Archivo_grabadora.archivo_nombre_original' : 50,
-            'Archivo_referencia_grabadora.archivo_nombre_original' : 50,
-            'Imagen_referencia_grabadora.archivo_nombre_original' : 50,
-            'Imagen_referencia_microfonos.archivo_nombre_original' : 50,
-        }
-    )
+	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+		linked_tables = [
+			'Sitio_muestra',
+			'Grabadora',
+			'Archivo_grabadora',
+			'Archivo_referencia_grabadora',
+			'Imagen_referencia_grabadora',
+			'Imagen_referencia_microfonos'
+		],
+		csv = True,
+		user_signature = False, 
+		maxtextlengths = {
+			'Archivo_grabadora.archivo_nombre_original' : 50,
+			'Archivo_referencia_grabadora.archivo_nombre_original' : 50,
+			'Imagen_referencia_grabadora.archivo_nombre_original' : 50,
+			'Imagen_referencia_microfonos.archivo_nombre_original' : 50,
+		}
+	)
 
-    return dict(form = form)
+	return dict(form = form)
 
 def invasoras_huellas_excretas():
 
-    ## Controlador correspondiente a la pestaña "Especies_invasoras y huellas/
-    ## excretas", de la sección: "Revisar_registros". Genera las tablas de
-    ## revisión usando el método "smartgrid" incluido en Web2py.
+	## Controlador correspondiente a la pestaña "Especies_invasoras y huellas/
+	## excretas", de la sección: "Revisar_registros". Genera las tablas de
+	## revisión usando el método "smartgrid" incluido en Web2py.
 
-    ###########################################
-    # Menús desplegables de "Transecto_muestra"
-    ###########################################
+	###########################################
+	# Menús desplegables de "Transecto_muestra"
+	###########################################
 
-    db.Transecto_muestra.transecto_numero.requires = IS_IN_DB(db,
-        db.Cat_numero_transecto.nombre, '%(nombre)s')
+	db.Transecto_muestra.transecto_numero.requires = IS_IN_DB(db,
+		db.Cat_numero_transecto.nombre, '%(nombre)s')
 
-    ###########################################
-    # Menús desplegables de "Especie_invasora"
-    ###########################################
+	###########################################
+	# Menús desplegables de "Especie_invasora"
+	###########################################
 
-    db.Especie_invasora.numero_individuos.requires = IS_IN_DB(db,
-        db.Cat_numero_individuos.nombre, '%(nombre)s')
+	db.Especie_invasora.numero_individuos.requires = IS_IN_DB(db,
+		db.Cat_numero_individuos.nombre, '%(nombre)s')
 
-    ###########################################
-    # Campos no modificables
-    ###########################################
+	###########################################
+	# Campos no modificables
+	###########################################
 
-    db.Transecto_muestra.conglomerado_muestra_id.writable = False
-    db.Especie_invasora.transecto_muestra_id.writable = False
-    db.Archivo_especie_invasora.especie_invasora_id.writable = False
-    db.Huella_excreta.transecto_muestra_id.writable = False
-    db.Archivo_huella_excreta.huella_excreta_id.writable = False
+	db.Transecto_muestra.conglomerado_muestra_id.writable = False
+	db.Especie_invasora.transecto_muestra_id.writable = False
+	db.Archivo_especie_invasora.especie_invasora_id.writable = False
+	db.Huella_excreta.transecto_muestra_id.writable = False
+	db.Archivo_huella_excreta.huella_excreta_id.writable = False
 
-    form = SQLFORM.smartgrid(db.Conglomerado_muestra,
-        linked_tables = [
-            'Transecto_muestra',
-            'Especie_invasora',
-            'Archivo_especie_invasora',
-            'Huella_excreta',
-            'Archivo_huella_excreta'
-        ],
-        csv = True,
-        user_signature = False,
-        maxtextlengths = {
-            'Archivo_especie_invasora.archivo_nombre_original' : 50,
-            'Archivo_huella_excreta.archivo_nombre_original' : 50
-        },
-        headers = {
-            'Huella_excreta.es_huella' : 'Huella'
-        }
-    )
+	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+		linked_tables = [
+			'Transecto_muestra',
+			'Especie_invasora',
+			'Archivo_especie_invasora',
+			'Huella_excreta',
+			'Archivo_huella_excreta'
+		],
+		csv = True,
+		user_signature = False,
+		maxtextlengths = {
+			'Archivo_especie_invasora.archivo_nombre_original' : 50,
+			'Archivo_huella_excreta.archivo_nombre_original' : 50
+		},
+		headers = {
+			'Huella_excreta.es_huella' : 'Huella'
+		}
+	)
 
-    return dict(form = form)
+	return dict(form = form)
 
 def registros_extra():
 
-    ## Controlador correspondiente a la pestaña "Registros extra", de la sección:
-    ## "Revisar_registros". Genera las tablas de revisión usando el método
-    ## "smartgrid" incluido en Web2py.
+	## Controlador correspondiente a la pestaña "Registros extra", de la sección:
+	## "Revisar_registros". Genera las tablas de revisión usando el método
+	## "smartgrid" incluido en Web2py.
 
-    ###########################################
-    # Menús desplegables de "Especie_invasora_extra"
-    ###########################################
+	###########################################
+	# Menús desplegables de "Especie_invasora_extra"
+	###########################################
 
-    db.Especie_invasora_extra.elipsoide.requires = IS_IN_DB(db,
-        db.Cat_elipsoide.nombre, '%(nombre)s')
-    db.Especie_invasora_extra.numero_individuos.requires = IS_IN_DB(db,
-    db.Cat_numero_individuos.nombre,'%(nombre)s')
+	db.Especie_invasora_extra.elipsoide.requires = IS_IN_DB(db,
+		db.Cat_elipsoide.nombre, '%(nombre)s')
+	db.Especie_invasora_extra.numero_individuos.requires = IS_IN_DB(db,
+	db.Cat_numero_individuos.nombre,'%(nombre)s')
 
-    ###########################################
-    # Menús desplegables de "Huella_excreta_extra"
-    ###########################################
+	###########################################
+	# Menús desplegables de "Huella_excreta_extra"
+	###########################################
 
-    db.Huella_excreta_extra.elipsoide.requires = IS_IN_DB(db,
-        db.Cat_elipsoide.nombre, '%(nombre)s')
+	db.Huella_excreta_extra.elipsoide.requires = IS_IN_DB(db,
+		db.Cat_elipsoide.nombre, '%(nombre)s')
 
-    ###########################################
-    # Menús desplegables de "Especimen_restos_extra"
-    ###########################################
+	###########################################
+	# Menús desplegables de "Especimen_restos_extra"
+	###########################################
 
-    db.Especimen_restos_extra.elipsoide.requires = IS_IN_DB(db,
-        db.Cat_elipsoide.nombre, '%(nombre)s')
-    db.Especimen_restos_extra.numero_individuos.requires = IS_IN_DB(db,
-        db.Cat_numero_individuos.nombre,'%(nombre)s')
+	db.Especimen_restos_extra.elipsoide.requires = IS_IN_DB(db,
+		db.Cat_elipsoide.nombre, '%(nombre)s')
+	db.Especimen_restos_extra.numero_individuos.requires = IS_IN_DB(db,
+		db.Cat_numero_individuos.nombre,'%(nombre)s')
 
-    ###########################################
-    # Campos no modificables
-    ###########################################
+	###########################################
+	# Campos no modificables
+	###########################################
 
-    db.Especie_invasora_extra.conglomerado_muestra_id.writable = False
-    db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable = False
-    db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
-    db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable = False
-    db.Especimen_restos_extra.conglomerado_muestra_id.writable = False
-    db.Archivo_especimen_restos_extra.especimen_restos_extra_id.writable = False
+	db.Especie_invasora_extra.conglomerado_muestra_id.writable = False
+	db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable = False
+	db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
+	db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable = False
+	db.Especimen_restos_extra.conglomerado_muestra_id.writable = False
+	db.Archivo_especimen_restos_extra.especimen_restos_extra_id.writable = False
 
-    ###########################################
-    # Generando la forma
-    ###########################################
+	###########################################
+	# Generando la forma
+	###########################################
 
-    form = SQLFORM.smartgrid(db.Conglomerado_muestra,
-        linked_tables = [
-            'Especie_invasora_extra',
-            'Archivo_especie_invasora_extra',
-            'Huella_excreta_extra',
-            'Archivo_huella_excreta_extra',
-            'Especimen_restos_extra',
-            'Archivo_especimen_restos_extra'
-        ],
-        csv = True,
-        user_signature = False,
-        maxtextlengths = {
-            'Archivo_especie_invasora_extra.archivo_nombre_original' : 50,
-            'Archivo_huella_excreta_extra.archivo_nombre_original' : 50,
-            'Archivo_especimen_restos_extra.archivo_nombre_original' : 50
-        },
-        headers = {
-            'Huella_excreta_extra.es_huella' : 'Huella',
-            'Especimen_restos_extra.es_especimen' : 'Espécimen'
-        }
-    )
+	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+		linked_tables = [
+			'Especie_invasora_extra',
+			'Archivo_especie_invasora_extra',
+			'Huella_excreta_extra',
+			'Archivo_huella_excreta_extra',
+			'Especimen_restos_extra',
+			'Archivo_especimen_restos_extra'
+		],
+		csv = True,
+		user_signature = False,
+		maxtextlengths = {
+			'Archivo_especie_invasora_extra.archivo_nombre_original' : 50,
+			'Archivo_huella_excreta_extra.archivo_nombre_original' : 50,
+			'Archivo_especimen_restos_extra.archivo_nombre_original' : 50
+		},
+		headers = {
+			'Huella_excreta_extra.es_huella' : 'Huella',
+			'Especimen_restos_extra.es_especimen' : 'Espécimen'
+		}
+	)
 
-    return dict(form = form)
+	return dict(form = form)
 
 # # Conteo de aves
 # db.Punto_conteo_aves.condiciones_ambientales.requires=IS_IN_DB(db,

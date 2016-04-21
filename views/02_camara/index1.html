@@ -44,7 +44,7 @@
 
 	<fieldset>
 		<legend>
-		Datos de la trampa cámara
+			Datos de la trampa cámara
 		</legend>
 		<table class="No_GPS">
 			<tr>
@@ -263,9 +263,10 @@
 		{
 			$('#sitio_muestra_id').remove();
 
-			//ajax es una función de Web2py que simplifica la función homónima de JQuery
-			//recibe el URL destino, los nombres de los campos que se enviarán y el ID
+			// ajax es una función de Web2py que simplifica la función homónima de JQuery
+			// recibe el URL destino, los nombres de los campos que se enviarán y el ID
 			// del elemento donde se insertará la respuesta
+
 			ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 		}
 	);
@@ -433,6 +434,7 @@
 			// Validando los campos obligatorios:
 
 			flag = true;
+
 			campos = $('.obligatorio');
 			campos.each(function() 
 			{
@@ -465,7 +467,7 @@
 				{
 					flag_f = false;
 				}
-				//Revisando que el mes y el día estén en un rango aceptable:
+				// Revisando que el mes y el día estén en un rango aceptable:
 				else
 				{
 					/* match contiene como primer elemento, el match de toda la
@@ -474,7 +476,7 @@
 					var match = fechaReg.exec($(this).val());
 					//alert(match);
 
-					//Validando que el mes se encuentre en un rango aceptable:
+					// Validando que el mes se encuentre en un rango aceptable:
 					if(match[1] < 1 || match[1] > 12)
 					{
 						//alert('El mes es incorrecto');

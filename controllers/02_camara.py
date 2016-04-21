@@ -1,4 +1,8 @@
 # coding: utf8
+
+# El siguiente paquete se utiliza para transformar las imágenes a base64 y pegarlas
+# en el código HTML que se enviará por AJAX.
+
 def index1():
 
 	## Controlador correspondiente a la pestaña "Información de la trampa cámara",
@@ -96,7 +100,7 @@ def index1():
 	
 	else:
 		pass
- 
+
 	##############################################################
 	# Enviando la información de las dropdowns
 	##############################################################
@@ -280,9 +284,9 @@ def index2():
 #     for camara in camarasAsignadas:
 
 #         dropdownHTML += "<option value='" + str(camara.id) + "'>" + camara.nombre + "</option>"  
-	
+
 #     dropdownHTML += "</select>"
-	
+
 #     return XML(dropdownHTML)
 
 def asignarCamara():
@@ -345,9 +349,9 @@ def index3():
 
 	return dict(listaConglomerado = listaConglomerado)
 
-    # Obteniendo los registros en la tabla de Archivo_camara
-    #fotosCamara = db(db.Archivo_camara).select()
-    #return dict(fotosCamara=fotosCamara)
+	# Obteniendo los registros en la tabla de Archivo_camara
+	#fotosCamara = db(db.Archivo_camara).select()
+	#return dict(fotosCamara=fotosCamara)
 
 # Se usan la funciones: asignarSitios() y asignarCamara() definidas con anterioridad
 
@@ -401,29 +405,29 @@ def asignarArchivos():
 
 def asignarInformacionArchivo():
 
-    ## Ésta funcion se invoca mediante AJAX, y genera una forma para
-    ## ingresar/modificar la información de la fotografía que seleccionó el
-    ## usuario en el menú desplegable. El AJAX se activa al seleccionar un
-    ## archivo de la lista desplegable.
+	## Ésta funcion se invoca mediante AJAX, y genera una forma para
+	## ingresar/modificar la información de la fotografía que seleccionó el
+	## usuario en el menú desplegable. El AJAX se activa al seleccionar un
+	## archivo de la lista desplegable.
 
-    # Obteniendo la información del archivo que seleccionó el usuario:
+	# Obteniendo la información del archivo que seleccionó el usuario:
 
-    archivoElegidoID = request.vars.archivo_camara_id
+	archivoElegidoID = request.vars.archivo_camara_id
 
-    # Obteniendo la información del archivo
+	# Obteniendo la información del archivo
 
-    datosArchivoAux = db(db.Archivo_camara.id == archivoElegidoID).select()
+	datosArchivoAux = db(db.Archivo_camara.id == archivoElegidoID).select()
 
-    datosArchivo = datosArchivoAux.first()
+	datosArchivo = datosArchivoAux.first()
 
-    # Creando la pantalla de revisión de fotografía, considerando el caso en el
-    # que datosArchivo esté vacía:
+	# Creando la pantalla de revisión de fotografía, considerando el caso en el
+	# que datosArchivo esté vacía:
 
-    if len(datosArchivoAux) == 0:
+	if len(datosArchivoAux) == 0:
 
-    	revisionHTML = "<form id='forma_shadow'></form>"
+		revisionHTML = "<form id='forma_shadow'></form>"
 
-    else:
+	else:
 
 		#HTML generado:
 
@@ -431,7 +435,7 @@ def asignarInformacionArchivo():
 		# 	<input type='hidden' name='id_archivo' value='str(datosArchivo.id)'/>
 
 		# 	<center>
-		# 		<img src='/init/02_camara/download/datosArchivo.archivo'
+		# 		<img src='data:image/jpeg;base64,imagen_codificada'
 		#		alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>
 		# 	</center>
 		# 	<hr/>
@@ -475,129 +479,153 @@ def asignarInformacionArchivo():
 		# 		id='numero_individuos' value='datosArchivo.numero_individuos'/>
 		# 	</div>
 		# 	<br/>
-        #	<input type='button' accesskey='a' style='float:left;' value='Anterior' id='anterior'/>
-        #	<input type='button' accesskey='s' style='float:right;' value='Siguiente' id='siguiente'/>
-        #
-        # 	<!--Se pone el center hasta el final, para que tome en cuenta el
-        #	margen del elemento que flota a la derecha. -->
-        #
-        #	<center>
-        #		<input type='button' value='Enviar' id='enviar'/>
-        #	</center>
+		#	<input type='button' accesskey='a' style='float:left;' value='Anterior' id='anterior'/>
+		#	<input type='button' accesskey='s' style='float:right;' value='Siguiente' id='siguiente'/>
+		#
+		# 	<!--Se pone el center hasta el final, para que tome en cuenta el
+		#	margen del elemento que flota a la derecha. -->
+		#
+		#	<center>
+		#		<input type='button' value='Enviar' id='enviar'/>
+		#	</center>
 		# </form>
 
-        revisionHTML = "<form id='forma_shadow'><input type='hidden' " +\
-        	"name='id_archivo' value='" + str(datosArchivo.id) + "'/><center>"
+		#################################
+		#################################
+		#################################
 
-        revisionHTML += "<img src='/init/02_camara/download/" + datosArchivo.archivo +\
-            "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"
+		# Leyendo la imagen, pasándola a base 64 y guardándola en una variable
+		# (hay que poner un try catch, por si no se puede leer la imagen)
 
-        revisionHTML += "</center><hr/><div style='float:left;padding-right:60px;'>" +\
-        		"<label for='con_fauna_evidente' style='float:left;padding-right:20px;'>" +\
-                "Con fauna evidente</label><input type='radio' name='fauna_evidente' " +\
-                "value='encontrada' id='con_fauna_evidente'"
+		import base64
 
-        # Si el campo de presencia de la foto elegida es True, entonces la
-        # casilla "fauna evidente" aparece marcada.
+		try:
 
-        if datosArchivo.presencia:
+			imagen = open("/Users/fpardo/Desktop/kefka_wallpaper.jpg", "rb")
+			imagen_codificada = base64.b64encode(imagen.read())
 
-            revisionHTML += " checked='true'/>"
+		except:
 
-        else:
+			imagen_codificada = "error de importación"
 
-            revisionHTML += "/>"
+		revisionHTML = "<form id='forma_shadow'><input type='hidden' " +\
+			"name='id_archivo' value='" + str(datosArchivo.id) + "'/><center>"
 
-        revisionHTML += "</div><div style='float:left;'><label for='sin_fauna_evidente' " +\
-            "style='float:left;padding-right:20px;'>Sin fauna evidente</label><input type='radio' " +\
-            "name='fauna_evidente' value='no_encontrada' id='sin_fauna_evidente'"
-        
-        # Si el campo de presencia de la foto elegida es False, entonces la
-        # casilla "Sin fauna evidente" aparece marcada.
-        # Hay que revisar que sea igual a false, porque podría ser None.
+		revisionHTML += "<img src='data:image/jpeg;base64," + imagen_codificada +\
+			"' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"
 
-        if datosArchivo.presencia == False:
+		# Descomentar el código siguiente para utilizar la función download() de
+		# Web2py para descargar la imagen en la vista (sólo funciona para imágenes
+		# guardadas en "uploads" usando el método "store()" de Web2py.)
 
-            revisionHTML += " checked='true'/>"
+		#revisionHTML += "<img src='/init/02_camara/download/" + datosArchivo.archivo +\
+		#    "' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"
 
-        else:
+		revisionHTML += "</center><hr/><div style='float:left;padding-right:60px;'>" +\
+				"<label for='con_fauna_evidente' style='float:left;padding-right:20px;'>" +\
+				"Con fauna evidente</label><input type='radio' name='fauna_evidente' " +\
+				"value='encontrada' id='con_fauna_evidente'"
 
-            revisionHTML += "/>"
+		# Si el campo de presencia de la foto elegida es True, entonces la
+		# casilla "fauna evidente" aparece marcada.
 
-        revisionHTML += "</div><div style='clear:both;'></div><br/><div id='info_fauna'>" +\
-            "<label for='nombre_comun' style='float:left;padding-right:49px;'>" +\
-            "Nombre común:</label><input type='text' name='nombre_comun' class='string' " +\
-            "id='nombre_comun' value='"
+		if datosArchivo.presencia:
 
-        #Si hay nombre común, éste aparece en la casilla para ingresar el texto.
-        if datosArchivo.nombre_comun:
+			revisionHTML += " checked='true'/>"
 
-            revisionHTML += datosArchivo.nombre_comun
+		else:
 
-        revisionHTML += "'/><br/><label for='nombre_cientifico' " +\
-            "style='float:left;padding-right:37px;'>Nombre científico:</label>" +\
-            "<input type='text' name='nombre_cientifico' class='string' id='nombre_cientifico' value='"
+			revisionHTML += "/>"
 
-        #Si hay nombre científico, éste aparece en la casilla para ingresar el texto.
-        if datosArchivo.nombre_cientifico:
+		revisionHTML += "</div><div style='float:left;'><label for='sin_fauna_evidente' " +\
+			"style='float:left;padding-right:20px;'>Sin fauna evidente</label><input type='radio' " +\
+			"name='fauna_evidente' value='no_encontrada' id='sin_fauna_evidente'"
+		
+		# Si el campo de presencia de la foto elegida es False, entonces la
+		# casilla "Sin fauna evidente" aparece marcada.
+		# Hay que revisar que sea igual a false, porque podría ser None.
 
-            revisionHTML += datosArchivo.nombre_cientifico
+		if datosArchivo.presencia == False:
 
-        revisionHTML += "'/><br/><label for='numero_individuos' " +\
-        	"style='float:left;padding-right:10px;'>Número de individuos:</label>" +\
-        	"<input type='text' name='numero_individuos' class='integer' id='numero_individuos' value='"
+			revisionHTML += " checked='true'/>"
 
-        if datosArchivo.numero_individuos:
+		else:
 
-            revisionHTML += str(datosArchivo.numero_individuos)
+			revisionHTML += "/>"
 
-        revisionHTML += "'/></div><br/>" +\
-        	"<input type='button' accesskey='a' style='float:left;' value='Anterior' id='anterior'/>" +\
-        	"<input type='button' accesskey='s' style='float:right;' value='Siguiente' id='siguiente'/>" +\
-        	"<center><input type='button' value='Enviar' id='enviar'/></center>" +\
-        	"</form>"
-    
-    return XML(revisionHTML)
+		revisionHTML += "</div><div style='clear:both;'></div><br/><div id='info_fauna'>" +\
+			"<label for='nombre_comun' style='float:left;padding-right:49px;'>" +\
+			"Nombre común:</label><input type='text' name='nombre_comun' class='string' " +\
+			"id='nombre_comun' value='"
+
+		#Si hay nombre común, éste aparece en la casilla para ingresar el texto.
+		if datosArchivo.nombre_comun:
+
+			revisionHTML += datosArchivo.nombre_comun
+
+		revisionHTML += "'/><br/><label for='nombre_cientifico' " +\
+			"style='float:left;padding-right:37px;'>Nombre científico:</label>" +\
+			"<input type='text' name='nombre_cientifico' class='string' id='nombre_cientifico' value='"
+
+		#Si hay nombre científico, éste aparece en la casilla para ingresar el texto.
+		if datosArchivo.nombre_cientifico:
+
+			revisionHTML += datosArchivo.nombre_cientifico
+
+		revisionHTML += "'/><br/><label for='numero_individuos' " +\
+			"style='float:left;padding-right:10px;'>Número de individuos:</label>" +\
+			"<input type='text' name='numero_individuos' class='integer' id='numero_individuos' value='"
+
+		if datosArchivo.numero_individuos:
+
+			revisionHTML += str(datosArchivo.numero_individuos)
+
+		revisionHTML += "'/></div><br/>" +\
+			"<input type='button' accesskey='a' style='float:left;' value='Anterior' id='anterior'/>" +\
+			"<input type='button' accesskey='s' style='float:right;' value='Siguiente' id='siguiente'/>" +\
+			"<center><input type='button' value='Enviar' id='enviar'/></center>" +\
+			"</form>"
+	
+	return XML(revisionHTML)
 
 def actualizarArchivo():
 
-    ## Ésta funcion se invoca mediante AJAX, y guarda la información que se introdujo/
-    ## modificó en la forma generada para el archivo seleccionada. El AJAX se
-    ## activa al presionar el botón "Enviar" en la forma correspondiente
+	## Ésta funcion se invoca mediante AJAX, y guarda la información que se introdujo/
+	## modificó en la forma generada para el archivo seleccionada. El AJAX se
+	## activa al presionar el botón "Enviar" en la forma correspondiente
 
-    # Utilizando los datos enviados de la forma_shadow, se actualiza el registro
-    # de una foto en la base de datos.
+	# Utilizando los datos enviados de la forma_shadow, se actualiza el registro
+	# de una foto en la base de datos.
 
-    archivoElegidoID = request.vars.id_archivo
-    faunaEvidente = request.vars.fauna_evidente
-    nombreComun = request.vars.nombre_comun
-    nombreCientifico = request.vars.nombre_cientifico
-    numeroIndividuos = request.vars.numero_individuos
+	archivoElegidoID = request.vars.id_archivo
+	faunaEvidente = request.vars.fauna_evidente
+	nombreComun = request.vars.nombre_comun
+	nombreCientifico = request.vars.nombre_cientifico
+	numeroIndividuos = request.vars.numero_individuos
 
-    # Viendo si se encontró fauna evidente, no se encontró o la foto simplemente
-    # no fue revisada.
-    if faunaEvidente == 'encontrada':
+	# Viendo si se encontró fauna evidente, no se encontró o la foto simplemente
+	# no fue revisada.
+	if faunaEvidente == 'encontrada':
 
-        db(db.Archivo_camara.id == archivoElegidoID).update(
-        	presencia = True,
-        	nombre_comun = nombreComun,
-        	nombre_cientifico = nombreCientifico,
-        	numero_individuos = numeroIndividuos
-        )
+		db(db.Archivo_camara.id == archivoElegidoID).update(
+			presencia = True,
+			nombre_comun = nombreComun,
+			nombre_cientifico = nombreCientifico,
+			numero_individuos = numeroIndividuos
+		)
 
-    else:
+	else:
 
-        db(db.Archivo_camara.id == archivoElegidoID).update(
-        	presencia = False,
-        	nombre_comun = None,
-        	nombre_cientifico = None,
-        	numero_individuos = None)
+		db(db.Archivo_camara.id == archivoElegidoID).update(
+			presencia = False,
+			nombre_comun = None,
+			nombre_cientifico = None,
+			numero_individuos = None)
 
-def download():
+# def download():
 
-    ## Esta función es de Web2py y se utiliza para visualizar las fotografías.
-    ## Hay que editarla para que funcione con la nueva política de archivos
-    ## (que no se suben a Web2py).
+# 	## Esta función es de Web2py y se utiliza para visualizar las fotografías.
+# 	## Hay que editarla para que funcione con la nueva política de archivos
+# 	## (que no se suben a Web2py).
 
-	return response.download(request, db)
-
+# 	return response.download(request, db)
