@@ -134,7 +134,11 @@
 
 		ajax("{{=URL('asignarArchivos')}}", ['camara_id'], 'shadow_clone_3');
 
-		ajax("{{=URL('asignarInformacionArchivo')}}", ['archivo_camara_id'], 'shadow_clone_4');
+		/* El AJAX siguiente usa "conglomerado_muestra_id", puesto que se tienen
+		que reconstruir los paths ahora (en vista de que ya no se suben los archivos
+		a la carpeta "uploads") */
+		ajax("{{=URL('asignarInformacionArchivo')}}",
+			['conglomerado_muestra_id', 'archivo_camara_id'], 'shadow_clone_4');
 	}
 	);
 
@@ -197,7 +201,11 @@
 		una forma vacía, pues en la combo box de "archivo_camara_id", que se
 		acaba de generar, no hay ninguna opción seleccionada) */
 
-		ajax("{{=URL('asignarInformacionArchivo')}}", ['archivo_camara_id'], 'shadow_clone_4');
+		/* El AJAX siguiente usa "conglomerado_muestra_id", puesto que se tienen
+		que reconstruir los paths ahora (en vista de que ya no se suben los archivos
+		a la carpeta "uploads") */
+		ajax("{{=URL('asignarInformacionArchivo')}}",
+			['conglomerado_muestra_id', 'archivo_camara_id'], 'shadow_clone_4');
 	}
 	);
 
@@ -208,7 +216,11 @@
 	$('#shadow_clone_3').on('change', '#archivo_camara_id', function(){
 		$('#forma_shadow').remove();
 
-		ajax("{{=URL('asignarInformacionArchivo')}}", ['archivo_camara_id'], 'shadow_clone_4');
+		/* El AJAX siguiente usa "conglomerado_muestra_id", puesto que se tienen
+		que reconstruir los paths ahora (en vista de que ya no se suben los archivos
+		a la carpeta "uploads") */
+		ajax("{{=URL('asignarInformacionArchivo')}}",
+			['conglomerado_muestra_id', 'archivo_camara_id'], 'shadow_clone_4');
 	}
 	)
 

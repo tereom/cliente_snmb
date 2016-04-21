@@ -290,14 +290,16 @@ def index2():
 
 			# Guardando el archivo en la carpeta adecuada
 
-			archivoGrabadora = db.Archivo_grabadora.archivo.store(aux, aux.filename)
+			# Descomentar ésto para que Web2py guarde el archivo en la carpeta
+			# "uploads"
+			#archivoGrabadora = db.Archivo_grabadora.archivo.store(aux, aux.filename)
 			
 			# Creando los campos de la tabla "Archivo_grabadora".
 
 			datosArchivoGrabadora = {}
 			datosArchivoGrabadora['es_audible'] = esAudible
 			datosArchivoGrabadora['grabadora_id'] = formaArchivosGrabadora.vars['grabadora_id']
-			datosArchivoGrabadora['archivo'] = archivoGrabadora
+			datosArchivoGrabadora['archivo'] = aux.filename
 			datosArchivoGrabadora['archivo_nombre_original'] = aux.filename
 		
 			#Insertando el registro en la base de datos:

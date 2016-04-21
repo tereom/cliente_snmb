@@ -217,13 +217,15 @@ def index2():
 
 			# Guardando el archivo en la carpeta adecuada
 
-			archivoCamara = db.Archivo_camara.archivo.store(aux, aux.filename)
+			# Descomentar ésto para que Web2py guarde el archivo en la carpeta
+			# "uploads"
+			#archivoCamara = db.Archivo_camara.archivo.store(aux, aux.filename)
 
 			# Creando los campos de la tabla "Archivo_camara".
 			
 			datosArchivoCamara = {}
 			datosArchivoCamara['camara_id'] = formaArchivosCamara.vars['camara_id']
-			datosArchivoCamara['archivo'] = archivoCamara
+			datosArchivoCamara['archivo'] = aux.filename
 			datosArchivoCamara['archivo_nombre_original'] = aux.filename
 		
 			# Insertando el registro en la base de datos:
@@ -405,6 +407,10 @@ def asignarArchivos():
 
 def asignarInformacionArchivo():
 
+	import base64
+	import os
+	import csv
+
 	## Ésta funcion se invoca mediante AJAX, y genera una forma para
 	## ingresar/modificar la información de la fotografía que seleccionó el
 	## usuario en el menú desplegable. El AJAX se activa al seleccionar un
@@ -420,7 +426,7 @@ def asignarInformacionArchivo():
 
 	datosArchivo = datosArchivoAux.first()
 
-	# Creando la pantalla de revisión de fotografía, considerando el caso en el
+	# Creando la pantalla de revisión de archivos, considerando el caso en el
 	# que datosArchivo esté vacía:
 
 	if len(datosArchivoAux) == 0:
@@ -490,23 +496,45 @@ def asignarInformacionArchivo():
 		#	</center>
 		# </form>
 
-		#################################
-		#################################
-		#################################
+		# Obteniendo la información del conglomerado en el que se declararon los
+		# archivos con el fin de reconstruir la ruta hacia ellos y poder visualizarlos.
+
+		conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+
+		# Obteniendo la información del conglomerado
+
+		datosConglomeradoAux = db(
+			db.Conglomerado_muestra.id == conglomeradoElegidoID).select(
+			db.Conglomerado_muestra.nombre, db.Conglomerado_muestra.fecha_visita)
+
+		datosConglomerado = datosConglomeradoAux.first()
+
+		# Creando el path hacia la imagen seleccionada (en caso de que se haya
+		# seleccionado, recordar que el AJAX se activa para resetear la lista de
+		# imágenes al cambiar cualquier combobox de la cascada.
+
+		thisPath = os.getcwd()
+
+		newPath = os.path.normpath(thisPath + os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
+
+		idConglomerado = str(datosConglomerado.nombre)
+		fechaConglomerado = str(datosConglomerado.fecha_visita)
+
+		newFolder = idConglomerado + '_' + fechaConglomerado
+
+		pathImagen = os.path.join(newPath,'conglomerados',newFolder,'c',datosArchivo.archivo)
 
 		# Leyendo la imagen, pasándola a base 64 y guardándola en una variable
 		# (hay que poner un try catch, por si no se puede leer la imagen)
 
-		import base64
-
 		try:
 
-			imagen = open("/Users/fpardo/Desktop/kefka_wallpaper.jpg", "rb")
+			imagen = open(pathImagen, "rb")
 			imagen_codificada = base64.b64encode(imagen.read())
 
 		except:
 
-			imagen_codificada = "error de importación"
+			imagen_codificada = ""
 
 		revisionHTML = "<form id='forma_shadow'><input type='hidden' " +\
 			"name='id_archivo' value='" + str(datosArchivo.id) + "'/><center>"
