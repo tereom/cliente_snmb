@@ -65,10 +65,10 @@ db.define_table('Imagen_referencia_camara', *Campos_Imagen_referencia_camara,
 Campos_Archivo_camara = [
 	Field('camara_id','reference Camara',required=True),
 	Field('archivo_nombre_original','string',required=True),
-	Field('archivo','string',required=True),
-
+	
 	# Como ya no se guardan los archivos en Web2py, "archivo" ya no es de tipo
 	# "upload"
+	Field('archivo','string',required=True),
 	#Field('archivo','upload',autodelete=True,required=True),
 	Field('presencia','boolean'),
 	Field('nombre_comun','string'),

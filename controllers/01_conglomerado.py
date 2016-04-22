@@ -555,7 +555,7 @@ def index():
 
 		for aux in archivos:
 
-			#Guardando el archivo en la carpeta adecuada
+			# Guardando el archivo en la carpeta adecuada
 			archivoImagen = db.Imagen_referencia_sitio.archivo.store(aux,aux.filename)
 
 			datosArchivoImagen = {}
@@ -563,20 +563,32 @@ def index():
 			datosArchivoImagen['archivo'] = archivoImagen
 			datosArchivoImagen['archivo_nombre_original'] = aux.filename
 
-
-			#Guardando la imagen de referencia en la carpeta adecuada
+			# Guardando la imagen de referencia en la carpeta adecuada
 			db.Imagen_referencia_sitio.insert(**datosArchivoImagen)
 
 		##################################################
-		# creación de carpetas para alojar fotos y sonidos 
+		# Creación de carpetas para alojar fotos y sonidos 
 		##################################################
 
 		# se crean las carpetas que van a alojar las fotos y videos de la trampa 
-		# cámara así como los sonidos audibles y ultrasónicos
+		# cámara así como los sonidos audibles y ultrasónicos. Ruta:
+		# cliente_snmb_windows/mac_v5
+		# ├───web2py
+		# ├───conglomerados
+		# |   ├───nombre_aaaa-mm-dd
+		# |   |   ├───c
+		# |   |   ├───ga
+		# |   |   ├───gu
 
 		thisPath = os.getcwd()
 
-		newPath = os.path.normpath(thisPath + os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
+
+		########### Para Windows ###########
+		#newPath = os.path.normpath(thisPath + os.sep + os.pardir)
+
+		############ Para Mac ###########
+		newPath = os.path.normpath(thisPath +\
+			os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
 
 		idConglomerado = str(datosConglomerado['nombre'])
 		fechaConglomerado = str(datosConglomerado['fecha_visita'])

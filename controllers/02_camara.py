@@ -177,6 +177,8 @@ def camaraExistente():
 
 def index2():
 
+	import os
+
 	## Controlador correspondiente a la pestaña "Archivos trampa cámara", de
 	## la sección "Trampa cámara"
 
@@ -196,8 +198,12 @@ def index2():
 		SELECT(_name='camara_id',
 			requires=IS_IN_DB(db,db.Camara.id,'%(nombre)s')),
 
-		INPUT(_name='archivos_camara',_type='file',requires=IS_NOT_EMPTY(),
-			_multiple=True)
+		# Ahora ya no se envían los archivos a través de la forma, únicamente el
+		# campo de "archivos_validados"
+		INPUT(_name='archivos_validados',_type='string',requires=IS_NOT_EMPTY()),
+
+		#INPUT(_name='archivos_camara',_type='file',requires=IS_NOT_EMPTY(),
+		#	_multiple=True)
 	]
 
 	formaArchivosCamara = FORM(*camposArchivosCamara)
@@ -205,10 +211,13 @@ def index2():
 	if formaArchivosCamara.accepts(request.vars,formname='formaArchivosCamaraHTML'):
 
 		###########################################
-		# Procesando los archivos múltiples capturados con una cámara
+		# Procesando los archivos múltiples encontrados en la carpeta:
+		# nombre_aaaa-mm-dd/c
 		###########################################
 		
-		archivos = formaArchivosCamara.vars['archivos_camara']
+		#archivos = formaArchivosCamara.vars['archivos_camara']
+
+		archivos = os.listdir()
 
 		if not isinstance(archivos, list):
 			archivos = [archivos]
@@ -331,6 +340,88 @@ def asignarCamara():
 
 	return XML(respuestaHTML)
 
+def validarArchivos():
+
+	import os
+
+	## Función invocada mediante AJAX cuando se presiona el botón de "validar_archivos"
+	## en la forma, y además se encuentra un valor para "camara_id" (por lo que
+	## deben haberse seleccionado valores de "conglomerado_muestra_id" y
+	## "sitio_muestra_id"). Esta función valida:
+	##	1. Que la migración de los archivos no se haya realizado con anterioridad.
+	##	2. Que la carpeta nombre_cgl_aaaa-mm-dd/c exista.
+	##	3. Que dicha carpeta no esté vacía
+	## Regresando un string con el mensaje apropiado en cada caso, para que la vista
+	## lo alerte.
+
+	camaraElegidaID = request.vars.camara_id
+
+	# Obteniendo los archivos correspondientes a la cámara seleccionada
+
+	archivosCamara = db(db.Archivo_camara.camara_id == camaraElegidaID).select()
+
+	# Generando los distintos mensajes:
+
+	if len(archivosCamara) > 0:
+
+		mensaje = "Ya se han enviado los archivos de la cámara para el " +\
+		"conglomerado seleccionado. Si lo necesita, borre el registro de la cámara " +\
+		"en la sección de 'Revisar registros', y vuelva a declararla"
+
+	else:
+
+		# Obteniendo los datos del conglomerado seleccionado, con el fin de crear
+		# el path hacia la carpeta apropiada:
+
+		conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+
+		# Obteniendo la información del conglomerado
+
+		datosConglomeradoAux = db(
+			db.Conglomerado_muestra.id == conglomeradoElegidoID).select(
+			db.Conglomerado_muestra.nombre, db.Conglomerado_muestra.fecha_visita)
+
+		datosConglomerado = datosConglomeradoAux.first()
+
+		# Creando el path hacia la carpeta nombre_cgl_aaaa-mm-dd/c
+
+		thisPath = os.getcwd()
+
+		########### Para Windows ###########
+		#newPath = os.path.normpath(thisPath + os.sep + os.pardir)
+
+		############ Para Mac ###########
+		newPath = os.path.normpath(thisPath +\
+			os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
+
+		idConglomerado = str(datosConglomerado.nombre)
+		fechaConglomerado = str(datosConglomerado.fecha_visita)
+
+		newFolder = idConglomerado + '_' + fechaConglomerado
+
+		pathC = os.path.join(newPath, 'conglomerados', newFolder, 'c')
+
+		# Verificando que dicha carpeta exista
+
+		if not os.path.isdir(pathC):
+
+			mensaje = "No se encontró la carpeta " +\
+			os.path.join('conglomerados', newFolder, 'c') +\
+			" favor de crearla."
+
+		elif len(os.listdir(pathC)) == 0:
+
+			mensaje = "La carpeta " +\
+			os.path.join('conglomerados', newFolder, 'c') + " está vacía, " +\
+			"favor de agregarle los archivos de la cámara"
+
+		else:
+
+			mensaje = "Archivos validados correctamente"
+
+	return mensaje
+
+
 def index3():
 
 	## Controlador correspondiente a la pestaña "Selección de fauna", de
@@ -409,7 +500,6 @@ def asignarInformacionArchivo():
 
 	import base64
 	import os
-	import csv
 
 	## Ésta funcion se invoca mediante AJAX, y genera una forma para
 	## ingresar/modificar la información de la fotografía que seleccionó el
@@ -515,7 +605,12 @@ def asignarInformacionArchivo():
 
 		thisPath = os.getcwd()
 
-		newPath = os.path.normpath(thisPath + os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
+		########### Para Windows ###########
+		#newPath = os.path.normpath(thisPath + os.sep + os.pardir)
+
+		############ Para Mac ###########
+		newPath = os.path.normpath(thisPath +\
+			os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
 
 		idConglomerado = str(datosConglomerado.nombre)
 		fechaConglomerado = str(datosConglomerado.fecha_visita)

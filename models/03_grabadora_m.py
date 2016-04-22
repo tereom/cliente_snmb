@@ -84,10 +84,10 @@ db.define_table('Archivo_referencia_grabadora', *Campos_Archivo_referencia_graba
 Campos_Archivo_grabadora = [
 	Field('grabadora_id','reference Grabadora',required=True),
 	Field('archivo_nombre_original','string',required=True),
-	Field('archivo','string',required=True),
 
 	# Como ya no se guardan los archivos en Web2py, "archivo" ya no es de tipo
 	# "upload"
+	Field('archivo','string',required=True),
 	#Field('archivo','upload',autodelete=True,required=True),
 	Field('es_audible','boolean',required=True)
 	]

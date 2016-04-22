@@ -82,7 +82,22 @@
 		</table>
 
 		<hr/>
-		<input class="obligatorio" type="file" id="archivos_camara" name="archivos_camara" multiple/>
+		<!--Ahora no se seleccionarán los archivos a subir en la vista, sino que,
+		a la hora de presionar el botón siguiente, se leerá la carpeta con los
+		contenidos, y se validará:
+		0. Que se haya encontrado una cámara declarada (ésto implica que se
+		seleccionaron un conglomerado y un sitio).
+		1. Que la migración de los archivos no se haya realizado con anterioridad.
+		2. Que la carpeta nombre_cgl_aaaa-mm-dd/c exista.
+		3. Que dicha carpeta no esté vacía
+
+		Si la validación es exitosa, ésto quedará registrado en el campo
+		"archivos_validados".
+		-->
+
+		<button type="button" id="validar_archivos">Validar archivos</button>
+		<hidden name="archivos_validados" id="archivos_validados" value=""/>
+		<!--<input class="obligatorio" type="file" id="archivos_camara" name="archivos_camara" multiple/>-->
 	</fieldset>
 		<br/>
 		<br/>
@@ -105,57 +120,95 @@
 	// AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
 	//////////////////////////////////////////
 
-	$('#conglomerado_muestra_id').change
-	(
-	function()
-	{
+	$('#conglomerado_muestra_id').change(
+		function()
+		{
 
-		/* Como a la hora de seleccionar el conglomerado, se resetea la combobox
-		de sitio, desaparece el mensaje de camara: */
+			/* Como a la hora de seleccionar el conglomerado, se resetea la combobox
+			de sitio, desaparece el mensaje de camara: */
 
-		$('.Mensaje').hide();
+			$('.Mensaje').hide();
 
-		$('#sitio_muestra_id, #camara_id').remove();
+			$('#sitio_muestra_id, #camara_id').remove();
 
-		/* ajax es una función de Web2py que simplifica la función homónima de
-		JQuery recibe el URL destino, los nombres de los campos que se enviarán
-		y el ID del elemento donde se insertará la respuesta. */
+			/* Al cambiar el conglomerado elegido, se elimina la validación de
+			los archivos (del conglomerado elegido anteriormente)*/
 
-		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+			$('#archivos_validados').val("");
 
-		ajax("{{=URL('asignarCamara')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-	}
+			/* ajax es una función de Web2py que simplifica la función homónima de
+			JQuery recibe el URL destino, los nombres de los campos que se enviarán
+			y el ID del elemento donde se insertará la respuesta. */
+
+			ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+
+			ajax("{{=URL('asignarCamara')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+		}
 	);
 
 	//////////////////////////////////////////
 	// AJAX para mandar la información con la cámara declarada al elegir un sitio
 	//////////////////////////////////////////
 
-	$('#shadow_clone').on('change', '#sitio_muestra_id', function ()
-	{
-		$.ajax
-		(
+	$('#shadow_clone').on('change', '#sitio_muestra_id', function()
 		{
-			type: "POST",
-			data: $('#sitio_muestra_id').serialize(),
-			url: "{{=URL('asignarCamara')}}",
-			async: false,
-			success: function(resultado)
+
+			/* Al cambiar el sitio elegido, se elimina la validación de
+			los archivos */
+			$('#archivos_validados').val("");
+
+			$.ajax
+			(
 			{
-				$("#shadow_clone_2").html(resultado);
+				type: "POST",
+				data: $('#sitio_muestra_id').serialize(),
+				url: "{{=URL('asignarCamara')}}",
+				async: false,
+				success: function(resultado)
+				{
+					$("#shadow_clone_2").html(resultado);
+				}
+			}
+			);
+			if($(this).val())
+			{
+				$('.Mensaje').show();
+			}
+			else
+			{
+				$('.Mensaje').hide();
 			}
 		}
-		);
-		if($(this).val())
-		{
-			$('.Mensaje').show();
-		}
-		else
-		{
-			$('.Mensaje').hide();
-		}
-	}
 	);
+
+	//////////////////////////////////////////
+	// AJAX para validar los archivos en cuanto se presione el botón en la forma
+	//////////////////////////////////////////
+
+	$('#validar_archivos').click(
+		function(){
+			if(!$('#camara_id').val())
+				alert('Favor de verificar que una cámara esté declarada en el ' +
+					'conglomerado y sitio seleccionados');
+			else
+				$.ajax
+				(
+				{
+					type: "POST",
+					data: $('#conglomerado_muestra_id, #camara_id').serialize(),
+					url: "{{=URL('validarArchivos')}}",
+					async: false,
+					success: function(mensaje)
+					{
+						alert(mensaje);
+						if(mensaje == "Archivos validados correctamente"){
+							$("#archivos_validados").val("true");
+						}
+					}
+				}
+				);
+		}
+	)
 
 	//////////////////////////////////////////
 	// Este código se ejecuta en cuanto el html termina de llegar al navegador:
