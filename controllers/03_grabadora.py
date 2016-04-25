@@ -429,7 +429,7 @@ def validarArchivos():
 
 	grabadoraElegidaID = request.vars.grabadora_id
 
-	tipoArchivo = reques.vars.es_audible_ultrasonico
+	tipoArchivo = request.vars.es_audible_ultrasonico
 
 	# Obteniendo los archivos correspondientes a la grabadora y tipo seleccionados.
 	# ésto código no puede tronar porque, gracias a la validación en la vista,
