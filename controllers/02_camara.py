@@ -1,9 +1,9 @@
 # coding: utf8
 
-import os
+import os # usado en index2, validarArchivos, asignarInformacionArchivo
 import applications.init.modules.estructura_archivos_admin as eaa
-import simplejson as json
-import base64
+import simplejson as json # usado en validarArchivos
+import base64 # usado en asignarInformacionArchivo
 
 
 def index1():
@@ -231,6 +231,9 @@ def index2():
 
 		rutaC = os.path.join(rutaCarpetaCglMuestra, 'c')
 
+		# como ya se validó que la carpeta "nombre_aaaa-mm-dd/c" exista, la
+		# siguiente instrucción no tiene por qué tronar.
+
 		archivos = os.listdir(rutaC)
 		
 		#archivos = formaArchivosCamara.vars['archivos_camara']
@@ -238,7 +241,7 @@ def index2():
 		if not isinstance(archivos, list):
 			archivos = [archivos]
 
-		# como ya se validó que la carpeta nombre_aaaa-mm-dd/c sea no vacía, el
+		# como ya se validó que la carpeta "nombre_aaaa-mm-dd/c" sea no vacía, el
 		# siguiente "for" no tiene por qué tronar.
 			
 		for aux in archivos:
@@ -533,9 +536,6 @@ def asignarInformacionArchivo():
 	## usuario en el menú desplegable. El AJAX se activa al seleccionar un
 	## archivo de la lista desplegable.
 
-	# El paquete base64 se utiliza para transformar las imágenes a dicha base y
-	# pegarlas en el código HTML que se enviará por AJAX.
-
 	# Obteniendo la información del archivo que seleccionó el usuario:
 
 	archivoElegidoID = request.vars.archivo_camara_id
@@ -629,42 +629,33 @@ def asignarInformacionArchivo():
 
 		datosConglomerado = datosConglomeradoAux.first()
 
-		# Creando el path hacia la imagen seleccionada (en caso de que se haya
-		# seleccionado, recordar que el AJAX se activa para resetear la lista de
-		# imágenes al cambiar cualquier combobox de la cascada.
-
-		thisPath = os.getcwd()
-
-		########### Para Windows ###########
-		#newPath = os.path.normpath(thisPath + os.sep + os.pardir)
-
-		############ Para Mac ###########
-		newPath = os.path.normpath(thisPath +\
-			os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
-
-		idConglomerado = str(datosConglomerado.nombre)
+		nombreConglomerado = str(datosConglomerado.nombre)
 		fechaConglomerado = str(datosConglomerado.fecha_visita)
 
-		newFolder = idConglomerado + '_' + fechaConglomerado
+		# Creando el path hacia la imagen seleccionada (en caso de que se haya
+		# seleccionado, recordar que el AJAX se activa para resetear la lista de
+		# imágenes al cambiar cualquier combobox de la cascada).
 
-		pathImagen = os.path.join(newPath,'conglomerados',newFolder,'c',datosArchivo.archivo)
+		rutaCarpetaCglMuestra = eaa.crearRutaCarpeta(nombreConglomerado, fechaConglomerado)
+
+		pathImagen = os.path.join(crearRutaCarpeta,'c',datosArchivo.archivo)
 
 		# Leyendo la imagen, pasándola a base 64 y guardándola en una variable
-		# (hay que poner un try catch, por si no se puede leer la imagen)
+		# (hay que poner un try catch, por si no se puede leer la imagen).
 
 		try:
 
 			imagen = open(pathImagen, "rb")
-			imagen_codificada = base64.b64encode(imagen.read())
+			imagenCodificada = base64.b64encode(imagen.read())
 
 		except:
 
-			imagen_codificada = ""
+			imagenCodificada = ""
 
 		revisionHTML = "<form id='forma_shadow'><input type='hidden' " +\
 			"name='id_archivo' value='" + str(datosArchivo.id) + "'/><center>"
 
-		revisionHTML += "<img src='data:image/jpeg;base64," + imagen_codificada +\
+		revisionHTML += "<img src='data:image/jpeg;base64," + imagenCodificada +\
 			"' alt='Error al cargar la fotografía' style='width:800px;height:600px;'/>"
 
 		# Descomentar el código siguiente para utilizar la función download() de
