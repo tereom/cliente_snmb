@@ -30,11 +30,6 @@
                     renglón, no se modifique el tamaño de la misma cuando se 
                     desaparecen algunos campos-->
 					<div class="Estatica">
-						<!--este campo (y el de sitio), en realidad sólo sirven 
-						para encontrar con AJAX las cámaras que han sido declaradas
-						en el sitio elegido. Al enviar la forma al controlador,
-						únicamente el id de la cámara (de la dropdown generada
-						mediante AJAX) se utilizará para registrar los archivos, -->
 						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
 							<option value=""/>
 							{{for conglomerado in listaConglomerado:}}
@@ -82,14 +77,15 @@
 		</table>
 
 		<hr/>
+
 		<!--Ahora no se seleccionarán los archivos a subir en la vista, sino que,
 		a la hora de presionar el botón siguiente, se validará:
-		0. Que se haya encontrado una cámara declarada (ésto implica que se
+		1. Que se haya encontrado una cámara declarada (ésto implica que se
 		seleccionaron un conglomerado y un sitio).
-		1. Que el registro de los archivos asociados a esa cámara no se haya
+		2. Que el registro de los archivos asociados a esa cámara no se haya
 		realizado con anterioridad.
-		2. Que la carpeta nombre_cgl_aaaa-mm-dd/c exista.
-		3. Que dicha carpeta no esté vacía
+		3. Que la carpeta nombre_cgl_aaaa-mm-dd/c exista.
+		4. Que dicha carpeta no esté vacía
 
 		Si la validación es exitosa, ésto quedará registrado en el campo
 		"archivos_validados".
@@ -113,8 +109,8 @@
 		<!--<input class="obligatorio" type="file" id="archivos_camara" name="archivos_camara" multiple/>-->
 
 	</fieldset>
-		<br/>
-		<br/>
+	<br/>
+	<br/>
 	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 

@@ -1,5 +1,4 @@
 {{extend 'layout.html'}}
-
 {{block head}}
 	<style type="text/css">
 
@@ -31,11 +30,6 @@
 					renglón, no se modifique el tamaño de la misma cuando se 
 					desaparecen algunos campos-->
 					<div class="Estatica">
-						<!--este campo (y el de sitio), en realidad sólo sirven 
-						para encontrar con AJAX las grabadoras que han sido declaradas
-						en el sitio elegido. Al enviar la forma al controlador,
-						se utilizará para registrar los archivos, únicamente el 
-						id de la grabadora (de la dropdown generada mediante AJAX)-->
 						<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
 							<option value=""/>
 							{{for conglomerado in listaConglomerado:}}
@@ -99,7 +93,40 @@
 
 		<hr/>
 
-		<input class="obligatorio" type="file" id="archivos_grabadora" name="archivos_grabadora" multiple/>
+		<!--Ahora no se seleccionarán los archivos a subir en la vista, sino que,
+		a la hora de presionar el botón siguiente, se validará:
+		1. Que se haya encontrado una grabadora declarada (ésto implica que se
+		seleccionaron un conglomerado y un sitio).
+		2. Que se haya seleccionado un tipo t de archivos, ya sean audibles o
+		ultrasónicos.
+		3. Que el registro de los archivos asociados a esa grabadora, y del tipo
+		t no se haya realizado con anterioridad.
+		4. Que la carpeta nombre_cgl_aaaa-mm-dd/t exista.
+		5. Que dicha carpeta no esté vacía
+
+		Si la validación es exitosa, ésto quedará registrado en el campo
+		"archivos_validados".
+		-->
+
+		<button type="button" id="validar_archivos">Validar archivos</button>
+		<input type="hidden" name="archivos_validados" id="archivos_validados" value=""/>
+
+		<!-- Los siguientes campos guardan los datos para construir la carpeta
+		nombre_cgl_aaaa-mm-dd/t, y poder registrar los archivos en la base. Ésto
+		se hace de esta manera puesto que al "Validar archivos" se hace obtienen
+		estos valores, y queremos reciclarlos (no recalcularlos).
+
+		Sus contenidos se resetean cuando una validación de archivos caduca, es
+		decir, cuando se cambia la selección en "conglomerado_muestra_id", 
+		"sitio_muestra_id" ó "es_audible_ultrasonico"-->
+
+		<input type="hidden" name="conglomerado_muestra_nombre" id="conglomerado_muestra_nombre" value=""/>
+		<input type="hidden" name="conglomerado_muestra_fecha_visita" id="conglomerado_muestra_fecha_visita" value=""/>
+		<!-- no se utiliza un control escondido para "es_audible_ultrasonico",
+		pues esta información se puede obtener inmediatamente de la forma de HTML
+		que le llega al controlador-->
+
+		<!--<input class="obligatorio" type="file" id="archivos_grabadora" name="archivos_grabadora" multiple/>-->
 		
 	</fieldset>
 	<br/>
@@ -123,57 +150,125 @@
 	// AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
 	//////////////////////////////////////////
 
-	$('#conglomerado_muestra_id').change
-	(
-	function()
-	{
+	$('#conglomerado_muestra_id').change(
+		function()
+		{
 
-		/* Como a la hora de seleccionar el conglomerado, se resetea la combobox de sitio,
-		desaparece el mensaje de grabadora: */
+			/* Como a la hora de seleccionar el conglomerado, se resetea la combobox
+			de sitio, desaparece el mensaje de grabadora: */
 
-		$('.Mensaje').hide();
+			$('.Mensaje').hide();
 
-		$('#sitio_muestra_id, #grabadora_id').remove();
+			$('#sitio_muestra_id, #grabadora_id').remove();
 
-		//ajax es una función de Web2py que simplifica la función homónima de JQuery
-		//recibe el URL destino, los nombres de los campos que se enviarán y el ID
-		// del elemento donde se insertará la respuesta.
+			/* Al cambiar el conglomerado elegido, se elimina la validación de
+			los archivos (del conglomerado elegido anteriormente)*/
 
-		ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+			$('#archivos_validados, #conglomerado_muestra_nombre, ' +
+				'#conglomerado_muestra_fecha_visita').val("");
 
-		ajax("{{=URL('asignarGrabadora')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-	}
+			//ajax es una función de Web2py que simplifica la función homónima de JQuery
+			//recibe el URL destino, los nombres de los campos que se enviarán y el ID
+			// del elemento donde se insertará la respuesta.
+
+			ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+
+			ajax("{{=URL('asignarGrabadora')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+		}
 	);
 
 	//////////////////////////////////////////
-	// AJAX para mandar la información con la cámara declarada al elegir un sitio
+	// AJAX para mandar la información con la grabadora declarada al elegir un sitio
 	//////////////////////////////////////////
 
 	$('#shadow_clone').on('change', '#sitio_muestra_id', function ()
-	{
-		$.ajax
-		(
 		{
-			type: "POST",
-			data: $('#sitio_muestra_id').serialize(),
-			url: "{{=URL('asignarGrabadora')}}",
-			async: false,
-			success: function(resultado)
+
+			/* Al cambiar el sitio elegido, se elimina la validación de
+			los archivos */
+
+			$('#archivos_validados, #conglomerado_muestra_nombre, ' +
+				'#conglomerado_muestra_fecha_visita').val("");
+
+			$.ajax
+			(
 			{
-				$("#shadow_clone_2").html(resultado);
+				type: "POST",
+				data: $('#sitio_muestra_id').serialize(),
+				url: "{{=URL('asignarGrabadora')}}",
+				async: false,
+				success: function(resultado)
+				{
+					$("#shadow_clone_2").html(resultado);
+				}
+			}
+			);
+			if($(this).val())
+			{
+				$('.Mensaje').show();
+			}
+			else
+			{
+				$('.Mensaje').hide();
 			}
 		}
-		);
-		if($(this).val())
-		{
-			$('.Mensaje').show();
-		}
-		else
-		{
-			$('.Mensaje').hide();
-		}
-	}
 	);
+
+	//////////////////////////////////////////
+	// AJAX para validar los archivos en cuanto se presione el botón en la forma
+	//////////////////////////////////////////
+
+	$('#validar_archivos').click(
+		function(){
+
+			if(!$('#grabadora_id').val())
+				alert('Favor de verificar que una grabadora esté declarada en el ' +
+					'conglomerado y sitio seleccionados');
+			else if(!$('input:radio[name=es_audible_ultrasonico]:checked').val())
+				alert('Favor de seleccionar un tipo de archivos, ya sean audibles ' +
+					'o ultrasónicos');
+			else
+				/* Si se encontró un valor para "camara_id", entonces tampoco están
+			vacíos "conglomerado_muestra_id" ni "sitio_muestra_id" */
+				$.ajax
+				(
+				{
+					type: "POST",
+					data: $('#conglomerado_muestra_id, #camara_id, ' +
+					'input:radio[name=es_audible_ultrasonico]:checked').serialize(),
+					dataType: 'json',
+					url: "{{=URL('validarArchivos')}}",
+					async: false,
+					success: function(resultado)
+					{
+						alert(resultado.mensaje);
+						if(resultado.flag == 1){
+							$('#archivos_validados').val('true');
+							$('#conglomerado_muestra_nombre').val(
+								resultado.conglomerado_muestra_nombre);
+							$('#conglomerado_muestra_fecha_visita').val(
+								resultado.conglomerado_muestra_fecha_visita);
+						}
+					}
+				}
+				);
+		}
+	)
+
+
+	//////////////////////////////////////////
+	// Funcionamiento de la vista
+	//////////////////////////////////////////
+
+	/* Cuando cambia la selección de "es_audible_ultrasonico", se elimina la
+	validación de los archivos*/
+
+	$('#es_audible, #es_ultrasonico').change(
+		function (){
+			$('#archivos_validados, #conglomerado_muestra_nombre, ' +
+			'#conglomerado_muestra_fecha_visita').val("");
+		}
+	)
 
 	//////////////////////////////////////////
 	// Este código se ejecuta en cuanto el html termina de llegar al navegador:
@@ -183,9 +278,7 @@
 	(
 		function()
 		{
-			alert('Si no se cargan todos los archivos al mismo tiempo,' + 
-			' por favor, súbalos por partes, asignándolos siempre a' + 
-			' la misma grabadora');
+			alert('Poner las instrucciones de la pestaña');
 		}
 	)
 
@@ -219,22 +312,30 @@
 			}
 
 			//Lo mismo para el campo de "grabadora_id":
+
 			if(!$('#shadow_clone_2').find('#grabadora_id').val())
 			{
 				flag = false;
 				//alert('Falta llenar la grabadora');
 			}
 
-			//Validando los radio-botones
+			//Validando los radio-botones:
+
 			if(!$('input:radio[name=es_audible_ultrasonico]:checked').val())
 			{
 				flag = false;
 				//alert('falta presionar un radio-botón');
 			}
 
+			// Verificando que se hayan validado los archivos:
+
+			if(!$('#archivos_validados').val()){
+				flag = false;
+			}
+
 			if(!flag)
 			{
-				alert('Faltó llenar algún campo o subir alguna imagen');
+				alert('Faltó llenar algún campo o pasar la validación de los archivos');
 				return false;
 			}
 		}

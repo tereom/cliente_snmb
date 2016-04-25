@@ -1,4 +1,11 @@
 # coding: utf8
+
+# usados en "index2", "validarArchivos"
+import os 
+import applications.init.modules.estructura_archivos_admin as eaa
+
+import simplejson as json # usado en "validarArchivos"
+
 def index1(): 
 
 	## Controlador correspondiente a la pestaña "Información de grabadora",
@@ -402,5 +409,122 @@ def asignarGrabadora():
 			"id='grabadora_id' value='" + str(grabadora.id)+ "'/>"
 
 	return XML(respuestaHTML)
+
+def validarArchivos():
+
+	## Función invocada mediante AJAX cuando se presiona el botón de "validar_archivos"
+	## en la forma, y se encontró un valor t para los campos: "es_audible_ultrasonico"
+	## y grabadora_id" (debido a este último, deben haberse seleccionado valores
+	## de "conglomerado_muestra_id" y "sitio_muestra_id"). Esta función valida:
+	##	1. Que la migración de los archivos no se haya realizado con anterioridad.
+	##	2. Que la carpeta nombre_cgl_aaaa-mm-dd/t exista.
+	##	3. Que dicha carpeta no esté vacía
+
+	## Regresa un string con el mensaje apropiado en cada caso, para que la vista
+	## lo alerte.
+
+	# Bandera que indica si los archivos fueron validados correctamente
+
+	flag = 0
+
+	grabadoraElegidaID = request.vars.grabadora_id
+
+	tipoArchivo = reques.vars.es_audible_ultrasonico
+
+	# Obteniendo los archivos correspondientes a la grabadora y tipo seleccionados.
+	# ésto código no puede tronar porque, gracias a la validación en la vista,
+	# los valores de "grabadoraElegidaID" y "tipoArchivo" son no vacíos.
+
+	if tipoArchivo == "audible":
+
+		archivosGrabadora = db(
+			(db.Archivo_grabadora.grabadora_id == grabadoraElegidaID) &\
+			(db.Archivo_grabadora.es_audible == True)
+			).select()
+
+	else:
+
+		archivosGrabadora = db(
+			(db.Archivo_grabadora.grabadora_id == grabadoraElegidaID) &\
+			(db.Archivo_grabadora.es_audible == False)
+			).select()
+
+	datosConglomeradoNombre = ""
+	datosConglomeradoFechaVisita = ""
+
+	# Generando los distintos mensajes:
+
+	if len(archivosGrabadora) > 0:
+
+		mensaje = "Ya se han enviado los archivos " + tipoArchivo + "s para el " +\
+		"conglomerado seleccionado. Si lo necesita, borre el registro de la grabadora " +\
+		"en la sección de 'Revisar registros', y vuelva a declararla"
+
+	else:
+
+		# Obteniendo los datos del conglomerado seleccionado, con el fin de crear
+		# el path hacia la carpeta apropiada:
+
+		conglomeradoElegidoID = request.vars.conglomerado_muestra_id
+
+		# Obteniendo la información del conglomerado
+
+		datosConglomeradoAux = db(
+			db.Conglomerado_muestra.id == conglomeradoElegidoID).select(
+			db.Conglomerado_muestra.nombre, db.Conglomerado_muestra.fecha_visita)
+
+		datosConglomerado = datosConglomeradoAux.first()
+
+		datosConglomeradoNombre = str(datosConglomerado['nombre'])
+		datosConglomeradoFechaVisita = str(datosConglomerado['fecha_visita'])
+
+		# Creando la ruta hacia la carpeta nombre_cgl_aaaa-mm-dd/t
+
+		rutaCarpetaCglMuestra = eaa.crearRutaCarpeta(
+			datosConglomeradoNombre,
+			datosConglomeradoFechaVisita
+		)
+
+		if tipoArchivo == "audible":
+			subcarpeta = "g_a"
+
+		else:
+			subcarpeta = "g_u"
+
+		rutaT = os.path.join(rutaCarpetaCglMuestra, subcarpeta)
+
+		#rutaTMensaje es la rutaT expresada para que el usuario la entienda
+
+		rutaTMensaje = os.path.join(
+			'conglomerados',
+			datosConglomeradoNombre + '_' + datosConglomeradoFechaVisita,
+			subcarpeta)
+
+		# Verificando que dicha carpeta exista
+
+		if not os.path.isdir(rutaT):
+
+			mensaje = "No se encontró la carpeta " + rutaTMensaje +\
+			". Favor de crearla."
+
+		elif len(os.listdir(rutaT)) == 0:
+
+			mensaje = "La carpeta " + rutaTMensaje + " está vacía, " +\
+			"favor de agregarle los archivos de la cámara"
+
+		else:
+
+			mensaje = "Validación exitosa para " + str(len(os.listdir(rutaT))) +\
+			" archivos en: " + rutaTMensaje + ". Ahora puede enviar la información."
+			flag = 1
+
+	# Enviando el diccionario como JSON para que JS lo pueda interpretar
+	return json.dumps(dict(
+		flag = flag,
+		mensaje = mensaje,
+		conglomerado_muestra_nombre = datosConglomeradoNombre,
+		conglomerado_muestra_fecha_visita = datosConglomeradoFechaVisita
+		))
+
 
 

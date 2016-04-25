@@ -1,9 +1,11 @@
 # coding: utf8
 
-import os # usado en index2, validarArchivos, asignarInformacionArchivo
+# usados en "index2", "validarArchivos", "asignarInformacionArchivo"
+import os 
 import applications.init.modules.estructura_archivos_admin as eaa
-import simplejson as json # usado en validarArchivos
-import base64 # usado en asignarInformacionArchivo
+
+import simplejson as json # usado en "validarArchivos"
+import base64 # usado en "asignarInformacionArchivo"
 
 
 def index1():
@@ -371,7 +373,8 @@ def validarArchivos():
 	##	1. Que la migración de los archivos no se haya realizado con anterioridad.
 	##	2. Que la carpeta nombre_cgl_aaaa-mm-dd/c exista.
 	##	3. Que dicha carpeta no esté vacía
-	## Regresando un string con el mensaje apropiado en cada caso, para que la vista
+
+	## Regresa un string con el mensaje apropiado en cada caso, para que la vista
 	## lo alerte.
 
 	# Bandera que indica si los archivos fueron validados correctamente
@@ -629,16 +632,18 @@ def asignarInformacionArchivo():
 
 		datosConglomerado = datosConglomeradoAux.first()
 
-		nombreConglomerado = str(datosConglomerado.nombre)
-		fechaConglomerado = str(datosConglomerado.fecha_visita)
+		datosConglomeradoNombre = str(datosConglomerado.nombre)
+		datosConglomeradoFechaVisita = str(datosConglomerado.fecha_visita)
 
 		# Creando el path hacia la imagen seleccionada (en caso de que se haya
 		# seleccionado, recordar que el AJAX se activa para resetear la lista de
 		# imágenes al cambiar cualquier combobox de la cascada).
 
-		rutaCarpetaCglMuestra = eaa.crearRutaCarpeta(nombreConglomerado, fechaConglomerado)
+		rutaCarpetaCglMuestra = eaa.crearRutaCarpeta(
+			datosConglomeradoNombre,
+			datosConglomeradoFechaVisita)
 
-		pathImagen = os.path.join(crearRutaCarpeta,'c',datosArchivo.archivo)
+		pathImagen = os.path.join(rutaCarpetaCglMuestra,'c',datosArchivo.archivo)
 
 		# Leyendo la imagen, pasándola a base 64 y guardándola en una variable
 		# (hay que poner un try catch, por si no se puede leer la imagen).
