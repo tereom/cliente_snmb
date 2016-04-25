@@ -1,7 +1,10 @@
 # coding: utf8
 
-# El siguiente paquete se utiliza para transformar las imágenes a base64 y pegarlas
-# en el código HTML que se enviará por AJAX.
+import os
+import applications.init.modules.estructura_archivos_admin as eaa
+import simplejson as json
+import base64
+
 
 def index1():
 
@@ -177,8 +180,6 @@ def camaraExistente():
 
 def index2():
 
-	import os
-
 	## Controlador correspondiente a la pestaña "Archivos trampa cámara", de
 	## la sección "Trampa cámara"
 
@@ -199,8 +200,14 @@ def index2():
 			requires=IS_IN_DB(db,db.Camara.id,'%(nombre)s')),
 
 		# Ahora ya no se envían los archivos a través de la forma, únicamente el
-		# campo de "archivos_validados"
+		# campo de "archivos_validados", y la información para construir la ruta
+		# hacia la carpeta "nombre_aaa-mm-dd/c", donde se encuentran los archivos
+		# a registrar en la base de datos.
 		INPUT(_name='archivos_validados',_type='string',requires=IS_NOT_EMPTY()),
+		INPUT(_name='conglomerado_muestra_nombre',_type='string',
+			requires=IS_NOT_EMPTY()),
+		INPUT(_name='conglomerado_muestra_fecha_visita',_type='string',
+			requires=IS_NOT_EMPTY()),
 
 		#INPUT(_name='archivos_camara',_type='file',requires=IS_NOT_EMPTY(),
 		#	_multiple=True)
@@ -214,13 +221,25 @@ def index2():
 		# Procesando los archivos múltiples encontrados en la carpeta:
 		# nombre_aaaa-mm-dd/c
 		###########################################
+
+		# Creando la ruta hacia la carpeta nombre_cgl_aaaa-mm-dd/c.
+
+		rutaCarpetaCglMuestra = eaa.crearRutaCarpeta(
+			str(formaArchivosCamara.vars['conglomerado_muestra_nombre']),
+			str(formaArchivosCamara.vars['conglomerado_muestra_fecha_visita'])
+		)
+
+		rutaC = os.path.join(rutaCarpetaCglMuestra, 'c')
+
+		archivos = os.listdir(rutaC)
 		
 		#archivos = formaArchivosCamara.vars['archivos_camara']
 
-		archivos = os.listdir()
-
 		if not isinstance(archivos, list):
 			archivos = [archivos]
+
+		# como ya se validó que la carpeta nombre_aaaa-mm-dd/c sea no vacía, el
+		# siguiente "for" no tiene por qué tronar.
 			
 		for aux in archivos:
 
@@ -234,8 +253,8 @@ def index2():
 			
 			datosArchivoCamara = {}
 			datosArchivoCamara['camara_id'] = formaArchivosCamara.vars['camara_id']
-			datosArchivoCamara['archivo'] = aux.filename
-			datosArchivoCamara['archivo_nombre_original'] = aux.filename
+			datosArchivoCamara['archivo'] = aux
+			datosArchivoCamara['archivo_nombre_original'] = aux
 		
 			# Insertando el registro en la base de datos:
 
@@ -342,8 +361,6 @@ def asignarCamara():
 
 def validarArchivos():
 
-	import os
-
 	## Función invocada mediante AJAX cuando se presiona el botón de "validar_archivos"
 	## en la forma, y además se encuentra un valor para "camara_id" (por lo que
 	## deben haberse seleccionado valores de "conglomerado_muestra_id" y
@@ -354,11 +371,18 @@ def validarArchivos():
 	## Regresando un string con el mensaje apropiado en cada caso, para que la vista
 	## lo alerte.
 
+	# Bandera que indica si los archivos fueron validados correctamente
+
+	flag = 0
+
 	camaraElegidaID = request.vars.camara_id
 
 	# Obteniendo los archivos correspondientes a la cámara seleccionada
 
 	archivosCamara = db(db.Archivo_camara.camara_id == camaraElegidaID).select()
+
+	datosConglomeradoNombre = ""
+	datosConglomeradoFechaVisita = ""
 
 	# Generando los distintos mensajes:
 
@@ -383,44 +407,50 @@ def validarArchivos():
 
 		datosConglomerado = datosConglomeradoAux.first()
 
-		# Creando el path hacia la carpeta nombre_cgl_aaaa-mm-dd/c
+		datosConglomeradoNombre = str(datosConglomerado['nombre'])
+		datosConglomeradoFechaVisita = str(datosConglomerado['fecha_visita'])
 
-		thisPath = os.getcwd()
+		# Creando la ruta hacia la carpeta nombre_cgl_aaaa-mm-dd/c
 
-		########### Para Windows ###########
-		#newPath = os.path.normpath(thisPath + os.sep + os.pardir)
+		rutaCarpetaCglMuestra = eaa.crearRutaCarpeta(
+			datosConglomeradoNombre,
+			datosConglomeradoFechaVisita
+		)
 
-		############ Para Mac ###########
-		newPath = os.path.normpath(thisPath +\
-			os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
+		rutaC = os.path.join(rutaCarpetaCglMuestra, 'c')
 
-		idConglomerado = str(datosConglomerado.nombre)
-		fechaConglomerado = str(datosConglomerado.fecha_visita)
+		#rutaCMensaje es la ruta C expresada para que el usuario la entienda
 
-		newFolder = idConglomerado + '_' + fechaConglomerado
-
-		pathC = os.path.join(newPath, 'conglomerados', newFolder, 'c')
+		rutaCMensaje = os.path.join(
+			'conglomerados',
+			datosConglomeradoNombre + '_' + datosConglomeradoFechaVisita,
+			'c')
 
 		# Verificando que dicha carpeta exista
 
-		if not os.path.isdir(pathC):
+		if not os.path.isdir(rutaC):
 
-			mensaje = "No se encontró la carpeta " +\
-			os.path.join('conglomerados', newFolder, 'c') +\
-			" favor de crearla."
+			mensaje = "No se encontró la carpeta " + rutaCMensaje +\
+			". Favor de crearla."
 
-		elif len(os.listdir(pathC)) == 0:
+		elif len(os.listdir(rutaC)) == 0:
 
-			mensaje = "La carpeta " +\
-			os.path.join('conglomerados', newFolder, 'c') + " está vacía, " +\
+			mensaje = "La carpeta " + rutaCMensaje + " está vacía, " +\
 			"favor de agregarle los archivos de la cámara"
 
 		else:
 
-			mensaje = "Archivos validados correctamente"
+			mensaje = "Validación exitosa para " + str(len(os.listdir(rutaC))) +\
+			" archivos en: " + rutaCMensaje + ". Ahora puede enviar la información."
+			flag = 1
 
-	return mensaje
-
+	# Enviando el diccionario como JSON para que JS lo pueda interpretar
+	return json.dumps(dict(
+		flag = flag,
+		mensaje = mensaje,
+		conglomerado_muestra_nombre = datosConglomeradoNombre,
+		conglomerado_muestra_fecha_visita = datosConglomeradoFechaVisita
+		))
 
 def index3():
 
@@ -498,13 +528,13 @@ def asignarArchivos():
 
 def asignarInformacionArchivo():
 
-	import base64
-	import os
-
 	## Ésta funcion se invoca mediante AJAX, y genera una forma para
 	## ingresar/modificar la información de la fotografía que seleccionó el
 	## usuario en el menú desplegable. El AJAX se activa al seleccionar un
 	## archivo de la lista desplegable.
+
+	# El paquete base64 se utiliza para transformar las imágenes a dicha base y
+	# pegarlas en el código HTML que se enviará por AJAX.
 
 	# Obteniendo la información del archivo que seleccionó el usuario:
 

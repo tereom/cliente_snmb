@@ -74,7 +74,7 @@
 					declarada en determinado conglomerado y sitio, si es que
 					existe. La clase Mensaje se usa para esconder el campo-->
 					<div id="shadow_clone_2" class="Mensaje">
-						<input type='hidden' name='camara_id' id='camara_id' value=''/>
+						<input type="hidden" name="camara_id" id="camara_id" value=""/>
 					</div>
 					<!--</div>-->
 				</td>
@@ -83,11 +83,11 @@
 
 		<hr/>
 		<!--Ahora no se seleccionarán los archivos a subir en la vista, sino que,
-		a la hora de presionar el botón siguiente, se leerá la carpeta con los
-		contenidos, y se validará:
+		a la hora de presionar el botón siguiente, se validará:
 		0. Que se haya encontrado una cámara declarada (ésto implica que se
 		seleccionaron un conglomerado y un sitio).
-		1. Que la migración de los archivos no se haya realizado con anterioridad.
+		1. Que el registro de los archivos asociados a esa cámara no se haya
+		realizado con anterioridad.
 		2. Que la carpeta nombre_cgl_aaaa-mm-dd/c exista.
 		3. Que dicha carpeta no esté vacía
 
@@ -96,8 +96,22 @@
 		-->
 
 		<button type="button" id="validar_archivos">Validar archivos</button>
-		<hidden name="archivos_validados" id="archivos_validados" value=""/>
+		<input type="hidden" name="archivos_validados" id="archivos_validados" value=""/>
+
+		<!-- Los siguientes campos guardan los datos para construir la carpeta
+		nombre_cgl_aaaa-mm-dd/c, y poder registrar los archivos en la base. Ésto
+		se hace de esta manera puesto que al "Validar archivos" se hace obtienen
+		estos valores, y queremos reciclarlos (no recalcularlos).
+
+		Sus contenidos se resetean cuando una validación de archivos caduca, es
+		decir, cuando se cambia la selección en "conglomerado_muestra_id" ó
+		"sitio_muestra_id"-->
+
+		<input type="hidden" name="conglomerado_muestra_nombre" id="conglomerado_muestra_nombre" value=""/>
+		<input type="hidden" name="conglomerado_muestra_fecha_visita" id="conglomerado_muestra_fecha_visita" value=""/>
+
 		<!--<input class="obligatorio" type="file" id="archivos_camara" name="archivos_camara" multiple/>-->
+
 	</fieldset>
 		<br/>
 		<br/>
@@ -134,7 +148,8 @@
 			/* Al cambiar el conglomerado elegido, se elimina la validación de
 			los archivos (del conglomerado elegido anteriormente)*/
 
-			$('#archivos_validados').val("");
+			$('#archivos_validados, #conglomerado_muestra_nombre, ' +
+				'#conglomerado_muestra_fecha_visita').val("");
 
 			/* ajax es una función de Web2py que simplifica la función homónima de
 			JQuery recibe el URL destino, los nombres de los campos que se enviarán
@@ -155,7 +170,9 @@
 
 			/* Al cambiar el sitio elegido, se elimina la validación de
 			los archivos */
-			$('#archivos_validados').val("");
+
+			$('#archivos_validados, #conglomerado_muestra_nombre, ' +
+				'#conglomerado_muestra_fecha_visita').val("");
 
 			$.ajax
 			(
@@ -187,22 +204,30 @@
 
 	$('#validar_archivos').click(
 		function(){
+
 			if(!$('#camara_id').val())
 				alert('Favor de verificar que una cámara esté declarada en el ' +
 					'conglomerado y sitio seleccionados');
 			else
+				/* Si se encontró un valor para "camara_id", entonces tampoco están
+			vacíos "conglomerado_muestra_id" ni "sitio_muestra_id" */
 				$.ajax
 				(
 				{
 					type: "POST",
 					data: $('#conglomerado_muestra_id, #camara_id').serialize(),
+					dataType: 'json',
 					url: "{{=URL('validarArchivos')}}",
 					async: false,
-					success: function(mensaje)
+					success: function(resultado)
 					{
-						alert(mensaje);
-						if(mensaje == "Archivos validados correctamente"){
-							$("#archivos_validados").val("true");
+						alert(resultado.mensaje);
+						if(resultado.flag == 1){
+							$('#archivos_validados').val('true');
+							$('#conglomerado_muestra_nombre').val(
+								resultado.conglomerado_muestra_nombre);
+							$('#conglomerado_muestra_fecha_visita').val(
+								resultado.conglomerado_muestra_fecha_visita);
 						}
 					}
 				}
@@ -218,9 +243,7 @@
 	(
 		function()
 		{
-			alert('Si no se cargan todos los archivos al mismo tiempo,' + 
-				' por favor, súbalos por partes, asignándolos siempre a' +
-				' la misma trampa cámara.');
+			alert('Poner las instrucciones de la pestaña');
 		}
 	)
 
@@ -255,16 +278,23 @@
 				//alert('Falta llenar el sitio');
 			}
 
-			//Lo mismo para el campo de "camara_id":
+			// Lo mismo para el campo de "camara_id":
+
 			if(!$('#shadow_clone_2').find('#camara_id').val())
 			{
 				flag = false;
 				//alert('Falta llenar la cámara');
 			}
 
+			// Verificando que se hayan validado los archivos:
+
+			if(!$('#archivos_validados').val()){
+				flag = false;
+			}
+
 			if(!flag)
 			{
-				alert('Faltó llenar algún campo o subir alguna imagen');
+				alert('Faltó llenar algún campo o pasar la validación de los archivos');
 				return false;
 			}
 		}

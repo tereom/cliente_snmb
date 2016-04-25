@@ -1,6 +1,6 @@
 # coding: utf8
 
-import os
+import applications.init.modules.estructura_archivos_admin as eaa
 
 def index():
 
@@ -570,36 +570,10 @@ def index():
 		# Creación de carpetas para alojar fotos y sonidos 
 		##################################################
 
-		# se crean las carpetas que van a alojar las fotos y videos de la trampa 
-		# cámara así como los sonidos audibles y ultrasónicos. Ruta:
-		# cliente_snmb_windows/mac_v5
-		# ├───web2py
-		# ├───conglomerados
-		# |   ├───nombre_aaaa-mm-dd
-		# |   |   ├───c
-		# |   |   ├───ga
-		# |   |   ├───gu
-
-		thisPath = os.getcwd()
-
-
-		########### Para Windows ###########
-		#newPath = os.path.normpath(thisPath + os.sep + os.pardir)
-
-		############ Para Mac ###########
-		newPath = os.path.normpath(thisPath +\
-			os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
-
-		idConglomerado = str(datosConglomerado['nombre'])
-		fechaConglomerado = str(datosConglomerado['fecha_visita'])
-
-		newFolder = idConglomerado + '_' + fechaConglomerado
-
-		if not os.path.exists(os.path.join(newPath,'conglomerados',newFolder)):
-			os.makedirs(os.path.join(newPath,'conglomerados',newFolder))
-			os.makedirs(os.path.join(newPath,'conglomerados',newFolder,'c'))
-			os.makedirs(os.path.join(newPath,'conglomerados',newFolder,'g_a'))
-			os.makedirs(os.path.join(newPath,'conglomerados',newFolder,'g_u'))
+		eaa.crearEstructuraCarpetas(
+			str(datosConglomerado['nombre']),
+			str(datosConglomerado['fecha_visita'])
+		)
 
 		response.flash = 'Éxito'
 		
