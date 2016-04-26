@@ -1,8 +1,9 @@
 # coding: utf8
 
 # usados en "index2", "validarArchivos"
-import os 
+import os
 import applications.init.modules.estructura_archivos_admin as eaa
+import re
 
 import simplejson as json # usado en "validarArchivos"
 
@@ -250,7 +251,7 @@ def index2():
 		# Archivos de la grabadora
 		###########################################
 
-		#Localización de la grabadora. Por medio del conglomerado y sitio debe ser
+		# Localización de la grabadora. Por medio del conglomerado y sitio debe ser
 		#posible localizar a lo más una grabadora.
 
 		SELECT(_name='conglomerado_muestra_id',
@@ -260,7 +261,7 @@ def index2():
 		SELECT(_name='grabadora_id',
 			requires=IS_IN_DB(db,db.Grabadora.id,'%(nombre)s')),
 
-		#Elegir si se quieren registrar archivos audiblles o ultrasónicos
+		# Elegir si se quieren registrar archivos audibles o ultrasónicos
 
 		INPUT(_name='es_audible_ultrasonico',_type='string',requires=IS_NOT_EMPTY()),
 
@@ -284,47 +285,73 @@ def index2():
 
 	if formaArchivosGrabadora.accepts(request.vars,formname='formaArchivosGrabadoraHTML'):
 
-
-
 		###########################################
 		# Procesando los archivos múltiples capturados con una grabadora
 		###########################################
 
-		# Revisando si los archivos subidos son audibles/ultrasónicos, mediante la
-		# selección del usuario:
+		# Revisando si los archivos subidos son audibles/ultrasónicos, mediante
+		# la selección del usuario:
 
 		if (formaArchivosGrabadora.vars['es_audible_ultrasonico'] == 'audible'):
 
 			esAudible = True
+			subcarpeta = "g_a"
 
 		else:
 
 			esAudible = False
+			subcarpeta = "g_u"
+
+
+		###########################################
+		# Procesando los archivos múltiples encontrados en la carpeta:
+		# nombre_aaaa-mm-dd/subcarpeta
+		###########################################
+
+		# Creando la ruta hacia la carpeta nombre_cgl_aaaa-mm-dd/subcarpeta.
+
+		rutaCarpetaCglMuestra = eaa.crearRutaCarpeta(
+			str(formaArchivosGrabadora.vars['conglomerado_muestra_nombre']),
+			str(formaArchivosGrabadora.vars['conglomerado_muestra_fecha_visita'])
+		)
+
+		rutaT = os.path.join(rutaCarpetaCglMuestra, subcarpeta)
+
+		# como ya se validó que la carpeta "nombre_aaaa-mm-dd/subcarpeta" exista,
+		# la siguiente instrucción no tiene por qué tronar.
+
+		archivos = os.listdir(rutaT)
 		
 		#archivos = formaArchivosGrabadora.vars['archivos_grabadora']
 
 		if not isinstance(archivos, list):
 			archivos = [archivos]
+
+		# como ya se validó que la carpeta "nombre_aaaa-mm-dd/c" sea no vacía, el
+		# siguiente "for" no tiene por qué tronar.
 			
 		for aux in archivos:
-
-			# Guardando el archivo en la carpeta adecuada
 
 			# Descomentar ésto para que Web2py guarde el archivo en la carpeta
 			# "uploads"
 			#archivoGrabadora = db.Archivo_grabadora.archivo.store(aux, aux.filename)
+
+			# Excluyendo los archivos que no tienen terminación jpg o avi.
+			# re.I: case insensitive.
 			
-			# Creando los campos de la tabla "Archivo_grabadora".
+			if re.search(r'wav$', aux, re.I):
 
-			datosArchivoGrabadora = {}
-			datosArchivoGrabadora['es_audible'] = esAudible
-			datosArchivoGrabadora['grabadora_id'] = formaArchivosGrabadora.vars['grabadora_id']
-			datosArchivoGrabadora['archivo'] = aux.filename
-			datosArchivoGrabadora['archivo_nombre_original'] = aux.filename
-		
-			#Insertando el registro en la base de datos:
+				# Creando los campos de la tabla "Archivo_grabadora".
 
-			db.Archivo_grabadora.insert(**datosArchivoGrabadora)
+				datosArchivoGrabadora = {}
+				datosArchivoGrabadora['es_audible'] = esAudible
+				datosArchivoGrabadora['grabadora_id'] = formaArchivosGrabadora.vars['grabadora_id']
+				datosArchivoGrabadora['archivo'] = aux
+				datosArchivoGrabadora['archivo_nombre_original'] = aux
+			
+				# Insertando el registro en la base de datos:
+
+				db.Archivo_grabadora.insert(**datosArchivoGrabadora)
 
 		response.flash = 'Éxito'
 		
@@ -524,24 +551,37 @@ def validarArchivos():
 			mensaje = "No se encontró la carpeta " + rutaTMensaje +\
 			". Favor de crearla."
 
-		elif len(os.listdir(rutaT)) == 0:
-
-			mensaje = "La carpeta " + rutaTMensaje + " está vacía, " +\
-			"favor de agregarle los archivos " + tipoArchivo + "s"
-
 		else:
 
-			mensaje = "Validación exitosa para " + str(len(os.listdir(rutaT))) +\
-			" archivos " + tipoArchivo + "s en: " + rutaTMensaje +\
-			". Ahora puede enviar la información."
-			flag = 1
+			# Verificando que dicha carpeta contenga archivos wav:
+
+			# Enlistando los archivos en rutaT
+			lista_archivos = os.listdir(rutaT)
+
+			# Obteniendo de éstos, cuáles son los archivos con terminación wav.
+			lista_wav = [archivo\
+				for archivo in lista_archivos\
+				if re.search(r'wav$', archivo, re.I)]
+
+			if len(lista_wav) == 0:
+
+				mensaje = "La carpeta " + rutaTMensaje + " no contiene archivos " +\
+				"WAV, favor de agregarle los archivos " + tipoArchivo + "s"
+
+			else:
+
+				mensaje = "Validación exitosa para " + str(len(lista_wav)) +\
+				" archivos WAV declarados como " + tipoArchivo + "s en: " +\
+				rutaTMensaje + ". Ahora puede enviar la información."
+
+				flag = 1
 
 	# Enviando el diccionario como JSON para que JS lo pueda interpretar
 	return json.dumps(dict(
 		flag = flag,
 		mensaje = mensaje,
 		conglomerado_muestra_nombre = datosConglomeradoNombre,
-		conglomerado_muestra_fecha_visita = datosConglomeradoFechaVisita
+		conglomerado_muestra_fecha_visita = datosConglomeradoFechaVisita,
 		))
 
 

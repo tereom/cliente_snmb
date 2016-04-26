@@ -228,13 +228,13 @@
 				alert('Favor de seleccionar un tipo de archivos, ya sean audibles ' +
 					'o ultrasónicos');
 			else
-				/* Si se encontró un valor para "camara_id", entonces tampoco están
+				/* Si se encontró un valor para "grabadora_id", entonces tampoco están
 			vacíos "conglomerado_muestra_id" ni "sitio_muestra_id" */
 				$.ajax
 				(
 				{
 					type: "POST",
-					data: $('#conglomerado_muestra_id, #camara_id, ' +
+					data: $('#conglomerado_muestra_id, #grabadora_id, ' +
 					'input:radio[name=es_audible_ultrasonico]:checked').serialize(),
 					dataType: 'json',
 					url: "{{=URL('validarArchivos')}}",

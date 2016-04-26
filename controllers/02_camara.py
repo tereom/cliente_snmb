@@ -3,6 +3,7 @@
 # usados en "index2", "validarArchivos", "asignarInformacionArchivo"
 import os 
 import applications.init.modules.estructura_archivos_admin as eaa
+import re
 
 import simplejson as json # usado en "validarArchivos"
 import base64 # usado en "asignarInformacionArchivo"
@@ -248,22 +249,24 @@ def index2():
 			
 		for aux in archivos:
 
-			# Guardando el archivo en la carpeta adecuada
-
 			# Descomentar ésto para que Web2py guarde el archivo en la carpeta
 			# "uploads"
 			#archivoCamara = db.Archivo_camara.archivo.store(aux, aux.filename)
 
-			# Creando los campos de la tabla "Archivo_camara".
-			
-			datosArchivoCamara = {}
-			datosArchivoCamara['camara_id'] = formaArchivosCamara.vars['camara_id']
-			datosArchivoCamara['archivo'] = aux
-			datosArchivoCamara['archivo_nombre_original'] = aux
-		
-			# Insertando el registro en la base de datos:
+			# Excluyendo los archivos que no tienen terminación jpg o avi.
+			# re.I: case insensitive.
+			if re.search(r'(jp.?g|avi)$', aux, re.I):
 
-			db.Archivo_camara.insert(**datosArchivoCamara)
+				# Creando los campos de la tabla "Archivo_camara".
+				
+				datosArchivoCamara = {}
+				datosArchivoCamara['camara_id'] = formaArchivosCamara.vars['camara_id']
+				datosArchivoCamara['archivo'] = aux
+				datosArchivoCamara['archivo_nombre_original'] = aux
+			
+				# Insertando el registro en la base de datos:
+
+				db.Archivo_camara.insert(**datosArchivoCamara)
 
 		response.flash = 'Éxito'
 		
@@ -443,16 +446,30 @@ def validarArchivos():
 			mensaje = "No se encontró la carpeta " + rutaCMensaje +\
 			". Favor de crearla."
 
-		elif len(os.listdir(rutaC)) == 0:
-
-			mensaje = "La carpeta " + rutaCMensaje + " está vacía, " +\
-			"favor de agregarle los archivos de la cámara"
-
 		else:
 
-			mensaje = "Validación exitosa para " + str(len(os.listdir(rutaC))) +\
-			" archivos en: " + rutaCMensaje + ". Ahora puede enviar la información."
-			flag = 1
+			# Verificando que dicha carpeta contenga archivos jpg/avi:
+
+			# Enlistando los archivos en rutaC
+			lista_archivos = os.listdir(rutaC)
+
+			# Obteniendo de éstos, cuáles son los archivos con terminación jpg/avi.
+			lista_jpg_avi = [archivo\
+				for archivo in lista_archivos\
+				if re.search(r'(jp.?g|avi)$', archivo, re.I)]
+
+			if len(lista_jpg_avi) == 0:
+
+				mensaje = "La carpeta " + rutaCMensaje + " no contiene archivos " +\
+				"JPG/AVI, favor de agregarle las imágenes y videos."
+
+			else:
+
+				mensaje = "Validación exitosa para " + str(len(lista_jpg_avi)) +\
+				" archivos JPG/AVI en: " + rutaCMensaje + ". Ahora puede enviar la " +\
+				"información."
+
+				flag = 1
 
 	# Enviando el diccionario como JSON para que JS lo pueda interpretar
 	return json.dumps(dict(
