@@ -370,12 +370,16 @@ def validarArchivos():
 	## en la forma, y además se encuentra un valor para "camara_id" (por lo que
 	## deben haberse seleccionado valores de "conglomerado_muestra_id" y
 	## "sitio_muestra_id"). Esta función valida:
-	##	1. Que la migración de los archivos no se haya realizado con anterioridad.
+	##	1. Que el registro de los archivos no se haya realizado con anterioridad.
 	##	2. Que la carpeta nombre_cgl_aaaa-mm-dd/c exista.
 	##	3. Que dicha carpeta no esté vacía
 
-	## Regresa un string con el mensaje apropiado en cada caso, para que la vista
-	## lo alerte.
+	## Regresa un JSON con:
+	## 1. El mensaje apropiado en cada caso, para que la vista
+	## lo alerte
+	## 2. Una bandera que indica si la validación fue exitosa o no
+	## 3. El "nombre" y la "fecha_visita" del conglomerado cuyo id fue recibido
+	## mediante AJAX, para no tener que recalcularlos en index2().
 
 	# Bandera que indica si los archivos fueron validados correctamente
 

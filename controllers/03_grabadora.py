@@ -260,18 +260,31 @@ def index2():
 		SELECT(_name='grabadora_id',
 			requires=IS_IN_DB(db,db.Grabadora.id,'%(nombre)s')),
 
-		#Elegir si se están introduciendo archivos audiblles o ultrasónicos
+		#Elegir si se quieren registrar archivos audiblles o ultrasónicos
 
 		INPUT(_name='es_audible_ultrasonico',_type='string',requires=IS_NOT_EMPTY()),
 
-		INPUT(_name='archivos_grabadora',_type='file',requires=IS_NOT_EMPTY(),
-			_multiple=True)
+		# Ahora ya no se envían los archivos a través de la forma, únicamente el
+		# campo de "archivos_validados", y la información para construir la ruta
+		# hacia la carpeta "nombre_aaa-mm-dd/t", donde se encuentran los archivos
+		# a registrar en la base de datos.
+
+		INPUT(_name='archivos_validados',_type='string',requires=IS_NOT_EMPTY()),
+		INPUT(_name='conglomerado_muestra_nombre',_type='string',
+			requires=IS_NOT_EMPTY()),
+		INPUT(_name='conglomerado_muestra_fecha_visita',_type='string',
+			requires=IS_NOT_EMPTY()),
+
+		# INPUT(_name='archivos_grabadora',_type='file',requires=IS_NOT_EMPTY(),
+		# 	_multiple=True)
 
 	]
 
 	formaArchivosGrabadora = FORM(*camposArchivosGrabadora)
 
 	if formaArchivosGrabadora.accepts(request.vars,formname='formaArchivosGrabadoraHTML'):
+
+
 
 		###########################################
 		# Procesando los archivos múltiples capturados con una grabadora
@@ -288,7 +301,7 @@ def index2():
 
 			esAudible = False
 		
-		archivos = formaArchivosGrabadora.vars['archivos_grabadora']
+		#archivos = formaArchivosGrabadora.vars['archivos_grabadora']
 
 		if not isinstance(archivos, list):
 			archivos = [archivos]
@@ -416,12 +429,16 @@ def validarArchivos():
 	## en la forma, y se encontró un valor t para los campos: "es_audible_ultrasonico"
 	## y grabadora_id" (debido a este último, deben haberse seleccionado valores
 	## de "conglomerado_muestra_id" y "sitio_muestra_id"). Esta función valida:
-	##	1. Que la migración de los archivos no se haya realizado con anterioridad.
+	##	1. Que el registro de los archivos no se haya realizado con anterioridad.
 	##	2. Que la carpeta nombre_cgl_aaaa-mm-dd/t exista.
 	##	3. Que dicha carpeta no esté vacía
 
-	## Regresa un string con el mensaje apropiado en cada caso, para que la vista
-	## lo alerte.
+	## Regresa un JSON con:
+	## 1. El mensaje apropiado en cada caso, para que la vista
+	## lo alerte
+	## 2. Una bandera que indica si la validación fue exitosa o no
+	## 3. El "nombre" y la "fecha_visita" del conglomerado cuyo id fue recibido
+	## mediante AJAX, para no tener que recalcularlos en index2().
 
 	# Bandera que indica si los archivos fueron validados correctamente
 
@@ -510,12 +527,13 @@ def validarArchivos():
 		elif len(os.listdir(rutaT)) == 0:
 
 			mensaje = "La carpeta " + rutaTMensaje + " está vacía, " +\
-			"favor de agregarle los archivos de la cámara"
+			"favor de agregarle los archivos " + tipoArchivo + "s"
 
 		else:
 
 			mensaje = "Validación exitosa para " + str(len(os.listdir(rutaT))) +\
-			" archivos en: " + rutaTMensaje + ". Ahora puede enviar la información."
+			" archivos " + tipoArchivo + "s en: " + rutaTMensaje +\
+			". Ahora puede enviar la información."
 			flag = 1
 
 	# Enviando el diccionario como JSON para que JS lo pueda interpretar
