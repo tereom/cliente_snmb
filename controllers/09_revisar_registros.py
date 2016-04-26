@@ -58,7 +58,7 @@ def conglomerado():
 	###########################################
 
 	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
-		linked_tables = ['Sitio_muestra', 'Imagen_referencia_sitio'],
+		linked_tables = ['Sitio_muestra', 'Imagen_referencia_sitio', 'Formato_campo'],
 		user_signature = False,
 		csv = True,
 		maxtextlengths = {'Imagen_referencia_sitio.archivo_nombre_original' : 50},
@@ -96,15 +96,13 @@ def camara():
 	# Generando la forma
 	###########################################
 
-	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+	form = SQLFORM.smartgrid(db.Camara,
 		linked_tables = [
-			'Sitio_muestra',
-			'Camara',
 			'Archivo_camara',
 			'Imagen_referencia_camara'],
 		user_signature = False, 
 		csv = True,
-		maxtextlengths = {'Archivo_camara.archivo_nombre_original' : 50,
+		maxtextlengths = {'Archivo_camara.archivo_nombre_original' : 70,
 		'Imagen_referencia_camara.archivo_nombre_original' : 50})
 
 	return dict(form = form)
@@ -138,10 +136,8 @@ def grabadora():
 	# Generando la forma
 	###########################################
 
-	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+	form = SQLFORM.smartgrid(db.Grabadora,
 		linked_tables = [
-			'Sitio_muestra',
-			'Grabadora',
 			'Archivo_grabadora',
 			'Archivo_referencia_grabadora',
 			'Imagen_referencia_grabadora',
@@ -150,7 +146,7 @@ def grabadora():
 		csv = True,
 		user_signature = False, 
 		maxtextlengths = {
-			'Archivo_grabadora.archivo_nombre_original' : 50,
+			'Archivo_grabadora.archivo_nombre_original' : 70,
 			'Archivo_referencia_grabadora.archivo_nombre_original' : 50,
 			'Imagen_referencia_grabadora.archivo_nombre_original' : 50,
 			'Imagen_referencia_microfonos.archivo_nombre_original' : 50,
