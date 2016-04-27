@@ -251,6 +251,16 @@
 			
 			$('#existe_4').prop('checked', true);
 			$('.Transecto_info_4').show();
+
+			/* Agregando la clase "validar" a las fechas, esta clase desaparece
+			si el transecto no existe. La razón de su uso es que las fechas
+			requieren de una validación adicional (no simplemente que estén
+			llenas, sino que estén en el formato correcto). Esta validación debe
+			aplicarse sólo a las fechas correspondientes a transectos existentes */
+			$('#fecha_2').addClass('validar');
+			$('#fecha_3').addClass('validar');
+			$('#fecha_4').addClass('validar');
+
 		}
 	)
 
@@ -267,10 +277,20 @@
 	(
 		function()
 		{
-			if($(this).prop('checked'))
+			if($(this).prop('checked')){
 				$('.Transecto_info_2').fadeIn();
-			else
+
+				/* Agregando la clase "validar" a la fecha correspondiente, para
+				validarla después */
+				$('#fecha_2').addClass('validar')
+			}
+			else{
 				$('.Transecto_info_2').fadeOut();
+
+				// Eliminando la clase "validar"
+				$('#fecha_2').removeClass('validar');
+
+			}
 		}
 	)
 
@@ -278,10 +298,19 @@
 	(
 		function()
 		{
-			if($(this).prop('checked'))
+			if($(this).prop('checked')){
 				$('.Transecto_info_3').fadeIn();
-			else
+
+				/* Agregando la clase "validar" a la fecha correspondiente, para
+				validarla después */
+				$('#fecha_3').addClass('validar');
+			}
+			else{
 				$('.Transecto_info_3').fadeOut();
+
+				// Eliminando la clase "validar"
+				$('#fecha_3').removeClass('validar');
+			}
 		}
 	)
 
@@ -289,10 +318,19 @@
 	(
 		function()
 		{
-			if($(this).prop('checked'))
+			if($(this).prop('checked')){
 				$('.Transecto_info_4').fadeIn();
-			else
+
+				/* Agregando la clase "validar" a la fecha correspondiente, para
+				validarla después */
+				$('#fecha_4').addClass('validar');
+			}
+			else{
 				$('.Transecto_info_4').fadeOut();
+
+				// Eliminando la clase "validar"
+				$('#fecha_4').removeClass('validar');
+			}
 		}
 	)
 
@@ -317,7 +355,7 @@
 			);
 
 			/* Validando que los campos correspondientes a un transecto 2, 3, 4
-			estén llenos si estos existen */
+			estén llenos si estos existen.*/
 
 			if($('#existe_2').prop('checked'))
 			{
@@ -361,12 +399,12 @@
 				);
 			}
 
-			/* Validando que la fecha esté en formato adecuado para que Web2py no
-			tenga problemas. fechaReg es una expresión regular par validar el
-			formato aaaa-mm-dd.*/
+			/* Validando que las fechas correpondientes a transectos existentes.
+			esté en formato adecuado para que Web2py no tenga problemas.fechaReg
+			es una expresión regular para validar el formato aaaa-mm-dd.*/
 
 			var fechaReg = /^\d{4}\-(\d{2})-(\d{2})$/;
-			campos_fecha = $('.date');
+			campos_fecha = $('.date.validar')
 			flag_f = true;
 			campos_fecha.each(function(){   
 				if(!fechaReg.test($(this).val()))
@@ -412,19 +450,57 @@
 				return false;
 			}
 
-			// Validando que la hora de inicio sea menor que la de término
-
 			else
 			{
-				var hora_inicio = $('#hora_inicio').val();
-				var hora_termino = $('#hora_termino').val();
+				/* Validando que la hora de inicio sea menor que la de término
+				para los transectos existentes. Ésto se hace hasta el final para
+				asegurarnos que los campos con la fecha estén no vacíos antes de
+				compararlos (si alguno estuviera vacío, flag sería false y el
+				programa saldría antes de llegar aquí) */
 
-				/* Usando el órden lexicográfico natural de strings para
-				comparar fechas: */
-				if(hora_inicio > hora_termino)
-				{
-					alert('La hora de inicio debe ser menor a la hora de término');
-					return false;
+				if($('#existe_2').prop('checked')){
+
+					var hora_inicio = $('#hora_inicio_2').val();
+					var hora_termino = $('#hora_termino_2').val();
+
+					/* Usando el órden lexicográfico natural de strings para
+					comparar fechas: */
+					if(hora_inicio > hora_termino)
+					{
+						alert('La hora de inicio debe ser menor a la hora de ' +
+							'término para cada transecto existente');
+						return false;
+					}
+				}
+
+				if($('#existe_3').prop('checked')){
+
+					var hora_inicio = $('#hora_inicio_3').val();
+					var hora_termino = $('#hora_termino_3').val();
+
+					/* Usando el órden lexicográfico natural de strings para
+					comparar fechas: */
+					if(hora_inicio > hora_termino)
+					{
+						alert('La hora de inicio debe ser menor a la hora de ' +
+							'término para cada transecto existente');
+						return false;
+					}
+				}
+
+				if($('#existe_4').prop('checked')){
+
+					var hora_inicio = $('#hora_inicio_4').val();
+					var hora_termino = $('#hora_termino_4').val();
+
+					/* Usando el órden lexicográfico natural de strings para
+					comparar fechas: */
+					if(hora_inicio > hora_termino)
+					{
+						alert('La hora de inicio debe ser menor a la hora de ' +
+							'término para cada transecto existente');
+						return false;
+					}
 				}
 			}
 		}

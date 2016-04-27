@@ -89,11 +89,13 @@ def index1():
 			datosTransecto2['hora_inicio'] = formaTransectos.vars['hora_inicio_2']
 			datosTransecto2['hora_termino'] = formaTransectos.vars['hora_termino_2']
 			datosTransecto2['tecnico'] = formaTransectos.vars['tecnico_2']
-			datosTransecto2['comentario'] = formaTransectos.vars['comentario_2']
 
 		else:
 
 			datosTransecto2['existe'] = False
+
+		# El comentario se envía independientemente si el transecto existe o no
+		datosTransecto2['comentario'] = formaTransectos.vars['comentario_2']
 		
 		#Insertando en la base de datos:
 		db.Transecto_muestra.insert(**datosTransecto2)      
@@ -119,11 +121,14 @@ def index1():
 			datosTransecto3['hora_inicio'] = formaTransectos.vars['hora_inicio_3']
 			datosTransecto3['hora_termino'] = formaTransectos.vars['hora_termino_3']
 			datosTransecto3['tecnico'] = formaTransectos.vars['tecnico_3']
-			datosTransecto3['comentario'] = formaTransectos.vars['comentario_3']
 
 		else:
 
 			datosTransecto3['existe'] = False
+
+		# El comentario se envía independientemente si el transecto existe o no
+		datosTransecto3['comentario'] = formaTransectos.vars['comentario_3']
+
 		
 		#Insertando en la base de datos:
 		db.Transecto_muestra.insert(**datosTransecto3)      
@@ -149,11 +154,13 @@ def index1():
 			datosTransecto4['hora_inicio'] = formaTransectos.vars['hora_inicio_4']
 			datosTransecto4['hora_termino'] = formaTransectos.vars['hora_termino_4']
 			datosTransecto4['tecnico'] = formaTransectos.vars['tecnico_4']
-			datosTransecto4['comentario'] = formaTransectos.vars['comentario_4']
 
 		else:
 
 			datosTransecto4['existe'] = False
+
+		# El comentario se envía independientemente si el transecto existe o no
+		datosTransecto4['comentario'] = formaTransectos.vars['comentario_4']
 		
 		#Insertando en la base de datos:
 		db.Transecto_muestra.insert(**datosTransecto4)      
