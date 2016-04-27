@@ -1,15 +1,35 @@
 # for web2py
 cache
+cron
 databases
 errors
-sessions
 languages
-private
-sessions
-uploads
-
 LICENSE
- 
+progress.log
+routes.example.py
+sessions
+static/403.html
+static/404.html
+static/500.html
+static/css
+static/fonts
+static/images
+static/js
+uploads
+controllers/appadmin.py
+views/appadmin.html
+views/default/user.html
+views/generic.html
+views/generic.ics
+views/generic.json
+views/generic.jsonp
+views/generic.load
+views/generic.map
+views/generic.pdf
+views/generic.rss
+views/generic.xml
+views/layout.html
+
 # inherit https://github.com/github/gitignore/blob/master/Python.gitignore
  
 *.py[co]
