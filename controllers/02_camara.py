@@ -58,10 +58,10 @@ def index1():
 		TEXTAREA(_name='comentario',_type='text'),
 
 		###########################################
-		# Imagen de referencia de la cámara
+		# Imagenes de referencia de la cámara
 		###########################################
 
-		INPUT(_name='imagen_camara',_type='file',requires=IS_NOT_EMPTY()),
+		INPUT(_name='imagen_camara',_type='file',requires=IS_NOT_EMPTY(),_multiple=True),
 
 	]
 
@@ -78,27 +78,34 @@ def index1():
 
 		# Guardando el registro de la cámara en la base de datos:
 		camaraInsertada = db.Camara.insert(**datosCamara)
-		
-		###########################################
-		# Procesando la imagen de referencia de la cámara
-		###########################################
-		
-		# Guardando la imagen de referencia en la carpeta adecuada
 
-		imagenRef = db.Imagen_referencia_camara.archivo.store(
-			formaCamara.vars.imagen_camara.file, formaCamara.vars.imagen_camara.filename)
+		###########################################
+		# Procesando las imágenes de referencia de la cámara
+		###########################################
+
+		archivos = formaCamara.vars.imagen_camara
+
+		if not isinstance(archivos, list):
 		
-		# Creando los campos de la tabla Imagen_referencia_camara:
-		
-		datosImagenRef = {}
-		datosImagenRef['camara_id'] = camaraInsertada
-		datosImagenRef['archivo'] = imagenRef
-		datosImagenRef['archivo_nombre_original'] = formaCamara.vars.imagen_camara.filename
-		
-		# Insertando el registro en la base de datos:
-		
-		db.Imagen_referencia_camara.insert(**datosImagenRef)
+			archivos = [archivos]
+
+		for aux in archivos:
+
+			# Guardando la imagen de referencia en la carpeta adecuada
+
+			imagenRef = db.Imagen_referencia_camara.archivo.store(aux.file, aux.filename)
 			
+			# Creando los campos de la tabla Imagen_referencia_camara:
+			
+			datosImagenRef = {}
+			datosImagenRef['camara_id'] = camaraInsertada
+			datosImagenRef['archivo'] = imagenRef
+			datosImagenRef['archivo_nombre_original'] = aux.filename
+			
+			# Insertando el registro en la base de datos:
+			
+			db.Imagen_referencia_camara.insert(**datosImagenRef)
+					
 		response.flash = 'Éxito'
 		
 	elif formaCamara.errors:

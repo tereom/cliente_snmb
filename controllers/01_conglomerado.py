@@ -563,7 +563,8 @@ def index():
 			datosArchivoImagen['archivo'] = archivoImagen
 			datosArchivoImagen['archivo_nombre_original'] = aux.filename
 
-			# Guardando la imagen de referencia en la carpeta adecuada
+			# Insertando el registro en la base de datos:
+			
 			db.Imagen_referencia_sitio.insert(**datosArchivoImagen)
 
 		##################################################

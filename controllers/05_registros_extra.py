@@ -83,7 +83,7 @@ def index1():
 		datosEspecie['hora'] = formaEspecie.vars['hora']
 
 		datosEspecie['lat_grado'] = formaEspecie.vars['lat_grado']
-		datosEspecie['lat_min'] = formaEspecie.vars['lat_mon']
+		datosEspecie['lat_min'] = formaEspecie.vars['lat_min']
 		datosEspecie['lat_seg'] = formaEspecie.vars['lat_seg']
 
 		datosEspecie['lon_grado'] = formaEspecie.vars['lon_grado']
@@ -284,7 +284,7 @@ def index2():
 		datosHuellaExcreta['hora'] = formaHuellaExcreta.vars['hora']
 
 		datosHuellaExcreta['lat_grado'] = formaHuellaExcreta.vars['lat_grado']
-		datosHuellaExcreta['lat_min'] = formaHuellaExcreta.vars['lat_mon']
+		datosHuellaExcreta['lat_min'] = formaHuellaExcreta.vars['lat_min']
 		datosHuellaExcreta['lat_seg'] = formaHuellaExcreta.vars['lat_seg']
 
 		datosHuellaExcreta['lon_grado'] = formaHuellaExcreta.vars['lon_grado']
@@ -461,7 +461,7 @@ def index3():
 		datosEspecimenRestos['hora'] = formaEspecimenRestos.vars['hora']
 
 		datosEspecimenRestos['lat_grado'] = formaEspecimenRestos.vars['lat_grado']
-		datosEspecimenRestos['lat_min'] = formaEspecimenRestos.vars['lat_mon']
+		datosEspecimenRestos['lat_min'] = formaEspecimenRestos.vars['lat_min']
 		datosEspecimenRestos['lat_seg'] = formaEspecimenRestos.vars['lat_seg']
 
 		datosEspecimenRestos['lon_grado'] = formaEspecimenRestos.vars['lon_grado']

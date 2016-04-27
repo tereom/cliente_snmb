@@ -53,7 +53,8 @@ def index1():
 		# Imagen de referencia de la grabadora
 		###########################################
 
-		INPUT(_name='imagen_grabadora',_type='file',requires=IS_NOT_EMPTY()),
+		INPUT(_name='imagen_grabadora',_type='file',_multiple=True,
+			requires=IS_NOT_EMPTY()),
 
 		###########################################
 		# Imágenes de referencia de los micrófonos
@@ -94,27 +95,33 @@ def index1():
 		#Guardando el registro de la grabadora en la base de datos:
 		
 		grabadoraInsertada = db.Grabadora.insert(**datosGrabadora)
-		
-		###########################################
-		# Procesando la imagen de referencia de la grabadora
-		###########################################
-		
-		# Guardando la imagen de referencia en la carpeta adecuada
 
-		imagenRef = db.Imagen_referencia_grabadora.archivo.store(
-			formaGrabadora.vars.imagen_grabadora.file,formaGrabadora.vars.imagen_grabadora.filename)
-		
-		# Creando los campos de la tabla Imagen_referencia_grabadora:
-		
-		datosImagenRef = {}
+		###########################################
+		# Procesando las imágenes de referencia de la grabadora
+		###########################################
 
-		datosImagenRef['grabadora_id'] = grabadoraInsertada
-		datosImagenRef['archivo'] = imagenRef
-		datosImagenRef['archivo_nombre_original'] = formaGrabadora.vars.imagen_grabadora.filename
+		archivos = formaGrabadora.vars.imagen_grabadora
+
+		if not isinstance(archivos, list):
 		
-		# Insertando el registro en la base de datos:
-		
-		db.Imagen_referencia_grabadora.insert(**datosImagenRef)
+			archivos = [archivos]
+
+		for aux in archivos:
+
+			# Guardando la imagen de referencia en la carpeta adecuada
+
+			imagenRef = db.Imagen_referencia_grabadora.archivo.store(aux.file, aux.filename)
+			
+			# Creando los campos de la tabla Imagen_referencia_grabadora:
+			
+			datosImagenRef = {}
+			datosImagenRef['grabadora_id'] = grabadoraInsertada
+			datosImagenRef['archivo'] = imagenRef
+			datosImagenRef['archivo_nombre_original'] = aux.filename
+			
+			# Insertando el registro en la base de datos:
+			
+			db.Imagen_referencia_grabadora.insert(**datosImagenRef)
 
 		###########################################
 		# Procesando las imágenes de referencia de los micrófonos
