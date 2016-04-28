@@ -1,73 +1,15 @@
-# for web2py
 docs
 cache
 cron
 databases
 errors
 languages
-LICENSE
 progress.log
 routes.example.py
 sessions
-static/403.html
-static/404.html
-static/500.html
-static/css
-static/fonts
-static/images
-static/js
 uploads
-controllers/appadmin.py
-views/appadmin.html
-views/default/user.html
-views/generic.html
-views/generic.ics
-views/generic.json
-views/generic.jsonp
-views/generic.load
-views/generic.map
-views/generic.pdf
-views/generic.rss
-views/generic.xml
-views/layout.html
 
-# inherit https://github.com/github/gitignore/blob/master/Python.gitignore
- 
 *.py[co]
-*.png
 *.py.bak
 *.bak
 *.log
-
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
- 
-# Installer logs
-pip-log.txt
- 
-# Unit test / coverage reports
-.coverage
-.tox
- 
-#Translations
-*.mo
- 
-#Mr Developer
-.mr.developer.cfg
-
-#Images
-*.jpg
-*.gif
-*.png
-
-languages/es.py
