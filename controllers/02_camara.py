@@ -2,7 +2,7 @@
 
 # usados en "index2", "validarArchivos", "asignarInformacionArchivo"
 import os 
-import applications.init.modules.estructura_archivos_admin as eaa
+import estructura_archivos_admin as eaa
 import re
 
 import contrib.simplejson as json # usado en "validarArchivos"

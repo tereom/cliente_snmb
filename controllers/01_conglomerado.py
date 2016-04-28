@@ -1,6 +1,6 @@
 # coding: utf8
 
-import applications.init.modules.estructura_archivos_admin as eaa
+import estructura_archivos_admin as eaa
 
 def index():
 
