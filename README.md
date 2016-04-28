@@ -26,6 +26,7 @@ de la aplicación creada.
 	+ languages
 	+ __models__
 	+ __modules__
+	+ __private__
 	+ sessions
 	+ __static__
 	+ uploads
@@ -35,9 +36,10 @@ Las carpetas resaltadas son las que contienen el código propio de la aplicació
 estamos desarrollando. Sin embargo, también pueden contener código precargado que
 es indispensable para que nuestra aplicación corra adecuadamente.
 
-Con respecto a las carpetas "sessions", "errors", "databases" y "uploads", su
-contenido se genera con el uso de la aplicación, por lo que pueden ser eliminadas
-una y otra vez sin problemas (siempre que los datos capturados no sean importantes).
+Con respecto a las carpetas "cron", "databses", "errors", "languages", "sessions" y
+"uploads", su contenido se genera con el uso de la aplicación, por lo que pueden
+ser eliminadas una y otra vez sin problemas (siempre que los datos capturados no
+sean importantes).
 
 Se eligió programar el cliente utilizando Web2py, debido a que:
 * Al empaquetar un intérprete de Python, un servidor local, y un DBMS SQlite,
@@ -74,6 +76,19 @@ los scripts de controladores se mapean a carpetas en la vista; y las funciones
 algunas funciones para el AJAX propio de Web2py, así como la plantilla (layout) general
 para la interfaz gráfica de Web2py, que se extiende para crear las nuestras propias.
 
-4. **static**: contiene archivos estáticos necesarios para el correcto funcionamiento de
+4. **modules**: contiene código reutilizable en toda la aplicación. Su contenido se importa
+como el de cualquier paquete de Python.
+
+5. **static**: contiene archivos estáticos necesarios para el correcto funcionamiento de
 la aplicación (CSS, JS, imágenes, entre otros). Muchos archivos son precargados, pero aquí
 podemos guardar los logos que utilicemos en nuestra aplicación particular.
+
+6. **private**: esta carpeta es nueva (la versión 2.13.4 no la tenía, pero la versión 2.14.5
+sí). Agrupa varios parámetros de la aplicación en un mismo lugar, para facilitar la configuración
+de la misma.
+
+### Instalación
+
+1. [Descargar Web2py](http://www.web2py.com/), ya sea para Windows o para Mac.
+2. Ir a la carpeta de __applications__
+3. Clonar o copiar el repositorio ahí. Automáticamente se tendrá una versión funcional.
