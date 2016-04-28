@@ -5,7 +5,7 @@ import os
 import applications.init.modules.estructura_archivos_admin as eaa
 import re
 
-import simplejson as json # usado en "validarArchivos"
+import contrib.simplejson as json # usado en "validarArchivos"
 import base64 # usado en "asignarInformacionArchivo"
 
 
