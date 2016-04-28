@@ -92,3 +92,5 @@ de la misma.
 1. [Descargar Web2py](http://www.web2py.com/), ya sea para Windows o para Mac.
 2. Ir a la carpeta de __applications__
 3. Clonar o copiar el repositorio ahí. Automáticamente se tendrá una versión funcional.
+4. En "modules/estructura_archivos_admin.py" verificar que el path específico para cada sistema
+operativo está siendo utilizado.
