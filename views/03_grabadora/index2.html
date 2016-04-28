@@ -278,7 +278,25 @@
 	(
 		function()
 		{
-			alert('Poner las instrucciones de la pestaña');
+			alert('Prerequisitos para utilizar esta pestaña:\n' +
+				'1. Las carpetas "conglomerados/cgl_aaaa-mm-dd/g_a" y ' +
+				'"conglomerados/cgl_aaaa-mm-dd/g_u" ya deben tener guardados los ' +
+				'respectivos archivos audibles y ultrasónicos (WAV) asociados a ' +
+				'la grabadora correspondiente.\n' +
+				'2. Dicha grabadora ya debe haber sido declarada en la pestaña ' +
+				'de "Información de grabadora."\n\n' +
+				'Procedimiento:\n' + 
+				'1. Elegir el conglomerado y sitio correspondientes a la grabadora ' +
+				'cuyos archivos quieren ser declarados.\n' +
+				'2. Elegir el tipo de archivos a declarar.\n' +
+				'3. Hacer click en "Validar archivos". Con esto se validará que ' +
+				'archivos WAV hayan sido introducidos en la carpeta ' +
+				'anterior.\n' +
+				'4. Al pasar la validación, podrá registrar los archivos en la ' +
+				'base de datos.\n\n' +
+				'Nota: la validación simplemente revisa que la carpeta tenga archivos ' +
+				'WAV, pero NO REVISA si son audibles o ultrasónicos, por lo que se ' +
+				'debe tener cuidado de guardar los archivos en la carpeta adecuada.');
 		}
 	)
 
