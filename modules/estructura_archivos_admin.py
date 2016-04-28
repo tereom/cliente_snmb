@@ -31,6 +31,11 @@ def crearRutaCarpeta(nombre, fecha_visita):
 	dirDestino = os.path.normpath(dirActual +\
 		os.sep + os.pardir + os.sep + os.pardir + os.sep + os.pardir)
 
+	# Asegurándonos que el nombre no tenga ceros a la izquierda, por ejemplo:
+	# no queremos que sea: "000123", sino simplemente "123".
+
+	nombre = str(int(nombre))
+
 	nombreDirCglMuestra = nombre + '_' + fecha_visita
 
 	rutaDirConglomeradoMuestra = os.path.join(dirDestino, 'conglomerados',
