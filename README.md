@@ -7,7 +7,7 @@ Monitoreo de Biodiversidad (SNMB).
 Éste se desarrolló usando el marco de trabajo [Web2py](http://www.web2py.com/),
 el cuál tiene las siguientes características:
 
-* Sigue un paradigma de modelo-vista-controlador, en el cuál el modelo define
+* Tiene una arquitectura modelo-vista-controlador, en el cuál el modelo define
 el esquema de la base de datos; la vista, la interfaz gráfica que utiliza el
 usuario, y el controlador, la liga entre el input del usuario y la base de datos.
 
@@ -47,7 +47,9 @@ es ideal para nuestros fines: una aplicación de escritorio de fácil instalaci�
 que sirva para capturar datos en una base local y fácilmente distribuíble (SQLite);
 pero que eventualmente pueda escalar para estar en un servidor remoto.
 * Permite hacer exportaciones CSV de la base local SQLite, que sirve para diseminar
-* los datos entre los que levantan la información y la capturan.
+los datos entre los que levantan la información y la capturan.
+* Con ayuda del método SQLFORM.grid(), permite desplegar al usuario las tablas de la
+base de datos para la fácil revisión y corrección de los mismos.
 * Por medio de esos archivos CSV, permite fusionar la información de varias bases
 de datos en una sola (lidiando automáticamente con los problemas de las ID's).
 
@@ -66,8 +68,8 @@ Web2py incluye aquí el código que define el menú principal de la interfaz gr�
 
 2. **controllers**: cada script numerado contiene todos los controladores de las
 pestañas correspondientes a una sección, así como funciones asociadas. Adicionalmente,
-están los controladores que definen el funcionamiento general de la aplicación, así como
-el controlador con funcionalidades default.
+está el controlador del administrador de la aplicación, así como el controlador con
+funcionalidades default.
 
 3. **views**: como cada script del controlador contiene todos los controladores de las
 pestañas correspondientes a una sección, y cada pestaña tiene su propia interfaz gráfica,
