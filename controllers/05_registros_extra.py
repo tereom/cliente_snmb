@@ -140,7 +140,7 @@ def index1():
 
 		# Insertando el registro en la base de datos:
 
-		especieInsertada = db.Especie_invasora.insert(**datosEspecie)
+		especieInsertada = db.Especie_invasora_extra.insert(**datosEspecie)
 
 		###########################################
 		# Procesando los archivos múltiples asociados a la especie invasora extra

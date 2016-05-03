@@ -1,46 +1,5 @@
 # coding: utf8
 
-## Menús desplegables que se utilizan en la mayoría de los controladores
-
-###########################################
-# Menús desplegables de "Conglomerado_muestra"
-###########################################
-
-db.Conglomerado_muestra.tipo.requires = IS_IN_DB(db,
-	db.Cat_tipo_conglomerado.nombre, '%(nombre)s')
-
-db.Conglomerado_muestra.estado.requires = IS_IN_DB(db,
-	db.Cat_estado_conglomerado.nombre, '%(nombre)s')
-
-db.Conglomerado_muestra.municipio.requires = IS_IN_DB(db,
-	db.Cat_municipio_conglomerado.nombre, '%(nombre)s')
-
-db.Conglomerado_muestra.tenencia.requires = IS_IN_DB(db,
-	db.Cat_tenencia_conglomerado.nombre, '%(nombre)s')
-
-db.Conglomerado_muestra.uso_suelo_tipo.requires = IS_IN_DB(db,
-	db.Cat_suelo_conglomerado.nombre, '%(nombre)s')
-
-# Este lo quitamos para que no tengan problemas si no deben llenar el campo
-# "vegetacion_tipo".
-#db.Conglomerado_muestra.vegetacion_tipo.requires = IS_IN_DB(db,
-#    db.Cat_vegetacion_conglomerado.nombre,'%(nombre)s')
-
-###########################################
-# Menús desplegables de "Sitio_muestra"
-###########################################
-
-db.Sitio_muestra.sitio_numero.requires = IS_IN_DB(db,db.Cat_numero_sitio.nombre,
-	'%(nombre)s')
-db.Sitio_muestra.elipsoide.requires = IS_IN_DB(db,db.Cat_elipsoide.nombre,
-	'%(nombre)s')
-
-###########################################
-# Campos no modificables
-###########################################
-
-db.Sitio_muestra.conglomerado_muestra_id.writable = False
-
 def conglomerado():
 
 	## Controlador correspondiente a la pestaña "Conglomerado", de la sección:
@@ -48,9 +7,43 @@ def conglomerado():
 	## "smartgrid" incluido en Web2py.
 
 	###########################################
+	# Menús desplegables de "Conglomerado_muestra"
+	###########################################
+
+	db.Conglomerado_muestra.tipo.requires = IS_IN_DB(db,
+		db.Cat_tipo_conglomerado.nombre, '%(nombre)s')
+
+	db.Conglomerado_muestra.estado.requires = IS_IN_DB(db,
+		db.Cat_estado_conglomerado.nombre, '%(nombre)s')
+
+	db.Conglomerado_muestra.municipio.requires = IS_IN_DB(db,
+		db.Cat_municipio_conglomerado.nombre, '%(nombre)s')
+
+	db.Conglomerado_muestra.tenencia.requires = IS_IN_DB(db,
+		db.Cat_tenencia_conglomerado.nombre, '%(nombre)s')
+
+	db.Conglomerado_muestra.uso_suelo_tipo.requires = IS_IN_DB(db,
+		db.Cat_suelo_conglomerado.nombre, '%(nombre)s')
+
+	# Este lo quitamos para que no tengan problemas si no deben llenar el campo
+	# "vegetacion_tipo".
+	#db.Conglomerado_muestra.vegetacion_tipo.requires = IS_IN_DB(db,
+	#    db.Cat_vegetacion_conglomerado.nombre,'%(nombre)s')
+
+	###########################################
+	# Menús desplegables de "Sitio_muestra"
+	###########################################
+
+	db.Sitio_muestra.sitio_numero.requires = IS_IN_DB(db,db.Cat_numero_sitio.nombre,
+		'%(nombre)s')
+	db.Sitio_muestra.elipsoide.requires = IS_IN_DB(db,db.Cat_elipsoide.nombre,
+		'%(nombre)s')
+
+	###########################################
 	# Campos no modificables
 	###########################################
 
+	db.Sitio_muestra.conglomerado_muestra_id.writable = False
 	db.Imagen_referencia_sitio.sitio_muestra_id.writable = False
 
 	###########################################
@@ -185,9 +178,8 @@ def invasoras_huellas_excretas():
 	db.Huella_excreta.transecto_muestra_id.writable = False
 	db.Archivo_huella_excreta.huella_excreta_id.writable = False
 
-	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+	form = SQLFORM.smartgrid(db.Transecto_muestra,
 		linked_tables = [
-			'Transecto_muestra',
 			'Especie_invasora',
 			'Archivo_especie_invasora',
 			'Huella_excreta',
@@ -206,11 +198,11 @@ def invasoras_huellas_excretas():
 
 	return dict(form = form)
 
-def registros_extra():
+def invasoras_extra():
 
-	## Controlador correspondiente a la pestaña "Registros extra", de la sección:
-	## "Revisar_registros". Genera las tablas de revisión usando el método
-	## "smartgrid" incluido en Web2py.
+	## Controlador correspondiente a la pestaña "Especies invasoras extra",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
 
 	###########################################
 	# Menús desplegables de "Especie_invasora_extra"
@@ -222,11 +214,74 @@ def registros_extra():
 	db.Cat_numero_individuos.nombre,'%(nombre)s')
 
 	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Especie_invasora_extra.conglomerado_muestra_id.writable = False
+	db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Especie_invasora_extra,
+		linked_tables = [
+			'Archivo_especie_invasora_extra'
+		],
+		csv = True,
+		user_signature = False,
+		maxtextlengths = {
+			'Archivo_especie_invasora_extra.archivo_nombre_original' : 50
+		}
+	)
+
+	return dict(form = form)
+
+def huellas_excretas_extra():
+
+	## Controlador correspondiente a la pestaña "Huellas/excretas extra",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
+
+	###########################################
 	# Menús desplegables de "Huella_excreta_extra"
 	###########################################
 
 	db.Huella_excreta_extra.elipsoide.requires = IS_IN_DB(db,
 		db.Cat_elipsoide.nombre, '%(nombre)s')
+
+	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
+	db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Huella_excreta_extra,
+		linked_tables = [
+			'Archivo_huella_excreta_extra'
+		],
+		csv = True,
+		user_signature = False,
+		maxtextlengths = {
+			'Archivo_huella_excreta_extra.archivo_nombre_original' : 50
+		},
+		headers = {
+			'Huella_excreta_extra.es_huella' : 'Huella'
+		}
+	)
+
+	return dict(form = form)
+
+def especimenes_restos_extra():
+
+	## Controlador correspondiente a la pestaña "Especímenes/restos extra",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
 
 	###########################################
 	# Menús desplegables de "Especimen_restos_extra"
@@ -241,10 +296,6 @@ def registros_extra():
 	# Campos no modificables
 	###########################################
 
-	db.Especie_invasora_extra.conglomerado_muestra_id.writable = False
-	db.Archivo_especie_invasora_extra.especie_invasora_extra_id.writable = False
-	db.Huella_excreta_extra.conglomerado_muestra_id.writable = False
-	db.Archivo_huella_excreta_extra.huella_excreta_extra_id.writable = False
 	db.Especimen_restos_extra.conglomerado_muestra_id.writable = False
 	db.Archivo_especimen_restos_extra.especimen_restos_extra_id.writable = False
 
@@ -252,24 +303,16 @@ def registros_extra():
 	# Generando la forma
 	###########################################
 
-	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
+	form = SQLFORM.smartgrid(db.Especimen_restos_extra,
 		linked_tables = [
-			'Especie_invasora_extra',
-			'Archivo_especie_invasora_extra',
-			'Huella_excreta_extra',
-			'Archivo_huella_excreta_extra',
-			'Especimen_restos_extra',
 			'Archivo_especimen_restos_extra'
 		],
 		csv = True,
 		user_signature = False,
 		maxtextlengths = {
-			'Archivo_especie_invasora_extra.archivo_nombre_original' : 50,
-			'Archivo_huella_excreta_extra.archivo_nombre_original' : 50,
 			'Archivo_especimen_restos_extra.archivo_nombre_original' : 50
 		},
 		headers = {
-			'Huella_excreta_extra.es_huella' : 'Huella',
 			'Especimen_restos_extra.es_especimen' : 'Espécimen'
 		}
 	)

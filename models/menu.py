@@ -141,9 +141,12 @@ response.menu = [
       #(T('Incendios'), False, URL('09_revisar_registros', 'editarIncendio')),
       #(T('Plagas'), False, URL('09_revisar_registros', 'editarPlaga')),
       #(T('Impactos ambientales'), False, URL('09_revisar_registros', 'editarImpacto')),
-      (T('Cámara'), False, URL('09_revisar_registros', 'camara')),
+      (T('Trampa cámara'), False, URL('09_revisar_registros', 'camara')),
       (T('Grabadora'), False, URL('09_revisar_registros', 'grabadora')),
-      (T('Registros extra'), False, URL('09_revisar_registros', 'registros_extra'))
+      (T('Especies invasoras extra'), False, URL('09_revisar_registros', 'invasoras_extra')),
+      (T('Huellas/excretas extra'), False, URL('09_revisar_registros', 'huellas_excretas_extra')),
+      (T('Especímenes/restos extra'), False, URL('09_revisar_registros', 'especimenes_restos_extra'))
+
       ]),
     
     ###########################################
