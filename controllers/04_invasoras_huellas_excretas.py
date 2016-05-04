@@ -355,7 +355,7 @@ def index2():
 	db.Archivo_especie_invasora.especie_invasora_id.writable =False
 
 	grid = SQLFORM.grid(db.Especie_invasora,orderby=~db.Especie_invasora.id,\
-		csv=False,user_signature=False,
+		csv=False,user_signature=False, details = False,
 		create=False,searchable=False,editable=False)
 
 	return dict(listaConglomerado = listaConglomerado,\
@@ -519,7 +519,7 @@ def index3():
 	db.Archivo_huella_excreta.huella_excreta_id.writable =False
 	
 	grid = SQLFORM.grid(db.Huella_excreta, orderby =~ db.Huella_excreta.id,\
-		csv = False, user_signature = False,
+		csv = False, user_signature = False, details = False,
 		create = False, searchable = False, editable = False)
 
 	return dict(listaConglomerado = listaConglomerado,

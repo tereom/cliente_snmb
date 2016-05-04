@@ -299,7 +299,7 @@ def index2():
 
 	db.Archivo_camara.camara_id.writable = False
 	grid = SQLFORM.smartgrid(db.Archivo_camara, orderby =~ db.Archivo_camara.id,\
-		csv = False, user_signature = False, 
+		csv = False, user_signature = False, details = False,
 		create = False, searchable = False, editable = False,
 		maxtextlengths = {'Archivo_camara.archivo_nombre_original' : 50})
 

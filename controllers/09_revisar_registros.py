@@ -53,6 +53,7 @@ def conglomerado():
 	form = SQLFORM.smartgrid(db.Conglomerado_muestra,
 		linked_tables = ['Sitio_muestra', 'Imagen_referencia_sitio', 'Formato_campo'],
 		user_signature = False,
+		details = False,
 		csv = True,
 		maxtextlengths = {'Imagen_referencia_sitio.archivo_nombre_original' : 50},
 		headers = {'Sitio_muestra.existe' : 'Muestreado'}
@@ -94,6 +95,7 @@ def camara():
 			'Archivo_camara',
 			'Imagen_referencia_camara'],
 		user_signature = False, 
+		details = False,
 		csv = True,
 		maxtextlengths = {'Archivo_camara.archivo_nombre_original' : 70,
 		'Imagen_referencia_camara.archivo_nombre_original' : 50})
@@ -136,6 +138,7 @@ def grabadora():
 			'Imagen_referencia_grabadora',
 			'Imagen_referencia_microfonos'
 		],
+		details = False,
 		csv = True,
 		user_signature = False, 
 		maxtextlengths = {
@@ -185,6 +188,7 @@ def invasoras_huellas_excretas():
 			'Huella_excreta',
 			'Archivo_huella_excreta'
 		],
+		details = False,
 		csv = True,
 		user_signature = False,
 		maxtextlengths = {
@@ -228,6 +232,7 @@ def invasoras_extra():
 		linked_tables = [
 			'Archivo_especie_invasora_extra'
 		],
+		details = False,
 		csv = True,
 		user_signature = False,
 		maxtextlengths = {
@@ -265,6 +270,7 @@ def huellas_excretas_extra():
 		linked_tables = [
 			'Archivo_huella_excreta_extra'
 		],
+		details = False,
 		csv = True,
 		user_signature = False,
 		maxtextlengths = {
@@ -307,6 +313,7 @@ def especimenes_restos_extra():
 		linked_tables = [
 			'Archivo_especimen_restos_extra'
 		],
+		details = False,
 		csv = True,
 		user_signature = False,
 		maxtextlengths = {
