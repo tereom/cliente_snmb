@@ -270,9 +270,9 @@
 				//alert('falta presionar un radio-botón');
 			}
 
-			/* faltanNombres es un indicador para enviar un mensaje que indique
-			que es necesario que se escriban ya sea el nombre común o el
-			científico de la especie*/
+			/* faltanNombres es un indicador para evitar que se envíe el mensaje
+			default si falta algo en la forma, en caso de que falten los nombres
+			(estos tendrán un mensaje especial).*/
 
 			faltanNombres = false;
 
@@ -282,32 +282,34 @@
 			{
 				flag = false;
 				faltanNombres = true;
-				//alert('caso1');
+				alert('Favor de ingresar al menos un nombre (ya sea común ' + 
+					'o científico)');
 			}
-			else if($('#hay_nombre_comun').prop('checked') && !$('#nombre_comun').val())
+
 			/* Si se marcó la casilla de nombre común pero no se escribió
 			nada en el campo subsecuente.*/
+
+			else if($('#hay_nombre_comun').prop('checked') && !$('#nombre_comun').val())
 			{
 				flag = false;
 				faltanNombres = true;
-				//alert('caso2');
+				alert('Favor de ingresar los nombres cuyas casillas están marcadas');
 			}
 
-			//Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
+			/* Si se marcó la casilla de nombre científico pero no se escribió
+			nada en el campo subsecuente. */
+			
 			else if($('#hay_nombre_cientifico').prop('checked') && !$('#nombre_cientifico').val())
 			{
 				flag = false;
 				faltanNombres = true;
-				//alert('caso3');
+				alert('Favor de ingresar los nombres cuyas casillas están marcadas');
 			}
 
 			if(!flag)
 			{
-				if(faltanNombres)
-					alert('Favor de escribir al menos un nombre (ya sea común científico)');
-				else
+				if(!faltanNombres)
 					alert('Faltó llenar algún campo o subir alguna imagen');
-
 				return false;
 			}
 		}
