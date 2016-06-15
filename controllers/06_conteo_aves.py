@@ -29,7 +29,7 @@ def index1():
 		SELECT(_name='condiciones_ambientales',requires=
 			IS_IN_DB(db,db.Cat_condiciones_ambientales.nombre,'%(nombre)s')),
 
-		TEXTAREA(_name='comentario')
+		TEXTAREA(_name='comentario',_type='text')
 	]
 	
 	formaPuntoConteo = FORM(*camposPuntoConteo)
@@ -135,7 +135,7 @@ def index2():
 
 	# Razonamiento detrás de la forma:
 	# 1. Preferimos el nombre científico al nombre común, por ello, en la vista,
-	# la casilla correspondiente al campo "hay_nombre_cientifico" estará marca
+	# la casilla correspondiente al campo "hay_nombre_cientifico" estará marca-
 	# da por default.
 	# 2. Pensábamos que la lista de nombres científicos era exhaustiva, pero no
 	# lo es si sólo conocen el género y no la especie, conviene permitirles
@@ -170,11 +170,11 @@ def index2():
 		# Campos de un avistamiento de aves:
 
 		INPUT(_name='hay_nombre_cientifico',_type='boolean'),
-		INPUT(_name='conabio_lista_nombre_cientifico',_type='string'),
+		INPUT(_name='seleccion_nombre_cientifico',_type='string'),
 		INPUT(_name='nombre_cientifico',_type='string'),
 
 		INPUT(_name='hay_nombre_comun',_type='boolean'),
-		INPUT(_name='conabio_lista_nombre_comun',_type='string'),
+		INPUT(_name='seleccion_nombre_comun',_type='string'),
 		INPUT(_name='nombre_comun',_type='string'),
 
 		INPUT(_name='es_visual',_type='boolean'),
@@ -225,7 +225,7 @@ def index2():
 		
 		if bool(formaAvistamiento.vars['hay_nombre_cientifico']):
 
-			seleccionListaCientifico = formaAvistamiento.vars['conabio_lista_nombre_cientifico']
+			seleccionListaCientifico = formaAvistamiento.vars['seleccion_nombre_cientifico']
 
 			if bool(seleccionListaCientifico != 'Otros'):
 
@@ -241,7 +241,7 @@ def index2():
 
 		if bool(formaAvistamiento.vars['hay_nombre_comun']):
 
-			seleccionListaComun = formaAvistamiento.vars['conabio_lista_nombre_comun']
+			seleccionListaComun = formaAvistamiento.vars['seleccion_nombre_comun']
 
 			if bool(seleccionListaComun != 'Otros'):
 
@@ -325,8 +325,8 @@ def index2():
 	db.Archivo_avistamiento_aves.avistamiento_aves_id.writable =False
 
 	grid = SQLFORM.grid(db.Avistamiento_aves, orderby=~ db.Avistamiento_aves.id,\
-		csv = False, user_signature = False,
-		create = False, searchable = False, editable=False)
+		csv = False, user_signature = False, details = False,
+		create = False, searchable = False, editable = False)
 
 	return dict(listaConglomerado = listaConglomerado,\
 		listaAvesNombreComun = listaAvesNombreComun,\

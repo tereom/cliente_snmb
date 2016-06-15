@@ -86,10 +86,10 @@
 						<input class="boolean" name="hay_nombre_comun" id="hay_nombre_comun" type="checkbox" value="on"/>
 					</div>
 					<div class="FlotaIzquierda" style="padding-right:24px;">
-						<label for="conabio_lista_nombre_comun">Nombre común<sup>1</sup></label>
+						<label for="seleccion_nombre_comun">Nombre común<sup>1</sup></label>
 					</div>
 					<div class="FlotaIzquierda" style="padding-right:10px">
-						<select class="generic-widget" name="conabio_lista_nombre_comun" id="conabio_lista_nombre_comun"
+						<select class="generic-widget" name="seleccion_nombre_comun" id="seleccion_nombre_comun"
 						style="margin-right: 1cm;">
 							<option value=""/>
 							{{for ave in listaAvesNombreComun:}}
@@ -110,10 +110,10 @@
 						<input class="boolean" name="hay_nombre_cientifico" id="hay_nombre_cientifico" type="checkbox" value="on"/>
 					</div>
 					<div class="FlotaIzquierda" style="padding-right:10px;">
-						<label for="conabio_lista_nombre_cientifico">Nombre científico<sup>1</sup></label>
+						<label for="seleccion_nombre_cientifico">Nombre científico<sup>1</sup></label>
 					</div>
 					<div class="FlotaIzquierda" style="padding-right:10px">
-						<select class="generic-widget" name="conabio_lista_nombre_cientifico" id="conabio_lista_nombre_cientifico"
+						<select class="generic-widget" name="seleccion_nombre_cientifico" id="seleccion_nombre_cientifico"
 						style="margin-right: 1cm;">
 							<option value=""/>
 							{{for ave in listaAvesNombreCientifico:}}
@@ -244,7 +244,7 @@
 			nombre científico */
 			$('#hay_nombre_cientifico').prop('checked', true);
 			$('#nombre_cientifico').hide();
-			$('#conabio_lista_nombre_comun').hide();
+			$('#seleccion_nombre_comun').hide();
 			$('#nombre_comun').hide();
 		}
 	)
@@ -262,15 +262,15 @@
 		{
 			if($(this).prop('checked'))
 			{
-				$('#conabio_lista_nombre_cientifico').fadeIn();
-				if($('#conabio_lista_nombre_cientifico').val() == "Otros")
+				$('#seleccion_nombre_cientifico').fadeIn();
+				if($('#seleccion_nombre_cientifico').val() == "Otros")
 				{
 					$('#nombre_cientifico').fadeIn();
 				}
 			}
 			else
 			{
-				$('#conabio_lista_nombre_cientifico').fadeOut();
+				$('#seleccion_nombre_cientifico').fadeOut();
 				$('#nombre_cientifico').fadeOut();
 			}
 		}
@@ -282,15 +282,15 @@
 		{
 			if($(this).prop('checked'))
 			{
-				$('#conabio_lista_nombre_comun').fadeIn();
-				if($('#conabio_lista_nombre_comun').val() == "Otros")
+				$('#seleccion_nombre_comun').fadeIn();
+				if($('#seleccion_nombre_comun').val() == "Otros")
 				{
 					$('#nombre_comun').fadeIn();
 				}
 			}
 			else
 			{
-				$('#conabio_lista_nombre_comun').fadeOut();
+				$('#seleccion_nombre_comun').fadeOut();
 				$('#nombre_comun').fadeOut();
 			}
 		}
@@ -299,7 +299,7 @@
 	/* Activando y desactivando el campo para ingresar el nombre a mano,
 	dependiendo de si se seleccionó "otros" en la combobox correspondiente*/
 
-	$('#conabio_lista_nombre_cientifico').change
+	$('#seleccion_nombre_cientifico').change
 	(
 		function()
 		{
@@ -312,7 +312,7 @@
 		}
 	)
 
-	$('#conabio_lista_nombre_comun').change
+	$('#seleccion_nombre_comun').change
 	(
 		function()
 		{
@@ -401,13 +401,13 @@
 			{
 				if($('#hay_nombre_comun').prop('checked'))
 				{
-					if(!$('#conabio_lista_nombre_comun').val())
+					if(!$('#seleccion_nombre_comun').val())
 					{
 						flag = false;
 						faltanNombres = true;
 						//alert('Caso 2: se indica que hay nombre común pero no se selecciona nada');
 					}
-					else if($('#conabio_lista_nombre_comun').val() == "Otros" && !$('#nombre_comun').val())
+					else if($('#seleccion_nombre_comun').val() == "Otros" && !$('#nombre_comun').val())
 					{
 						flag = false;
 						faltanNombres = true;
@@ -417,13 +417,13 @@
 
 				if($('#hay_nombre_cientifico').prop('checked'))
 				{
-					if(!$('#conabio_lista_nombre_cientifico').val())
+					if(!$('#seleccion_nombre_cientifico').val())
 					{
 						flag = false;
 						faltanNombres = true;
 						//alert('Caso 4: se indica que hay nombre científico pero no se selecciona nada');
 					}
-					else if($('#conabio_lista_nombre_cientifico').val()=="Otros" && !$('#nombre_cientifico').val())
+					else if($('#seleccion_nombre_cientifico').val()=="Otros" && !$('#nombre_cientifico').val())
 					{
 						flag = false;
 						faltanNombres = true;
