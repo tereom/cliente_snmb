@@ -335,7 +335,7 @@ def index2():
 
 def asignarPuntoConteo():
 
-	## Función invocada mediante AJAX para verficar si se ha ingresado información 
+	## Función invocada mediante AJAX para verificar si se ha ingresado información 
 	## de punto de control para el conglomerado y sitio seleccionados. En caso
 	## de que no se haya ingresado un punto de control no se permite enviar la
 	## forma. El AJAX se activa cuando se selecciona un número de sitio

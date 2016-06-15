@@ -81,15 +81,13 @@ response.menu = [
     # Carbono
     ###########################################
 
-    # (T('Vegetación y suelo'), False, URL('11_carbono', 'index1'), [
-    #   (T('Material leñoso caído'), False, URL('11_carbono', 'index1')),
-    #   (T('Material 1000h'), False, URL('11_carbono', 'index2')),
-    #   (T('Carbono en el mantillo'), False, URL('11_carbono', 'index3')),
-    #   (T('Árboles pequeños y arbustos'), False, URL('11_carbono', 'index4')),
-    #   (T('Árboles grandes'), False, URL('11_carbono', 'index5'))]),
-
-    # ### Epífitas
-    # (T('Epífitas'), False, URL('12_epifitas', 'index'),[]),
+    (T('Vegetación y suelo'), False, URL('07_vegetacion_suelo', 'index1'), [
+      (T('Material leñoso caído'), False, URL('07_vegetacion_suelo', 'index1')),
+      (T('Material 1000h'), False, URL('07_vegetacion_suelo', 'index2')),
+      (T('Carbono en el mantillo'), False, URL('07_vegetacion_suelo', 'index3')),
+      (T('Árboles pequeños y arbustos'), False, URL('07_vegetacion_suelo', 'index4')),
+      (T('Árboles grandes'), False, URL('07_vegetacion_suelo', 'index5')),
+      (T('Epífitas'), False, URL('07_vegetacion_suelo', 'index6'))]),
 
     # ### Impactos ambientales
     # (T('Impactos ambientales'),False,URL('13_impactos_ambientales','index3'), [
