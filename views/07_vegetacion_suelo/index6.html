@@ -1,36 +1,38 @@
 {{extend 'layout.html'}}
+
 {{block head}}
-<style type="text/css">
+    <style type="text/css">
 
-    .Tabla .string
-    {
-        margin-right: 0.5cm;
-        width: 2cm;
-        text-align: center;
-    }
-    
-    .Tabla .generic-widget
-    {
-    	margin-right: 2cm;
-        width: 4.4cm;
-    }
-    
-    .FlotaIzquierda
-    {
-        float: left;
-    }
+        .Tabla .string
+        {
+            margin-right: 0.5cm;
+            width: 2cm;
+            text-align: center;
+        }
+        
+        .Tabla .generic-widget
+        {
+        	margin-right: 2cm;
+            width: 4.4cm;
+        }
+        
+        .Centrar
+        {
+            text-align: center;
+        }
 
-    .Centrar
-    {
-        text-align: center;
-    }
+        #enviar
+        {
+            float: left;
+        }
 
-</style>
+    </style>
 {{end}}
 {{#=response.toolbar()}}
 
 <form action="" enctype="multipart/form-data" method="post">
     <input type="hidden" name="_formname" value="formaEpifitasHTML"/>
+
     <fieldset>
         <legend>
             Información de epífitas
@@ -38,19 +40,15 @@
         <table class="Tabla">
             <tr>
                 <td>
-                    <div>
-                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
-                    </div>
-                    <div>
-                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-                            <option value=""/>
-                            {{for conglomerado in listaConglomerado:}}
-                                <option value="{{=conglomerado.id}}">
-                                    {{=conglomerado.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
+                    <label for="conglomerado_muestra_id">Conglomerado</label>
+                    <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+                        <option value=""/>
+                        {{for conglomerado in listaConglomerado:}}
+                            <option value="{{=conglomerado.id}}">
+                                {{=conglomerado.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
                 </td>                
             </tr>
         </table>
@@ -62,92 +60,127 @@
             </tr>
             <tr>
                 <td>
-                    <label for="tabla_helechos_observados">Helechos</label>
+                    <label for="helechos_observados">Helechos</label>
                 </td>
                 <td class="Centrar">
-                    <input class="boolean" name="helechos_observados" id="tabla_helechos_observados" type="checkbox" value="on"/>
+                    <input class="boolean" name="helechos_observados" id="helechos_observados" type="checkbox" value="on"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="tabla_orquideas_observadas">Orquídeas</label>
+                    <label for="orquideas_observadas">Orquídeas</label>
                 </td>
                 <td class="Centrar">
-                    <input class="boolean" name="orquideas_observadas" id="tabla_orquideas_observadas" type="checkbox" value="on"/>
+                    <input class="boolean" name="orquideas_observadas" id="orquideas_observadas" type="checkbox" value="on"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="tabla_musgos_observados">Musgos</label>
+                    <label for="musgos_observados">Musgos</label>
                 </td>
                 <td class="Centrar">
-                    <input class="boolean" name="musgos_observados" id="tabla_musgos_observados" type="checkbox" value="on"/>
+                    <input class="boolean" name="musgos_observados" id="musgos_observados" type="checkbox" value="on"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="tabla_liquenes_observados">Líquenes</label>
+                    <label for="liquenes_observados">Líquenes</label>
                 </td>
                 <td class="Centrar">
-                    <input class="boolean" name="liquenes_observados" id="tabla_liquenes_observados" type="checkbox" value="on"/>
+                    <input class="boolean" name="liquenes_observados" id="liquenes_observados" type="checkbox" value="on"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="tabla_cactaceas_observadas">Cactáceas</label>
+                    <label for="cactaceas_observadas">Cactáceas</label>
                 </td>
                 <td class="Centrar">
-                    <input class="boolean" name="cactaceas_observadas" id="tabla_cactaceas_observadas" type="checkbox" value="on"/>
+                    <input class="boolean" name="cactaceas_observadas" id="cactaceas_observadas" type="checkbox" value="on"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="tabla_bromeliaceas_observadas">Bromeliáceas</label>
+                    <label for="bromeliaceas_observadas">Bromeliáceas</label>
                 </td>
                 <td class="Centrar">
-                    <input class="boolean" name="bromeliaceas_observadas" id="tabla_bromeliaceas_observadas" type="checkbox" value="on"/>
+                    <input class="boolean" name="bromeliaceas_observadas" id="bromeliaceas_observadas" type="checkbox" value="on"/>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="tabla_otras_observadas">Otras</label>
+                    <label for="otras_observadas">Otras</label>
                 </td>
                 <td class="Centrar">
-                    <input class="boolean" name="otras_observadas" id="tabla_otras_observadas" type="checkbox" value="on"/>
+                    <input class="boolean" name="otras_observadas" id="otras_observadas" type="checkbox" value="on"/>
                 </td>
                 <td>
                     <div class="Nombre">
-                        <label for="tabla_nombre_otras">Nombre</label>
+                        <label for="nombre_otras">Nombre</label>
                     </div>
                 </td>
                 <td>
                     <div class="Nombre">
-                        <input class="string" name="nombre_otras" id="tabla_nombre_otras" type="text" value=""/>
+                        <input class="string" name="nombre_otras" id="nombre_otras" type="text" value=""/>
                     </div>
                 </td>
             </tr>
         </table>
     <hr/>
     </fieldset>
-    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+    <input type="submit" value="Enviar" id ="enviar" class="btn"/>
 </form>
 
 {{#=BEAUTIFY(request.vars)}}
 <script>
+
+    //////////////////////////////////////////
+    // AJAX para evitar que se envíe la información de epífitas
+    // correspondiente a un conglomerado más de una vez.
+    //////////////////////////////////////////
+
+    $('#conglomerado_muestra_id').change(
+        function(){
+            $.ajax
+            (
+            {
+                type: "POST",
+                data: $('#conglomerado_muestra_id').serialize(),
+                url: "{{=URL('informacionEpifitasExistente')}}",
+                success: function(resultado)
+                {
+                    //alert(resultado);
+                    if(resultado>0)
+                    {
+                        alert('La información de epífitas ya ha sido insertada para el conglomerado seleccionado');
+                        $('#conglomerado_muestra_id').val("");
+                    }
+                }
+            }
+            );
+        }
+        );
+
+    //////////////////////////////////////////
+    // Este código se ejecuta en cuanto el html termina de llegar al navegador:
+    //////////////////////////////////////////
 
     $(document).ready
     (
         function()
         {
            /* Cuando el documento se carga, el campo Nombre está escondido */
-           $('#tabla_otras_observadas').prop('checked', false);
+           $('#otras_observadas').prop('checked', false);
            $('.Nombre').hide();
         }
     )
+
+    //////////////////////////////////////////
+    // Funcionamiento de la vista
+    //////////////////////////////////////////
     
     /* Cuando se selecciona la opción "Otras" aparece el campo Nombre */
     
-    $('#tabla_otras_observadas').change
+    $('#otras_observadas').change
     (
         function()
         {
@@ -160,58 +193,45 @@
         }
     )
 
-    //AJAX para evitar que se envíe la información de epífitas correspondiente
-    //a un conglomerado más de una vez:
-    $('#tabla_conglomerado_muestra_id').change(function (){
-        $.ajax
-        (
-        {
-            type: "POST",
-            data: $('#tabla_conglomerado_muestra_id').serialize(),
-            url: "{{=URL('informacionEpifitasExistente')}}",
-            success: function(resultado)
-                {
-                    //alert(resultado);
-                    if(resultado>0)
-                    {
-                        alert('La información de epífitas ya ha sido insertada para el conglomerado seleccionado');
-                        $('#tabla_conglomerado_muestra_id').val("");
-                    }
-                }
-            }
-            );
-        }
-        );
+    //////////////////////////////////////////
+    // Validaciones a la hora de enviar la forma
+    //////////////////////////////////////////
 
-    //Validando, para ello utilizamos la clase "obligatorio":
     $('form').submit
     (
          function()
          {
-            flag =true;
-            campos=$('.obligatorio');
-            campos.each(function() 
-            {
-                if(!$(this).val())
+
+            // Validando los campos obligatorios
+
+            flag = true;
+            campos = $('.obligatorio');
+            campos.each(
+                function() 
                 {
-                    flag = false;
+                    if(!$(this).val())
+                    {
+                        flag = false;
+                    }
                 }
-            }
             );
 
-            //Validando que se escriba el nombre de la epífita si la opción "Otras"
-            // es seleccionada
+            /* Validando que se escriba el nombre de la epífita si la opción "Otras"
+            es seleccionada */
 
             faltanNombres = false;
-            if($('#tabla_otras_observadas').prop('checked'))
+
+            if($('#otras_observadas').prop('checked'))
             {
-                if(!$(tabla_nombre_otras).val())
+                if(!$(nombre_otras).val())
                 {
                     //alert('Favor de introducir el nombre de las epífitas observadas');
-                    flag=false;
-                    faltanNombres=true;
+                    flag = false;
+                    faltanNombres = true;
                 }
             }
+
+            // Juntando todas las validaciones:
 
             if(!flag)
             {
@@ -221,7 +241,6 @@
                     alert('Faltó llenar algún campo');
                 return false;
             }
-
         }
     )
     
