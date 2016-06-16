@@ -783,7 +783,7 @@ def index5():
 
     formaArbol = FORM(*camposArbolCuadrante)
 
-    if formaArbol.accepts(request.vars,formname='formaArbolHTML'):
+    if formaArbol.accepts(request.vars,formname='formaArbolCuadranteHTML'):
 
         ###########################################
         # Procesando los datos de cada individuo
