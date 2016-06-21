@@ -1,66 +1,63 @@
 {{extend 'layout.html'}}
 {{block head}}
-<style type="text/css">
+    <style type="text/css">
 
-    .Tabla .generic-widget
-    {
-        margin-right: 2cm;
-        width: 4.4cm;
-    }
+        .Tabla .generic-widget
+        {
+            margin-right: 2cm;
+            width: 4.4cm;
+        }
 
-    .TablaCONANP .generic-widget
-    {
-        margin-left: 0.5cm;
-        margin-right: 0.5cm;
-        width: 4.4cm;
-    }
+        .TablaCONANP .generic-widget
+        {
+            margin-left: 0.5cm;
+            margin-right: 0.5cm;
+            width: 4.4cm;
+        }
 
-    .TablaCONANP textarea
-    {
-        margin-left: 0.5cm;
-        margin-right: 0.5cm;
-        width: 7cm;
-    }
+        .TablaCONANP textarea
+        {
+            margin-left: 0.5cm;
+            margin-right: 0.5cm;
+            width: 7cm;
+        }
 
-    .FlotaIzquierda
-    {
-        float: left;
-    }
+        .Centrar
+        {
+            text-align: center;
+        }
 
-    .Centrar
-    {
-        text-align: center;
-    }
+        #enviar
+        {
+            float: left;
+        }
 
-</style>
+    </style>
 {{end}}
-{{#=response.toolbar()}}
 
 <form action="" enctype="multipart/form-data" method="post">
     <input type="hidden" name="_formname" value="formaImpactosHTML"/>
+
     <fieldset>
         <legend>
             Impactos ambientales actuales
         </legend>
+
         <div class="Tabla">
-            <div>
-                <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
-            </div>
-            <div>
-                <!--este campo sólo sirve para encontrar
-                con AJAX los sitios existentes asociados al conglomerado
-                elegido, al enviar la forma al controlador, se utilizará
-                para guardar el registro de la cámara, únicamente el id
-                del sitio (de la dropdown generada mediante AJAX)-->
-                <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-                    <option value=""/>
-                    {{for conglomerado in listaConglomerado:}}
-                        <option value="{{=conglomerado.id}}">
-                            {{=conglomerado.nombre}}
-                        </option>
-                    {{pass}}
-                </select>
-            </div>
+            <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+                <!--este campo, en realidad sólo sirve para encontrar
+                con AJAX el sitio adecuado. Al enviar la forma al controlador,
+                se utilizará para guardar los registros del material leñoso
+                caído, únicamente el id del sitio (de la dropdown generada
+                mediante AJAX)-->
+            <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+                <option value=""/>
+                {{for conglomerado in listaConglomerado:}}
+                    <option value="{{=conglomerado.id}}">
+                        {{=conglomerado.nombre}}
+                    </option>
+                {{pass}}
+            </select>
         </div>
         <hr/>
         <table class="TablaCONANP">
@@ -101,28 +98,24 @@
                             <input class="boolean" name="{{=hay_evidencia_i}}" id="{{=tabla_hay_evidencia_i}}" type="checkbox" value="on"/>
                     </td>
                     <td>
-                        <div>
-                            <select class="generic-widget obligatorio" name="{{=en_vegetacion_i}}" id="{{=tabla_en_vegetacion_i}}">
-                                <option value=""/>
-                                {{for severidad in listaSeveridadImpacto:}}
-                                    <option value="{{=severidad.nombre}}">
-                                        {{=severidad.nombre}}
-                                    </option>
-                                {{pass}}
-                            </select>
-                        </div>
+                        <select class="generic-widget obligatorio" name="{{=en_vegetacion_i}}" id="{{=tabla_en_vegetacion_i}}">
+                            <option value=""/>
+                            {{for severidad in listaSeveridadImpacto:}}
+                                <option value="{{=severidad.nombre}}">
+                                    {{=severidad.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
                     </td>
                     <td>
-                        <div>
-                            <select class="generic-widget obligatorio" name="{{=en_suelo_i}}" id="{{=tabla_en_suelo_i}}">
-                                <option value=""/>
-                                {{for severidad in listaSeveridadImpacto:}}
-                                    <option value="{{=severidad.nombre}}">
-                                        {{=severidad.nombre}}
-                                    </option>
-                                {{pass}}
-                            </select>
-                        </div>
+                        <select class="generic-widget obligatorio" name="{{=en_suelo_i}}" id="{{=tabla_en_suelo_i}}">
+                            <option value=""/>
+                            {{for severidad in listaSeveridadImpacto:}}
+                                <option value="{{=severidad.nombre}}">
+                                    {{=severidad.nombre}}
+                                </option>
+                            {{pass}}
+                        </select>
                     </td>
                     <td>
                         <textarea class="text" cols="40" id="{{=tabla_comentario_i}}" name="{{=comentario_i}}" rows="1"></textarea>
@@ -130,17 +123,18 @@
                 </tr>
             {{pass}}
         </table>
-        <hr/>
     </fieldset>
-    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
- </form>
 
-{{#=BEAUTIFY(request.vars)}}
+    <input type="submit" value="Enviar" id = "enviar" class="btn"/>
+ </form>
 
 <script>
 
-    //AJAX para evitar que se envíe la información de incendios
-    //correspondiente a un conglomerado más de una vez:
+    //////////////////////////////////////////
+    // AJAX para evitar que se envíe la información de impactos ambientales
+    // asociados a un conglomerado más de una vez:
+    //////////////////////////////////////////
+
     $('#tabla_conglomerado_muestra_id').change
     (
         function ()
@@ -165,20 +159,24 @@
         }
     );
 
-    //Validando, para ello utilizamos la clase "obligatorio":
+    //////////////////////////////////////////
+    // Validaciones a la hora de enviar la forma
+    //////////////////////////////////////////
+
     $('form').submit
     (
         function()
         {
-            flag =true;
-            campos=$('.obligatorio');
-            campos.each(function() 
-            {
-                if(!$(this).val())
+            flag = true;
+            campos = $('.obligatorio');
+            campos.each(
+                function() 
                 {
-                     flag = false;
+                    if(!$(this).val())
+                    {
+                        flag = false;
+                    }
                 }
-            }
             );
                        
             if(!flag)

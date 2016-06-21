@@ -2,16 +2,10 @@
 
 def index1():
 
-    '''
-    Controlador correspondiente a la pestaña *Impactos actuales*.  
+    ## Controlador correspondiente a la pestaña "Impactos actuales" de la sección:
+    ## "Impactos ambientales"
 
-    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
-    información ingresada en la vista (views/13_impactos_ambientales/index1.html), antes de 
-    ser agregada a la base de datos.
-
-    '''
-
-    #Creando una lista con los tipos de impactos ambientales:
+    # Creando una lista con los tipos de impactos ambientales:
 
     listaTiposImpacto = db(db.Cat_tipo_impacto).select(db.Cat_tipo_impacto.nombre)
  
@@ -19,25 +13,22 @@ def index1():
 
     camposImpactos = [
 
-        # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
-        # para incluir las dropdowns en cascada.
-    
-        #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
-        #de datos y así, evitar excepciones.
-
-        # Campos Impacto_actual
+        ###########################################
+        # Impactos actuales
+        ###########################################
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s'))
 
     ]
 
+    # Generando con un for los nombres de los campos relativos a cada impacto
+    # ambiental
+
     for i in range(n_impactos):
 
-        #Creando de manera automatizada los nombres de los campos:
-
-        #Por la forma en como se diseñó la vista de esta pestaña, el tipo vendrá
-        #de un input hidden (se mostrará en pantalla el contenido del mismo)
+        # Por la forma en como se diseñó la vista de esta pestaña, el tipo vendrá
+        # de un input hidden (se mostrará en pantalla el contenido del mismo)
 
         tipo_i = 'tipo_' + str(i+1)
 
@@ -46,7 +37,6 @@ def index1():
         en_suelo_i = 'en_suelo_' + str(i+1)
         comentario_i = 'comentario_' + str(i+1)
 
-        #Extendiendo la lista anterior:
         camposImpactos.extend([
 
             INPUT(_name=tipo_i,_type='string'),
@@ -65,12 +55,18 @@ def index1():
 
     if formaImpactos.accepts(request.vars,formname='formaImpactosHTML'):
 
-        #Obteniendo el id del conglomerado asociado
+        # Obteniendo el id del conglomerado asociado
+
         conglomeradoID = formaImpactos.vars['conglomerado_muestra_id']
+
+        ###########################################
+        # Procesando los datos de cada impacto ambiental
+        ###########################################
 
         for i in range(n_impactos):
 
-            #Creando de manera automatizada los nombres de los campos:
+            # Creando de manera automatizada los nombres de los campos:
+
             tipo_i = 'tipo_' + str(i+1)
             hay_evidencia_i = 'hay_evidencia_' + str(i+1)
             en_vegetacion_i = 'en_vegetacion_' + str(i+1)
@@ -82,17 +78,20 @@ def index1():
             datosImpacto_i['tipo'] = formaImpactos.vars[tipo_i]
 
             # Si hay evidencia del i-ésimo tipo:
+
             if bool(formaImpactos.vars[hay_evidencia_i]):
-                datosImpacto_i['hay_evidencia']=True
+                datosImpacto_i['hay_evidencia'] = True
             else:
-                datosImpacto_i['hay_evidencia']=False
+                datosImpacto_i['hay_evidencia'] = False
         
             # Agregando los datos extraídos de la forma:
-            datosImpacto_i['en_vegetacion']=formaImpactos.vars[en_vegetacion_i]
-            datosImpacto_i['en_suelo']=formaImpactos.vars[en_suelo_i]
-            datosImpacto_i['comentario']=formaImpactos.vars[comentario_i]
+
+            datosImpacto_i['en_vegetacion'] = formaImpactos.vars[en_vegetacion_i]
+            datosImpacto_i['en_suelo'] = formaImpactos.vars[en_suelo_i]
+            datosImpacto_i['comentario'] = formaImpactos.vars[comentario_i]
 
             # Insertando los datos del impacto ambiental:
+
             db.Impacto_actual.insert(**datosImpacto_i)
 
         response.flash = 'Éxito'
@@ -104,10 +103,12 @@ def index1():
     else:
         pass
 
-    ##########Enviando la información de las dropdowns##########################
+    ###########################################
+    # Procesando la información de las dropdowns
+    ###########################################
 
-    #Regresando los nombres de todos los conglomerados insertados en la tabla de
-    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+    # Regresando los nombres de todos los conglomerados insertados en la tabla de
+    # conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
@@ -115,42 +116,35 @@ def index1():
     listaSeveridadImpacto = db(db.Cat_severidad_impactos).select(
         db.Cat_severidad_impactos.nombre)
 
-    #Regresando la lista de tipos de impacto para crear la vista en HTML
-    return dict(listaTiposImpacto=listaTiposImpacto,
-        listaConglomerado=listaConglomerado,
-        listaSeveridadImpacto=listaSeveridadImpacto,
-        n_impactos=n_impactos)
+    # Regresando la lista de tipos de impacto para crear la vista en HTML
+
+    return dict(listaTiposImpacto = listaTiposImpacto,
+        listaConglomerado = listaConglomerado,
+        listaSeveridadImpacto = listaSeveridadImpacto,
+        n_impactos = n_impactos)
 
 def impactosExistentes():
 
-    '''
-    Función de AJAX para revisar que no se haya ingresado información de impactos
-    actuales en el mismo conglomerado con anterioridad.
-    El AJAX se activará cuando seleccionen un conglomerado.
+    ## Función de AJAX para revisar que no se haya ingresado información de
+    ## impactos actuales en el mismo conglomerado con anterioridad.
+    ## El AJAX se activará cuando seleccionen un conglomerado.
 
-    '''
+    # Obteniendo la información del conglomerado que seleccionó el usuario:
 
-    #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
 
-    #Haciendo un query a la tabla de Impacto_actual con la información anterior:
+    # Haciendo un query a la tabla de Impacto_actual con la información anterior:
 
-    impactosYaInsertados=db(db.Impacto_actual.conglomerado_muestra_id==conglomeradoElegidoID).select()
+    impactosYaInsertados = db(db.Impacto_actual.conglomerado_muestra_id == conglomeradoElegidoID).select()
 
-    #regresa la longitud de impactosYaInsertados para que sea interpretada por JS
+    # Regresa la longitud de impactosYaInsertados para que sea interpretada por JS
 
     return len(impactosYaInsertados)
 
 def index2():
 
-    '''
-    Controlador correspondiente a la pestaña *Información de plagas*.  
-
-    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
-    información ingresada en la vista (views/13_impactos_ambientales/index2.html), antes de 
-    ser agregada a la base de datos.
-
-    '''
+    ## Controlador correspondiente a la pestaña "Información de plagas", de la
+    ## sección "Impactos ambientales".  
 
     camposPlaga = [
 
