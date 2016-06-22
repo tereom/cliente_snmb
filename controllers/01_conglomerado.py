@@ -586,7 +586,7 @@ def index():
 		pass
 
 	##############################################################
-	# Enviando la información de las dropdowns
+	# Procesando la información de las dropdowns
 	##############################################################
 
 	# Llenando las combobox de tipo de conglomerado, estado, tenencia, principal

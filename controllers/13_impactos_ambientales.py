@@ -148,16 +148,13 @@ def index2():
 
     camposPlaga = [
 
-        # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
-        # para incluir las dropdowns en cascada.
-    
-        #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
-        #de datos y así, evitar excepciones.
+        ###########################################
+        # Plaga
+        ###########################################    
 
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
 
-        # Campos Plaga
         SELECT(_name='agente',
             requires=IS_IN_DB(db,db.Cat_agente_impactos.nombre,'%(nombre)s')),
         INPUT(_name='nombre_comun',_type='string'),
@@ -168,35 +165,44 @@ def index2():
             requires=IS_IN_DB(db,db.Cat_prop_afectacion.nombre,'%(nombre)s')),
         INPUT(_name='esta_activa_inactiva',_type='string'),
 
-        # Campos Archivo_plaga
+        ###########################################
+        # Archivos plaga
+        ###########################################    
+
         INPUT(_name='archivos_plaga',_type='file',_multiple=True)
     ]
 
     formaPlaga = FORM(*camposPlaga)
 
-    if formaPlaga.accepts(request.vars,formname='formaPlagaHTML'):
+    if formaPlaga.accepts(request.vars, formname = 'formaPlagaHTML'):
 
-        #Filtrando los datos correspondientes a la tabla de plagas:
+		###########################################
+		# Procesando los datos de una plaga
+		###########################################
+
+        # Filtrando los datos correspondientes a la tabla de plagas:
 
         datosPlaga = db.Plaga._filter_fields(formaPlaga.vars)
 
-        #Si la plaga está activa, entonces True se guarda en la base de datos,
-        #en caso contrario, se tiene que guardar manualmente False, pues si no,
-        #Web2py guarda Null.
+        # Si la plaga está activa, entonces True se guarda en la base de datos,
+        # en caso contrario, se tiene que guardar manualmente False, pues si no,
+        # Web2py guarda Null.
 
-        if formaPlaga.vars['esta_activa_inactiva']=='activa':
-            datosPlaga['esta_activa']=True
+        if formaPlaga.vars['esta_activa_inactiva'] == 'activa':
+            datosPlaga['esta_activa'] = True
         else:
-            datosPlaga['esta_activa']=False
+            datosPlaga['esta_activa'] = False
 
-        #Guardando el registro de la plaga en la base de datos:
+        # Guardando el registro de la plaga en la base de datos:
         
         plagaInsertada = db.Plaga.insert(**datosPlaga)
 
-        ################Procesando los archivos múltiples#################################
+		###########################################
+		# Procesando los archivos de la plaga:
+		###########################################
 
-        #Como los archivos de plaga no son obligatorios, hay que poner
-        #un try, except:
+        # Como los archivos de plaga no son obligatorios, hay que poner
+        # un try, except:
 
         try:
         
@@ -207,7 +213,7 @@ def index2():
             
             for aux in archivos:
 
-                #Guardando el archivo en la carpeta adecuada
+                # Guardando el archivo en la carpeta adecuada
                 archivoPlaga = db.Archivo_plaga.archivo.store(aux,aux.filename)
             
                 datosArchivoPlaga = {}
@@ -215,7 +221,7 @@ def index2():
                 datosArchivoPlaga['archivo'] = archivoPlaga
                 datosArchivoPlaga['archivo_nombre_original'] = aux.filename
         
-                #Insertando el registro en la base de datos:
+                # Insertando el registro en la base de datos:
 
                 db.Archivo_plaga.insert(**datosArchivoPlaga)
 
@@ -232,10 +238,12 @@ def index2():
     else:
         pass
 
-    ##########Enviando la información de las dropdowns##########################
+	##############################################################
+	# Procesando la información de las dropdowns
+	##############################################################
 
-    #Regresando los nombres de todos los conglomerados insertados en la tabla de
-    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+    # Regresando los nombres de todos los conglomerados insertados en la tabla de
+    # conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
@@ -246,100 +254,108 @@ def index2():
     listaPropAfectacion = db(db.Cat_prop_afectacion).select(
         db.Cat_prop_afectacion.nombre)
 
-    # Tabla de revisión de registros ingresados
-    db.Archivo_plaga.plaga_id.writable =False
-    grid = SQLFORM.grid(db.Plaga,csv=False,orderby=~db.Plaga.id,\
-        user_signature=False,
-        create=False,searchable=False,editable=False)
+	##############################################################
+	# Creando la tabla de revisión de los registros ingresados
+	##############################################################
 
-    return dict(listaConglomerado=listaConglomerado,
-        listaAgente=listaAgente,
-        listaPropAfectacion=listaPropAfectacion,
-        grid=grid)
+    db.Archivo_plaga.plaga_id.writable = False
+    grid = SQLFORM.grid(db.Plaga, orderby =~ db.Plaga.id,\
+        csv = False, user_signature = False, details = False,
+        create = False, searchable = False, editable = False)
+
+    return dict(
+    	listaConglomerado = listaConglomerado,
+        listaAgente = listaAgente,
+        listaPropAfectacion = listaPropAfectacion,
+        grid = grid)
 
 def index3():
 
-    '''
-    Controlador correspondiente a la pestaña *Información de incendios*.  
-
-    Funcionamiento: Genera los campos de la forma, con el fin de validar la 
-    información ingresada en la vista (views/13_impactos_ambientales/index3.html), antes de 
-    ser agregada a la base de datos.
-
-    '''
-
+    ## Controlador correspondiente a la pestaña "Información de incendios", de
+    ## la sección: "Impactos ambientales"  
 
     camposIncendio = [
 
-        # Utilizamos una FORM porque nos brinda mayor flexibilidad, como por ejemplo,
-        # para incluir las dropdowns en cascada.
-    
-        #Ésta forma únicamente se utilizará para validar antes de ingresar a la base
-        #de datos y así, evitar excepciones.
+        ###########################################
+        # Incendio
+        ###########################################    
+
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
 
-        # Campos Incendio
         INPUT(_name='hay_evidencia',_type='boolean'),
 
-        #Sólo si hay evidencia se llenan los campos siguientes.
-        #Por eso mismo, aunque los campos de "tipo" y "prop_..." provengan de catálogo,
-        #no se exigirá: requires=IS_IN_DB(...), pues pueden ser vacíos...
+        # Sólo si hay evidencia se llenan los campos siguientes.
+        # Por eso mismo, aunque los campos de "tipo" y "prop_..." provengan de catálogo,
+        # no se exigirá: requires=IS_IN_DB(...), pues pueden ser vacíos...
 
-        #El siguiente campo va a leer de radio-botones, por eso admite un string
-        #(lee el valor asociado al botón seleccionado)
-        INPUT(_name='es_anio_actual_anterior',_type='string'),
+        # El siguiente campo va a leer de radio-botones, por eso admite un string
+        # (lee el valor asociado al botón seleccionado)
+
+        INPUT(_name='es_anio_actual_anterior', _type='string'),
 
         INPUT(_name='tipo', _type='string'),
         INPUT(_name='prop_afectacion_herbacea', _type='string'),
         INPUT(_name='prop_afectacion_arbustiva', _type='string'),
         INPUT(_name='prop_afectacion_arborea', _type='string'),
         INPUT(_name='prop_copa_quemada', _type='string'),
-        INPUT(_name='hay_evidencia_recuperacion',_type='boolean'),
+        INPUT(_name='hay_evidencia_recuperacion', _type='boolean'),
 
-        # Campos Archivos_incendio
-        INPUT(_name='archivos_incendio',_type='file',_multiple=True)
+        ###########################################
+        # Archivos incendio
+        ###########################################
+
+        INPUT(_name='archivos_incendio', _type='file', _multiple=True)
 
     ]
 
     formaIncendio = FORM(*camposIncendio)
 
-    if formaIncendio.accepts(request.vars,formname='formaIncendioHTML'):
+    if formaIncendio.accepts(request.vars, formname = 'formaIncendioHTML'):
+
+		###########################################
+		# Procesando los datos de un incendio
+		###########################################
 
         datosIncendio = {}
-        datosIncendio['conglomerado_muestra_id']=formaIncendio.vars['conglomerado_muestra_id']
+        datosIncendio['conglomerado_muestra_id'] = formaIncendio.vars['conglomerado_muestra_id']
 
-        #Si los campos booleanos son verdaderos, entonces True se guarda en la base de datos,
-        #en caso contrario, se tiene que guardar manualmente False, pues si no,
-        #Web2py guarda Null.
+        # Si los campos booleanos son verdaderos, entonces True se guarda en la
+        # base de datos,en caso contrario, se tiene que guardar manualmente False,
+        # pues si no, Web2py guarda Null.
 
         if bool(formaIncendio.vars['hay_evidencia']):
-            datosIncendio['hay_evidencia']=formaIncendio.vars['hay_evidencia']
-            datosIncendio['tipo']=formaIncendio.vars['tipo']
-            datosIncendio['prop_afectacion_herbacea']=formaIncendio.vars['prop_afectacion_herbacea']
-            datosIncendio['prop_afectacion_arbustiva']=formaIncendio.vars['prop_afectacion_arbustiva']
-            datosIncendio['prop_afectacion_arborea']=formaIncendio.vars['prop_afectacion_arborea']
-            datosIncendio['prop_copa_quemada']=formaIncendio.vars['prop_copa_quemada']
 
-            if formaIncendio.vars['es_anio_actual_anterior']=='actual':
-                datosIncendio['es_anio_actual']=True
+            datosIncendio['hay_evidencia'] = formaIncendio.vars['hay_evidencia']
+            datosIncendio['tipo'] = formaIncendio.vars['tipo']
+            datosIncendio['prop_afectacion_herbacea'] = formaIncendio.vars['prop_afectacion_herbacea']
+            datosIncendio['prop_afectacion_arbustiva'] = formaIncendio.vars['prop_afectacion_arbustiva']
+            datosIncendio['prop_afectacion_arborea'] = formaIncendio.vars['prop_afectacion_arborea']
+            datosIncendio['prop_copa_quemada'] = formaIncendio.vars['prop_copa_quemada']
+
+            if formaIncendio.vars['es_anio_actual_anterior'] == 'actual':
+                datosIncendio['es_anio_actual'] = True
+
             else:
-                datosIncendio['es_anio_actual']=False
+                datosIncendio['es_anio_actual'] = False
 
             if bool(formaIncendio.vars['hay_evidencia_recuperacion']):
-                datosIncendio['hay_evidencia_recuperacion']=True
+                datosIncendio['hay_evidencia_recuperacion'] = True
+
             else:
-                datosIncendio['hay_evidencia_recuperacion']=False
+                datosIncendio['hay_evidencia_recuperacion'] = False
 
         else:
-            datosIncendio['hay_evidencia']=False
+            datosIncendio['hay_evidencia'] = False
 
         incendioInsertado = db.Incendio.insert(**datosIncendio)
 
-        ################Procesando los archivos múltiples#################################
+		###########################################
+		# Procesando los archivos de un incendio:
+		###########################################
 
-        #Como los archivos de incendio no son obligatorios, hay que poner
-        #un try, except:
+        # Como los archivos de incendio no son obligatorios, hay que poner
+        # un try, except:
 
         try:
         
@@ -376,11 +392,12 @@ def index3():
         pass
         #response.flash = 'Por favor, llene los campos solicitados'
 
+	##############################################################
+	# Procesando la información de las dropdowns
+	##############################################################
 
-    ##########Enviando la información de las dropdowns##########################
-
-    #Regresando los nombres de todos los conglomerados insertados en la tabla de
-    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+    # Regresando los nombres de todos los conglomerados insertados en la tabla de
+    # conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id, db.Conglomerado_muestra.nombre)
@@ -390,28 +407,25 @@ def index3():
     listaPropAfectacion = db(db.Cat_prop_afectacion).select(
         db.Cat_prop_afectacion.nombre)
 
-    return dict(listaConglomerado=listaConglomerado,
-        listaTipoIncendio=listaTipoIncendio,
-        listaPropAfectacion=listaPropAfectacion)
+    return dict(listaConglomerado = listaConglomerado,
+        listaTipoIncendio = listaTipoIncendio,
+        listaPropAfectacion = listaPropAfectacion)
 
 def incendioExistente():
 
-    '''
-    Función de AJAX para revisar que no se haya ingresado información de incendios
-    en el mismo conglomerado con anterioridad. El AJAX se activará cuando seleccionen 
-    un conglomerado.
+    ## Función de AJAX para revisar que no se haya ingresado información de incendios
+    ## en el mismo conglomerado con anterioridad. El AJAX se activará cuando seleccionen 
+    ## un conglomerado.
 
-    '''
+    # Obteniendo la información del conglomerado que seleccionó el usuario:
 
-
-    #Obteniendo la información del conglomerado que seleccionó el usuario:
     conglomeradoElegidoID = request.vars.conglomerado_muestra_id
 
-    #Haciendo un query a la tabla de Incendios con la información anterior:
+    # Haciendo un query a la tabla de Incendios con la información anterior:
 
-    incendioYaInsertado=db(db.Incendio.conglomerado_muestra_id==conglomeradoElegidoID).select()
+    incendioYaInsertado = db(db.Incendio.conglomerado_muestra_id == conglomeradoElegidoID).select()
 
-    #regresa la longitud de incendiosYaInsertados para que sea interpretada por JS
+    # Regresa la longitud de incendiosYaInsertados para que sea interpretada por JS:
 
     return len(incendioYaInsertado)
 

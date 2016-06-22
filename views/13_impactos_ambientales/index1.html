@@ -44,13 +44,13 @@
         </legend>
 
         <div class="Tabla">
-            <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
+            <label for="conglomerado_muestra_id">Conglomerado</label>
                 <!--este campo, en realidad sólo sirve para encontrar
                 con AJAX el sitio adecuado. Al enviar la forma al controlador,
                 se utilizará para guardar los registros del material leñoso
                 caído, únicamente el id del sitio (de la dropdown generada
                 mediante AJAX)-->
-            <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
+            <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
                 <option value=""/>
                 {{for conglomerado in listaConglomerado:}}
                     <option value="{{=conglomerado.id}}">
@@ -60,6 +60,7 @@
             </select>
         </div>
         <hr/>
+
         <table class="TablaCONANP">
             <tr>
                 <th></th>
@@ -75,30 +76,25 @@
 
                 <!-- Creamos los nombres de los campos y id's -->
                 {{tipo_i = 'tipo_' + str(i+1)}}
-                {{tabla_tipo_i = 'tabla_' + tipo_i}}
 
                 {{hay_evidencia_i = 'hay_evidencia_' + str(i+1)}}
-                {{tabla_hay_evidencia_i = 'tabla_' + hay_evidencia_i}}
 
                 {{en_vegetacion_i = 'en_vegetacion_' + str(i+1)}}
-                {{tabla_en_vegetacion_i = 'tabla' + en_vegetacion_i}}
 
                 {{en_suelo_i = 'en_suelo_' + str(i+1)}}
-                {{tabla_en_suelo_i = 'tabla' + en_suelo_i}}
 
                 {{comentario_i = 'comentario_' + str(i+1)}}
-                {{tabla_comentario_i = 'tabla' + comentario_i}}
 
                 <tr>
                     <td>
                         {{=impacto_i.nombre}}
-                        <input type="hidden" value="{{=impacto_i.nombre}}" name="{{=tipo_i}}" id="{{=tabla_tipo_i}}">
+                        <input type="hidden" value="{{=impacto_i.nombre}}" name="{{=tipo_i}}" id="{{=tipo_i}}">
                     </td>
                     <td class="Centrar">
-                            <input class="boolean" name="{{=hay_evidencia_i}}" id="{{=tabla_hay_evidencia_i}}" type="checkbox" value="on"/>
+                            <input class="boolean" name="{{=hay_evidencia_i}}" id="{{=hay_evidencia_i}}" type="checkbox" value="on"/>
                     </td>
                     <td>
-                        <select class="generic-widget obligatorio" name="{{=en_vegetacion_i}}" id="{{=tabla_en_vegetacion_i}}">
+                        <select class="generic-widget obligatorio" name="{{=en_vegetacion_i}}" id="{{=en_vegetacion_i}}">
                             <option value=""/>
                             {{for severidad in listaSeveridadImpacto:}}
                                 <option value="{{=severidad.nombre}}">
@@ -108,7 +104,7 @@
                         </select>
                     </td>
                     <td>
-                        <select class="generic-widget obligatorio" name="{{=en_suelo_i}}" id="{{=tabla_en_suelo_i}}">
+                        <select class="generic-widget obligatorio" name="{{=en_suelo_i}}" id="{{=en_suelo_i}}">
                             <option value=""/>
                             {{for severidad in listaSeveridadImpacto:}}
                                 <option value="{{=severidad.nombre}}">
@@ -118,7 +114,7 @@
                         </select>
                     </td>
                     <td>
-                        <textarea class="text" cols="40" id="{{=tabla_comentario_i}}" name="{{=comentario_i}}" rows="1"></textarea>
+                        <textarea class="text" cols="40" name="{{=comentario_i}}" id="{{=comentario_i}}" rows="1"></textarea>
                     </td>
                 </tr>
             {{pass}}
@@ -135,7 +131,7 @@
     // asociados a un conglomerado más de una vez:
     //////////////////////////////////////////
 
-    $('#tabla_conglomerado_muestra_id').change
+    $('#conglomerado_muestra_id').change
     (
         function ()
         {
@@ -143,7 +139,7 @@
             (
             {  
                 type: "POST",
-                data: $('#tabla_conglomerado_muestra_id').serialize(),
+                data: $('#conglomerado_muestra_id').serialize(),
                 url: "{{=URL('impactosExistentes')}}",
                 success: function(resultado)
                 {
@@ -151,7 +147,7 @@
                     if(resultado>=1)
                     {
                         alert('Ya se ha ingresado la información de impactos actuales de este conglomerado');
-                        $('#tabla_conglomerado_muestra_id').val("");
+                        $('#conglomerado_muestra_id').val("");
                     }
                 }
             }

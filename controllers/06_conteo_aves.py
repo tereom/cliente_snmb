@@ -322,7 +322,7 @@ def index2():
 	##############################################################
 
 	db.Avistamiento_aves.punto_conteo_aves_id.writable = False
-	db.Archivo_avistamiento_aves.avistamiento_aves_id.writable =False
+	db.Archivo_avistamiento_aves.avistamiento_aves_id.writable = False
 
 	grid = SQLFORM.grid(db.Avistamiento_aves, orderby=~ db.Avistamiento_aves.id,\
 		csv = False, user_signature = False, details = False,
