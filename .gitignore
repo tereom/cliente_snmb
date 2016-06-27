@@ -4,6 +4,7 @@ cron
 databases
 errors
 languages
+private
 progress.log
 routes.example.py
 sessions
