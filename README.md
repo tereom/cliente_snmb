@@ -87,7 +87,8 @@ podemos guardar los logos que utilicemos en nuestra aplicación particular.
 
 6. **private**: esta carpeta es nueva (la versión 2.13.4 no la tenía, pero la versión 2.14.5
 sí). Agrupa varios parámetros de la aplicación en un mismo lugar, para facilitar la configuración
-de la misma.
+de la misma. Como el cliente ahora está diseñado para funcionar. con la versión 2.9.11 de Web2py,
+esta carpeta ya no es necesaria.
 
 ### Instalación
 
