@@ -5,11 +5,9 @@
 <!--[if IE 7]><html class="ie ie7 ie-lte9 ie-lte8 ie-lte7 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
 <!--[if IE 8]><html class="ie ie8 ie-lte9 ie-lte8 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
 <!--[if IE 9]><html class="ie9 ie-lte9 no-js" lang="{{=T.accepted_language or 'en'}}"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or 'es'}}"> <!--<![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="no-js" lang="{{=T.accepted_language or 'en'}}"> <!--<![endif]-->
 <head>
 <title>{{=response.title or request.application}}</title>
-
-
   <!--[if !HTML5]>
       <meta http-equiv="X-UA-Compatible" content="IE=edge{{=not request.is_local and ',chrome=1' or ''}}">
   <![endif]-->
@@ -150,7 +148,6 @@
         </footer>
     </div>
 
-
   </div> <!-- /container -->
 
   <!-- The javascript =============================================
@@ -163,16 +160,18 @@
       <![endif]-->
   
   {{if response.google_analytics_id:}}
-  <script src="{{=URL('static','js/analytics.min.js')}}"></script>
-  <script type="text/javascript">
-  analytics.initialize({
-    'Google Analytics':{trackingId:'{{=response.google_analytics_id}}'} 
-  });</script>
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', '{{=response.google_analytics_id}}', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
   {{pass}}
-
-<!--  tom
   <script src="{{=URL('static','js/share.js',vars=dict(static=URL('static','images')))}}"></script>
-tom -->
 </body>
 </html>
 
