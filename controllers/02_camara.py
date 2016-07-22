@@ -5,7 +5,7 @@ import os
 import estructura_archivos_admin as eaa
 import re
 
-import contrib.simplejson as json # usado en "validarArchivos"
+import gluon.contrib.simplejson as json # usado en "validarArchivos"
 import base64 # usado en "asignarInformacionArchivo"
 
 
