@@ -6,7 +6,7 @@
 
 
 ##########################################################################
-## Pestaña Carbono
+## Pestaña Vegetación y suelos
 ########################################################################
 
 db.define_table('Cat_material_carbono',Field('nombre','string',
@@ -48,12 +48,37 @@ if db(db.Cat_transecto_direccion.id>0).count() == 0:
 
 #########################################################################
 
+# Este catálogo es para árboles pequeños y arbustos
 db.define_table('Cat_forma_vida',Field('nombre','string',
 	required='TRUE'))
 
 if db(db.Cat_forma_vida.id>0).count() == 0:
+	db.Cat_forma_vida.insert(nombre='Sin individuo')
 	db.Cat_forma_vida.insert(nombre='Arbustiva')
 	db.Cat_forma_vida.insert(nombre='Arbórea')
+
+#########################################################################
+
+# Este catálogo es para árboles grandes
+db.define_table('Cat_forma_vida_arboles_grandes',Field('nombre','string',
+	required='TRUE'))
+
+if db(db.Cat_forma_vida_arboles_grandes.id>0).count() == 0:
+	db.Cat_forma_vida_arboles_grandes.insert(nombre='Sin individuo')
+	db.Cat_forma_vida_arboles_grandes.insert(nombre='Árbol')
+	db.Cat_forma_vida_arboles_grandes.insert(nombre='Arbustiva')
+	db.Cat_forma_vida_arboles_grandes.insert(nombre='Arborescente')
+	db.Cat_forma_vida_arboles_grandes.insert(nombre='Cañas')
+	db.Cat_forma_vida_arboles_grandes.insert(nombre='Cactáceas arborescentes')
+	db.Cat_forma_vida_arboles_grandes.insert(nombre='Manglares')
+
+db.define_table('Cat_cambios_arboles_grandes',Field('nombre','string',
+	required='TRUE'))
+
+if db(db.Cat_cambios_arboles_grandes.id>0).count() == 0:
+	db.Cat_cambios_arboles_grandes.insert(nombre='Árbol nuevo')
+	db.Cat_cambios_arboles_grandes.insert(nombre='Árbol muerto nuevo')
+	db.Cat_cambios_arboles_grandes.insert(nombre='Tocón nuevo')
 
 ##########################################################################
 ## Pestaña Impactos ambientales
@@ -92,6 +117,7 @@ db.define_table('Cat_agente_impactos',Field('nombre','string',
 	required='TRUE'))
 
 if db(db.Cat_agente_impactos.id>0).count() == 0:
+	db.Cat_agente_impactos.insert(nombre='0 Sin plagas')
 	db.Cat_agente_impactos.insert(nombre='1 Barrenador')
 	db.Cat_agente_impactos.insert(nombre='2 Defoliador')
 	db.Cat_agente_impactos.insert(nombre='3 Descortezador')

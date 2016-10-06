@@ -29,6 +29,7 @@
 
 <form action="" enctype="multipart/form-data" method="post">
     <input type="hidden" name="_formname" value="formaPlagaHTML"/>
+
     <fieldset>
         <legend>
             Información de plagas
@@ -36,75 +37,67 @@
         <table class="Tabla">
             <tr>
                 <td rowspan="2" class="CentrarV">
-                    <div>
-                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
-                    </div>
-                    <div>
-                        <!--este campo sólo sirve para encontrar
-                        con AJAX los sitios existentes asociados al conglomerado
-                        elegido, al enviar la forma al controlador, se utilizará
-                        para guardar el registro de la cámara, únicamente el id
-                        del sitio (de la dropdown generada mediante AJAX)-->
-                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-                            <option value=""/>
-                            {{for conglomerado in listaConglomerado:}}
-                                <option value="{{=conglomerado.id}}">
-                                    {{=conglomerado.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
+                    <label for="conglomerado_muestra_id">Conglomerado</label>
+                    <!--este campo, en realidad sólo sirve para encontrar
+                    con AJAX el sitio adecuado. Al enviar la forma al controlador,
+                    se utilizará para guardar los registros de impacto ambientales
+                    actuales, únicamente el id del sitio (de la dropdown generada
+                    mediante AJAX)-->
+                    <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+                        <option value=""/>
+                        {{for conglomerado in listaConglomerado:}}
+                            <option value="{{=conglomerado.id}}">
+                                {{=conglomerado.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
                 </td>  
                 <td rowspan="2" class="CentrarV">
-                    <div>
-                        <label for="tabla_agente">Agente</label>
-                    </div>
-                    <div>
-                        <select class="generic-widget obligatorio" name="agente" id="tabla_agente">
-                            <option value=""/>
-                            {{for agente in listaAgente:}}
-                                <option value="{{=agente.nombre}}">
-                                    {{=agente.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
+                    <label for="agente">Agente</label>
+                    <select class="generic-widget obligatorio" name="agente" id="agente">
+                        <option value=""/>
+                        {{for agente in listaAgente:}}
+                            <option value="{{=agente.nombre}}">
+                                {{=agente.nombre}}
+                            </option>
+                        {{pass}}
+                    </select>
                 </td>
                 <td colspan="2">
                     <div class="FlotaIzquierda" style="padding-right:10px;">
-                        <input class="boolean" name="hay_nombre_comun" id="tabla_hay_nombre_comun" type="checkbox" value="on"/>
+                        <input class="boolean" name="hay_nombre_comun" id="hay_nombre_comun" type="checkbox" value="on"/>
                     </div>
                     <div class="FlotaIzquierda" style="padding-right:22px;">
-                        <label for="tabla_nombre_comun">Nombre común</label>
+                        <label for="nombre_comun">Nombre común</label>
                     </div>
                     <div class="FlotaIzquierda">
-                        <input class="string" name="nombre_comun" id="tabla_nombre_comun" type="text" value=""/>
+                        <input class="string" name="nombre_comun" id="nombre_comun" type="text" value=""/>
                     </div>
                 </td>
                 <td  class="CentrarV">
                     <div class="FlotaIzquierda" style="padding-right:18px;">
-                        <label for="tabla_esta_activa">Activa</label>
+                        <label for="esta_activa">Activa</label>
                     </div>
-                        <input class="radio" name="esta_activa_inactiva" id="tabla_esta_activa" type="radio" value="activa"/>
+                        <input class="radio" name="esta_activa_inactiva" id="esta_activa" type="radio" value="activa"/>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <div class="FlotaIzquierda" style="padding-right:10px;">
-                        <input class="boolean" name="hay_nombre_cientifico" id="tabla_hay_nombre_cientifico" type="checkbox" value="on"/>
+                        <input class="boolean" name="hay_nombre_cientifico" id="hay_nombre_cientifico" type="checkbox" value="on"/>
                     </div>
                     <div class="FlotaIzquierda" style="padding-right:10px;">
-                        <label for="tabla_nombre_cientifico">Nombre científico</label>
+                        <label for="nombre_cientifico">Nombre científico</label>
                     </div>
                     <div class="FlotaIzquierda Estatico">
-                        <input class="string" name="nombre_cientifico" id="tabla_nombre_cientifico" type="text" value=""/>
+                        <input class="string" name="nombre_cientifico" id="nombre_cientifico" type="text" value=""/>
                     </div>
                 </td>
                 <td class="CentrarV">
                     <div class="FlotaIzquierda" style="padding-right:10px">
-                        <label for="tabla_esta_inactiva">Inactiva</label>
+                        <label for="esta_inactiva">Inactiva</label>
                     </div>
-                        <input class="radio" name="esta_activa_inactiva" id="tabla_esta_inactiva" type="radio" value="inactiva"/>
+                        <input class="radio" name="esta_activa_inactiva" id="esta_inactiva" type="radio" value="inactiva"/>
                 </td>
             </tr>        
         </table>
@@ -112,22 +105,19 @@
         <table class="Tabla">
             <tr>
                 <td>
-                    <div>
-                        <strong>Porcentajes de afectación:</strong>
-                    </div>
-                    <div>
+                    <strong>Porcentajes de afectación:</strong>
                         <!-- Span para dar formato-->
-                        <span class="generic-widget"></span>
-                    </div>
+                    <span class="generic-widget"></span>
                 </td>
-                <td></td>
+                <td>
+                </td>
             </tr>
             <tr>
                 <td>
-                    <label for="tabla_prop_afectacion_arborea">Estrato arbóreo</label>
+                    <label for="prop_afectacion_arborea">Estrato arbóreo</label>
                 </td>
                 <td>
-                    <select class="generic-widget obligatorio" name="prop_afectacion_arborea" id="tabla_prop_afectacion_arborea">
+                    <select class="generic-widget obligatorio" name="prop_afectacion_arborea" id="prop_afectacion_arborea">
                         <option value=""/>
                             {{for prop in listaPropAfectacion:}}
                                 <option value="{{=prop.nombre}}">
@@ -139,10 +129,10 @@
             </tr>
             <tr>
                 <td>
-                    <label for="tabla_prop_afectacion_repoblado">Repoblado</label>
+                    <label for="prop_afectacion_repoblado">Repoblado</label>
                 </td>
                 <td>
-                    <select class="generic-widget obligatorio" name="prop_afectacion_repoblado" id="tabla_prop_afectacion_repoblado">
+                    <select class="generic-widget obligatorio" name="prop_afectacion_repoblado" id="prop_afectacion_repoblado">
                         <option value=""/>
                             {{for prop in listaPropAfectacion:}}
                                 <option value="{{=prop.nombre}}">
@@ -154,70 +144,78 @@
             </tr>
         </table>
         <hr/>
-        <div>
-            <label for="tabla_archivos_plaga">
-                Imágenes*
-            </label>
-        <div>
-            <input type="file" id="tabla_archivos_plaga" name="archivos_plaga" multiple/>
-        </div>
+        <label for="archivos_plaga">
+             Imágenes*
+        </label>
+        <input type="file" id="archivos_plaga" name="archivos_plaga" multiple/>
     </fieldset>
+    <br/>
     <br/>
     <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
 </form>
-
-{{#=BEAUTIFY(request.vars)}}
 
 <br/>
 <br/>
 
 <fieldset>
-<legend>
-  Revisión de registros
-</legend>
+    <legend>
+        Revisión de registros
+    </legend>
+    {{=grid}}
 </fieldset>
-{{=grid}}
 
 <script>
+
+    //////////////////////////////////////////
+    // Este código se ejecuta en cuanto el html termina de llegar al navegador:
+    //////////////////////////////////////////
 
     $(document).ready
     (
         function()
         {
-           /*Cuando el documento se carga, las casillas para seleccionar nombres
+           /* Cuando el documento se carga, las casillas para seleccionar nombres
            están seleccionadas y los campos de texto son visibles (default):*/
-            $('#tabla_hay_nombre_comun').prop('checked', true);
 
-            $('#tabla_hay_nombre_cientifico').prop('checked', true);
+            $('#hay_nombre_comun').prop('checked', true);
+
+            $('#hay_nombre_cientifico').prop('checked', true);
         }
     )
 
-    /*Fade in/out de los campos de ingreso de nombre común/científico, de acuerdo
-    a si se marcó o no la casilla correspondiente*/
+    //////////////////////////////////////////
+    // Funcionamiento de la vista
+    //////////////////////////////////////////
 
-    $('#tabla_hay_nombre_comun').change
+    /* Activando y descativando los campos de ingreso de nombre común/científico,
+    de acuerdo a si se marcó o no la casilla correspondiente*/
+
+    $('#hay_nombre_comun').change
     (
         function()
         {
             if($(this).prop('checked'))
-                $('#tabla_nombre_comun').fadeIn();
+                $('#nombre_comun').fadeIn();
             else
-                $('#tabla_nombre_comun').fadeOut();
+                $('#nombre_comun').fadeOut();
         }
     )
 
-    $('#tabla_hay_nombre_cientifico').change
+    $('#hay_nombre_cientifico').change
     (
         function()
         {
             if($(this).prop('checked'))
-                $('#tabla_nombre_cientifico').fadeIn();
+                $('#nombre_cientifico').fadeIn();
             else
-                $('#tabla_nombre_cientifico').fadeOut();
+                $('#nombre_cientifico').fadeOut();
         }
     )
 
-    //Validando, para ello utilizamos la clase "obligatorio":
+    //////////////////////////////////////////
+    // Validaciones a la hora de enviar la forma
+    //////////////////////////////////////////
+
     $('form').submit
     (
         function()
@@ -228,7 +226,8 @@
             la especie no se encuentra en la lista de invasoras), y sin embargo,
             no se ha hecho.*/
             flag = true;
-            faltanNombres = false;
+
+            // Validando los campos obligatorios
 
             campos=$('.obligatorio');
             campos.each(function() 
@@ -240,41 +239,56 @@
             }
             );
 
-            //Si no se marcó ninguna casilla para ingresar el nombre
-            if(!$('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_hay_nombre_cientifico').prop('checked'))
+            /* faltanNombres es un indicador para enviar un mensaje que indique
+            que es necesario que se escriban ya sea el nombre común o el
+            científico de la especie.*/
+
+            faltanNombres = false;
+
+            /* En términos generales, primero se verifica al menos una casilla
+            (correspondiente a algún nombre) esté marcada, y luego, que los
+            nombres que se marcaron estén correctamente registrados. Para saber
+            los detalles de cada condición, ver el alert() correspondiente.*/
+
+            if(!$('#hay_nombre_comun').prop('checked') && !$('#hay_nombre_cientifico').prop('checked'))
             {
                 flag = false;
                 faltanNombres = true;
-                //alert('caso1');
+                alert('Favor de ingresar al menos un nombre (ya sea común ' + 
+                    'o científico)');
+
             }
-            else if($('#tabla_hay_nombre_comun').prop('checked') && !$('#tabla_nombre_comun').val())
-            /*Si se marcó la casilla de nombre común pero no se escribió
-            nada en el campo subsecuente.*/
+
+            else if($('#hay_nombre_comun').prop('checked') && !$('#nombre_comun').val())
             {
                 flag = false;
                 faltanNombres = true;
-                //alert('caso2');
-            }
-             //Si se marcó la casilla de nombre científico pero no se escribió nada en el campo subsecuente.
-            else if($('#tabla_hay_nombre_cientifico').prop('checked') && !$('#tabla_nombre_cientifico').val())
+                alert('Favor de ingresar los nombres cuyas casillas están marcadas');
+
+
+            else if($('#hay_nombre_cientifico').prop('checked') && !$('#nombre_cientifico').val())
             {
                 flag = false;
                 faltanNombres = true;
-                //alert('caso3');
+                alert('Favor de ingresar los nombres cuyas casillas están marcadas');
+
             }
-            //Validando los radio-botones
+
+            // Validando los radio botones:
+
             if(!$('input:radio[name=esta_activa_inactiva]:checked').val())
             {
                 flag = false;
                 //alert('falta presionar un radio-botón');
             }
-            if(!flag)
-            {
-                if(faltanNombres)
-                    alert('Favor de escribir al menos un nombre (ya sea común científico)');
-                else
-                    alert('Faltó llenar algún campo');
 
+            if(!flag)
+            {       
+                /* si faltanNombres es true, ya se mandó el mensaje correspondiente
+                con anterioridad */
+                        
+                if(!faltanNombres)
+                    alert('Faltó llenar algún campo o subir alguna imagen');
                 return false;
             }
 

@@ -24,40 +24,31 @@ Campos_Impacto_actual = [
 db.define_table('Impacto_actual', *Campos_Impacto_actual,
 	singular='Impactos ambientales', plural='Impactos ambientales')
 
-###########################################
-# Muestreo_plagas
-###########################################
-
-Campos_Muestreo_plagas = [
-
-	Field('conglomerado_muestra_id','reference Conglomerado_muestra',required=True),
-]
-
-db.define_table('Muestreo_plagas', *Campos_Muestreo_plagas,
-	singular='Muestreo plagas', plural='Muestreos plagas')
-
-
-###########################################
-# Plaga
-###########################################
+##########################################################################
+## Plaga
+##########################################################################
 
 Campos_Plaga = [
 
-	Field('muestreo_plagas_id','reference Muestreo_plagas',required=True),
+    Field('conglomerado_muestra_id','reference Conglomerado_muestra',required=True),
 
-	# Se insertará a partir de un catálogo
-	Field('agente','string',required=True),
+    # Se insertará a partir de un catálogo
+    Field('agente','string',required=True),
 
-	Field('nombre_comun','string'),
-	Field('nombre_cientifico','string'),
-	Field('prop_afectacion_arborea','string',required=True),
-	Field('prop_afectacion_repoblado','string',required=True),
-	Field('esta_activa','boolean',required=True)
+    Field('nombre_comun','string'),
+    Field('nombre_cientifico','string'),
 
-	]
+    # Estas las dejamos como requeridas, aunque nuestro proceso contemple la 
+    # inclusión de plagas fantasma, debido a que queremos hacer los menores cambios
+    # a la base de datos.
+    
+    Field('prop_afectacion_arborea','string',required=True),
+    Field('prop_afectacion_repoblado','string',required=True),
+    Field('esta_activa','boolean',required=True)
 
-db.define_table('Plaga', *Campos_Plaga, singular='Plaga', plural='Plagas')
+    ]
 
+db.define_table('Plaga',*Campos_Plaga,singular='Plaga',plural='Plagas')
 
 ###########################################
 # Archivo_plaga

@@ -54,52 +54,36 @@ Campos_Punto_carbono = [
 
 	Field('grosor','integer',required=True),
 
-	Field('peso_humedo','double',required=True),
-	Field('peso_humedo_muestra','double',required=True),
-	Field('peso_seco_muestra','double',required=True)
+	# Los siguientes campo se hicieron opcionales en esquema v14.
+	Field('peso_humedo','double'),
+	Field('peso_humedo_muestra','double'),
+	Field('peso_seco_muestra','double')
 ]
 
 db.define_table('Punto_carbono', *Campos_Punto_carbono,
 	singular='Carbono en el mantillo', plural='Carbono en el mantillo')
 
-
-###########################################
-## Transecto_arboles (pequeños y arbustos)
-###########################################
-
-Campos_Transecto_arboles = [
-	
-	Field('sitio_muestra_id','reference Sitio_muestra',required=True),
-
-	#Se insertará a partir de campos ocultos:
-	Field('direccion','string',required=True)
-]
-
-db.define_table('Transecto_arboles', *Campos_Transecto_arboles,
-	singular='Transecto árboles', plural='Transectos árboles')
-
-
-###########################################
-# Arbol_transecto (pequeños y arbustos)
-###########################################
+##########################################################################
+## Arbol_transecto: arboles pequeños y arbustos
+##########################################################################
 
 Campos_Arbol_transecto = [
 
-	Field('transecto_arboles_id','reference Transecto_arboles',required=True),
-	Field('individuo_numero','integer',required=True),
-	Field('nombre_comun','string'),
-	Field('nombre_cientifico','string'),
-	Field('distancia_copa','double',required=True),
-	Field('altura','double',required=True),
+    Field('sitio_muestra_id','reference Sitio_muestra',required=True),
 
-	# Se insertará a partir de un catálogo
-	Field('forma_vida','string',required=True)
-	
-	]
+    #Se insertará a partir de un catálogo
+    Field('transecto','string',required=True),
+    Field('individuo_numero','integer',required=True),
+    Field('nombre_comun','string'),
+    Field('nombre_cientifico','string'),
+    Field('forma_vida','string',required=True),
+    Field('distancia_copa','double',required=True),
+    Field('altura','double',required=True),
+    
+    ]
 
-db.define_table('Arbol_transecto', *Campos_Arbol_transecto,
-	singular='Árbol transecto', plural='Árboles transectos')
-
+db.define_table('Arbol_transecto',*Campos_Arbol_transecto,
+    singular='Árbol transecto',plural='Árboles transectos')
 
 ###########################################
 # Arbol_cuadrante: árboles grandes
@@ -118,8 +102,14 @@ Campos_Arbol_cuadrante = [
 	Field('nombre_comun','string'),
 	Field('nombre_cientifico','string'),
 	Field('altura','double'),
-	Field('diametro_normal','double'),
-	Field('diametro_copa','double')
+	Field('diametro_copa','double'),
+
+	# El siguiente campo se cambió de tipo en el esquema v14.
+	Field('diametro_normal','string'),
+
+	# Los siguientes campos se agregaron en el esquema v14.
+	Field('forma_vida', 'string'),
+	Field('cambios', 'string')
 	]
 
 db.define_table('Arbol_cuadrante', *Campos_Arbol_cuadrante,

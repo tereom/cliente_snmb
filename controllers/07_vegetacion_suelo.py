@@ -354,7 +354,7 @@ def asignarTransectos():
 def index3():
 
     ## Controlador correspondiente a la pestaña "Carbono en el mantillo",
-    ## correspondiente a la sección: "Vegetación y suelo"
+    ## de la sección: "Vegetación y suelo"
 
     CamposPuntosCarbono = [
 
@@ -398,9 +398,11 @@ def index3():
             SELECT(_name=material_tipo_i,
                 requires=IS_IN_DB(db,db.Cat_material_carbono.nombre,'%(nombre)s')),
             INPUT(_name=grosor_i,_type='integer',requires=IS_NOT_EMPTY()),
-            INPUT(_name=peso_humedo_i,_type='double',requires=IS_NOT_EMPTY()),
-            INPUT(_name=peso_humedo_muestra_i,_type='double',requires=IS_NOT_EMPTY()),
-            INPUT(_name=peso_seco_muestra_i,_type='double',requires=IS_NOT_EMPTY())
+
+            # Los siguientes campos ya no se requieren en el cliente SAR-MOD v5.
+            #INPUT(_name=peso_humedo_i,_type='double'),
+            #INPUT(_name=peso_humedo_muestra_i,_type='double'),
+            #INPUT(_name=peso_seco_muestra_i,_type='double')
 
         ])
 
@@ -430,9 +432,11 @@ def index3():
 
         datosPunto1['material_tipo'] = formaPuntosCarbono.vars['material_tipo_1']
         datosPunto1['grosor'] = formaPuntosCarbono.vars['grosor_1']
-        datosPunto1['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_1']
-        datosPunto1['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_1']
-        datosPunto1['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_1']
+
+        # Los siguientes campos ya no se requieren en el cliente SAR-MOD v5.
+        #datosPunto1['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_1']
+        #datosPunto1['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_1']
+        #datosPunto1['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_1']
 
         # Insertando en la base de datos:
         db.Punto_carbono.insert(**datosPunto1)
@@ -447,9 +451,11 @@ def index3():
 
         datosPunto2['material_tipo'] = formaPuntosCarbono.vars['material_tipo_2']
         datosPunto2['grosor'] = formaPuntosCarbono.vars['grosor_2']
-        datosPunto2['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_2']
-        datosPunto2['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_2']
-        datosPunto2['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_2']
+
+        # Los siguientes campos ya no se requieren en el cliente SAR-MOD v5.
+        #datosPunto2['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_2']
+        #datosPunto2['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_2']
+        #datosPunto2['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_2']
 
         # Insertando en la base de datos:
         db.Punto_carbono.insert(**datosPunto2)
@@ -464,9 +470,11 @@ def index3():
 
         datosPunto3['material_tipo'] = formaPuntosCarbono.vars['material_tipo_3']
         datosPunto3['grosor'] = formaPuntosCarbono.vars['grosor_3']
-        datosPunto3['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_3']
-        datosPunto3['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_3']
-        datosPunto3['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_3']
+
+        # Los siguientes campos ya no se requieren en el cliente SAR-MOD v5.
+        #datosPunto3['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_3']
+        #datosPunto3['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_3']
+        #datosPunto3['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_3']
 
         # Insertando en la base de datos:
         db.Punto_carbono.insert(**datosPunto3)
@@ -481,9 +489,11 @@ def index3():
 
         datosPunto4['material_tipo'] = formaPuntosCarbono.vars['material_tipo_4']
         datosPunto4['grosor'] = formaPuntosCarbono.vars['grosor_4']
-        datosPunto4['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_4']
-        datosPunto4['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_4']
-        datosPunto4['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_4']
+
+        # Los siguientes campos ya no se requieren en el cliente SAR-MOD v5.
+        #datosPunto4['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_4']
+        #datosPunto4['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_4']
+        #datosPunto4['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_4']
 
         # Insertando en la base de datos:
         db.Punto_carbono.insert(**datosPunto4)
@@ -498,9 +508,11 @@ def index3():
 
         datosPunto5['material_tipo'] = formaPuntosCarbono.vars['material_tipo_5']
         datosPunto5['grosor'] = formaPuntosCarbono.vars['grosor_5']
-        datosPunto5['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_5']
-        datosPunto5['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_5']
-        datosPunto5['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_5']
+
+        # Los siguientes campos ya no se requieren en el cliente SAR-MOD v5.
+        #datosPunto5['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_5']
+        #datosPunto5['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_5']
+        #datosPunto5['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_5']
 
         # Insertando en la base de datos:
         db.Punto_carbono.insert(**datosPunto5)
@@ -515,9 +527,11 @@ def index3():
 
         datosPunto6['material_tipo'] = formaPuntosCarbono.vars['material_tipo_6']
         datosPunto6['grosor'] = formaPuntosCarbono.vars['grosor_6']
-        datosPunto6['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_6']
-        datosPunto6['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_6']
-        datosPunto6['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_6']
+
+        # Los siguientes campos ya no se requieren en el cliente SAR-MOD v5.
+        #datosPunto6['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_6']
+        #datosPunto6['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_6']
+        #datosPunto6['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_6']
 
         # Insertando en la base de datos:
         db.Punto_carbono.insert(**datosPunto6)
@@ -532,9 +546,11 @@ def index3():
 
         datosPunto7['material_tipo'] = formaPuntosCarbono.vars['material_tipo_7']
         datosPunto7['grosor'] = formaPuntosCarbono.vars['grosor_7']
-        datosPunto7['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_7']
-        datosPunto7['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_7']
-        datosPunto7['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_7']
+
+        # Los siguientes campos ya no se requieren en el cliente SAR-MOD v5.
+        #datosPunto7['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_7']
+        #datosPunto7['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_7']
+        #datosPunto7['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_7']
 
         # Insertando en la base de datos:
         db.Punto_carbono.insert(**datosPunto7)
@@ -549,9 +565,11 @@ def index3():
 
         datosPunto8['material_tipo'] = formaPuntosCarbono.vars['material_tipo_8']
         datosPunto8['grosor'] = formaPuntosCarbono.vars['grosor_8']
-        datosPunto8['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_8']
-        datosPunto8['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_8']
-        datosPunto8['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_8']
+
+        # Los siguientes campos ya no se requieren en el cliente SAR-MOD v5.
+        #datosPunto8['peso_humedo'] = formaPuntosCarbono.vars['peso_humedo_8']
+        #datosPunto8['peso_humedo_muestra'] = formaPuntosCarbono.vars['peso_humedo_muestra_8']
+        #datosPunto8['peso_seco_muestra'] = formaPuntosCarbono.vars['peso_seco_muestra_8']
 
         # Insertando en la base de datos:
         db.Punto_carbono.insert(**datosPunto8)
@@ -586,8 +604,8 @@ def index3():
 def puntosExistentes():
     
     ## Función de AJAX para revisar que no se haya ingresado la forma 
-    ## correspondiente a "Carbono en el mantillo" en el mismo sitio con anterioridad
-    ##anterioridad. El AJAX se activará cuando seleccionen un 
+    ## correspondiente a "Carbono en el mantillo" en el mismo sitio con
+    ## anterioridad. El AJAX se activará cuando seleccionen un 
     ## conglomerado y un número de sitio.
 
     #Obteniendo la información del sitio que seleccionó el usuario:
@@ -626,11 +644,14 @@ def index4():
     ##########################
     # Generando con un for los campos relativos a cada individuo:
 
-    n_individuos = 10
+    n_individuos = 100
 
     for i in range(n_individuos):
 
-        existe_i = 'existe_' + str(i+1)
+        # El siguiente campo ya no se requieren en el cliente SAR-MOD v5, porque
+        # se utilizará JS para CXUDear campos en la vista.
+
+        #existe_i = 'existe_' + str(i+1)
         individuo_numero_i = 'individuo_numero' + str(i+1)
         nombre_comun_i = 'nombre_comun_' + str(i+1)
         nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
@@ -639,8 +660,8 @@ def index4():
         altura_i = 'altura_' + str(i+1)
 
         camposArbolTransecto.extend([
-            #Campo para marcar si existe o no una rama.
-            INPUT(_name=existe_i,_type='boolean'),
+            #Campo para marcar si existe o no un individuo.
+            #INPUT(_name=existe_i,_type='boolean'),
 
             INPUT(_name=individuo_numero_i,_type='integer'),
             INPUT(_name=nombre_comun_i,_type='string'),
@@ -665,14 +686,20 @@ def index4():
         arbolSitioID = formaArbolTransecto.vars['sitio_muestra_id']
         arbolTransectoID = formaArbolTransecto.vars['transecto']
 
-        # Generando los otros campos con un for:
+        # Como el while depende de 'individuo_numero_i', estos valores no podrán
+        # dejarse al usuario. Deberán llenarse automáticamente.
+        i = 0
+        individuo_numero_i = 'individuo_numero' + str(i+1)
 
-        for i in range(n_individuos):
+        while bool(formaArbolTransecto.vars[individuo_numero_i])
 
             # Creando de manera automatizada los nombres de los campos:
 
-            existe_i = 'existe_' + str(i+1)
-            individuo_numero_i = 'individuo_numero' + str(i+1)
+            # El siguiente campo ya no se requieren en el cliente SAR-MOD v5,
+            # porque se utilizará JS para CXUDear campos en la vista.
+
+            # existe_i = 'existe_' + str(i+1)
+            #individuo_numero_i = 'individuo_numero' + str(i+1)
             nombre_comun_i = 'nombre_comun_' + str(i+1)
             nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
             forma_vida_i = 'forma_vida_' + str(i+1)
@@ -680,23 +707,27 @@ def index4():
             altura_i = 'altura_' + str(i+1)
 
             # Si existe el i-ésimo árbol:
-            if bool(formaArbolTransecto.vars[existe_i]):
+            #if bool(formaArbolTransecto.vars[existe_i]):
 
-                datosArbolTransecto_i = {}
+            datosArbolTransecto_i = {}
         
-                # Agregando los datos extraídos de la forma:
-                datosArbolTransecto_i['individuo_numero'] = formaArbolTransecto.vars[individuo_numero_i]
-                datosArbolTransecto_i['nombre_comun'] = formaArbolTransecto.vars[nombre_comun_i]
-                datosArbolTransecto_i['nombre_cientifico'] = formaArbolTransecto.vars[nombre_cientifico_i]
-                datosArbolTransecto_i['forma_vida'] = formaArbolTransecto.vars[forma_vida_i]
-                datosArbolTransecto_i['distancia_copa'] = formaArbolTransecto.vars[distancia_copa_i]
-                datosArbolTransecto_i['altura'] = formaArbolTransecto.vars[altura_i]
+            # Agregando los datos extraídos de la forma:
+            datosArbolTransecto_i['individuo_numero'] = formaArbolTransecto.vars[individuo_numero_i]
+            datosArbolTransecto_i['nombre_comun'] = formaArbolTransecto.vars[nombre_comun_i]
+            datosArbolTransecto_i['nombre_cientifico'] = formaArbolTransecto.vars[nombre_cientifico_i]
+            datosArbolTransecto_i['forma_vida'] = formaArbolTransecto.vars[forma_vida_i]
+            datosArbolTransecto_i['distancia_copa'] = formaArbolTransecto.vars[distancia_copa_i]
+            datosArbolTransecto_i['altura'] = formaArbolTransecto.vars[altura_i]
 
-                datosArbolTransecto_i['sitio_muestra_id'] = arbolSitioID
-                datosArbolTransecto_i['transecto'] = arbolTransectoID
+            datosArbolTransecto_i['sitio_muestra_id'] = arbolSitioID
+            datosArbolTransecto_i['transecto'] = arbolTransectoID
 
-                # Insertando los datos de la rama:
-                db.Arbol_transecto.insert(**datosArbolTransecto_i)
+            # Insertando los datos de la rama:
+            db.Arbol_transecto.insert(**datosArbolTransecto_i)
+
+            # Incremento para el while
+            i = i + 1
+            individuo_numero_i = 'individuo_numero' + str(i+1)
 
         response.flash = 'Éxito'
         
@@ -716,7 +747,9 @@ def index4():
 
     listaTransecto = db(db.Cat_transecto_direccion).select(db.Cat_transecto_direccion.nombre)
 
-    listaFormaVida = db(db.Cat_forma_vida).select(db.Cat_forma_vida.nombre)
+    # Se seleccionan los campos apropiados para la combobox.
+    listaFormaVida = db(db.Cat_forma_vida.nombre != 'Sin individuo').select(
+        db.Cat_forma_vida.nombre)
 
     ##############################################################
     # Creando la tabla de revisión de los registros ingresados
@@ -735,6 +768,27 @@ def index4():
         listaFormaVida = listaFormaVida,
         grid = grid)
 
+def transectosArboladoExistentes():
+
+    ## Función de AJAX para revisar que no se haya ingresado la forma 
+    ## correspondiente a "Árboles pequeños y arbustos" en el mismo sitio y
+    ## transecto con anterioridad. El AJAX se activará cuando seleccionen un 
+    ## conglomerado, un número de sitio y un transecto.
+
+    # Obteniendo la información del sitio que seleccionó el usuario:
+    sitioElegidoID = request.vars.sitio_muestra_id
+
+    transectoElegidoID = request.vars.transecto
+
+    # Haciendo un query a la tabla de Arbol_transecto con la información anterior:
+    arbolesYaInsertados = db(
+        (db.Arbol_transecto.sitio_muestra_id==sitioElegidoID)&
+        (db.Arbol_transecto.transecto==transectoElegidoID)
+        ).select()
+
+    # Regresa la longitud de arbolesYaInsertados para que sea interpretada por la vista
+    return len(arbolesYaInsertados)
+
 def index5():
     
     ## Controlador correspondiente a la pestaña Árboles grandes, de la sección
@@ -752,7 +806,7 @@ def index5():
     ##########################
     # Generando con un for los campos relativos a cada individuo:
 
-    n_individuos = 8
+    n_individuos = 100
 
     for i in range(n_individuos):
 
@@ -767,6 +821,11 @@ def index5():
         diametro_normal_i = 'diametro_normal_' + str(i+1)
         diametro_copa_i = 'diametro_copa_' + str(i+1)
 
+        # Los siguientes campos se agregaron en el esquema v14.
+
+        cambios_i = 'cambios_' + str(i+1)
+        forma_vida_i = 'forma_vida_' + str(i+1)
+
         camposArbolCuadrante.extend([
 
             # Campo para marcar si existe o no un árbol.
@@ -778,7 +837,12 @@ def index5():
             INPUT(_name=nombre_cientifico_i,_type='string'),
             INPUT(_name=altura_i,_type='double'),
             INPUT(_name=diametro_normal_i,_type='double'),
-            INPUT(_name=diametro_copa_i,_type='double')
+            INPUT(_name=diametro_copa_i,_type='double'),
+
+            # Los siguientes campos se agregaron en el esquema v14.
+
+            INPUT(_name=cambios_i,_type='string'),
+            INPUT(_name=forma_vida_i,_type='string')
             ])
 
     formaArbol = FORM(*camposArbolCuadrante)
@@ -794,9 +858,14 @@ def index5():
 
         arbolSitioID = formaArbol.vars['sitio_muestra_id']
 
-        for i in range(n_individuos):
+        # Como el while depende de 'individuo_numero_i', estos valores no podrán
+        # dejarse al usuario. Deberán llenarse automáticamente.
+        i = 0
+        individuo_numero_i = 'individuo_numero' + str(i+1)
 
-            #Creando de manera automatizada los nombres de los campos:
+        while bool(formaArbol.vars[individuo_numero_i])
+
+            # Creando de manera automatizada los nombres de los campos:
             existe_i = 'existe_' + str(i+1)
             distancia_i = 'distancia_' + str(i+1)
             azimut_i = 'azimut_' + str(i+1)
@@ -806,37 +875,46 @@ def index5():
             diametro_normal_i = 'diametro_normal_' + str(i+1)
             diametro_copa_i = 'diametro_copa_' + str(i+1)
 
-            # Datos que se guardarán para cualquier árbol, independientemente si
-            # existe o no:
+            # Los siguientes campos se agregaron en el esquema v14.
+
+            forma_vida_i = 'forma_vida_' + str(i+1)
+            cambios_i = 'cambios_' + str(i+1)
+
+            # El campo "existe" toma un nuevo significado: como se muestrean ahora
+            # todos los árboles de un sitio, se insertará un registro fantasma si
+            # no se encuentran árboles en el mismo. Este registro fantasma tendrá
+            # existe "false"
 
             datosArbol_i = {}
 
             datosArbol_i['sitio_muestra_id'] = arbolSitioID
 
             # Escribiendo el número de individuo
-            datosArbol_i['individuo_numero'] = (i+1)
-
-            
-            # Si existe el i-ésimo árbol:
-            if bool(formaArbol.vars[existe_i]):
+            #datosArbol_i['individuo_numero'] = (i+1)
         
-                # Agregando los datos extraídos de la forma:
-                datosArbol_i['existe'] = formaArbol.vars[existe_i]
-                datosArbol_i['distancia'] = formaArbol.vars[distancia_i]
-                datosArbol_i['azimut'] = formaArbol.vars[azimut_i]
-                datosArbol_i['nombre_comun'] = formaArbol.vars[nombre_comun_i]
-                datosArbol_i['nombre_cientifico'] = formaArbol.vars[nombre_cientifico_i]
-                datosArbol_i['altura'] = formaArbol.vars[altura_i]
-                datosArbol_i['diametro_normal'] = formaArbol.vars[diametro_normal_i]
-                datosArbol_i['diametro_copa'] = formaArbol.vars[diametro_copa_i]
+            # Agregando los datos extraídos de la forma:
+            datosArbol_i['existe'] = formaArbol.vars[existe_i]
+            datosArbol_i['distancia'] = formaArbol.vars[distancia_i]
+            datosArbol_i['azimut'] = formaArbol.vars[azimut_i]
+            datosArbol_i['nombre_comun'] = formaArbol.vars[nombre_comun_i]
+            datosArbol_i['nombre_cientifico'] = formaArbol.vars[nombre_cientifico_i]
+            datosArbol_i['altura'] = formaArbol.vars[altura_i]
+            datosArbol_i['diametro_normal'] = formaArbol.vars[diametro_normal_i]
+            datosArbol_i['diametro_copa'] = formaArbol.vars[diametro_copa_i]
 
-            else:
+            # Los siguientes campos se agregaron en el esquema v14.
+            datosArbol_i['forma_vida'] = formaArbol.vars[forma_vida_i]
+            datosArbol_i['cambios'] = formaArbol.vars[cambios_i]
 
-                datosArbol_i['existe'] = False                
+            datosArbol_i['individuo_numero'] = formaArbol.vars[individuo_numero_i]
 
             # Insertando los datos de la rama:
 
             db.Arbol_cuadrante.insert(**datosArbol_i)
+
+            # Incremento para el while
+            i = i + 1
+            individuo_numero_i = 'individuo_numero' + str(i+1)
 
         response.flash = 'Éxito'
         
@@ -969,8 +1047,8 @@ def index6():
     # Procesando la información de las dropdowns
     ###########################################
 
-    #Regresando los nombres de todos los conglomerados insertados en la tabla de
-    #conglomerado junto con sus id's para llenar la combobox de conglomerado.
+    # Regresando los nombres de todos los conglomerados insertados en la tabla de
+    # conglomerado junto con sus id's para llenar la combobox de conglomerado.
 
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
