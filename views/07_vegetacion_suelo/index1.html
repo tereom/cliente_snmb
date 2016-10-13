@@ -54,7 +54,7 @@
 							</option>
 						{{pass}}
 					</select>
-				</td>                
+				</td>
 				<td>
 					<label for="sitio_muestra_id">Sitio</label>
 					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
@@ -156,18 +156,15 @@
 	// AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
 	//////////////////////////////////////////
 
-	$('#conglomerado_muestra_id').change
-	(
-		function()
-		{
+	$('#conglomerado_muestra_id').change(
+		function(){
 			$('#sitio_muestra_id').remove();
 
 			//ajax es una función de Web2py que simplifica la función homónima de JQuery
 			//recibe el URL destino, los nombres de los campos que se enviarán y el ID
 			// del elemento donde se insertará la respuesta
 			ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-		}
-	)
+		});
 
 	//////////////////////////////////////////
 	// AJAX para evitar que se envíe la información de los transectos
@@ -175,9 +172,9 @@
 	//////////////////////////////////////////
 
 	$('#shadow_clone').on('change', '#sitio_muestra_id', function (){
+
 		$.ajax
-		(
-		{
+		({
 			type: "POST",
 			data: $('#sitio_muestra_id').serialize(),
 			url: "{{=URL('transectosExistentes')}}",
@@ -190,8 +187,7 @@
 						$('#sitio_muestra_id').val("");
 					}
 				}
-		}
-		);
+		});
 	}
 	);
 

@@ -363,14 +363,14 @@ def especimenes_restos_extra():
 #         user_signature=False)
 #     return dict(form=form)
 
-# def editarCarbono():
-#     # writeble=False implica que no se puede editar el id
-#     db.Punto_carbono.sitio_muestra_id.writable = False
-#     form = SQLFORM.smartgrid(db.Punto_carbono,
-#         # csv= False implica que no se pueden descargar las tablas
-#         csv=False,
-#         user_signature=False)
-#     return dict(form=form)
+def editarCarbono():
+    # writeble=False implica que no se puede editar el id
+    db.Punto_carbono.sitio_muestra_id.writable = False
+    form = SQLFORM.smartgrid(db.Punto_carbono,
+        # csv= False implica que no se pueden descargar las tablas
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
 
 # def editarCarbonoRamas():
 #     # writeble=False implica que no se puede editar el id

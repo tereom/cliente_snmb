@@ -161,7 +161,7 @@ def asignarSitios():
 
     # Creando la dropdown de sitios y enviándola a la vista para que sea desplegada:
 
-    dropdownHTML = "<select class='generic-widget' name='sitio_muestra_id' id='tabla_sitio_muestra_id'>"
+    dropdownHTML = "<select class='generic-widget' name='sitio_muestra_id' id='sitio_muestra_id'>"
 
     dropdownHTML += "<option value=''/>"
 
@@ -338,7 +338,7 @@ def asignarTransectos():
 
     # Creando la dropdown de transectos y enviándola a la vista para que sea desplegada:
 
-    dropdownHTML = "<select class='generic-widget' name='transecto_ramas_id' id='tabla_transecto_ramas_id'>"
+    dropdownHTML = "<select class='generic-widget' name='transecto_ramas_id' id='transecto_ramas_id'>"
 
     dropdownHTML += "<option value=''/>"
 
@@ -648,9 +648,8 @@ def index4():
 
     for i in range(n_individuos):
 
-        # El siguiente campo ya no se requieren en el cliente SAR-MOD v5, porque
-        # se utilizará JS para CXUDear campos en la vista.
-
+        # El campo de existe_i se utilizará para un while que leerá los datos
+        # de cada individuo.
         #existe_i = 'existe_' + str(i+1)
         individuo_numero_i = 'individuo_numero' + str(i+1)
         nombre_comun_i = 'nombre_comun_' + str(i+1)
@@ -660,9 +659,7 @@ def index4():
         altura_i = 'altura_' + str(i+1)
 
         camposArbolTransecto.extend([
-            #Campo para marcar si existe o no un individuo.
             #INPUT(_name=existe_i,_type='boolean'),
-
             INPUT(_name=individuo_numero_i,_type='integer'),
             INPUT(_name=nombre_comun_i,_type='string'),
             INPUT(_name=nombre_cientifico_i,_type='string'),
@@ -691,7 +688,7 @@ def index4():
         i = 0
         individuo_numero_i = 'individuo_numero' + str(i+1)
 
-        while bool(formaArbolTransecto.vars[individuo_numero_i])
+        while bool(formaArbolTransecto.vars[individuo_numero_i]):
 
             # Creando de manera automatizada los nombres de los campos:
 
@@ -863,7 +860,7 @@ def index5():
         i = 0
         individuo_numero_i = 'individuo_numero' + str(i+1)
 
-        while bool(formaArbol.vars[individuo_numero_i])
+        while bool(formaArbol.vars[individuo_numero_i]):
 
             # Creando de manera automatizada los nombres de los campos:
             existe_i = 'existe_' + str(i+1)

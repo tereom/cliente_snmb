@@ -1,680 +1,702 @@
 {{extend 'layout.html'}}
 {{block head}}
-<style type="text/css">
+	<style type="text/css">
 
-/* TablaCONANP se refiere a una tabla tipo formulario en papel (tomada tal cuál)
-de los formularios de trabajo de campo*/
+	/* TablaCONANP se refiere a una tabla tipo formulario en papel (tomada tal cuál)
+	de los formularios de trabajo de campo*/
 
-    .Tabla .generic-widget, .Tabla .Estatico
-    {
-        margin-right: 2cm;
-        width: 4.4cm;
-    }
+		.Tabla .generic-widget, .Tabla .Estatico
+		{
+			margin-right: 2cm;
+			width: 4.4cm;
+		}
 
-    .TablaCONANP .integer, .TablaCONANP .double
-    {
-        margin-right: 0.25cm;
-        margin-left: 0.25cm;
-        width: 2.5cm;
-        text-align: center;
-    }
-    .TablaCONANP .generic-widget
-    {
-        margin-right: 0.25cm;
-        margin-left: 0.25cm;
-        width: 2.9cm;
-        text-align: center;
-    }
-    
-    .FlotaIzquierda
-    {
-        float: left;
-    }
+		.TablaCONANP .integer, .TablaCONANP .double
+		{
+			margin-right: 0.25cm;
+			margin-left: 0.25cm;
+			width: 2.5cm;
+			text-align: center;
+		}
+		.TablaCONANP .generic-widget
+		{
+			margin-right: 0.25cm;
+			margin-left: 0.25cm;
+			width: 2.9cm;
+			text-align: center;
+		}
 
-    .Centrar
-    {
-        text-align: center;
-    }
+		#enviar
+		{
+			float: left;
+		}
 
-</style>
+		.Centrar
+		{
+			text-align: center;
+		}
+
+	</style>
 {{end}}
-{{#=response.toolbar()}}
 
 <form action="" enctype="multipart/form-data" method="post">
-    <input type="hidden" name="_formname" value="formaRamasHTML"/>
-    <fieldset>
-        <legend>
-            Desglose de ramas 1000h (0-15m)
-        </legend>
-        <table class="Tabla">
-            <tr>
-                <td>
-                    <div>
-                        <label for="tabla_conglomerado_muestra_id">Conglomerado</label>
-                    </div>
-                    <div>
-                        <!--este campo sólo sirve para encontrar
-                        con AJAX los sitios existentes asociados al conglomerado
-                        elegido, al enviar la forma al controlador, se utilizará
-                        para guardar el registro de la cámara, únicamente el id
-                        del sitio (de la dropdown generada mediante AJAX)-->
-                        <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="tabla_conglomerado_muestra_id">
-                            <option value=""/>
-                            {{for conglomerado in listaConglomerado:}}
-                                <option value="{{=conglomerado.id}}">
-                                    {{=conglomerado.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </div>
-                </td>                
-                <td>
-                    <div class="Estatico">
-                        <label for="tabla_sitio_muestra_id">Sitio</label>
-                    </div>
-                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
-                    <div id="shadow_clone">
-                        <select class="generic-widget" name="sitio_muestra_id" id="tabla_sitio_muestra_id">
-                            <option value=""/>
-                        </select>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <label for="tabla_transecto_ramas_id">Transecto</label>
-                    </div>
-                    <div id="shadow_clone_2">
-                        <select class="generic-widget" name="transecto_ramas_id" id="tabla_transecto_ramas_id">
-                            <option value=""/>
-                        </select>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <hr/>
-        <table class="TablaCONANP">
-            <tr>
-                <th class="Centrar">Existe</th>
-                <th class="Centrar">Diámetro (cm)</th>
-                <th class="Centrar">Grado</th>
-            </tr>
-            <!-- La tabla se genera en un ciclo for -->
-            
-            {{for i in range(n_ramas):}}    
-                <!-- Nombres auxiliares para la vista -->
-                <!-- la variable Rama_i se utiliza para administrar el fade-in fade-out -->
-                {{Rama_i = 'Rama_' + str(i+1)}}
+	<input type="hidden" name="_formname" value="formaRamasHTML"/>
+	<fieldset>
+		<legend>
+			Desglose de ramas 1000h (0-15m)
+		</legend>
+		<table class="Tabla">
+			<tr>
+				<td>
+					<label for="conglomerado_muestra_id">Conglomerado</label>
+					<!--este campo sólo sirve para encontrar
+					con AJAX los sitios existentes asociados al conglomerado
+					elegido, al enviar la forma al controlador, se utilizará
+					para guardar el registro de las ramas 1000h, únicamente el id
+					del transecto-->
+					<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+						<option value=""/>
+						{{for conglomerado in listaConglomerado:}}
+							<option value="{{=conglomerado.id}}">
+								{{=conglomerado.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>                
+				<td>
+					<div class="Estatico">
+						<label for="sitio_muestra_id">Sitio</label>
+					</div>
+					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
+						<select class="generic-widget" name="sitio_muestra_id" id="sitio_muestra_id">
+							<option value=""/>
+						</select>
+					</div>
+				</td>
+				<td>
+					<label for="transecto_ramas_id">Transecto</label>
+					<div id="shadow_clone_2">
+						<select class="generic-widget" name="transecto_ramas_id" id="transecto_ramas_id">
+							<option value=""/>
+						</select>
+					</div>
+				</td>
+			</tr>
+		</table>
 
-                <!-- Creamos los nombres de los campos y las tablas -->
-                {{existe_i = 'existe_' + str(i+1)}}
-                {{tabla_existe_i = 'tabla_' + existe_i}}
+		<hr/>
 
-                {{#transecto_ramas_i = 'transecto_ramas_' + str(i+1)}}
-                {{#tabla_transecto_ramas_i = 'tabla_' + transecto_ramas_i}}
+		<table class="TablaCONANP">
+			<tr>
+				<th class="Centrar">Existe</th>
+				<th class="Centrar">Diámetro (cm)</th>
+				<th class="Centrar">Grado</th>
+			</tr>
+			<!-- La tabla se genera en un ciclo for -->
+			
+			{{for i in range(n_ramas):}}    
+				<!-- Nombres auxiliares para la vista -->
+				<!-- la variable Rama_i se utiliza para administrar el fade-in fade-out -->
+				{{Rama_i = 'Rama_' + str(i+1)}}
 
-                {{diametro_i = 'diametro_' + str(i+1)}}
-                {{tabla_diametro_i = 'tabla_' + diametro_i}}
-                    
-                {{grado_i = 'grado_' + str(i+1)}}
-                {{tabla_grado_i = 'tabla_' + grado_i}}
+				<!-- Creamos los nombres de los campos y las tablas -->
+				{{existe_i = 'existe_' + str(i+1)}}
 
-                <tr>
-                    <td class="Centrar">
-                        <input class="boolean" name="{{=existe_i}}" id="{{=tabla_existe_i}}" type="checkbox" value="on"/>
-                    </td>
-                   
-                    <td>
-                        <div class="{{=Rama_i}}">
-                            <input class="double" name="{{=diametro_i}}" id="{{=tabla_diametro_i}}" type="text" value=""/>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="{{=Rama_i}}">
-                            <select class="generic-widget" name="{{=grado_i}}" id="{{=tabla_grado_i}}">
-                                <option value=""/>
-                                    {{for grado in listaGrado:}}
-                                <option value="{{=grado.nombre}}">
-                                    {{=grado.nombre}}
-                                </option>
-                                    {{pass}}
-                            </select>
-                        </div>
-                    </td>
-                </tr>
-            {{pass}}
-        </table>
-        <!--<legend>
-            Frecuencias por grosor del material
-        </legend>-->
-        <hr/>  
-        <div> 
-            <p>
-                <strong>
-                    Si faltan registros por ingresar favor de llenar una nueva forma 
-                    con la información restante.
-                </strong>
-            </p>
-        </div>  
-        <br/>  
-    </fieldset>
-    <input type="submit" value="Enviar" class="btn FlotaIzquierda"/>
+				{{diametro_i = 'diametro_' + str(i+1)}}
+					
+				{{grado_i = 'grado_' + str(i+1)}}
+
+				<tr>
+					<td class="Centrar">
+						<input class="boolean" name="{{=existe_i}}" id="{{=existe_i}}" type="checkbox" value="on"/>
+					</td>
+					<td>
+						<div class="{{=Rama_i}}">
+							<input class="double" name="{{=diametro_i}}" id="{{=diametro_i}}" type="text" value=""/>
+						</div>
+					</td>
+					<td>
+						<div class="{{=Rama_i}}">
+							<select class="generic-widget" name="{{=grado_i}}" id="{{=grado_i}}">
+								<option value=""/>
+								{{for grado in listaGrado:}}
+									<option value="{{=grado.nombre}}">
+										{{=grado.nombre}}
+									</option>
+								{{pass}}
+							</select>
+						</div>
+					</td>
+				</tr>
+			{{pass}}
+		</table>
+		<!--<legend>
+			Frecuencias por grosor del material
+		</legend>-->
+		<hr/>  
+		<p>
+			<strong>
+				Si faltan registros por ingresar favor de llenar una nueva forma 
+				con la información restante.
+			</strong>
+		</p>
+	</fieldset>
+	<br/>
+	<br/>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 
 <br/>
 <br/>
 
 <fieldset>
-<legend>
-  Revisión de registros
-</legend>
+	<legend>
+		Revisión de registros
+	</legend>
+	{{=grid}}
 </fieldset>
-{{=grid}}
 
-{{#=BEAUTIFY(request.vars)}}
 <script>
-    $(document).ready
-    (
-        function()
-        {
-           for(i=1; i<=10; i++)
-           {
-                tabla_existe_i = '#tabla_existe_'.concat(i);
-                Rama_i = '.Rama_'.concat(i);
-                if(i <= 5){
-                    $(tabla_existe_i).prop('checked', true);
-                    $(Rama_i).show();
-                }
-                else{
-                    $(Rama_i).hide();
-                }
-                
-            }
-        }
-     )
 
-    $('#tabla_existe_1').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_1').fadeIn();
-            else
-                $('.Rama_1').fadeOut();
-        }
-    )
+	//////////////////////////////////////////
+	// AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+	//////////////////////////////////////////
 
-    $('#tabla_existe_2').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_2').fadeIn();
-            else
-                $('.Rama_2').fadeOut();
-        }
-    )
+	$('#conglomerado_muestra_id').change
+	(
+		function()
+		{
+			$('#sitio_muestra_id, #transecto_ramas_id').remove();
+			//ajax es una función de Web2py que simplifica la función homónima de JQuery
+			//recibe el URL destino, los nombres de los campos que se enviarán y el ID
+			// del elemento donde se insertará la respuesta
+			ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+			// ajax para asignar transectos
+			ajax("{{=URL('asignarTransectos')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+		}
+	)
 
-    $('#tabla_existe_3').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_3').fadeIn();
-            else
-                $('.Rama_3').fadeOut();
-        }
-    )
+	//////////////////////////////////////////
+	// AJAX para asignar transectos
+	//////////////////////////////////////////
 
-    $('#tabla_existe_4').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_4').fadeIn();
-            else
-                $('.Rama_4').fadeOut();
-        }
-    )
+	$('#shadow_clone').on('change', '#sitio_muestra_id', function ()
+	{
+		$.ajax
+		(
+		{
+			type: "POST",
+			data: $('#sitio_muestra_id').serialize(),
+			url: "{{=URL('transectosExistentes')}}",
+				success: function(resultado)
+				{
+						//alert(resultado);
+						if(resultado==0)
+						{
+							alert('Favor de ingresar la pestaña de material leñoso caído antes de proceder a desglose de material 1000h');
+							$('#sitio_muestra_id').val("");
+						}
+				}
+		}
+		);
+		$('#transecto_ramas_id').remove();
+		//ajax es una función de Web2py que simplifica la función homónima de JQuery
+		//recibe el URL destino, los nombres de los campos que se enviarán y el ID
+		// del elemento donde se insertará la respuesta
+		ajax("{{=URL('asignarTransectos')}}", ['sitio_muestra_id'], 'shadow_clone_2');
+	}
+	);
 
-    $('#tabla_existe_5').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_5').fadeIn();
-            else
-                $('.Rama_5').fadeOut();
-        }
-    )
+	//////////////////////////////////////////
+	// Este código se ejecuta en cuanto el html termina de llegar al navegador:
+	//////////////////////////////////////////
 
-    $('#tabla_existe_6').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_6').fadeIn();
-            else
-                $('.Rama_6').fadeOut();
-        }
-    )
+	$(document).ready
+	(
+		function()
+		{
+			for(i=1; i<=10; i++)
+			{
+				existe_i = '#existe_'.concat(i);
+				Rama_i = '.Rama_'.concat(i);
+				if(i <= 5){
+					$(existe_i).prop('checked', true);
+					$(Rama_i).show();
+				}
+				else{
+					$(Rama_i).hide();
+				}
+				
+			}
+		}
+	 )
 
-    $('#tabla_existe_7').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_7').fadeIn();
-            else
-                $('.Rama_7').fadeOut();
-        }
-    )
+	//////////////////////////////////////////
+	// Funcionamiento de la vista
+	//////////////////////////////////////////
 
-    $('#tabla_existe_8').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_8').fadeIn();
-            else
-                $('.Rama_8').fadeOut();
-        }
-    )
+	$('#existe_1').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_1').fadeIn();
+			else
+				$('.Rama_1').fadeOut();
+		}
+	)
 
-    $('#tabla_existe_9').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_9').fadeIn();
-            else
-                $('.Rama_9').fadeOut();
-        }
-    )
+	$('#existe_2').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_2').fadeIn();
+			else
+				$('.Rama_2').fadeOut();
+		}
+	)
 
-    $('#tabla_existe_10').change
-    (
-        function()
-        {
-            if($(this).prop('checked'))
-                $('.Rama_10').fadeIn();
-            else
-                $('.Rama_10').fadeOut();
-        }
-    )
+	$('#existe_3').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_3').fadeIn();
+			else
+				$('.Rama_3').fadeOut();
+		}
+	)
 
-    $('#tabla_diametro_1').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#existe_4').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_4').fadeIn();
+			else
+				$('.Rama_4').fadeOut();
+		}
+	)
 
-    $('#tabla_diametro_2').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#existe_5').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_5').fadeIn();
+			else
+				$('.Rama_5').fadeOut();
+		}
+	)
 
-    $('#tabla_diametro_3').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#existe_6').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_6').fadeIn();
+			else
+				$('.Rama_6').fadeOut();
+		}
+	)
 
-    $('#tabla_diametro_4').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#existe_7').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_7').fadeIn();
+			else
+				$('.Rama_7').fadeOut();
+		}
+	)
 
-    $('#tabla_diametro_5').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#existe_8').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_8').fadeIn();
+			else
+				$('.Rama_8').fadeOut();
+		}
+	)
 
-    $('#tabla_diametro_6').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#existe_9').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_9').fadeIn();
+			else
+				$('.Rama_9').fadeOut();
+		}
+	)
 
-    $('#tabla_diametro_7').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#existe_10').change
+	(
+		function()
+		{
+			if($(this).prop('checked'))
+				$('.Rama_10').fadeIn();
+			else
+				$('.Rama_10').fadeOut();
+		}
+	)
 
-    $('#tabla_diametro_8').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#diametro_1').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    $('#tabla_diametro_9').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#diametro_2').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    $('#tabla_diametro_10').change
-    (
-        function()
-        {
-            if($(this).val())
-            {
-                if($(this).val()<7.5)
-                {
-                    alert('El diámetro mínimo es 7.5cm');
-                    $(this).val("");
-                }
-            }
-        }
-    )
+	$('#diametro_3').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
+	$('#diametro_4').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    //AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
-    $('#tabla_conglomerado_muestra_id').change
-    (
-        function()
-        {
-            $('#tabla_sitio_muestra_id, #tabla_transecto_ramas_id').remove();
-            //ajax es una función de Web2py que simplifica la función homónima de JQuery
-            //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-            // del elemento donde se insertará la respuesta
-            ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
-            // ajax para asignar transectos
-            ajax("{{=URL('asignarTransectos')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-        }
-       )
-    // ajax para asignar transectos
-    $('#shadow_clone').on('change', '#tabla_sitio_muestra_id', function ()
-    {
-        $.ajax
-        (
-        {
-            type: "POST",
-            data: $('#tabla_sitio_muestra_id').serialize(),
-            url: "{{=URL('transectosExistentes')}}",
-                success: function(resultado)
-                {
-                        //alert(resultado);
-                        if(resultado==0)
-                        {
-                            alert('Favor de ingresar la pestaña de material leñoso caído antes de proceder a desglose de material 1000h');
-                            $('#tabla_sitio_muestra_id').val("");
-                        }
-                }
-        }
-        );
-        $('#tabla_transecto_ramas_id').remove();
-        //ajax es una función de Web2py que simplifica la función homónima de JQuery
-        //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-        // del elemento donde se insertará la respuesta
-        ajax("{{=URL('asignarTransectos')}}", ['sitio_muestra_id'], 'shadow_clone_2');
-    }
-    );
+	$('#diametro_5').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    /* Los campos de clase double no deben contener comas*/
-    $('.double').change
-    (
-        function()
-        {
-            var comaReg = /,/;
-            if(comaReg.test($(this).val()))
-            {
-                alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
-                $(this).val("");
-            }
-        }
-    )
+	$('#diametro_6').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
 
-    //Validando, para ello utilizamos la clase "obligatorio":
-    $('form').submit
-    (
-         function()
-         {
-            flag =true;
-            campos=$('.obligatorio');
-            campos.each(function() 
-            {
-                if(!$(this).val())
-                {
-                    flag = false;
-                }
-            }
-            );
-            /*Validando que los campos correspondientes a una rama estén 
-            llenos si ésta existe*/
-            if($('#tabla_existe_1').prop('checked'))
-            {
-                campos=$('.Rama_1 input, .Rama_1 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            if($('#tabla_existe_2').prop('checked'))
-            {
-                campos=$('.Rama_2 input, .Rama_2 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            if($('#tabla_existe_3').prop('checked'))
-            {
-                campos=$('.Rama_3 input, .Rama_3 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            if($('#tabla_existe_4').prop('checked'))
-            {
-                campos=$('.Rama_4 input, .Rama_4 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            if($('#tabla_existe_5').prop('checked'))
-            {
-                campos=$('.Rama_5 input, .Rama_5 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            if($('#tabla_existe_6').prop('checked'))
-            {
-                campos=$('.Rama_6 input, .Rama_6 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            if($('#tabla_existe_7').prop('checked'))
-            {
-                campos=$('.Rama_7 input, .Rama_7 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            if($('#tabla_existe_8').prop('checked'))
-            {
-                campos=$('.Rama_8 input, .Rama_8 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            if($('#tabla_existe_9').prop('checked'))
-            {
-                campos=$('.Rama_9 input, .Rama_9 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            if($('#tabla_existe_10').prop('checked'))
-            {
-                campos=$('.Rama_10 input, .Rama_10 select');
-                campos.each(function() 
-                {
-                    if(!$(this).val())
-                    {
-                        //alert('this');
-                        flag = false;
-                    }
-                }
-                );
-            }
-            //Sin embargo, como el campo de "sitio_muestra_id" es generado por
-            //medio de AJAX; no entra en la validación anterior. Lo tenemos que
-            //validar aparte:
-            if(!$('#shadow_clone').find('select:first').val())
-            {
-                flag = false;
-                //alert('Falta llenar el sitio');
-            }
-            //Lo mismo para el campo de transecto.
-            if(!$('#shadow_clone_2').find('select:first').val())
-            {
-                flag = false;
-                //alert('Falta llenar el transecto');
-            }
-            if(!flag)
-            {
-                alert('Faltó llenar algún campo');
-                return false;
-            }
-        }
-    )
+	$('#diametro_7').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
+
+	$('#diametro_8').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
+
+	$('#diametro_9').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
+
+	$('#diametro_10').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val()<7.5)
+				{
+					alert('El diámetro mínimo es 7.5cm');
+					$(this).val("");
+				}
+			}
+		}
+	)
+
+	// Los campos de clase double no deben contener comas
+	$('.double').change
+	(
+		function()
+		{
+			var comaReg = /,/;
+			if(comaReg.test($(this).val()))
+			{
+				alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
+				$(this).val("");
+			}
+		}
+	)
+
+	//////////////////////////////////////////
+	// Validaciones a la hora de enviar la forma
+	//////////////////////////////////////////
+
+	$('form').submit
+	(
+		function()
+		{
+			flag =true;
+
+			// Validando, para ello utilizamos la clase "obligatorio":
+
+			campos = $('.obligatorio');
+			campos.each(function() 
+			{
+				if(!$(this).val())
+				{
+					flag = false;
+				}
+			}
+			);
+
+			/* Validando que los campos correspondientes a una rama estén 
+			llenos si ésta existe*/
+
+			if($('#existe_1').prop('checked'))
+			{
+				campos=$('.Rama_1 input, .Rama_1 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_2').prop('checked'))
+			{
+				campos=$('.Rama_2 input, .Rama_2 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_3').prop('checked'))
+			{
+				campos=$('.Rama_3 input, .Rama_3 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_4').prop('checked'))
+			{
+				campos=$('.Rama_4 input, .Rama_4 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_5').prop('checked'))
+			{
+				campos=$('.Rama_5 input, .Rama_5 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_6').prop('checked'))
+			{
+				campos=$('.Rama_6 input, .Rama_6 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_7').prop('checked'))
+			{
+				campos=$('.Rama_7 input, .Rama_7 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_8').prop('checked'))
+			{
+				campos=$('.Rama_8 input, .Rama_8 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_9').prop('checked'))
+			{
+				campos=$('.Rama_9 input, .Rama_9 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			if($('#existe_10').prop('checked'))
+			{
+				campos=$('.Rama_10 input, .Rama_10 select');
+				campos.each(function() 
+				{
+					if(!$(this).val())
+					{
+						//alert('this');
+						flag = false;
+					}
+				}
+				);
+			}
+
+			// Sin embargo, como el campo de "sitio_muestra_id" es generado por
+			// medio de AJAX; no entra en la validación anterior. Lo tenemos que
+			// validar aparte:
+
+			if(!$('#shadow_clone').find('select:first').val())
+			{
+				flag = false;
+				//alert('Falta llenar el sitio');
+			}
+
+			// Lo mismo para el campo de transecto.
+			if(!$('#shadow_clone_2').find('select:first').val())
+			{
+				flag = false;
+				//alert('Falta llenar el transecto');
+			}
+
+			if(!flag)
+			{
+				alert('Faltó llenar algún campo');
+				return false;
+			}
+		}
+	)
 </script>
