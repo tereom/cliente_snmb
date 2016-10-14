@@ -391,14 +391,14 @@ def editarCarbono():
 #         user_signature=False)
 #     return dict(form=form)
 
-# def editarArbolTransecto():
-#     # writeble=False implica que no se puede editar el id
-#     db.Arbol_cuadrante.sitio_muestra_id.writable = False
-#     form = SQLFORM.smartgrid(db.Arbol_transecto,
-#         # csv= False implica que no se pueden descargar las tablas
-#         csv=False,
-#         user_signature=False)
-#     return dict(form=form)
+def editarArbolTransecto():
+    # writeble=False implica que no se puede editar el id
+    db.Arbol_cuadrante.sitio_muestra_id.writable = False
+    form = SQLFORM.smartgrid(db.Arbol_transecto,
+        # csv= False implica que no se pueden descargar las tablas
+        csv=False,
+        user_signature=False)
+    return dict(form=form)
 
 # def editarEpifitas():
 #     # writeble=False implica que no se puede editar el id

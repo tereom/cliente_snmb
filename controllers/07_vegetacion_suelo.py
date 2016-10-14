@@ -638,8 +638,14 @@ def index4():
         SELECT(_name='sitio_muestra_id',
             requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
         SELECT(_name='transecto',
-            requires=IS_IN_DB(db,db.Cat_transecto_direccion.nombre,'%(nombre)s'))
-        ]
+            requires=IS_IN_DB(db,db.Cat_transecto_direccion.nombre,'%(nombre)s')),
+
+        # Este campo proviene de los radio botones
+        INPUT(_name='sin_con_individuos', _type='string', requires=IS_NOT_EMPTY()),
+
+        # Campo escondido necesario para saber qué individuos procesar
+        INPUT(_name='estado_individuos', _type='string')
+    ]
 
     ##########################
     # Generando con un for los campos relativos a cada individuo:
@@ -648,33 +654,26 @@ def index4():
 
     for i in range(n_individuos):
 
-        # El campo de existe_i se utilizará para un while que leerá los datos
-        # de cada individuo.
-        #existe_i = 'existe_' + str(i+1)
-        individuo_numero_i = 'individuo_numero' + str(i+1)
-        nombre_comun_i = 'nombre_comun_' + str(i+1)
-        nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
-        forma_vida_i = 'forma_vida_' + str(i+1)
-        distancia_copa_i = 'distancia_copa_' + str(i+1)
-        altura_i = 'altura_' + str(i+1)
+        individuo_numero_i = 'individuo_numero_' + str(i)
+        nombre_comun_i = 'nombre_comun_' + str(i)
+        nombre_cientifico_i = 'nombre_cientifico_' + str(i)
+        forma_vida_i = 'forma_vida_' + str(i)
+        distancia_copa_i = 'distancia_copa_' + str(i)
+        altura_i = 'altura_' + str(i)
 
         camposArbolTransecto.extend([
-            #INPUT(_name=existe_i,_type='boolean'),
-            INPUT(_name=individuo_numero_i,_type='integer'),
-            INPUT(_name=nombre_comun_i,_type='string'),
-            INPUT(_name=nombre_cientifico_i,_type='string'),
-            INPUT(_name=forma_vida_i,_type='string'),
-            INPUT(_name=distancia_copa_i,_type='double'),
-            INPUT(_name=altura_i,_type='double')
+
+            INPUT(_name=individuo_numero_i, _type='integer'),
+            INPUT(_name=nombre_comun_i, _type='string'),
+            INPUT(_name=nombre_cientifico_i, _type='string'),
+            INPUT(_name=forma_vida_i, _type='string'),
+            INPUT(_name=distancia_copa_i, _type='double'),
+            INPUT(_name=altura_i, _type='double')
         ])
 
     formaArbolTransecto = FORM(*camposArbolTransecto)
 
     if formaArbolTransecto.accepts(request.vars,formname='formaArbolTransectoHTML'):
-
-        ###########################################
-        # Procesando los datos de cada individuo
-        ###########################################
 
         # Datos para localizar un sitio único y asociarle los puntos de carbono
         # a éste. El campo de TransectoID se asignará una vez por forma enviada,
@@ -683,50 +682,71 @@ def index4():
         arbolSitioID = formaArbolTransecto.vars['sitio_muestra_id']
         arbolTransectoID = formaArbolTransecto.vars['transecto']
 
-        # Como el while depende de 'individuo_numero_i', estos valores no podrán
-        # dejarse al usuario. Deberán llenarse automáticamente.
-        i = 0
-        individuo_numero_i = 'individuo_numero' + str(i+1)
+        # Si se declaró que hay individuos
+        if formaArbolTransecto.vars['sin_con_individuos'] == "con":
 
-        while bool(formaArbolTransecto.vars[individuo_numero_i]):
+            # Generando el vector que muestra si el elemento i está presente o no en
+            # la forma enviada mediante html, por medio del contenido del campo
+            # "estado_individuos"
 
-            # Creando de manera automatizada los nombres de los campos:
+            vector_estados = formaArbolTransecto.vars['estado_individuos'].split(',')
 
-            # El siguiente campo ya no se requieren en el cliente SAR-MOD v5,
-            # porque se utilizará JS para CXUDear campos en la vista.
+            for i in range(n_individuos):
 
-            # existe_i = 'existe_' + str(i+1)
-            #individuo_numero_i = 'individuo_numero' + str(i+1)
-            nombre_comun_i = 'nombre_comun_' + str(i+1)
-            nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
-            forma_vida_i = 'forma_vida_' + str(i+1)
-            distancia_copa_i = 'distancia_copa_' + str(i+1)
-            altura_i = 'altura_' + str(i+1)
+                # Si el individuo se envió en la forma
 
-            # Si existe el i-ésimo árbol:
-            #if bool(formaArbolTransecto.vars[existe_i]):
+                if vector_estados[i] == "true":
+
+                    # Creando de manera automatizada los nombres de los campos:
+
+                    individuo_numero_i = 'individuo_numero_' + str(i)
+                    nombre_comun_i = 'nombre_comun_' + str(i)
+                    nombre_cientifico_i = 'nombre_cientifico_' + str(i)
+                    forma_vida_i = 'forma_vida_' + str(i)
+                    distancia_copa_i = 'distancia_copa_' + str(i)
+                    altura_i = 'altura_' + str(i)
+
+                    ###########################################
+                    # Procesando los datos del individuo
+                    ###########################################
+
+                    datosArbolTransecto_i = {}
+            
+                    # Agregando los datos extraídos de la forma:
+
+                    datosArbolTransecto_i['individuo_numero'] = formaArbolTransecto.vars[individuo_numero_i]
+                    datosArbolTransecto_i['nombre_comun'] = formaArbolTransecto.vars[nombre_comun_i]
+                    datosArbolTransecto_i['nombre_cientifico'] = formaArbolTransecto.vars[nombre_cientifico_i]
+                    datosArbolTransecto_i['forma_vida'] = formaArbolTransecto.vars[forma_vida_i]
+                    datosArbolTransecto_i['distancia_copa'] = formaArbolTransecto.vars[distancia_copa_i]
+                    datosArbolTransecto_i['altura'] = formaArbolTransecto.vars[altura_i]
+
+                    datosArbolTransecto_i['sitio_muestra_id'] = arbolSitioID
+                    datosArbolTransecto_i['transecto'] = arbolTransectoID
+
+                    # Insertando los datos del arbol pequeño:
+                    db.Arbol_transecto.insert(**datosArbolTransecto_i)
+
+        # Si se declaró que no hay individuos en el transecto enviado
+        else:
+
+            ###########################################
+            # Procesando los datos del individuo fantasma
+            ###########################################
 
             datosArbolTransecto_i = {}
-        
-            # Agregando los datos extraídos de la forma:
-            datosArbolTransecto_i['individuo_numero'] = formaArbolTransecto.vars[individuo_numero_i]
-            datosArbolTransecto_i['nombre_comun'] = formaArbolTransecto.vars[nombre_comun_i]
-            datosArbolTransecto_i['nombre_cientifico'] = formaArbolTransecto.vars[nombre_cientifico_i]
-            datosArbolTransecto_i['forma_vida'] = formaArbolTransecto.vars[forma_vida_i]
-            datosArbolTransecto_i['distancia_copa'] = formaArbolTransecto.vars[distancia_copa_i]
-            datosArbolTransecto_i['altura'] = formaArbolTransecto.vars[altura_i]
+            datosArbolTransecto_i['individuo_numero'] = -1
+            datosArbolTransecto_i['forma_vida'] = "No existe"
+            datosArbolTransecto_i['distancia_copa'] = 0
+            datosArbolTransecto_i['altura'] = 0
 
             datosArbolTransecto_i['sitio_muestra_id'] = arbolSitioID
             datosArbolTransecto_i['transecto'] = arbolTransectoID
 
-            # Insertando los datos de la rama:
+            # Insertando los datos del arbol pequeño:
             db.Arbol_transecto.insert(**datosArbolTransecto_i)
 
-            # Incremento para el while
-            i = i + 1
-            individuo_numero_i = 'individuo_numero' + str(i+1)
-
-        response.flash = 'Éxito'
+        response.flash = 'Éxitos'
         
     elif formaArbolTransecto.errors:
 
@@ -1050,7 +1070,7 @@ def index6():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
-    return dict(listaConglomerado=listaConglomerado)
+    return dict(listaConglomerado = listaConglomerado)
 
 def informacionEpifitasExistente():
 
