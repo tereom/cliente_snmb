@@ -57,9 +57,9 @@ response.menu = [
     # Conteo de aves
     ###########################################
 
-    # (T('Conteo de aves'), False, URL('06_conteo_aves', 'index1'), [
-    #   (T('Punto de conteo'), False, URL('06_conteo_aves', 'index1')),
-    #   (T('Avistamientos'), False, URL('06_conteo_aves', 'index2'))]),
+     (T('Conteo de aves'), False, URL('06_conteo_aves', 'index1'), [
+       (T('Punto de conteo'), False, URL('06_conteo_aves', 'index1')),
+       (T('Avistamientos'), False, URL('06_conteo_aves', 'index2'))]),
 
     ###########################################
     # Especies invasoras y huellas/excretas
@@ -83,12 +83,15 @@ response.menu = [
       (T('Árboles grandes'), False, URL('07_vegetacion_suelo', 'index5')),
       (T('Epífitas'), False, URL('07_vegetacion_suelo', 'index6'))]),
 
-    # ### Impactos ambientales
-    # (T('Impactos ambientales'),False,URL('13_impactos_ambientales','index3'), [
-    #   (T('Incendios'),False,URL('13_impactos_ambientales','index3')),
-    #   (T('Plagas'),False,URL('13_impactos_ambientales','index2')),
-    #   (T('Impactos actuales'),False,URL('13_impactos_ambientales','index1'))
-    #   ]),
+    ###########################################
+    # Impactos ambientales
+    ###########################################
+    
+    (T('Impactos ambientales'),False,URL('08_impactos_ambientales','index3'), [
+      (T('Incendios'),False,URL('08_impactos_ambientales','index3')),
+      (T('Plagas'),False,URL('08_impactos_ambientales','index2')),
+      (T('Impactos actuales'),False,URL('08_impactos_ambientales','index1'))
+      ]),
 
     ###########################################
     # Cámara
@@ -123,21 +126,21 @@ response.menu = [
     
     (T('Revisar registros'), False, URL('09_revisar_registros', 'conglomerado'), [
       (T('Conglomerado'), False, URL('09_revisar_registros', 'conglomerado')),
-      #(T('Conteo de aves'), False, URL('09_revisar_registros', 'editarConteoAves')),
-      (T('Especies invasoras y huellas/excretas'), False, URL('09_revisar_registros', 'invasoras_huellas_excretas')),
-      (T('Material leñoso'), False, URL('09_revisar_registros', 'editarCarbonoRamas')),
-      (T('Carbono mantillo'), False, URL('09_revisar_registros', 'editarCarbono')),
-      (T('Árboles pequeños'), False, URL('09_revisar_registros', 'editarArbolTransecto')),
-      (T('Árboles grandes'), False, URL('09_revisar_registros', 'editarArbolCuadrante')),
-      (T('Epífitas'), False, URL('09_revisar_registros', 'editarEpifitas')),
-      #(T('Incendios'), False, URL('09_revisar_registros', 'editarIncendio')),
-      #(T('Plagas'), False, URL('09_revisar_registros', 'editarPlaga')),
-      #(T('Impactos ambientales'), False, URL('09_revisar_registros', 'editarImpacto')),
+      (T('Conteo de aves'), False, URL('09_revisar_registros', 'punto_conteo_aves')),
+      (T('Especies invasoras y huellas/excretas'), False, URL('09_revisar_registros', 'transecto_muestra')),
+      (T('Material leñoso caído'), False, URL('09_revisar_registros', 'transecto_ramas')),
+      (T('Carbono en el mantillo'), False, URL('09_revisar_registros', 'punto_carbono')),
+      (T('Árboles pequeños'), False, URL('09_revisar_registros', 'arbol_transecto')),
+      (T('Árboles grandes'), False, URL('09_revisar_registros', 'arbol_cuadrante')),
+      (T('Epífitas'), False, URL('09_revisar_registros', 'informacion_epifitas')),
+      (T('Incendios'), False, URL('09_revisar_registros', 'incendio')),
+      (T('Plagas'), False, URL('09_revisar_registros', 'plaga')),
+      (T('Impactos ambientales'), False, URL('09_revisar_registros', 'impacto_actual')),
       (T('Trampa cámara'), False, URL('09_revisar_registros', 'camara')),
       (T('Grabadora'), False, URL('09_revisar_registros', 'grabadora')),
-      (T('Especies invasoras extra'), False, URL('09_revisar_registros', 'invasoras_extra')),
-      (T('Huellas/excretas extra'), False, URL('09_revisar_registros', 'huellas_excretas_extra')),
-      (T('Especímenes/restos extra'), False, URL('09_revisar_registros', 'especimenes_restos_extra'))
+      (T('Especies invasoras extra'), False, URL('09_revisar_registros', 'especie_invasora_extra')),
+      (T('Huellas/excretas extra'), False, URL('09_revisar_registros', 'huella_excreta_extra')),
+      (T('Especímenes/restos extra'), False, URL('09_revisar_registros', 'especimen_restos_extra'))
 
       ]),
     

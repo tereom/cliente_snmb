@@ -675,9 +675,9 @@ def index4():
 
     if formaArbolTransecto.accepts(request.vars,formname='formaArbolTransectoHTML'):
 
-        # Datos para localizar un sitio único y asociarle los puntos de carbono
-        # a éste. El campo de TransectoID se asignará una vez por forma enviada,
-        # y afectará a todos los individuos registrados en la misma.
+        # Datos para localizar un transecto único y asociarle los árboles a este.
+        # Los campos de arbolSitioID y arbolTransectoID se asignarán una vez por
+        #  forma enviada, y afectarán a todos los individuos registrados en la misma.
 
         arbolSitioID = formaArbolTransecto.vars['sitio_muestra_id']
         arbolTransectoID = formaArbolTransecto.vars['transecto']
@@ -746,7 +746,7 @@ def index4():
             # Insertando los datos del arbol pequeño:
             db.Arbol_transecto.insert(**datosArbolTransecto_i)
 
-        response.flash = 'Éxitos'
+        response.flash = 'Éxito'
         
     elif formaArbolTransecto.errors:
 
@@ -765,8 +765,7 @@ def index4():
     listaTransecto = db(db.Cat_transecto_direccion).select(db.Cat_transecto_direccion.nombre)
 
     # Se seleccionan los campos apropiados para la combobox.
-    listaFormaVida = db(db.Cat_forma_vida.nombre != 'Sin individuo').select(
-        db.Cat_forma_vida.nombre)
+    listaFormaVida = db(db.Cat_forma_vida.nombre != 'No existe').select(db.Cat_forma_vida.nombre)
 
     ##############################################################
     # Creando la tabla de revisión de los registros ingresados
@@ -808,17 +807,28 @@ def transectosArboladoExistentes():
 
 def index5():
     
-    ## Controlador correspondiente a la pestaña Árboles grandes, de la sección
-    ## "Vegetación y suelo"
+    ## Controlador correspondiente a la pestaña "Árboles grandes", de
+    ## la sección "Vegetación y suelo"
 
     camposArbolCuadrante = [
 
-        # Datos para localizar un sitio único y asociarle los puntos de carbono a éste.
+        ###########################################
+        # Campos de los árboles grandes
+        ###########################################
+
+        # Datos para localizar un sitio único y asociarle un individuo a éste
+
         SELECT(_name='conglomerado_muestra_id',
             requires=IS_IN_DB(db,db.Conglomerado_muestra.id,'%(nombre)s')),
         SELECT(_name='sitio_muestra_id',
-            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s'))
-        ]
+            requires=IS_IN_DB(db,db.Sitio_muestra.id,'%(nombre)s')),
+
+        # Este campo proviene de los radio botones
+        INPUT(_name='sin_con_individuos', _type='string', requires=IS_NOT_EMPTY()),
+
+        # Campo escondido necesario para saber qué individuos procesar
+        INPUT(_name='estado_individuos', _type='string')
+    ]
 
     ##########################
     # Generando con un for los campos relativos a cada individuo:
@@ -827,115 +837,137 @@ def index5():
 
     for i in range(n_individuos):
 
-        # Creando de manera automatizada los nombres de los campos:
+        individuo_numero_i = 'individuo_numero_' + str(i)
+        distancia_i = 'distancia_' + str(i)
+        azimut_i = 'azimut_' + str(i)
+        nombre_comun_i = 'nombre_comun_' + str(i)
+        nombre_cientifico_i = 'nombre_cientifico_' + str(i)
 
-        existe_i = 'existe_' + str(i+1)
-        distancia_i = 'distancia_' + str(i+1)
-        azimut_i = 'azimut_' + str(i+1)
-        nombre_comun_i = 'nombre_comun_' + str(i+1)
-        nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
-        altura_i = 'altura_' + str(i+1)
-        diametro_normal_i = 'diametro_normal_' + str(i+1)
-        diametro_copa_i = 'diametro_copa_' + str(i+1)
+        # El siguiente campo se agregó en el esquema v14.
+        forma_vida_i = 'forma_vida_' +str(i)
 
-        # Los siguientes campos se agregaron en el esquema v14.
+        altura_i = 'altura_' + str(i)
+        diametro_normal_i = 'diametro_normal_' + str(i)
+        diametro_copa_i = 'diametro_copa_' + str(i)
 
-        cambios_i = 'cambios_' + str(i+1)
-        forma_vida_i = 'forma_vida_' + str(i+1)
+        # El siguiente campo se agregó en el esquema v14.
+        cambios_i = 'cambios_' + str(i)
 
         camposArbolCuadrante.extend([
 
-            # Campo para marcar si existe o no un árbol.
-            INPUT(_name=existe_i,_type='boolean'),
-
+            INPUT(_name=individuo_numero_i,_type='integer'),
             INPUT(_name=distancia_i,_type='double'),
             INPUT(_name=azimut_i,_type='double'),
             INPUT(_name=nombre_comun_i,_type='string'),
             INPUT(_name=nombre_cientifico_i,_type='string'),
+
+            # El siguiente campo se agregó en el esquema v14.
+            INPUT(_name=forma_vida_i,_type='string'),
+
             INPUT(_name=altura_i,_type='double'),
-            INPUT(_name=diametro_normal_i,_type='double'),
+
+            # El siguiente campo se cambió de tipo para aceptar valores separados
+            # por comas.
+            INPUT(_name=diametro_normal_i,_type='string'),
+
             INPUT(_name=diametro_copa_i,_type='double'),
 
-            # Los siguientes campos se agregaron en el esquema v14.
-
+            # El siguiente campo se agregó en el esquema v14.
             INPUT(_name=cambios_i,_type='string'),
-            INPUT(_name=forma_vida_i,_type='string')
-            ])
+        ])
 
-    formaArbol = FORM(*camposArbolCuadrante)
 
-    if formaArbol.accepts(request.vars,formname='formaArbolCuadranteHTML'):
+    formaArbolCuadrante = FORM(*camposArbolCuadrante)
 
-        ###########################################
-        # Procesando los datos de cada individuo
-        ###########################################
+    if formaArbolCuadrante.accepts(request.vars,formname='formaArbolCuadranteHTML'):
 
-        # Asignando el id del sitio al que pertenecen todos los individuos
-        # enviados en la forma.
+        # Datos para localizar un sitio único y asociarle los árboles a este.
+        # El campo de arbolSitioID se asignará una vez por
+        # forma enviada, y afectará a todos los individuos registrados en la misma.
 
-        arbolSitioID = formaArbol.vars['sitio_muestra_id']
+        arbolSitioID = formaArbolCuadrante.vars['sitio_muestra_id']
 
-        # Como el while depende de 'individuo_numero_i', estos valores no podrán
-        # dejarse al usuario. Deberán llenarse automáticamente.
-        i = 0
-        individuo_numero_i = 'individuo_numero' + str(i+1)
+        # Si se declaró que hay individuos
+        if formaArbolCuadrante.vars['sin_con_individuos'] == "con":
 
-        while bool(formaArbol.vars[individuo_numero_i]):
+            # Generando el vector que muestra si el elemento i está presente o no en
+            # la forma enviada mediante html, por medio del contenido del campo
+            # "estado_individuos"
 
-            # Creando de manera automatizada los nombres de los campos:
-            existe_i = 'existe_' + str(i+1)
-            distancia_i = 'distancia_' + str(i+1)
-            azimut_i = 'azimut_' + str(i+1)
-            nombre_comun_i = 'nombre_comun_' + str(i+1)
-            nombre_cientifico_i = 'nombre_cientifico_' + str(i+1)
-            altura_i = 'altura_' + str(i+1)
-            diametro_normal_i = 'diametro_normal_' + str(i+1)
-            diametro_copa_i = 'diametro_copa_' + str(i+1)
+            vector_estados = formaArbolCuadrante.vars['estado_individuos'].split(',')
 
-            # Los siguientes campos se agregaron en el esquema v14.
+            for i in range(n_individuos):
 
-            forma_vida_i = 'forma_vida_' + str(i+1)
-            cambios_i = 'cambios_' + str(i+1)
+                # Si el individuo se envió en la forma
 
-            # El campo "existe" toma un nuevo significado: como se muestrean ahora
-            # todos los árboles de un sitio, se insertará un registro fantasma si
-            # no se encuentran árboles en el mismo. Este registro fantasma tendrá
-            # existe "false"
+                if vector_estados[i] == "true":
 
-            datosArbol_i = {}
+                    # Creando de manera automatizada los nombres de los campos:
 
-            datosArbol_i['sitio_muestra_id'] = arbolSitioID
+                    individuo_numero_i = 'individuo_numero_' + str(i)
+                    distancia_i = 'distancia_' + str(i)
+                    azimut_i = 'azimut_' + str(i)
+                    nombre_comun_i = 'nombre_comun_' + str(i)
+                    nombre_cientifico_i = 'nombre_cientifico_' + str(i)
 
-            # Escribiendo el número de individuo
-            #datosArbol_i['individuo_numero'] = (i+1)
-        
-            # Agregando los datos extraídos de la forma:
-            datosArbol_i['existe'] = formaArbol.vars[existe_i]
-            datosArbol_i['distancia'] = formaArbol.vars[distancia_i]
-            datosArbol_i['azimut'] = formaArbol.vars[azimut_i]
-            datosArbol_i['nombre_comun'] = formaArbol.vars[nombre_comun_i]
-            datosArbol_i['nombre_cientifico'] = formaArbol.vars[nombre_cientifico_i]
-            datosArbol_i['altura'] = formaArbol.vars[altura_i]
-            datosArbol_i['diametro_normal'] = formaArbol.vars[diametro_normal_i]
-            datosArbol_i['diametro_copa'] = formaArbol.vars[diametro_copa_i]
+                    # El siguiente campo se agregó en el esquema v14.
+                    forma_vida_i = 'forma_vida_' +str(i)
 
-            # Los siguientes campos se agregaron en el esquema v14.
-            datosArbol_i['forma_vida'] = formaArbol.vars[forma_vida_i]
-            datosArbol_i['cambios'] = formaArbol.vars[cambios_i]
+                    altura_i = 'altura_' + str(i)
+                    diametro_normal_i = 'diametro_normal_' + str(i)
+                    diametro_copa_i = 'diametro_copa_' + str(i)
 
-            datosArbol_i['individuo_numero'] = formaArbol.vars[individuo_numero_i]
+                    # El siguiente campo se agregó en el esquema v14.
+                    cambios_i = 'cambios_' + str(i)
 
-            # Insertando los datos de la rama:
+                    ###########################################
+                    # Procesando los datos del individuo
+                    ###########################################
 
-            db.Arbol_cuadrante.insert(**datosArbol_i)
+                    datosArbolCuadrante_i = {}
+            
+                    # Agregando los datos extraídos de la forma:
 
-            # Incremento para el while
-            i = i + 1
-            individuo_numero_i = 'individuo_numero' + str(i+1)
+                    datosArbolCuadrante_i['individuo_numero'] = formaArbolCuadrante.vars[individuo_numero_i]
+                    datosArbolCuadrante_i['distancia'] = formaArbolCuadrante.vars[distancia_i]
+                    datosArbolCuadrante_i['azimut'] = formaArbolCuadrante.vars[azimut_i]
+                    datosArbolCuadrante_i['nombre_comun'] = formaArbolCuadrante.vars[nombre_comun_i]
+                    datosArbolCuadrante_i['nombre_cientifico'] = formaArbolCuadrante.vars[nombre_cientifico_i]
+                    datosArbolCuadrante_i['forma_vida'] = formaArbolCuadrante.vars[forma_vida_i]
+                    datosArbolCuadrante_i['altura'] = formaArbolCuadrante.vars[altura_i]
+                    datosArbolCuadrante_i['diametro_normal'] = formaArbolCuadrante.vars[diametro_normal_i]
+                    datosArbolCuadrante_i['diametro_copa'] = formaArbolCuadrante.vars[diametro_copa_i]
+                    datosArbolCuadrante_i['cambios'] = formaArbolCuadrante.vars[cambios_i]
+
+                    datosArbolCuadrante_i['sitio_muestra_id'] = arbolSitioID
+                    datosArbolCuadrante_i['existe'] = True
+
+
+                    # Insertando los datos del arbol grande:
+                    db.Arbol_cuadrante.insert(**datosArbolCuadrante_i)
+
+        # Si se declaró que no hay individuos en el sitio enviado
+
+        else:
+
+            ###########################################
+            # Procesando los datos del individuo fantasma
+            ###########################################
+
+            datosArbolCuadrante_i = {}
+    
+            datosArbolCuadrante_i['individuo_numero'] = -1
+            datosArbolCuadrante_i['forma_vida'] = "No existe"
+
+            datosArbolCuadrante_i['sitio_muestra_id'] = arbolSitioID
+            datosArbolCuadrante_i['existe'] = False
+
+            # Insertando los datos del arbol grande:
+            db.Arbol_cuadrante.insert(**datosArbolCuadrante_i)
 
         response.flash = 'Éxito'
         
-    elif formaArbol.errors:
+    elif formaArbolCuadrante.errors:
 
         response.flash = 'Hubo un error al llenar la forma'
 
@@ -949,11 +981,29 @@ def index5():
     listaConglomerado = db(db.Conglomerado_muestra).select(
         db.Conglomerado_muestra.id,db.Conglomerado_muestra.nombre)
 
-    # Regresando el número de individuos para crear la vista en HTML
+    # Se seleccionan los campos apropiados para las combobox.
+    listaFormaVida = db(db.Cat_forma_vida_arboles_grandes.nombre != 'No existe').select(
+        db.Cat_forma_vida_arboles_grandes.nombre)
+
+    listaCambios = db(db.Cat_cambios_arboles_grandes).select(
+        db.Cat_cambios_arboles_grandes.nombre)
+
+    ##############################################################
+    # Creando la tabla de revisión de los registros ingresados
+    ##############################################################
+
+    db.Arbol_cuadrante.sitio_muestra_id.writable = False
+    grid = SQLFORM.smartgrid(db.Arbol_cuadrante, orderby =~ db.Arbol_cuadrante.id,\
+        csv = False,user_signature = False, details = False,
+        create = False, searchable = False, editable = False)
+
+    # Regresando el número de ramas para crear la vista en HTML
     return dict(
         n_individuos = n_individuos,
-        listaConglomerado = listaConglomerado
-        )
+        listaConglomerado = listaConglomerado,
+        listaFormaVida = listaFormaVida,
+        listaCambios = listaCambios,
+        grid = grid)
 
 def sitiosArboladoExistentes():
 

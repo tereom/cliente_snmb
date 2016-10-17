@@ -151,7 +151,7 @@ def grabadora():
 
 	return dict(form = form)
 
-def invasoras_huellas_excretas():
+def transecto_muestra():
 
 	## Controlador correspondiente a la pestaña "Especies_invasoras y huellas/
 	## excretas", de la sección: "Revisar_registros". Genera las tablas de
@@ -202,7 +202,7 @@ def invasoras_huellas_excretas():
 
 	return dict(form = form)
 
-def invasoras_extra():
+def especie_invasora_extra():
 
 	## Controlador correspondiente a la pestaña "Especies invasoras extra",
 	## de la sección: "Revisar_registros". Genera las tablas de revisión
@@ -242,7 +242,7 @@ def invasoras_extra():
 
 	return dict(form = form)
 
-def huellas_excretas_extra():
+def huella_excreta_extra():
 
 	## Controlador correspondiente a la pestaña "Huellas/excretas extra",
 	## de la sección: "Revisar_registros". Genera las tablas de revisión
@@ -283,7 +283,7 @@ def huellas_excretas_extra():
 
 	return dict(form = form)
 
-def especimenes_restos_extra():
+def especimen_restos_extra():
 
 	## Controlador correspondiente a la pestaña "Especímenes/restos extra",
 	## de la sección: "Revisar_registros". Genera las tablas de revisión
@@ -326,115 +326,329 @@ def especimenes_restos_extra():
 
 	return dict(form = form)
 
-# # Conteo de aves
-# db.Punto_conteo_aves.condiciones_ambientales.requires=IS_IN_DB(db,
-#     db.Cat_condiciones_ambientales.nombre,'%(nombre)s')
+def punto_conteo_aves():
 
-# # Carbono
-# db.Punto_carbono.material_tipo.requires=IS_IN_DB(db,
-#     db.Cat_material_carbono.nombre,'%(nombre)s')
-# db.Punto_carbono.transecto_direccion.requires=IS_IN_DB(db,
-#     db.Cat_transecto_direccion.nombre,'%(nombre)s')
+	## Controlador correspondiente a la pestaña "Conteo de aves",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
 
-# db.Arbol_transecto.forma_vida.requires=IS_IN_DB(db,db.Cat_forma_vida.nombre,
-#     '%(nombre)s')
+	###########################################
+	# Menús desplegables de "Punto_conteo_aves"
+	###########################################
 
-# # Impactos ambientales
-# db.Impacto_actual.tipo.requires=IS_IN_DB(db,db.Cat_tipo_impacto.nombre,
-#     '%(nombre)s')
-# db.Incendio.tipo.requires=IS_IN_DB(db,db.Cat_incendio.nombre,'%(nombre)s')
-# db.Incendio.prop_afectacion_herbacea.requires=IS_IN_DB(db,
-#     db.Cat_prop_afectacion.nombre,'%(nombre)s')
-# db.Incendio.prop_afectacion_arbustiva.requires=IS_IN_DB(db,
-#     db.Cat_prop_afectacion.nombre,'%(nombre)s')
-# db.Incendio.prop_afectacion_arborea.requires=IS_IN_DB(db,
-#     db.Cat_prop_afectacion.nombre,'%(nombre)s')
-# db.Incendio.prop_copa_quemada.requires=IS_IN_DB(db,
-#     db.Cat_prop_afectacion.nombre,'%(nombre)s')
+	db.Punto_conteo_aves.condiciones_ambientales.requires=IS_IN_DB(db,
+		db.Cat_condiciones_ambientales.nombre,'%(nombre)s')
 
-# def editarConteoAves():
-#     # writeble=False implica que no se puede editar el id
-#     db.Punto_conteo_aves.sitio_muestra_id.writable = False
-#     db.Conteo_ave.punto_conteo_aves_id.writable = False
-#     db.Archivo_conteo_ave.conteo_ave_id.writable =False
-#     form = SQLFORM.smartgrid(db.Punto_conteo_aves,
-#         # csv= False implica que no se pueden descargar las tablas
-#         csv=False,
-#         user_signature=False)
-#     return dict(form=form)
+	###########################################
+	# Campos no modificables
+	###########################################
 
-def editarCarbono():
-    # writeble=False implica que no se puede editar el id
-    db.Punto_carbono.sitio_muestra_id.writable = False
-    form = SQLFORM.smartgrid(db.Punto_carbono,
-        # csv= False implica que no se pueden descargar las tablas
-        csv=False,
-        user_signature=False)
-    return dict(form=form)
+	db.Punto_conteo_aves.sitio_muestra_id.writable = False
+	db.Avistamiento_aves.punto_conteo_aves_id.writable = False
+	db.Archivo_avistamiento_aves.avistamiento_aves_id.writable = False
 
-# def editarCarbonoRamas():
-#     # writeble=False implica que no se puede editar el id
-#     db.Transecto_ramas.sitio_muestra_id.writable = False
-#     db.Rama_1000h.transecto_ramas_id.writable = False
-#     form = SQLFORM.smartgrid(db.Transecto_ramas,
-#         # csv= False implica que no se pueden descargar las tablas
-#         csv=False,
-#         user_signature=False)
-#     return dict(form=form)
+	###########################################
+	# Generando la forma
+	###########################################
 
-# def editarArbolCuadrante():
-#     # writeble=False implica que no se puede editar el id
-#     db.Arbol_cuadrante.sitio_muestra_id.writable = False
-#     form = SQLFORM.smartgrid(db.Arbol_cuadrante,
-#         # csv= False implica que no se pueden descargar las tablas
-#         csv=False,
-#         user_signature=False)
-#     return dict(form=form)
+	form = SQLFORM.smartgrid(db.Punto_conteo_aves,
+		linked_tables = [
+			'Avistamiento_aves',
+			'Archivo_avistamiento_aves'
+		],
+		details = True,
+		csv = True,
+		user_signature = False,
+		maxtextlengths = {
+			'Archivo_avistamiento_aves.archivo_nombre_original' : 50
+		},
+	)
 
-def editarArbolTransecto():
-    # writeble=False implica que no se puede editar el id
-    db.Arbol_cuadrante.sitio_muestra_id.writable = False
-    form = SQLFORM.smartgrid(db.Arbol_transecto,
-        # csv= False implica que no se pueden descargar las tablas
-        csv=False,
-        user_signature=False)
-    return dict(form=form)
+	return dict(form = form)
 
-# def editarEpifitas():
-#     # writeble=False implica que no se puede editar el id
-#     db.Informacion_epifitas.conglomerado_muestra_id.writable = False
-#     form = SQLFORM.smartgrid(db.Informacion_epifitas,
-#         # csv= False implica que no se pueden descargar las tablas
-#         csv=False,
-#         user_signature=False)
-#     return dict(form=form)
+def transecto_ramas():
 
-# def editarImpacto():
-#     # writeble=False implica que no se puede editar el id
-#     db.Impacto_actual.conglomerado_muestra_id.writable = False
-#     form = SQLFORM.smartgrid(db.Impacto_actual,
-#         # csv= False implica que no se pueden descargar las tablas
-#         csv=False,
-#         user_signature=False)
-#     return dict(form=form)
+	## Controlador correspondiente a la pestaña "Material leñoso caído",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
 
-# def editarIncendio():
-#     # writeble=False implica que no se puede editar el id
-#     db.Incendio.conglomerado_muestra_id.writable = False
-#     db.Archivo_incendio.incendio_id.writable = False
-#     form = SQLFORM.smartgrid(db.Incendio,
-#         # csv= False implica que no se pueden descargar las tablas
-#         csv=False,
-#         user_signature=False)
-#     return dict(form=form)
+	###########################################
+	# Menús desplegables de "Transecto_ramas"
+	###########################################
 
-# def editarPlaga():
-#     # writeble=False implica que no se puede editar el id
-#     db.Plaga.conglomerado_muestra_id.writable = False
-#     db.Archivo_plaga.plaga_id.writable = False
-#     form = SQLFORM.smartgrid(db.Plaga,
-#         # csv= False implica que no se pueden descargar las tablas
-#         csv=False,
-#         user_signature=False)
-#     return dict(form=form)
+	db.Transecto_ramas.direccion.requires=IS_IN_DB(db,
+		db.Cat_transecto_direccion.nombre,'%(nombre)s')
 
+	###########################################
+	# Menús desplegables de "Rama_1000h"
+	###########################################
+
+	db.Rama_1000h.grado.requires=IS_IN_DB(db,
+		db.Cat_grado_carbono.nombre,'%(nombre)s')
+
+	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Transecto_ramas.sitio_muestra_id.writable = False
+	db.Rama_1000h.transecto_ramas_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Transecto_ramas,
+		linked_tables = [
+			'Rama_1000h'
+		],
+		details = True,
+		csv = True,
+		user_signature = False
+	)
+
+	return dict(form = form)
+
+def punto_carbono():
+
+	## Controlador correspondiente a la pestaña "Carbono en el mantillo",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
+
+	###########################################
+	# Menús desplegables de "Punto_carbono"
+	###########################################
+
+	db.Punto_carbono.material_tipo.requires=IS_IN_DB(db,
+		db.Cat_material_carbono.nombre,'%(nombre)s')
+	db.Punto_carbono.transecto_direccion.requires=IS_IN_DB(db,
+	    db.Cat_transecto_direccion.nombre,'%(nombre)s')
+
+	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Punto_carbono.sitio_muestra_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Punto_carbono,
+		details = True,
+		csv = True,
+		user_signature = False
+	)
+
+	return dict(form = form)
+
+def arbol_transecto():
+
+	## Controlador correspondiente a la pestaña "Árboles pequeños y arbustos",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
+
+	###########################################
+	# Menús desplegables de "Arbol_transecto"
+	###########################################
+
+	db.Arbol_transecto.transecto.requires=IS_IN_DB(db,
+		db.Cat_transecto_direccion.nombre,'%(nombre)s')
+	db.Arbol_transecto.forma_vida.requires=IS_IN_DB(db,
+		db.Cat_forma_vida.nombre,'%(nombre)s')
+
+	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Arbol_transecto.sitio_muestra_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Arbol_transecto,
+		details = True,
+		csv = True,
+		user_signature = False
+	)
+
+	return dict(form = form)
+
+def arbol_cuadrante():
+
+	## Controlador correspondiente a la pestaña "Árboles grandes",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
+
+	###########################################
+	# Menús desplegables de "Arbol_cuadrante"
+	###########################################
+
+	db.Arbol_cuadrante.forma_vida.requires=IS_IN_DB(db,
+		db.Cat_forma_vida_arboles_grandes.nombre,'%(nombre)s')
+	db.Arbol_cuadrante.cambios.requires=IS_IN_DB(db,
+		db.Cat_cambios_arboles_grandes.nombre,'%(nombre)s')
+
+	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Arbol_cuadrante.sitio_muestra_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Arbol_cuadrante,
+		details = True,
+		csv = True,
+		user_signature = False
+	)
+
+	return dict(form = form)
+
+def informacion_epifitas():
+
+	## Controlador correspondiente a la pestaña "Epífitas",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
+
+	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Informacion_epifitas.conglomerado_muestra_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Informacion_epifitas,
+		details = True,
+		csv = True,
+		user_signature = False
+	)
+
+	return dict(form = form)
+
+def impacto_actual():
+
+	## Controlador correspondiente a la pestaña "Impactos ambientales actuales",
+	## de la sección: "Revisar_registros". Genera las tablas de revisión
+	## usando el método "smartgrid" incluido en Web2py.
+
+	###########################################
+	# Menús desplegables de "Impacto_actual"
+	###########################################
+
+	db.Impacto_actual.tipo.requires=IS_IN_DB(db,
+		db.Cat_tipo_impacto.nombre,'%(nombre)s')
+	db.Impacto_actual.en_vegetacion.requires=IS_IN_DB(db,
+		db.Cat_severidad_impactos.nombre,'%(nombre)s')
+	db.Impacto_actual.en_suelo.requires=IS_IN_DB(db,
+		db.Cat_severidad_impactos.nombre,'%(nombre)s')
+
+	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Impacto_actual.conglomerado_muestra_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Impacto_actual,
+		details = True,
+		csv = True,
+		user_signature = False
+	)
+
+	return dict(form = form)
+
+def plaga():
+
+	## Controlador correspondiente a la pestaña "Plagas", de la sección:
+	## "Revisar_registros". Genera las tablas de revisión usando el método
+	## "smartgrid" incluido en Web2py.
+
+	###########################################
+	# Menús desplegables de "Plaga"
+	###########################################
+
+	db.Plaga.agente.requires=IS_IN_DB(db,
+		db.Cat_agente_impactos.nombre,'%(nombre)s')
+	db.Plaga.prop_afectacion_arborea.requires=IS_IN_DB(db,
+		db.Cat_prop_afectacion.nombre,'%(nombre)s')
+	db.Plaga.prop_afectacion_repoblado.requires=IS_IN_DB(db,
+		db.Cat_prop_afectacion.nombre,'%(nombre)s')
+
+	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Plaga.conglomerado_muestra_id.writable = False
+	db.Archivo_plaga.plaga_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Plaga,
+		linked_tables = [
+			'Archivo_plaga'
+		],
+		details = True,
+		csv = True,
+		user_signature = False,
+		maxtextlengths = {
+			'Archivo_plaga.archivo_nombre_original' : 50
+		}
+	)
+
+	return dict(form = form)
+
+def incendio():
+
+	## Controlador correspondiente a la pestaña "Incendios", de la sección:
+	## "Revisar_registros". Genera las tablas de revisión usando el método
+	## "smartgrid" incluido en Web2py.
+
+	###########################################
+	# Menús desplegables de "Incendio"
+	###########################################
+
+	db.Incendio.tipo.requires=IS_IN_DB(db,db.Cat_incendio.nombre,'%(nombre)s')
+	db.Incendio.prop_afectacion_herbacea.requires=IS_IN_DB(db,
+	    db.Cat_prop_afectacion.nombre,'%(nombre)s')
+	db.Incendio.prop_afectacion_arbustiva.requires=IS_IN_DB(db,
+	    db.Cat_prop_afectacion.nombre,'%(nombre)s')
+	db.Incendio.prop_afectacion_arborea.requires=IS_IN_DB(db,
+	    db.Cat_prop_afectacion.nombre,'%(nombre)s')
+	db.Incendio.prop_copa_quemada.requires=IS_IN_DB(db,
+	    db.Cat_prop_afectacion.nombre,'%(nombre)s')	
+
+	###########################################
+	# Campos no modificables
+	###########################################
+
+	db.Incendio.conglomerado_muestra_id.writable = False
+	db.Archivo_incendio.incendio_id.writable = False
+
+	###########################################
+	# Generando la forma
+	###########################################
+
+	form = SQLFORM.smartgrid(db.Incendio,
+		linked_tables = [
+			'Archivo_incendio'
+		],
+		details = True,
+		csv = True,
+		user_signature = False,
+		maxtextlengths = {
+			'Archivo_incendio.archivo_nombre_original' : 50
+		}
+	)
+
+	return dict(form = form)

@@ -92,9 +92,11 @@ db.define_table('Arbol_transecto',*Campos_Arbol_transecto,
 Campos_Arbol_cuadrante = [
 
 	Field('sitio_muestra_id','reference Sitio_muestra',required=True),
-	#Se insertará a partir de un catálogo
-	# Field('cuadrante','string',required=True),
 	Field('individuo_numero','integer',required=True),
+
+	# El siguiente campo ya no es necesario para el protocolo de toma de datos
+	# del cliente v5, pero es necesario mantenerlo para datos capturados con
+	# protocolos anteriores
 	Field('existe', 'boolean',required=True),
 
 	Field('distancia','double'),

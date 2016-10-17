@@ -1,464 +1,464 @@
 {{extend 'layout.html'}}
 {{block head}}
 
-    <style type="text/css">
+	<style type="text/css">
 
-        /* TablaCONANP se refiere a una tabla tipo formulario en papel (tomada tal 
-        cuál) de los formularios de trabajo de campo*/
+		/* TablaCONANP se refiere a una tabla tipo formulario en papel (tomada tal 
+		cuál) de los formularios de trabajo de campo*/
 
-        .Tabla .generic-widget, .Tabla .Estatico
-        {
-            margin-right: 2cm;
-            width: 4.4cm;
-        }
+		.Tabla .generic-widget, .Tabla .Estatico
+		{
+			margin-right: 2cm;
+			width: 4.4cm;
+		}
 
 
-        .TablaCONANP .integer, .TablaCONANP .double
-        {
-            margin-left: 0.25cm;
-            margin-right: 0.25cm;
-            width: 2.5cm;
-            text-align: center;
-        }
+		.TablaCONANP .integer, .TablaCONANP .double
+		{
+			margin-left: 0.25cm;
+			margin-right: 0.25cm;
+			width: 2.5cm;
+			text-align: center;
+		}
 
-        .TablaCONANP .string
-        {
-            /* Nombres comunes y científicos*/
-            margin-left: 0.25cm;
-            margin-right: 0.25cm;
-            width: 4cm;
-            text-align: center;
-        }
-        
-        .TablaCONANP .generic-widget
-        {
-            margin-left: 0.25cm;
-            margin-right: 0.25cm;
-            width: 2.9cm;
-        }
-        
-        .FlotaIzquierda
-        {
-            float: left;
-        }
+		.TablaCONANP .string
+		{
+			/* Nombres comunes y científicos*/
+			margin-left: 0.25cm;
+			margin-right: 0.25cm;
+			width: 4cm;
+			text-align: center;
+		}
+		
+		.TablaCONANP .generic-widget
+		{
+			margin-left: 0.25cm;
+			margin-right: 0.25cm;
+			width: 2.9cm;
+		}
+		
+		.FlotaIzquierda
+		{
+			float: left;
+		}
 
-        .Centrar
-        {
-            text-align: center;
-        }
+		.Centrar
+		{
+			text-align: center;
+		}
 
-        .CentrarV
-        {
-            vertical-align: middle;
-        }
+		.CentrarV
+		{
+			vertical-align: middle;
+		}
 
-    </style>
+	</style>
 {{end}}
 
 <form action="" method="post">
-    <input type="hidden" name="_formname" value="formaArbolTransectoHTML"/>
-    <fieldset>
-        <legend>
-            Árboles pequeños y arbustos
-        </legend>
-        <table class="Tabla">
-            <tr>
-                <td rowspan="2">
-                    <label for="conglomerado_muestra_id">Conglomerado</label>
-                    <!--este campo sólo sirve para encontrar
-                    con AJAX los sitios existentes asociados al conglomerado
-                    elegido, al enviar la forma al controlador, se utilizará
-                    para guardar el registro de la cámara, únicamente el id
-                    del sitio (de la dropdown generada mediante AJAX)-->
-                    <select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
-                        <option value=""/>
-                        {{for conglomerado in listaConglomerado:}}
-                            <option value="{{=conglomerado.id}}">
-                                {{=conglomerado.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                </td>                
-                <td rowspan="2">
-                    <div class="Estatico">
-                        <label for="sitio_muestra_id">Sitio</label>
-                    </div>
-                    <!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
-                    <div id="shadow_clone">
-                        <select class="generic-widget" name="sitio_muestra_id" id="sitio_muestra_id">
-                            <option value=""/>
-                        </select>
-                    </div>
-                </td>
-                <td rowspan="2">
-                    <label for="transecto">Transecto</label>
-                    <select class="generic-widget obligatorio" name="transecto" id="transecto">
-                        <option value=""/>
-                        {{for transecto in listaTransecto:}}
-                            <option value="{{=transecto.nombre}}">
-                                {{=transecto.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                </td>
-                <td class="CentrarV">
-                    <div class="FlotaIzquierda" style="padding-right:17px;">
-                        <label for="sin_individuos">Sin individuos</label>
-                    </div>
-                    <!--Marcamos que no hay individuos por default-->
-                    <input class="boolean" name="sin_con_individuos" id="sin_individuos" type="radio" value="sin" checked="checked"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div class="FlotaIzquierda" style="padding-right:10px;">
-                        <label for="con_individuos">Con individuos</label>
-                    </div>
-                    <input class="boolean" name="sin_con_individuos" id="con_individuos" type="radio" value="con"/>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                    <!--Para dar formato a la última columna-->
-                    <span class="generic-widget"></span>
-                </td>
-            </tr>
-        </table>
+	<input type="hidden" name="_formname" value="formaArbolTransectoHTML"/>
+	<fieldset>
+		<legend>
+			Árboles pequeños y arbustos
+		</legend>
+		<table class="Tabla">
+			<tr>
+				<td rowspan="2">
+					<label for="conglomerado_muestra_id">Conglomerado</label>
+					<!--este campo sólo sirve para encontrar
+					con AJAX los sitios existentes asociados al conglomerado
+					elegido, al enviar la forma al controlador, se utilizará
+					para guardar el registro de la cámara, únicamente el id
+					del sitio (de la dropdown generada mediante AJAX)-->
+					<select class="generic-widget obligatorio" name="conglomerado_muestra_id" id="conglomerado_muestra_id">
+						<option value=""/>
+						{{for conglomerado in listaConglomerado:}}
+							<option value="{{=conglomerado.id}}">
+								{{=conglomerado.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>                
+				<td rowspan="2">
+					<div class="Estatico">
+						<label for="sitio_muestra_id">Sitio</label>
+					</div>
+					<!-- El ID es para cambiar la lista de sitios asociados a un conglomerado dinámicamente, utilizando AJAX-->
+					<div id="shadow_clone">
+						<select class="generic-widget" name="sitio_muestra_id" id="sitio_muestra_id">
+							<option value=""/>
+						</select>
+					</div>
+				</td>
+				<td rowspan="2">
+					<label for="transecto">Transecto</label>
+					<select class="generic-widget obligatorio" name="transecto" id="transecto">
+						<option value=""/>
+						{{for transecto in listaTransecto:}}
+							<option value="{{=transecto.nombre}}">
+								{{=transecto.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>
+				<td class="CentrarV">
+					<div class="FlotaIzquierda" style="padding-right:17px;">
+						<label for="sin_individuos">Sin individuos</label>
+					</div>
+					<!--Marcamos que no hay individuos por default-->
+					<input class="boolean" name="sin_con_individuos" id="sin_individuos" type="radio" value="sin" checked="checked"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div class="FlotaIzquierda" style="padding-right:10px;">
+						<label for="con_individuos">Con individuos</label>
+					</div>
+					<input class="boolean" name="sin_con_individuos" id="con_individuos" type="radio" value="con"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+				</td>
+				<td>
+					<!--Para dar formato a la última columna-->
+					<span class="generic-widget"></span>
+				</td>
+			</tr>
+		</table>
 
-        <hr/>
+		<hr/>
 
-        <!-- la tabla está escondida por default.-->
-        <div id="captura_individuos" style="display:none">
-            <table id="tabla_individuos" class="TablaCONANP">
-                <!-- se usa thead porque se obtendrá el número de individuos contando
-                tr's-->
-                <thead>
-                    <th class="Centrar"># Individuo</th>
-                    <th class="Centrar">Nombre común</th>
-                    <th class="Centrar">Nombre científico</th>
-                    <th class="Centrar">Forma de vida</th>
-                    <th class="Centrar">Longitud que intersecta (cm)</th>
-                    <th class="Centrar">Altura (cm)</th>
-                    <th> <!--esta celda es para el botón de eliminar--></th>
-                </thead>
+		<!-- la tabla está escondida por default.-->
+		<div id="captura_individuos" style="display:none">
+			<table id="tabla_individuos" class="TablaCONANP">
+				<!-- se usa thead porque se obtendrá el número de individuos contando
+				tr's-->
+				<thead>
+					<th class="Centrar"># Individuo</th>
+					<th class="Centrar">Nombre común</th>
+					<th class="Centrar">Nombre científico</th>
+					<th class="Centrar">Forma de vida</th>
+					<th class="Centrar">Longitud que intersecta (cm)</th>
+					<th class="Centrar">Altura (cm)</th>
+					<th> <!--esta celda es para el botón de eliminar--></th>
+				</thead>
 
-                <tr id="0">
-                    <td>
-                        <input class="integer" name="individuo_numero_0" id="individuo_numero_0" type="text" value="" placeholder="1"/>
-                    </td>
-                    <td>
-                        <input class="string" name="nombre_comun_0" id="nombre_comun_0" type="text" value="" placeholder="Encino mexicano azul"/>
-                    </td>
-                    <td>
-                        <input class="string" name="nombre_cientifico_0" id="nombre_cientifico_0" type="text" value="" placeholder="Quercus chrysolepis"/>
-                    </td>
-                    <td>
-                        <select class="generic-widget" name="forma_vida_0" id="forma_vida_0">
-                            <option value=""/>
-                            {{for forma_vida in listaFormaVida:}}
-                                <option value="{{=forma_vida.nombre}}">
-                                    {{=forma_vida.nombre}}
-                                </option>
-                            {{pass}}
-                        </select>
-                    </td>
-                    <td>
-                        <input class="double" name="distancia_copa_0" id="distancia_copa_0" type="text" value="" placeholder="115"/>
-                    </td>
-                    <td>
-                        <input class="double" name="altura_0" id="altura_0" type="text" value="" placeholder="1530"/>
-                    </td>
-                    <td>
-                        <!--esta celda es para el botón de eliminar-->
-                    </td>
-                </tr>
-            </table>
-            <input type="button" id="agregar_arbol" value="Nuevo árbol" />
-        </div>
+				<tr id="0">
+					<td>
+						<input class="integer" name="individuo_numero_0" id="individuo_numero_0" type="text" value="" placeholder="1"/>
+					</td>
+					<td>
+						<input class="string" name="nombre_comun_0" id="nombre_comun_0" type="text" value="" placeholder="Encino mexicano azul"/>
+					</td>
+					<td>
+						<input class="string" name="nombre_cientifico_0" id="nombre_cientifico_0" type="text" value="" placeholder="Quercus chrysolepis"/>
+					</td>
+					<td>
+						<select class="generic-widget" name="forma_vida_0" id="forma_vida_0">
+							<option value=""/>
+							{{for forma_vida in listaFormaVida:}}
+								<option value="{{=forma_vida.nombre}}">
+									{{=forma_vida.nombre}}
+								</option>
+							{{pass}}
+						</select>
+					</td>
+					<td>
+						<input class="double" name="distancia_copa_0" id="distancia_copa_0" type="text" value="" placeholder="115"/>
+					</td>
+					<td>
+						<input class="double" name="altura_0" id="altura_0" type="text" value="" placeholder="1530"/>
+					</td>
+					<td>
+						<!--esta celda es para el botón de eliminar-->
+					</td>
+				</tr>
+			</table>
+			<input type="button" id="agregar_individuo" value="Nuevo individuo" />
+		</div>
 
-        <!-- Segunda tabla escondida para agregar individuos -->
-        <table id="nuevo_arbol" style="display:none">
-            <tr>
-                <td>
-                    <!-- se obtendrán los valores de "name" y "id" concatenando
-                    con el valor de id de <tr>-->
-                    <input class="integer" name="individuo_numero_" id="individuo_numero_" type="text" value="" placeholder="1"/>
-                </td>
-                <td>
-                    <input class="string" name="nombre_comun_" id="nombre_comun_" type="text" value="" placeholder="Encino mexicano azul"/>
-                </td>
-                <td>
-                    <input class="string" name="nombre_cientifico_" id="nombre_cientifico_" type="text" value="" placeholder="Quercus chrysolepis"/>
-                </td>
-                <td>
-                    <select class="generic-widget" name="forma_vida_" id="forma_vida_">
-                        <option value=""/>
-                        {{for forma_vida in listaFormaVida:}}
-                            <option value="{{=forma_vida.nombre}}">
-                                {{=forma_vida.nombre}}
-                            </option>
-                        {{pass}}
-                    </select>
-                </td>
-                <td>
-                    <input class="double" name="distancia_copa_" id="distancia_copa_" type="text" value="" placeholder="115"/>
-                </td>
-                <td>
-                    <input class="double" name="altura_" id="altura_" type="text" value="" placeholder="1530"/>
-                </td>
-               <td>
-                    <button class="eliminar">Eliminar</button>
-                </td>
-            </tr>
-      </table>
+		<!-- Segunda tabla escondida para agregar individuos -->
+		<table id="nuevo_individuo" style="display:none">
+			<tr>
+				<td>
+					<!-- se obtendrán los valores de "name" y "id" concatenando
+					con el valor de id de <tr>-->
+					<input class="integer" name="individuo_numero_" id="individuo_numero_" type="text" value="" placeholder="1"/>
+				</td>
+				<td>
+					<input class="string" name="nombre_comun_" id="nombre_comun_" type="text" value="" placeholder="Encino mexicano azul"/>
+				</td>
+				<td>
+					<input class="string" name="nombre_cientifico_" id="nombre_cientifico_" type="text" value="" placeholder="Quercus chrysolepis"/>
+				</td>
+				<td>
+					<select class="generic-widget" name="forma_vida_" id="forma_vida_">
+						<option value=""/>
+						{{for forma_vida in listaFormaVida:}}
+							<option value="{{=forma_vida.nombre}}">
+								{{=forma_vida.nombre}}
+							</option>
+						{{pass}}
+					</select>
+				</td>
+				<td>
+					<input class="double" name="distancia_copa_" id="distancia_copa_" type="text" value="" placeholder="115"/>
+				</td>
+				<td>
+					<input class="double" name="altura_" id="altura_" type="text" value="" placeholder="150"/>
+				</td>
+			   <td>
+					<button class="eliminar_individuo">Eliminar</button>
+				</td>
+			</tr>
+	  </table>
 
-      <!-- El siguiente campo sirve para saber cuáles individuos se procesarán
-      a nivel de controlador. Contiene un vector con tantos individuos como el
-      controlador envía, y el elemento i es false si el individuo correspondiente
-      no está presente y true si lo está-->
+	  <!-- El siguiente campo sirve para saber cuáles individuos se procesarán
+	  a nivel de controlador. Contiene un vector con tantos individuos como el
+	  controlador envía, y el elemento i es false si el individuo correspondiente
+	  no está presente y true si lo está-->
 
-      <input type="hidden" name="estado_individuos" id="estado_individuos"/>
+	  <input type="hidden" name="estado_individuos" id="estado_individuos"/>
 
-    </fieldset>
+	</fieldset>
 
-    <hr/>
-    <br/>
+	<hr/>
+	<br/>
 
-    <input type="submit" value="Enviar" class="btn" id="enviar"/>
+	<input type="submit" value="Enviar" class="btn" id="enviar"/>
 </form>
 
 <br/>
 <br/>
 
 <fieldset>
-    <legend>
-        Revisión de registros
-    </legend>
-    {{=grid}}
+	<legend>
+		Revisión de registros
+	</legend>
+	{{=grid}}
 </fieldset>
 
 <script>
 
-    // Para evitar problemas de scope, todo se metió en document.ready.
-    $(document).ready(function(){
+	// Para evitar problemas de scope, todo se metió en document.ready.
+	$(document).ready(function(){
 
-        //////////////////////////////////////////
-        // AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
-        //////////////////////////////////////////
+		//////////////////////////////////////////
+		// AJAX para llenar la combobox con los sitios existentes al elegir el conglomerado
+		//////////////////////////////////////////
 
-        $('#conglomerado_muestra_id').change(function(){
-                $('#sitio_muestra_id').remove();
+		$('#conglomerado_muestra_id').change(function(){
+				$('#sitio_muestra_id').remove();
 
-                //ajax es una función de Web2py que simplifica la función homónima de JQuery
-                //recibe el URL destino, los nombres de los campos que se enviarán y el ID
-                // del elemento donde se insertará la respuesta
-                ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
+				//ajax es una función de Web2py que simplifica la función homónima de JQuery
+				//recibe el URL destino, los nombres de los campos que se enviarán y el ID
+				// del elemento donde se insertará la respuesta
+				ajax("{{=URL('asignarSitios')}}", ['conglomerado_muestra_id'], 'shadow_clone');
 
-                // inicializando el transecto
-                $('#transecto').val("");
-        })
+				// inicializando el transecto
+				$('#transecto').val("");
+		})
 
-        //////////////////////////////////////////
-        // Inicializar el transecto cada que se elige un sitio:
-        //////////////////////////////////////////   
+		//////////////////////////////////////////
+		// Inicializar el transecto cada que se elige un sitio:
+		//////////////////////////////////////////   
 
-        $('#shadow_clone').on('change', '#sitio_muestra_id', function (){
+		$('#shadow_clone').on('change', '#sitio_muestra_id', function (){
 
-            // inicializando el transecto
-            $('#transecto').val("");
-        });
+			// inicializando el transecto
+			$('#transecto').val("");
+		});
 
-        //////////////////////////////////////////
-        // AJAX para evitar que se envíe la información de correspondiente a
-        // un sitio y transecto más de una vez:
-        //////////////////////////////////////////
+		//////////////////////////////////////////
+		// AJAX para evitar que se envíe la información de correspondiente a
+		// un sitio y transecto más de una vez:
+		//////////////////////////////////////////
 
-        $('#transecto').change(function(){
-            $.ajax
-            ({
-                type: "POST",
-                data: $('#sitio_muestra_id, #transecto').serialize(),
-                url: "{{=URL('transectosArboladoExistentes')}}",
-                    success: function(resultado)
-                    {
-                        //alert(resultado);
-                        if(resultado>=1)
-                        {
-                            alert('Ya se introdujo la información correspondiente a ' +
-                                'este transecto en este sitio');
-                            $('#sitio_muestra_id').val("");
-                            $('#transecto').val("");
-                        }
-                    }
-            });
-        }
-        );
+		$('#transecto').change(function(){
+			$.ajax
+			({
+				type: "POST",
+				data: $('#sitio_muestra_id, #transecto').serialize(),
+				url: "{{=URL('transectosArboladoExistentes')}}",
+					success: function(resultado)
+					{
+						//alert(resultado);
+						if(resultado>=1)
+						{
+							alert('Ya se introdujo la información correspondiente a ' +
+								'este transecto en este sitio');
+							$('#sitio_muestra_id').val("");
+							$('#transecto').val("");
+						}
+					}
+			});
+		}
+		);
 
-        //////////////////////////////////////////
-        // Código para manipulación de la tabla dinámica:
-        //////////////////////////////////////////
+		//////////////////////////////////////////
+		// Código para manipulación de la tabla dinámica:
+		//////////////////////////////////////////
 
-        // id sirve para llevar el control de registros creados / eliminados en
-        // un arreglo.
-        var id = 0;
+		// id sirve para llevar el control de registros creados / eliminados en
+		// un arreglo.
+		var id = 0;
 
-        // Creando el arreglo para guardar el estado de los individuos
-        var vector_estados = [];
+		// Creando el arreglo para guardar el estado de los individuos
+		var vector_estados = [];
 
-        // inicializando vector de registro de estado de individuos
-        for(var i = 0 ; i < {{=n_individuos}}; i++){
-            vector_estados[i] = false;
-        }
+		// inicializando vector de registro de estado de individuos
+		for(var i = 0 ; i < {{=n_individuos}}; i++){
+			vector_estados[i] = false;
+		}
 
-        // como el primer individuo siempre existe
-        vector_estados[0] = true;
+		// como el primer individuo siempre existe
+		vector_estados[0] = true;
 
-        /* Código para agregar un nuevo renglón a la tabla al hacer click en el
-        botón correspondiente */
-        $("#agregar_arbol").click(function() {
+		/* Código para agregar un nuevo renglón a la tabla al hacer click en el
+		botón correspondiente */
+		$("#agregar_individuo").click(function() {
 
-            id++;
+			id++;
 
-            if(id >= {{=n_individuos}}){
-                alert("No se pueden ingresar más árboles, contacte a CONABIO para " + 
-                    "mayor información");
-            }
-            else{
+			if(id >= {{=n_individuos}}){
+				alert("No se pueden ingresar más árboles, contacte a CONABIO para " + 
+					"mayor información");
+			}
+			else{
 
-                // Obteniendo el nuevo renglón de la tabla "#nuevo_arbol"
-                var row = $('#nuevo_arbol tr').clone(true);
+				// Obteniendo el nuevo renglón de la tabla "#nuevo_individuo"
+				var row = $('#nuevo_individuo tr').clone(true);
 
-                // Agregando al renglón clon su id.
-                row.attr('id',id);
+				// Agregando al renglón clon su id.
+				row.attr('id',id);
 
-                // Creando el nombre y el id de cada control en el renglón clon.
-                row.find("input:text, select").each(function() {
-                    $(this).attr("id", $(this).attr("id") + id);
-                    $(this).attr("name", $(this).attr("name") + id);
-                });
+				// Creando el nombre y el id de cada control en el renglón clon.
+				row.find("input:text, select").each(function() {
+					$(this).attr("id", $(this).attr("id") + id);
+					$(this).attr("name", $(this).attr("name") + id);
+				});
 
-                // Inicializando campos del renglón clon
-                row.find("input:text").val("");
+				// Inicializando campos del renglón clon
+				row.find("input:text").val("");
 
-                // Agregando el renglón clon a la base de datos
-                row.appendTo('#tabla_individuos');
+				// Agregando el renglón clon a la base de datos
+				row.appendTo('#tabla_individuos');
 
-                // registrando el estado del nuevo individuo
-                vector_estados[id] = true;
+				// registrando el estado del nuevo individuo
+				vector_estados[id] = true;
 
-                //alert(vector_estados);
-                return false;
-            }
-        });        
+				//alert(vector_estados);
+				return false;
+			}
+		});        
 
-        // Código para eliminar un renglón agregado con la función anterior.
+		// Código para eliminar un renglón agregado con la función anterior.
 
-        $('.eliminar').on("click", function() {
+		$('.eliminar_individuo').on("click", function() {
 
-            // Obteniendo id del renglón eliminado
-            id_eliminado = $(this).parents("tr").attr('id');
+			// Obteniendo id del renglón eliminado
+			id_eliminado = $(this).parents("tr").attr('id');
 
-            // Eliminando el renglón eliminado
-            $(this).parents("tr").remove();
+			// Eliminando el renglón eliminado
+			$(this).parents("tr").remove();
 
-            // Registrando el estado del individuo eliminado
-            vector_estados[id_eliminado] = false;
-            //alert(vector_estados);
-        });
+			// Registrando el estado del individuo eliminado
+			vector_estados[id_eliminado] = false;
+			//alert(vector_estados);
+		});
 
-        //////////////////////////////////////////
-        // Funcionamiento de la vista
-        //////////////////////////////////////////
+		//////////////////////////////////////////
+		// Funcionamiento de la vista
+		//////////////////////////////////////////
 
-        // obtener radio botones
-        var radios = $('input:radio[name=sin_con_individuos]');
-        // obtener la tabla
-        var toggledTable = $('#captura_individuos');
+		// obtener radio botones
+		var radios = $('input:radio[name=sin_con_individuos]');
+		// obtener la tabla
+		var toggledTable = $('#captura_individuos');
 
-        /* Cuando se hace click en el radio botón correspondiente (sin / con
-        individuos), se hace fade-in / out de la tabla */
-        radios.click(function() {
-            if (radios.filter(':checked[value="con"]').length) {
-                toggledTable.fadeIn();
-            } else {
-                toggledTable.fadeOut();
-            }
-        });
+		/* Cuando se hace click en el radio botón correspondiente (sin / con
+		individuos), se hace fade-in / out de la tabla */
+		radios.click(function() {
+			if (radios.filter(':checked[value="con"]').length) {
+				toggledTable.fadeIn();
+			} else {
+				toggledTable.fadeOut();
+			}
+		});
 
-        // Los campos de clase double no deben contener comas
-        $('.double').change(
-            function(){
-                var comaReg = /,/;
-                if(comaReg.test($(this).val()))
-                {
-                    alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
-                    $(this).val("");
-                }
-            });
+		// Los campos de clase double no deben contener comas
+		$('.double').change(
+			function(){
+				var comaReg = /,/;
+				if(comaReg.test($(this).val()))
+				{
+					alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
+					$(this).val("");
+				}
+			});
 
-        //////////////////////////////////////////
-        // Validaciones a la hora de enviar la forma
-        //////////////////////////////////////////
+		//////////////////////////////////////////
+		// Validaciones a la hora de enviar la forma
+		//////////////////////////////////////////
 
-        $('form').submit(function(){
+		$('form').submit(function(){
 
-            flag = true;
+			flag = true;
 
-            // Validando, para ello utilizamos la clase "obligatorio":
+			// Validando, para ello utilizamos la clase "obligatorio":
 
-            campos = $('.obligatorio');
-            campos.each(function(){
-                if(!$(this).val())
-                {
-                    flag = false;
-                }
-            });
+			campos = $('.obligatorio');
+			campos.each(function(){
+				if(!$(this).val())
+				{
+					flag = false;
+				}
+			});
 
-            /* Sin embargo, como el campo de "sitio_muestra_id" es generado por
-            medio de AJAX; no entra en la validación anterior. Lo tenemos que
-            validar aparte: */
+			/* Sin embargo, como el campo de "sitio_muestra_id" es generado por
+			medio de AJAX; no entra en la validación anterior. Lo tenemos que
+			validar aparte: */
 
-            if(!$('#shadow_clone').find('select:first').val()){
-                flag = false;
-            //    alert('Faltó llenar el sitio');
-            }
+			if(!$('#shadow_clone').find('select:first').val()){
+				flag = false;
+			//    alert('Faltó llenar el sitio');
+			}
 
-            /* Validando los campos de la tabla_individuos, si se marcó el
-            radio botón correspondiente.*/
-            
-            if($('input:radio[name=sin_con_individuos]:checked').val() === 'con'){
+			/* Validando los campos de la tabla_individuos, si se marcó el
+			radio botón correspondiente.*/
+			
+			if($('input:radio[name=sin_con_individuos]:checked').val() === 'con'){
 
-                /* Validando que todos los campos en la "tabla_individuos" estén
-                llenos */
-                $('#tabla_individuos').find("input:text, select").each(
-                    function(){
-                    if(!$(this).val())
-                    {
-                        flag = false;
-                    }
-                });
-            }
-            /* Si no hay individuos, entonces "tabla_individuos" se manda igual,
-            pero a nivel de controlador se ignoran los campos correspondientes
-            a ésta.*/
+				/* Validando que todos los campos en la "tabla_individuos" estén
+				llenos */
+				$('#tabla_individuos').find("input:text, select").each(
+					function(){
+					if(!$(this).val())
+					{
+						flag = false;
+					}
+				});
+			}
+			/* Si no hay individuos, entonces "tabla_individuos" se manda igual,
+			pero a nivel de controlador se ignoran los campos correspondientes
+			a ésta.*/
 
-            /* agregando el valor del estado (serializado) de los individuos
-            al control hidden */
+			/* agregando el valor del estado (serializado) de los individuos
+			al control hidden */
 
-            $('#estado_individuos').val(vector_estados.toString());
-            //alert($('#estado_individuos').val());
+			$('#estado_individuos').val(vector_estados.toString());
+			//alert($('#estado_individuos').val());
 
-            if(!flag)
-            {
-                alert('Faltó llenar algún campo');
-                return false;
-            }
-        });
-    });
+			if(!flag)
+			{
+				alert('Faltó llenar algún campo');
+				return false;
+			}
+		});
+	});
 </script>
