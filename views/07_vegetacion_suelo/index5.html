@@ -172,8 +172,8 @@
 						<input class="double" name="altura_0" id="altura_0" type="text" value="" placeholder="1530"/>
 					</td>
 					<td>
-						<input class="string" name="diametro_normal_0" id="diametro_normal_0" type="text" value="" placeholder="30.2,29.3"/>
-					</td>                    
+						<input class="string diametro_normal" name="diametro_normal_0" id="diametro_normal_0" type="text" value="" placeholder="30,29,42"/>
+					</td>
 					<td>
 						<input class="double" name="diametro_copa_0" id="diametro_copa_0" type="text" value="" placeholder="760"/>
 					</td>
@@ -230,7 +230,7 @@
 					<input class="double" name="altura_" id="altura_" type="text" value="" placeholder="1530"/>
 				</td>
 				<td>
-					<input class="string" name="diametro_normal_" id="diametro_normal_" type="text" value="" placeholder="30.2,29.3"/>
+					<input class="string diametro_normal" name="diametro_normal_" id="diametro_normal_" type="text" value="" placeholder="30,29,42"/>
 				</td>                    
 				<td>
 					<input class="double" name="diametro_copa_" id="diametro_copa_" type="text" value="" placeholder="760"/>
@@ -420,6 +420,21 @@
 					$(this).val("");
 				}
 			});
+
+		// Los valores del diámetro normal deben ser enteros separados por comas
+		$('.diametro_normal').change(
+			function(){
+				var regex = /^\d+(,\d+)*$/;
+				if($(this).val()){
+					if(!regex.test($(this).val()))
+					{
+						alert('Favor de introducir uno o más enteros separados ' +
+							'por comas sin espacios. Ejemplo: 32,46,21');
+						$(this).val("");
+					}
+				}
+			});
+
 
 		//////////////////////////////////////////
 		// Validaciones a la hora de enviar la forma

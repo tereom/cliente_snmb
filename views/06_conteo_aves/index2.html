@@ -14,6 +14,11 @@
 			width: 4.4cm;
 		}
 
+		.FlotaIzquierda
+		{
+			float: left;
+		}
+
         #enviar
         {
             float: left;
@@ -336,6 +341,23 @@
 			{
 				alert('Favor de utilizar punto decimal, no coma. Ejemplo: 9.34');
 				$(this).val("");
+			}
+		}
+	)
+
+	// La "distancia_aproximada" debe ser menor a 60m
+
+	$('#distancia_aproximada').change
+	(
+		function()
+		{
+			if($(this).val())
+			{
+				if($(this).val() > 60)
+				{
+					alert('La distancia aproximada debe ser menor o igual a 60m');
+					$(this).val("");
+				}
 			}
 		}
 	)
