@@ -93,4 +93,4 @@ Campos_Archivo_grabadora = [
 	]
 
 db.define_table('Archivo_grabadora', *Campos_Archivo_grabadora, 
-	singular='Archivo grabadora', plurals='Archivos grabadoras')
+	singular='Archivo grabadora', plural='Archivos grabadoras')
