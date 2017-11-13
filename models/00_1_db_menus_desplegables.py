@@ -82,7 +82,7 @@ if db(db.Cat_tenencia_conglomerado.id>0).count() == 0:
 
 #########################################################################
 
-db.define_table('Cat_suelo_conglomerado', Field('nombre', 'string'), required='TRUE')
+db.define_table('Cat_suelo_conglomerado', Field('nombre', 'string', required='TRUE'))
 
 if db(db.Cat_suelo_conglomerado.id>0).count() == 0:
 	db.Cat_suelo_conglomerado.insert(nombre='ACUI - Acuicola')
